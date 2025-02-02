@@ -24,7 +24,8 @@ import { SideNavComponent } from '../../components/side-nav/side-nav.component';
           </div>
 
           <!-- Horizontal line below header -->
-          <hr class="mb-3" style="border-color: black; border-width: 2px;" />
+          <hr class="mb-3" style="border-color: #757575; border-width: 2px;" />
+
 
           <!-- Filters -->
           <div class="d-flex justify-content-between mb-3">
