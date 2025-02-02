@@ -1,64 +1,93 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="fw-bold">Vehicle List</h2>
-    <div>
-      <button class="btn btn-success me-2">+ Add Vehicle</button>
-      <button class="btn btn-danger">Remove Vehicle</button>
+<div class="d-flex vehicle-list-container">
+  <app-side-nav></app-side-nav>
+
+  <div class="main-content">
+    <div class="content-wrapper">
+      <div class="header">
+        <h2 class="title">
+          <fa-icon [icon]="faTruck" class="me-2"></fa-icon>
+          Vehicle List
+        </h2>
+        <div class="button-group">
+          <button class="btn-action btn-add">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            <span class="ms-2">Add Vehicle</span>
+          </button>
+          <button class="btn-action btn-remove">
+            <fa-icon [icon]="faMinus"></fa-icon>
+            <span class="ms-2">Remove Vehicle</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="filters-section">
+        <div class="filters-group">
+          <label class="filter-label">
+            <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
+            Filters:
+          </label>
+          <select class="filter-select" [(ngModel)]="selectedStatus">
+            <option value="">All Status</option>
+            <option value="Active">Active</option>
+            <option value="Idle">Idle</option>
+            <option value="Maintenance">Maintenance</option>
+          </select>
+          <select class="filter-select" [(ngModel)]="selectedRoute">
+            <option value="">All Routes</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Industrial">Industrial</option>
+            <option value="Residential">Residential</option>
+          </select>
+          <select class="filter-select" [(ngModel)]="selectedCapacity">
+            <option value="">All Capacities</option>
+            <option value="1000kg">1000kg</option>
+            <option value="1500kg">1500kg</option>
+            <option value="2000kg">2000kg</option>
+            <option value="2500kg">2500kg</option>
+            <option value="3000kg">3000kg</option>
+          </select>
+        </div>
+        <div class="search-group">
+          <div class="search-input-wrapper">
+            <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
+            <input type="text" class="search-input" placeholder="Search by ID..." [(ngModel)]="searchQuery">
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="vehicle-table">
+          <thead>
+            <tr>
+              <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> ID</th>
+              <th><fa-icon [icon]="faTruck" class="me-2"></fa-icon> License Plate</th>
+              <th><fa-icon [icon]="faUser" class="me-2"></fa-icon> Driver's Name</th>
+              <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status</th>
+              <th><fa-icon [icon]="faRoute" class="me-2"></fa-icon> Route Type</th>
+              <th><fa-icon [icon]="faWeight" class="me-2"></fa-icon> Max Capacity</th>
+              <th><fa-icon [icon]="faTools" class="me-2"></fa-icon> Last Maintenance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vehicle of filteredVehicles">
+              <td>{{ vehicle.id }}</td>
+              <td>{{ vehicle.licensePlate }}</td>
+              <td>{{ vehicle.driverName }}</td>
+              <td>
+                <span class="status-badge" [class]="'status-' + vehicle.status.toLowerCase()">
+                  <fa-icon [icon]="faCircle" class="me-1" size="xs"></fa-icon>
+                  {{ vehicle.status }}
+                </span>
+              </td>
+              <td>{{ vehicle.routeType }}</td>
+              <td>{{ vehicle.maxCapacity }}</td>
+              <td>{{ vehicle.lastMaintenance }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-
-  <!-- Add a horizontal line below the header -->
-  <hr class="mb-3" style="border-color: black; border-width: 2px;" />
-
-  <div class="d-flex justify-content-between mb-3">
-    <div>
-      <label class="me-2">Filters:</label>
-      <select class="form-select d-inline w-auto" [(ngModel)]="selectedStatus">
-        <option value="">All Status</option>
-        <option value="Active">Active</option>
-        <option value="Idle">Idle</option>
-        <option value="Maintenance">Maintenance</option>
-      </select>
-      <select class="form-select d-inline w-auto ms-2" [(ngModel)]="selectedRoute">
-        <option value="">All Routes</option>
-        <option value="Commercial">Commercial</option>
-        <option value="Industrial">Industrial</option>
-        <option value="Residential">Residential</option>
-      </select>
-      <select class="form-select d-inline w-auto ms-2" [(ngModel)]="selectedCapacity">
-        <option value="">All Capacities</option>
-        <option value="1000kg">1000kg</option>
-        <option value="1500kg">1500kg</option>
-        <option value="2000kg">2000kg</option>
-        <option value="2500kg">2500kg</option>
-        <option value="3000kg">3000kg</option>
-      </select>
-    </div>
-    <input type="text" class="form-control w-auto" placeholder="Search by ID..." [(ngModel)]="searchQuery">
-  </div>
-
-  <table class="table table-bordered table-striped">
-    <thead class="table-light">
-      <tr>
-        <th>ID</th>
-        <th>License Plate</th>
-        <th>Driver's Name</th>
-        <th>Status</th>
-        <th>Route Type</th>
-        <th>Max Capacity</th>
-        <th>Last Maintenance</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let vehicle of filteredVehicles">
-        <td>{{ vehicle.id }}</td>
-        <td>{{ vehicle.licensePlate }}</td>
-        <td>{{ vehicle.driverName }}</td>
-        <td>{{ vehicle.status }}</td>
-        <td>{{ vehicle.routeType }}</td>
-        <td>{{ vehicle.maxCapacity }}</td>
-        <td>{{ vehicle.lastMaintenance }}</td>
-      </tr>
-    </tbody>
-  </table>
 </div>
