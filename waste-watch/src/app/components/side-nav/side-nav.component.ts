@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTrash, faTruck, faSignOutAlt, faMap } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-side-nav',
@@ -19,7 +19,7 @@ import { faTrash, faTruck, faSignOutAlt, faMap } from '@fortawesome/free-solid-s
         <li class="nav-item">
           <a class="nav-link" routerLink="/bin-dashboard" routerLinkActive="active">
             <div class="icon-container">
-              <fa-icon [icon]="faTrash"></fa-icon>
+              <fa-icon [icon]="faDashboard"></fa-icon>
             </div>
             <span class="link-text">Fleet Dashboard</span>
           </a>
@@ -27,7 +27,7 @@ import { faTrash, faTruck, faSignOutAlt, faMap } from '@fortawesome/free-solid-s
         <li class="nav-item">
           <a class="nav-link" routerLink="/fleet-dashboard" routerLinkActive="active">
             <div class="icon-container">
-              <fa-icon [icon]="faTruck"></fa-icon>
+              <fa-icon [icon]="faMap"></fa-icon>
             </div>
             <span class="link-text">Fleet Monitoring</span>
           </a>
@@ -35,7 +35,7 @@ import { faTrash, faTruck, faSignOutAlt, faMap } from '@fortawesome/free-solid-s
         <li class="nav-item">
           <a class="nav-link" routerLink="/map" routerLinkActive="active">
             <div class="icon-container">
-              <fa-icon [icon]="faMap"></fa-icon>
+              <fa-icon [icon]="faTruck"></fa-icon>
             </div>
             <span class="link-text">Vehicle Roster</span>
           </a>
@@ -222,6 +222,7 @@ export class SideNavComponent {
   faTruck = faTruck;
   faSignOutAlt = faSignOutAlt;
   faMap = faMap;
+  faDashboard = faDashboard;
 
   logout() {
     // Implement logout logic
