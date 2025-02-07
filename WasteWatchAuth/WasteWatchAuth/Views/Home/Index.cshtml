@@ -1,0 +1,39 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<h1 class="text-center">Bem-vindo ao WasteWatch</h1>
+
+@if (SignInManager.IsSignedIn(User))
+{
+	var user = await UserManager.GetUserAsync(User);
+	var roles = new List<string>(); // Inicializa uma lista vazia para evitar erro
+
+	if (user != null)
+	{
+		roles = (await UserManager.GetRolesAsync(user)).ToList();
+	}
+
+	<p class="text-center">Utilizador Logado: @User.Identity?.Name</p>
+	<p class="text-center">Roles do Utilizador:</p>
+
+	<ul class="text-center">
+		@foreach (var role in roles)
+		{
+			<li>@role</li>
+		}
+	</ul>
+
+	if (roles.Any(r => r.Equals("Admin", StringComparison.OrdinalIgnoreCase)))
+	{
+		<div class="text-center mt-4">
+			<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">
+				Registar Novo Utilizador
+			</a>
+		</div>
+	}
+}
