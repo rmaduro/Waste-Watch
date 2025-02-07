@@ -68,6 +68,16 @@ using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
 	var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+	var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+	await DataSeeder.SeedDatabase(userManager, roleManager);
+}
+
+
+using (var scope = app.Services.CreateScope())
+{
+	var services = scope.ServiceProvider;
+	var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
 
 	string adminEmail = "wastewatchproject@gmail.com"; // Confirma que é o teu email
 	string adminRole = "Admin";
