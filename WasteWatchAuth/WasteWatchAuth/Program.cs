@@ -7,31 +7,31 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Adicionar a base de dados e o contexto
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+	?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+	options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Configurar Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+	options.SignIn.RequireConfirmedAccount = false; // Removida a confirmação de email no login
 })
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders()
-    .AddDefaultUI();
+	.AddRoles<IdentityRole>()
+	.AddEntityFrameworkStores<ApplicationDbContext>()
+	.AddDefaultTokenProviders()
+	.AddDefaultUI();
 
 // Configuração para cookies (sessão e autenticação)
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(10); // Tempo de inatividade antes do logout
-    options.SlidingExpiration = true;
-    options.LoginPath = "/Identity/Account/Login";
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+	options.ExpireTimeSpan = TimeSpan.FromMinutes(10); // Tempo de inatividade antes do logout
+	options.SlidingExpiration = true;
+	options.LoginPath = "/Identity/Account/Login";
+	options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
-// Registrar o serviço de envio de emails
+// Registrar o serviço de envio de emails (para recuperação de password)
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // Adicionar controladores e vistas
@@ -42,12 +42,12 @@ var app = builder.Build();
 // Configurar o pipeline de requisições
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+	app.UseMigrationsEndPoint();
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+	app.UseExceptionHandler("/Home/Error");
+	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -58,46 +58,24 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-    await RoleSeeder.SeedRoles(roleManager);
-}
+// Criar a base de dados e popular os seeders (Roles e Users)
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
-	var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
 	var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-	await DataSeeder.SeedDatabase(userManager, roleManager);
-}
-
-
-using (var scope = app.Services.CreateScope())
-{
-	var services = scope.ServiceProvider;
 	var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+	var context = services.GetRequiredService<ApplicationDbContext>();
 
-	string adminEmail = "wastewatchproject@gmail.com"; // Confirma que é o teu email
-	string adminRole = "Admin";
+	await context.Database.MigrateAsync(); // Garantir que a base de dados está criada e atualizada
 
-	var adminUser = await userManager.FindByEmailAsync(adminEmail);
-	if (adminUser != null)
-	{
-		// Verifica se o utilizador já tem o role
-		if (!await userManager.IsInRoleAsync(adminUser, adminRole))
-		{
-			await userManager.AddToRoleAsync(adminUser, adminRole);
-			Console.WriteLine($"Role '{adminRole}' atribuído ao utilizador {adminEmail}");
-		}
-	}
+	// Chamar os seeders
+	await RoleSeeder.SeedRoles(roleManager);
+	await UserSeeder.SeedUsersAsync(userManager);
 }
-
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+	name: "default",
+	pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
