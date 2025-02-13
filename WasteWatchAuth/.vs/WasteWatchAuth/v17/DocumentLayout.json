@@ -3,11 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\waste-watch\\wastewatchauth\\wastewatchauth\\data\\userseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\data\\userseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetUsers.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetUsers.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetUserRoles.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\waste-watch\\wastewatchauth\\wastewatchauth\\data\\userseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\data\\userseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\waste-watch\\wastewatchauth\\wastewatchauth\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -20,9 +27,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\waste-watch\\wastewatchauth\\wastewatchauth\\data\\roleseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\data\\roleseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetUserRoles.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetRoles.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
@@ -50,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,43 +62,66 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "dbo.AspNetUserRoles [Dados]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetUserRoles.sql",
+              "ToolTip": "dbo.AspNetUserRoles [Dados]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-02-13T15:37:21.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "dbo.AspNetUsers [Dados]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetUsers.sql",
+              "ToolTip": "dbo.AspNetUsers [Dados]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-02-13T15:36:34.757Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAA5wKMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T14:32:51.117Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "UserSeeder.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\UserSeeder.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\UserSeeder.cs",
               "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\UserSeeder.cs",
               "RelativeToolTip": "WasteWatchAuth\\Data\\UserSeeder.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAzwAsAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-11T17:54:51.799Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "dbo.AspNetUsers [Dados]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetUsers.sql",
-              "ToolTip": "dbo.AspNetUsers [Dados]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-02-11T17:53:56.063Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Program.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Program.cs",
               "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Program.cs",
               "RelativeToolTip": "WasteWatchAuth\\Program.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAswE8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAFkAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-06T01:11:34.419Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "RoleSeeder.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\RoleSeeder.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\RoleSeeder.cs",
@@ -106,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "EmailSender.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Services\\EmailSender.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Services\\EmailSender.cs",
@@ -118,25 +145,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "dbo.AspNetUserRoles [Dados]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetUserRoles.sql",
-              "ToolTip": "dbo.AspNetUserRoles [Dados]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-02-06T04:42:52.663Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "dbo.AspNetRoles.sql",
+              "DocumentIndex": 7,
+              "Title": "dbo.AspNetRoles [Dados]",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetRoles.sql",
-              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.AspNetRoles.sql",
+              "ToolTip": "dbo.AspNetRoles [Dados]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
               "WhenOpened": "2025-02-06T04:43:07.584Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Login.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
@@ -148,7 +166,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "_LoginPartial.cshtml",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Views\\Shared\\_LoginPartial.cshtml",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Views\\Shared\\_LoginPartial.cshtml",
@@ -160,7 +178,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\appsettings.json",
               "RelativeDocumentMoniker": "WasteWatchAuth\\appsettings.json",
@@ -172,7 +190,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "20250206011933_Initial.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\WasteWatchAuth\\WasteWatchAuth\\Data\\Migrations\\20250206011933_Initial.cs",
               "RelativeDocumentMoniker": "..\\..\\WasteWatchAuth\\WasteWatchAuth\\Data\\Migrations\\20250206011933_Initial.cs",

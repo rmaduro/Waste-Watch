@@ -15,7 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 // Configurar Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-	options.SignIn.RequireConfirmedAccount = false; // Removida a confirmação de email no login
+	options.SignIn.RequireConfirmedAccount = false; // Permitir login sem confirmar e-mail
 })
 	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<ApplicationDbContext>()
@@ -25,17 +25,32 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 // Configuração para cookies (sessão e autenticação)
 builder.Services.ConfigureApplicationCookie(options =>
 {
-	options.ExpireTimeSpan = TimeSpan.FromMinutes(10); // Tempo de inatividade antes do logout
+	options.ExpireTimeSpan = TimeSpan.FromMinutes(10); // Logout automático após 10 min de inatividade
 	options.SlidingExpiration = true;
 	options.LoginPath = "/Identity/Account/Login";
 	options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
+// Habilitar CORS para permitir conexões do frontend específico
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowFrontend",
+		policy => policy.WithOrigins("http://localhost:3000") // Trocar pelo URL do frontend
+			.AllowAnyMethod()
+			.AllowAnyHeader());
+});
+
 // Registrar o serviço de envio de emails (para recuperação de password)
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+// Adicionar suporte a APIs e JSON
+builder.Services.AddControllers()
+	.AddNewtonsoftJson(options =>
+		options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 // Adicionar controladores e vistas
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -55,6 +70,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors("AllowFrontend"); // Aplicar política de CORS
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -62,20 +79,25 @@ app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
+	var context = services.GetRequiredService<ApplicationDbContext>();
 	var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 	var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-	var context = services.GetRequiredService<ApplicationDbContext>();
 
-	await context.Database.MigrateAsync(); // Garantir que a base de dados está criada e atualizada
+	// Aplicar as migrações automaticamente
+	await context.Database.MigrateAsync();
 
 	// Chamar os seeders
 	await RoleSeeder.SeedRoles(roleManager);
 	await UserSeeder.SeedUsersAsync(userManager);
 }
 
+// Mapear as rotas padrão e API
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+// Adicionar rotas para a API
+app.MapControllers();
 
 app.Run();
