@@ -8,13 +8,15 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
   selector: 'app-reset-password',
   standalone: true,
   imports: [CommonModule, FormsModule], // Add FormsModule and CommonModule
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css'],
+  templateUrl: './define-password.component.html',
+  styleUrls: ['./define-password.component.css'],
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   @ViewChild('backgroundVideo') backgroundVideo!: ElementRef<HTMLVideoElement>;
 
   email = '';
+  password = '';
+  confirmPassword = '';
   currentImage = 'assets/images/login_image5.jpeg'; // Use only login_image5.jpeg
 
   constructor(private router: Router, private http: HttpClient) {}
@@ -28,13 +30,25 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
+  // On form submission
   onResetPassword() {
-    const resetData = { email: this.email };
+    // Check if the passwords match before proceeding
+    if (this.password !== this.confirmPassword) {
+      console.error('Passwords do not match!');
+      return;
+    }
 
-    this.http.post('https://localhost:7259/api/auth/forgot-password', resetData)
+    // Prepare the data to send to the backend
+    const resetData = {
+      email: this.email,
+      newPassword: this.password
+    };
+
+    // Make the API call to reset the password
+    this.http.post('https://localhost:7259/api/auth/reset-password', resetData)
       .subscribe({
         next: (response) => {
-          console.log('Password reset email sent successfully:', response);
+          console.log('Password reset successfully:', response);
           this.router.navigate(['/login']); // Redirect to login after password reset
         },
         error: (error) => {
@@ -48,8 +62,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       });
   }
 
-
-
+  // Navigation to the login page
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
