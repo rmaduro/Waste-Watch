@@ -1,93 +1,145 @@
-<div class="d-flex vehicle-list-container">
-  <app-side-nav></app-side-nav>
-
-  <div class="main-content">
-    <div class="content-wrapper">
-      <div class="header">
-        <h2 class="title">
-          <fa-icon [icon]="faTruck" class="me-2"></fa-icon>
-          Vehicle List
-        </h2>
-        <div class="button-group">
-          <button class="btn-action btn-add">
-            <fa-icon [icon]="faPlus"></fa-icon>
-            <span class="ms-2">Add Vehicle</span>
-          </button>
-          <button class="btn-action btn-remove">
-            <fa-icon [icon]="faMinus"></fa-icon>
-            <span class="ms-2">Remove Vehicle</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="filters-section">
-        <div class="filters-group">
-          <label class="filter-label">
-            <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
-            Filters:
-          </label>
-          <select class="filter-select" [(ngModel)]="selectedStatus">
-            <option value="">All Status</option>
-            <option value="Active">Active</option>
-            <option value="Idle">Idle</option>
-            <option value="Maintenance">Maintenance</option>
-          </select>
-          <select class="filter-select" [(ngModel)]="selectedRoute">
-            <option value="">All Routes</option>
-            <option value="Commercial">Commercial</option>
-            <option value="Industrial">Industrial</option>
-            <option value="Residential">Residential</option>
-          </select>
-          <select class="filter-select" [(ngModel)]="selectedCapacity">
-            <option value="">All Capacities</option>
-            <option value="1000kg">1000kg</option>
-            <option value="1500kg">1500kg</option>
-            <option value="2000kg">2000kg</option>
-            <option value="2500kg">2500kg</option>
-            <option value="3000kg">3000kg</option>
-          </select>
-        </div>
-        <div class="search-group">
-          <div class="search-input-wrapper">
-            <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
-            <input type="text" class="search-input" placeholder="Search by ID..." [(ngModel)]="searchQuery">
+<div [class.blur-background]="showAddForm">
+  <div class="d-flex vehicle-list-container">
+    <app-side-nav></app-side-nav>
+    <div class="main-content">
+      <div class="content-wrapper">
+        <div class="header">
+          <h2 class="title">
+            <fa-icon [icon]="faTruck" class="me-2"></fa-icon>
+            Vehicle List
+          </h2>
+          <div class="button-group">
+            <button class="btn-action btn-add" (click)="toggleAddForm()">
+              <fa-icon [icon]="faPlus"></fa-icon>
+              <span class="ms-2">Add Vehicle</span>
+            </button>
+            <button class="btn-action btn-remove">
+              <fa-icon [icon]="faMinus"></fa-icon>
+              <span class="ms-2">Remove Vehicle</span>
+            </button>
           </div>
         </div>
-      </div>
 
-      <div class="table-container">
-        <table class="vehicle-table">
-          <thead>
-            <tr>
-              <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> ID</th>
-              <th><fa-icon [icon]="faTruck" class="me-2"></fa-icon> License Plate</th>
-              <th><fa-icon [icon]="faUser" class="me-2"></fa-icon> Driver's Name</th>
-              <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status</th>
-              <th><fa-icon [icon]="faRoute" class="me-2"></fa-icon> Route Type</th>
-              <th><fa-icon [icon]="faWeight" class="me-2"></fa-icon> Max Capacity</th>
-              <th><fa-icon [icon]="faTools" class="me-2"></fa-icon> Last Maintenance</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let vehicle of filteredVehicles">
-              <td>{{ vehicle.id }}</td>
-              <td>{{ vehicle.licensePlate }}</td>
-              <td>{{ vehicle.driverName }}</td>
-              <td>
-                <span class="status-badge" [class]="'status-' + vehicle.status.toLowerCase()">
-                  <fa-icon [icon]="faCircle" class="me-1" size="xs"></fa-icon>
-                  {{ vehicle.status }}
-                </span>
-              </td>
-              <td>{{ vehicle.routeType }}</td>
-              <td>{{ vehicle.maxCapacity }}</td>
-              <td>{{ vehicle.lastMaintenance }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="divider"></div>
+
+        <div class="filters-section">
+          <div class="filters-group">
+            <label class="filter-label">
+              <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
+              Filters:
+            </label>
+            <select class="filter-select" [(ngModel)]="selectedStatus">
+              <option value="">All Status</option>
+              <option value="Active">Active</option>
+              <option value="Idle">Idle</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
+            <select class="filter-select" [(ngModel)]="selectedRoute">
+              <option value="">All Routes</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Industrial">Industrial</option>
+              <option value="Residential">Residential</option>
+            </select>
+            <select class="filter-select" [(ngModel)]="selectedCapacity">
+              <option value="">All Capacities</option>
+              <option value="1000kg">1000kg</option>
+              <option value="1500kg">1500kg</option>
+              <option value="2000kg">2000kg</option>
+              <option value="2500kg">2500kg</option>
+              <option value="3000kg">3000kg</option>
+            </select>
+          </div>
+          <div class="search-group">
+            <div class="search-input-wrapper">
+              <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
+              <input type="text" class="search-input" placeholder="Search by ID..." [(ngModel)]="searchQuery">
+            </div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="vehicle-table">
+            <thead>
+              <tr>
+                <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> ID</th>
+                <th><fa-icon [icon]="faTruck" class="me-2"></fa-icon> License Plate</th>
+                <th><fa-icon [icon]="faUser" class="me-2"></fa-icon> Driver's Name</th>
+                <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status</th>
+                <th><fa-icon [icon]="faRoute" class="me-2"></fa-icon> Route Type</th>
+                <th><fa-icon [icon]="faWeight" class="me-2"></fa-icon> Max Capacity</th>
+                <th><fa-icon [icon]="faTools" class="me-2"></fa-icon> Last Maintenance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vehicle of filteredVehicles">
+                <td>{{ vehicle.id }}</td>
+                <td>{{ vehicle.licensePlate }}</td>
+                <td>{{ vehicle.driverName }}</td>
+                <td>
+                  <span class="status-badge" [class]="'status-' + vehicle.status.toLowerCase()">
+                    <fa-icon [icon]="faCircle" class="me-1" size="xs"></fa-icon>
+                    {{ vehicle.status }}
+                  </span>
+                </td>
+                <td>{{ vehicle.routeType }}</td>
+                <td>{{ vehicle.maxCapacity }}</td>
+                <td>{{ vehicle.lastMaintenance }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
+
+<div class="vehicle-form-container" *ngIf="showAddForm">
+  <h2 class="form-title">Add / Edit Vehicle</h2>
+  <form class="vehicle-form" (ngSubmit)="addVehicle()">
+    <div class="form-group">
+      <label for="vehicleId">Vehicle ID:</label>
+      <input type="number" id="vehicleId" class="form-control" [(ngModel)]="vehicle.id" name="vehicleId" required>
+    </div>
+
+    <div class="form-group">
+      <label for="licensePlate">License Plate:</label>
+      <input type="text" id="licensePlate" class="form-control" [(ngModel)]="vehicle.licensePlate" name="licensePlate" required>
+    </div>
+
+    <div class="form-group">
+      <label for="driverName">Driver's Name:</label>
+      <input type="text" id="driverName" class="form-control" [(ngModel)]="vehicle.driverName" name="driverName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" class="form-control" [(ngModel)]="vehicle.status" name="status">
+        <option value="Active">Active</option>
+        <option value="Idle">Idle</option>
+        <option value="Maintenance">Maintenance</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="routeType">Route Type:</label>
+      <select id="routeType" class="form-control" [(ngModel)]="vehicle.routeType" name="routeType">
+        <option value="Commercial">Commercial</option>
+        <option value="Industrial">Industrial</option>
+        <option value="Residential">Residential</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="lastMaintenance">Last Maintenance Date:</label>
+      <input type="date" id="lastMaintenance" class="form-control" [(ngModel)]="vehicle.lastMaintenance" name="lastMaintenance" required>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">Save Vehicle</button>
+      <button type="button" class="btn-reset" (click)="toggleAddForm()">Cancel</button>
+    </div>
+  </form>
+</div>
+  

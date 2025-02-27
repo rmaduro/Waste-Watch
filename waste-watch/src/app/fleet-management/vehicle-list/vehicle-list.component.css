@@ -21,7 +21,7 @@
   padding: 2rem;
   width: 100%;
   max-width: none;
-  margin: 0; 
+  margin: 0;
 
 }
 
@@ -224,3 +224,48 @@
   background-color: #fee2e2;
   color: #dc2626;
 }
+
+/* Blur effect when form is open */
+.blur-background {
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+/* Modal styles */
+.vehicle-form-container {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 50%;
+  background: white;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.vehicle-form-container h2 {
+  margin-bottom: 1rem;
+}
+
+.vehicle-form-container .form-group {
+  margin-bottom: 1rem;
+}
+
+.vehicle-form-container .form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Dark overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+

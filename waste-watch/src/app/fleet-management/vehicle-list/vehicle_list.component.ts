@@ -46,7 +46,7 @@ export class VehicleListComponent {
       status: 'Active',
       routeType: 'Commercial',
       maxCapacity: '1000kg',
-      lastMaintenance: '02-May-2024',
+      lastMaintenance: '2024-05-02',
     },
     {
       id: 2,
@@ -55,7 +55,7 @@ export class VehicleListComponent {
       status: 'Idle',
       routeType: 'Industrial',
       maxCapacity: '1500kg',
-      lastMaintenance: '18-Jun-2024',
+      lastMaintenance: '2024-06-18',
     },
   ];
 
@@ -63,6 +63,23 @@ export class VehicleListComponent {
   selectedRoute = '';
   selectedCapacity = '';
   searchQuery = '';
+
+  vehicle = {
+    id: null as number | null,
+    licensePlate: '',
+    driverName: '',
+    status: 'Active',
+    routeType: 'Commercial',
+    maxCapacity: '1000kg',
+    lastMaintenance: '',
+  };
+
+    showAddForm = false;
+
+    toggleAddForm() {
+      this.showAddForm = !this.showAddForm;
+    }
+
 
 
   get filteredVehicles() {
@@ -74,5 +91,33 @@ export class VehicleListComponent {
         (this.searchQuery === '' || vehicle.id.toString().includes(this.searchQuery))
       );
     });
+  }
+
+
+
+  addVehicle() {
+    if (this.vehicle.id !== null && this.vehicle.licensePlate && this.vehicle.driverName) {
+      const vehicleId = Number(this.vehicle.id);
+      const existingIndex = this.vehicles.findIndex(v => v.id === vehicleId);
+      if (existingIndex !== -1) {
+        this.vehicles[existingIndex] = { ...this.vehicle, id: vehicleId };
+      } else {
+        this.vehicles.push({ ...this.vehicle, id: vehicleId });
+      }
+      this.clearForm();
+      this.showAddForm = false;
+    }
+  }
+
+  clearForm() {
+    this.vehicle = {
+      id: null,
+      licensePlate: '',
+      driverName: '',
+      status: 'Active',
+      routeType: 'Commercial',
+      maxCapacity: '1000kg',
+      lastMaintenance: '',
+    };
   }
 }
