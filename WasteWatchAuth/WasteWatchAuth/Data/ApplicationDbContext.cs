@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using WasteWatchAuth.Models;
 
 namespace WasteWatchAuth.Data
 {
@@ -10,6 +9,5 @@ namespace WasteWatchAuth.Data
             : base(options)
         {
         }
-        public DbSet<ActivityLog> ActivityLogs { get; set; }
-	}
+    }
 }

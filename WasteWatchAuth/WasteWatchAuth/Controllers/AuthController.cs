@@ -6,7 +6,6 @@ using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using WasteWatchAuth.Services;
 
 namespace WasteWatchAuth.Controllers
 {
@@ -17,14 +16,12 @@ namespace WasteWatchAuth.Controllers
 		private readonly UserManager<IdentityUser> _userManager;
 		private readonly SignInManager<IdentityUser> _signInManager;
 		private readonly IEmailSender _emailSender;
-		private readonly ActivityLogService _activityLogService;
 
-		public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailSender emailSender, ActivityLogService activityLogService)
+		public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailSender emailSender)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_emailSender = emailSender;
-			_activityLogService = activityLogService;
 		}
 
 		/// <summary>
@@ -44,8 +41,6 @@ namespace WasteWatchAuth.Controllers
 			if (!result.Succeeded)
 				return Unauthorized(new { message = "Credenciais inválidas" });
 
-			await _activityLogService.LogActivityAsync("Login", $"User {user.Email} logged in.");
-
 			return Ok(new
 			{
 				message = "Login bem-sucedido",
@@ -59,12 +54,7 @@ namespace WasteWatchAuth.Controllers
 		[HttpPost("logout")]
 		public async Task<IActionResult> Logout()
 		{
-			var user = await _userManager.GetUserAsync(User);
-			var userEmail = user?.Email ?? "Unknown User";
-
 			await _signInManager.SignOutAsync();
-
-			await _activityLogService.LogActivityAsync("Logout", $"User {userEmail} logged out.");
 			return Ok(new { message = "Logout bem-sucedido" });
 		}
 
@@ -101,8 +91,6 @@ namespace WasteWatchAuth.Controllers
 				await _userManager.AddToRoleAsync(user, model.Role);
 			}
 
-			await _activityLogService.LogActivityAsync("Register", $"Admin {User.Identity.Name} registered user {model.Email} with role {model.Role}.");
-
 			return Ok(new
 			{
 				message = "Utilizador registado com sucesso",
@@ -128,49 +116,102 @@ namespace WasteWatchAuth.Controllers
 
 
 			// Criar o link para redefinir a password (frontend deve consumir este link)
-			var resetLink = $"{Request.Scheme}://{Request.Host}/Identity/Account/ResetPassword?email={model.Email}&token={token}";
+			var resetLink = $"http://localhost:4200/define-password?email={model.Email}&token={encodedToken}";
 
 
 
 			Console.WriteLine($"TOKEN GERADO: {encodedToken}"); // Mostra o token no console
 
-			await _emailSender.SendEmailAsync(model.Email, "Recuperação de Password",
-				$"Clique no link para redefinir sua password: <a href='{resetLink}'>Redefinir Password</a>");
+			await _emailSender.SendEmailAsync(model.Email, "🔒 Redefinição de Password - WasteWatch",
+	$@"
+    <html>
+    <body style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 40px 0; text-align: center;'>
+        <div style='max-width: 500px; background: white; padding: 30px; border-radius: 10px; 
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: auto; text-align: left;'>
+            
+            <h2 style='color: #007bff; text-align: center;'>🔑 Recuperação de Password</h2>
+            
+            <p style='font-size: 16px; color: #333;'>Olá,</p>
+            
+            <p style='font-size: 16px; color: #333;'>
+                Recebemos um pedido para redefinir a password associada ao seu email:
+            </p>
+            
+            <p style='font-size: 16px; font-weight: bold; color: #007bff; text-align: center;'>
+                {model.Email}
+            </p>
+
+            <p style='font-size: 16px; color: #333;'>
+                Para criar uma nova password, clique no botão abaixo:
+            </p>
+            
+            <p style='text-align: center; margin: 20px 0;'>
+                <a href='{resetLink}' 
+                   style='background-color: #007bff; color: white; padding: 12px 25px; text-decoration: none; 
+                          border-radius: 5px; font-size: 16px; font-weight: bold; display: inline-block;'>
+                   🔑 Redefinir Password
+                </a>
+            </p>
+
+            <p style='font-size: 14px; color: #555; text-align: center;'>
+                Se o botão acima não funcionar, copie e cole este link no seu navegador:
+            </p>
+            
+            <p style='word-break: break-word; font-size: 14px; text-align: center; color: #007bff;'>
+                <a href='{resetLink}'>{resetLink}</a>
+            </p>
+
+            <hr style='border: none; border-top: 1px solid #ddd; margin: 20px 0;'>
+            
+            <p style='font-size: 14px; color: #777;'>
+                Se você não solicitou esta alteração, pode ignorar este email. Sua conta permanecerá segura.
+            </p>
+
+            <p style='font-size: 14px; color: #777; text-align: center;'>
+                <strong>Equipe WasteWatch</strong>
+            </p>
+
+        </div>
+    </body>
+    </html>");
 
 			return Ok(new { message = "Email de recuperação enviado com sucesso", resetLink = resetLink });
 		}
 
 
 
-		[HttpPost("reset-password")]
-		public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
-		{
-			if (!ModelState.IsValid)
-				return BadRequest(ModelState);
-
-			var user = await _userManager.FindByEmailAsync(model.Email);
-			if (user == null)
-				return BadRequest(new { message = "Utilizador não encontrado" });
-
-			// NÃO é necessário decodificar o token aqui, porque ele já está num formato válido
-			var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
-
-			if (!result.Succeeded)
-				return BadRequest(result.Errors);
-
-			await _activityLogService.LogActivityAsync("Reset Password", $"User {model.Email} reset their password.");
-
-			return Ok(new { message = "Password redefinida com sucesso" });
-		}
 
 
-	}
+            [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return BadRequest(new { message = "Utilizador não encontrado" });
+
+            // Decode the token
+            var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
+
+            var result = await _userManager.ResetPasswordAsync(user, decodedToken, model.NewPassword);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            return Ok(new { message = "Password redefinida com sucesso" });
+        }
 
 
-	/// <summary>
-	/// Modelo para login.
-	/// </summary>
-	public class LoginModel
+
+    }
+
+
+    /// <summary>
+    /// Modelo para login.
+    /// </summary>
+    public class LoginModel
 	{
 		[Required(ErrorMessage = "O email é obrigatório")]
 		[EmailAddress(ErrorMessage = "Formato de email inválido")]
@@ -220,10 +261,6 @@ namespace WasteWatchAuth.Controllers
 		[Required(ErrorMessage = "A nova password é obrigatória")]
 		[MinLength(6, ErrorMessage = "A password deve ter pelo menos 6 caracteres")]
 		public string NewPassword { get; set; }
-
-		[Required(ErrorMessage = "A confirmação de password é obrigatória")]
-		[Compare("NewPassword", ErrorMessage = "As passwords não coincidem")]
-		public string ConfirmPassword { get; set; }
 	}
 
 }

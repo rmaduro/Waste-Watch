@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using WasteWatchAuth.Data;
-using WasteWatchAuth.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +21,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
-
-builder.Services.AddScoped<ActivityLogService>();
 
 // Configuração para cookies (sessão e autenticação)
 builder.Services.ConfigureApplicationCookie(options =>
