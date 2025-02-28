@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using WasteWatchAuth.Services;
 
 namespace WasteWatchAuth.Controllers
 {
@@ -16,12 +17,15 @@ namespace WasteWatchAuth.Controllers
 		private readonly UserManager<IdentityUser> _userManager;
 		private readonly SignInManager<IdentityUser> _signInManager;
 		private readonly IEmailSender _emailSender;
+		private readonly ActivityLogService _activityLogService;
 
-		public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailSender emailSender)
+
+		public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailSender emailSender, ActivityLogService activityLogService)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_emailSender = emailSender;
+			_activityLogService = activityLogService;
 		}
 
 		/// <summary>
@@ -40,6 +44,8 @@ namespace WasteWatchAuth.Controllers
 			var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 			if (!result.Succeeded)
 				return Unauthorized(new { message = "Credenciais inválidas" });
+			
+			await _activityLogService.LogActivityAsync("Login", $"User {user.Email} logged in.");
 
 			return Ok(new
 			{
@@ -54,7 +60,12 @@ namespace WasteWatchAuth.Controllers
 		[HttpPost("logout")]
 		public async Task<IActionResult> Logout()
 		{
+			var user = await _userManager.GetUserAsync(User);
+			var userEmail = user?.Email ?? "Unknown User";
+
 			await _signInManager.SignOutAsync();
+
+			await _activityLogService.LogActivityAsync("Logout", $"User {userEmail} logged out.");
 			return Ok(new { message = "Logout bem-sucedido" });
 		}
 
@@ -90,6 +101,9 @@ namespace WasteWatchAuth.Controllers
 			{
 				await _userManager.AddToRoleAsync(user, model.Role);
 			}
+
+
+			await _activityLogService.LogActivityAsync("Register", $"Admin {User.Identity.Name} registered user {model.Email} with role {model.Role}.");
 
 			return Ok(new
 			{
@@ -148,7 +162,10 @@ namespace WasteWatchAuth.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            return Ok(new { message = "Password redefinida com sucesso" });
+            await _activityLogService.LogActivityAsync("Reset Password", $"User {model.Email} reset their password.");
+
+
+			return Ok(new { message = "Password redefinida com sucesso" });
         }
 
 
