@@ -13,6 +13,8 @@ namespace WasteWatchAuth.Data
         public DbSet<ActivityLog> ActivityLogs { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
 
+        public DbSet<Driver> Drivers { get; set; }
+
 
 	}
 }

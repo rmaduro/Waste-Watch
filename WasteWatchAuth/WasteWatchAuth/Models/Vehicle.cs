@@ -1,28 +1,30 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WasteWatchAuth.Models
 {
 	public class Vehicle
 	{
-		[Key]
 		public int Id { get; set; }
 
 		[Required]
-		public string LicensePlate { get; set; }
+		public string LicensePlate { get; set; } = string.Empty;
 
 		[Required]
-		public string DriverName { get; set; }
+		public string Status { get; set; } = string.Empty;
 
 		[Required]
-		public string Status { get; set; } // ACTIVE, IDLE, etc.
+		public string RouteType { get; set; } = string.Empty;
 
-		[Required]
-		public string RouteType { get; set; } // Commercial, Industrial, etc.
+		public int MaxCapacity { get; set; }
 
-		[Required]
-		public int MaxCapacity { get; set; } // Em kg
+		public DateTime LastMaintenance { get; set; }
 
-		public DateTime LastMaintenance { get; set; } // Última manutenção
+		// Relação com o Driver
+		public int DriverId { get; set; }
+
+		[ForeignKey("DriverId")]
+		public Driver Driver { get; set; }
 	}
 }

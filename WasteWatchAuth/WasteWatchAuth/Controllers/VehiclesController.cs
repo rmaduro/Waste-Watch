@@ -20,19 +20,34 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Cria um novo veículo.
+		/// Cria um novo veículo e associa um condutor.
 		/// </summary>
 		[HttpPost]
 		public async Task<IActionResult> CreateVehicle([FromBody] Vehicle vehicle)
 		{
-			if (vehicle == null)
-				return BadRequest("Invalid vehicle data.");
+			if (vehicle == null || vehicle.Driver == null)
+				return BadRequest("Invalid vehicle or driver data.");
 
-			// Verifica se já existe um veículo com a mesma LicensePlate
+			// Verifica se já existe um veículo com a mesma matrícula
 			bool exists = await _context.Vehicles.AnyAsync(v => v.LicensePlate == vehicle.LicensePlate);
 			if (exists)
 				return Conflict(new { message = "Já existe um veículo com esta matrícula." });
 
+			// Adiciona o condutor primeiro (se não existir)
+			var existingDriver = await _context.Drivers.FirstOrDefaultAsync(d => d.Name == vehicle.Driver.Name);
+			if (existingDriver != null)
+			{
+				vehicle.DriverId = existingDriver.Id;
+				vehicle.Driver = existingDriver;
+			}
+			else
+			{
+				_context.Drivers.Add(vehicle.Driver);
+				await _context.SaveChangesAsync();
+				vehicle.DriverId = vehicle.Driver.Id;
+			}
+
+			// Adiciona o veículo
 			_context.Vehicles.Add(vehicle);
 			await _context.SaveChangesAsync();
 
@@ -40,12 +55,15 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Obtém um veículo pelo ID.
+		/// Obtém um veículo pelo ID, incluindo o condutor.
 		/// </summary>
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetVehicleById(int id)
 		{
-			var vehicle = await _context.Vehicles.FindAsync(id);
+			var vehicle = await _context.Vehicles
+				.Include(v => v.Driver) // Incluir o condutor nos resultados
+				.FirstOrDefaultAsync(v => v.Id == id);
+
 			if (vehicle == null)
 				return NotFound();
 
@@ -53,12 +71,12 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Obtém todos os veículos.
+		/// Obtém todos os veículos, incluindo condutores.
 		/// </summary>
 		[HttpGet]
 		public async Task<IActionResult> GetAllVehicles()
 		{
-			var vehicles = await _context.Vehicles.ToListAsync();
+			var vehicles = await _context.Vehicles.Include(v => v.Driver).ToListAsync();
 			return Ok(vehicles);
 		}
 

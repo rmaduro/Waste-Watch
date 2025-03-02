@@ -12,8 +12,8 @@ using WasteWatchAuth.Data;
 namespace WasteWatchAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250228200359_AddVehiclesTable")]
-    partial class AddVehiclesTable
+    [Migration("20250302170230_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -251,6 +251,30 @@ namespace WasteWatchAuth.Migrations
                     b.ToTable("ActivityLogs");
                 });
 
+            modelBuilder.Entity("WasteWatchAuth.Models.Driver", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Drivers");
+                });
+
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
                 {
                     b.Property<int>("Id")
@@ -259,9 +283,8 @@ namespace WasteWatchAuth.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DriverName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("LastMaintenance")
                         .HasColumnType("datetime2");
@@ -282,6 +305,8 @@ namespace WasteWatchAuth.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
 
                     b.ToTable("Vehicles");
                 });
@@ -335,6 +360,17 @@ namespace WasteWatchAuth.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
+                {
+                    b.HasOne("WasteWatchAuth.Models.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
                 });
 #pragma warning restore 612, 618
         }
