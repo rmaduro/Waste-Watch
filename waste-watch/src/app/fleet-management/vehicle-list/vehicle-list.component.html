@@ -1,4 +1,4 @@
-<div [class.blur-background]="showAddForm">
+<div [class.blur-background]="showAddForm || showDeleteConfirmation">
   <div class="d-flex vehicle-list-container">
     <app-side-nav></app-side-nav>
     <div class="main-content">
@@ -13,7 +13,7 @@
               <fa-icon [icon]="faPlus"></fa-icon>
               <span class="ms-2">Add Vehicle</span>
             </button>
-            <button class="btn-action btn-remove">
+            <button class="btn-action btn-remove" [disabled]="!selectedVehicle" (click)="showDeleteDialog()">
               <fa-icon [icon]="faMinus"></fa-icon>
               <span class="ms-2">Remove Vehicle</span>
             </button>
@@ -57,7 +57,19 @@
           </div>
         </div>
 
-        <div class="table-container">
+        <!-- Loading indicator -->
+        <div class="loading-container" *ngIf="isLoading">
+          <fa-icon [icon]="faSpinner" size="2x"></fa-icon>
+          <p>Loading...</p>
+        </div>
+
+        <!-- Error message -->
+        <div class="error-message" *ngIf="error">
+          <p>{{ error }}</p>
+          <button class="btn-retry" (click)="loadVehicles()">Try Again</button>
+        </div>
+
+        <div class="table-container" *ngIf="!isLoading && !error">
           <table class="vehicle-table">
             <thead>
               <tr>
@@ -71,7 +83,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let vehicle of filteredVehicles">
+              <tr *ngFor="let vehicle of filteredVehicles"
+                  (click)="selectVehicle(vehicle)"
+                  [class.selected-row]="selectedVehicle && selectedVehicle.id === vehicle.id">
                 <td>{{ vehicle.id }}</td>
                 <td>{{ vehicle.licensePlate }}</td>
                 <td>{{ vehicle.driverName }}</td>
@@ -82,8 +96,11 @@
                   </span>
                 </td>
                 <td>{{ vehicle.routeType }}</td>
-                <td>{{ vehicle.maxCapacity }}</td>
-                <td>{{ vehicle.lastMaintenance }}</td>
+                <td>{{ formatCapacity(vehicle.maxCapacity) }}</td>
+                <td>{{ vehicle.lastMaintenance | date:'yyyy-MM-dd' }}</td>
+              </tr>
+              <tr *ngIf="filteredVehicles.length === 0">
+                <td colspan="7" class="no-data">No vehicles found</td>
               </tr>
             </tbody>
           </table>
@@ -96,50 +113,90 @@
 <div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
 
 <div class="vehicle-form-container" *ngIf="showAddForm">
-  <h2 class="form-title">Add / Edit Vehicle</h2>
+  <h2 class="form-title">Add New Vehicle</h2>
   <form class="vehicle-form" (ngSubmit)="addVehicle()">
-    <div class="form-group">
-      <label for="vehicleId">Vehicle ID:</label>
-      <input type="number" id="vehicleId" class="form-control" [(ngModel)]="vehicle.id" name="vehicleId" required>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="licensePlate">License Plate:</label>
+        <input type="text" id="licensePlate" class="form-control" [(ngModel)]="vehicle.licensePlate" name="licensePlate" required>
+      </div>
+      <div class="form-group">
+        <label for="driverName">Driver's Name:</label>
+        <input type="text" id="driverName" class="form-control" [(ngModel)]="vehicle.driverName" name="driverName" required>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="licensePlate">License Plate:</label>
-      <input type="text" id="licensePlate" class="form-control" [(ngModel)]="vehicle.licensePlate" name="licensePlate" required>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="routeType">Route Type:</label>
+        <select id="routeType" class="form-control" [(ngModel)]="vehicle.routeType" name="routeType">
+          <option value="Commercial">Commercial</option>
+          <option value="Industrial">Industrial</option>
+          <option value="Residential">Residential</option>
+        </select>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="driverName">Driver's Name:</label>
-      <input type="text" id="driverName" class="form-control" [(ngModel)]="vehicle.driverName" name="driverName" required>
-    </div>
-
-    <div class="form-group">
-      <label for="status">Status:</label>
-      <select id="status" class="form-control" [(ngModel)]="vehicle.status" name="status">
-        <option value="Active">Active</option>
-        <option value="Idle">Idle</option>
-        <option value="Maintenance">Maintenance</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="routeType">Route Type:</label>
-      <select id="routeType" class="form-control" [(ngModel)]="vehicle.routeType" name="routeType">
-        <option value="Commercial">Commercial</option>
-        <option value="Industrial">Industrial</option>
-        <option value="Residential">Residential</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="lastMaintenance">Last Maintenance Date:</label>
-      <input type="date" id="lastMaintenance" class="form-control" [(ngModel)]="vehicle.lastMaintenance" name="lastMaintenance" required>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="maxCapacity">Max Capacity:</label>
+        <select id="maxCapacity" class="form-control" [(ngModel)]="vehicle.maxCapacity" name="maxCapacity">
+          <option value="1000kg">1000kg</option>
+          <option value="1500kg">1500kg</option>
+          <option value="2000kg">2000kg</option>
+          <option value="2500kg">2500kg</option>
+          <option value="3000kg">3000kg</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="lastMaintenance">Last Maintenance Date:</label>
+        <input type="date" id="lastMaintenance" class="form-control" [(ngModel)]="vehicle.lastMaintenance" name="lastMaintenance" required>
+      </div>
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="btn-submit">Save Vehicle</button>
-      <button type="button" class="btn-reset" (click)="toggleAddForm()">Cancel</button>
+      <button type="submit" class="btn-submit" [disabled]="isLoading">
+        <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
+        <span *ngIf="!isLoading">Save Vehicle</span>
+        <span *ngIf="isLoading">Saving...</span>
+      </button>
+      <button type="button" class="btn-cancel" (click)="toggleAddForm()" [disabled]="isLoading">Cancel</button>
     </div>
   </form>
 </div>
-  
+
+<!-- Delete Confirmation Modal -->
+<div class="overlay" *ngIf="showDeleteConfirmation" (click)="cancelDelete()"></div>
+
+<div class="delete-confirmation-container" *ngIf="showDeleteConfirmation">
+  <div class="delete-confirmation-header">
+    <fa-icon [icon]="faExclamationTriangle" class="warning-icon"></fa-icon>
+    <h2>Confirm Deletion</h2>
+  </div>
+
+  <div class="delete-confirmation-body">
+    <p>Are you sure you want to delete vehicle with ID: <strong>{{ selectedVehicle?.id }}</strong>?</p>
+    <p>This action cannot be undone.</p>
+
+    <div class="vehicle-details" *ngIf="selectedVehicle">
+      <div class="detail-item">
+        <span class="detail-label">License Plate:</span>
+        <span class="detail-value">{{ selectedVehicle.licensePlate }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Driver:</span>
+        <span class="detail-value">{{ selectedVehicle.driverName }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="delete-confirmation-actions">
+    <button class="btn-delete" (click)="confirmDelete()" [disabled]="isLoading">
+      <fa-icon *ngIf="!isLoading" [icon]="faTrash"></fa-icon>
+      <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
+      <span *ngIf="!isLoading">Delete Vehicle</span>
+      <span *ngIf="isLoading">Deleting...</span>
+    </button>
+    <button class="btn-cancel" (click)="cancelDelete()" [disabled]="isLoading">Cancel</button>
+  </div>
+</div>
