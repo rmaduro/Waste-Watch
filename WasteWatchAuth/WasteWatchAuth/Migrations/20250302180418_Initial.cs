@@ -67,18 +67,19 @@ namespace WasteWatchAuth.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Drivers",
+                name: "Collaborators",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    LicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollaboratorType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Drivers", x => x.Id);
+                    table.PrimaryKey("PK_Collaborators", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,19 +195,22 @@ namespace WasteWatchAuth.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LicensePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RouteType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaxCapacity = table.Column<int>(type: "int", nullable: false),
                     LastMaintenance = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
                     DriverId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicles_Drivers_DriverId",
+                        name: "FK_Vehicles_Collaborators_DriverId",
                         column: x => x.DriverId,
-                        principalTable: "Drivers",
+                        principalTable: "Collaborators",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -287,7 +291,7 @@ namespace WasteWatchAuth.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Drivers");
+                name: "Collaborators");
         }
     }
 }

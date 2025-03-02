@@ -248,7 +248,7 @@ namespace WasteWatchAuth.Migrations
                     b.ToTable("ActivityLogs");
                 });
 
-            modelBuilder.Entity("WasteWatchAuth.Models.Driver", b =>
+            modelBuilder.Entity("WasteWatchAuth.Models.Collaborator", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -257,6 +257,9 @@ namespace WasteWatchAuth.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CollaboratorType")
                         .HasColumnType("int");
 
                     b.Property<string>("LicenseNumber")
@@ -269,7 +272,7 @@ namespace WasteWatchAuth.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Drivers");
+                    b.ToTable("Collaborators");
                 });
 
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
@@ -286,9 +289,15 @@ namespace WasteWatchAuth.Migrations
                     b.Property<DateTime>("LastMaintenance")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
                     b.Property<string>("LicensePlate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
 
                     b.Property<int>("MaxCapacity")
                         .HasColumnType("int");
@@ -300,6 +309,9 @@ namespace WasteWatchAuth.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -361,7 +373,7 @@ namespace WasteWatchAuth.Migrations
 
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
                 {
-                    b.HasOne("WasteWatchAuth.Models.Driver", "Driver")
+                    b.HasOne("WasteWatchAuth.Models.Collaborator", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Cascade)
