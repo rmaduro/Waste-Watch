@@ -15,6 +15,9 @@ namespace WasteWatchAuth.Data
 
         public DbSet<Collaborator> Collaborators { get; set; }
 
+		public DbSet<Bin> Bins { get; set; }
+		public DbSet<BinLocation> BinLocations { get; set; }
+
 
 
 	}

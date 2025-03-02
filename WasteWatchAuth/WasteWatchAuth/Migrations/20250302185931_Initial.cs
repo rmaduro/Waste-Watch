@@ -67,6 +67,21 @@ namespace WasteWatchAuth.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BinLocations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BinLocations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Collaborators",
                 columns: table => new
                 {
@@ -189,6 +204,29 @@ namespace WasteWatchAuth.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bins",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Capacity = table.Column<double>(type: "float", nullable: false),
+                    LastEmptied = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bins", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bins_BinLocations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "BinLocations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Vehicles",
                 columns: table => new
                 {
@@ -255,6 +293,11 @@ namespace WasteWatchAuth.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bins_LocationId",
+                table: "Bins",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_DriverId",
                 table: "Vehicles",
                 column: "DriverId");
@@ -282,6 +325,9 @@ namespace WasteWatchAuth.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Bins");
+
+            migrationBuilder.DropTable(
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
@@ -289,6 +335,9 @@ namespace WasteWatchAuth.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BinLocations");
 
             migrationBuilder.DropTable(
                 name: "Collaborators");

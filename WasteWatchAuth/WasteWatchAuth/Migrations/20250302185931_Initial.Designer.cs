@@ -12,7 +12,7 @@ using WasteWatchAuth.Data;
 namespace WasteWatchAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250302180418_Initial")]
+    [Migration("20250302185931_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -251,6 +251,58 @@ namespace WasteWatchAuth.Migrations
                     b.ToTable("ActivityLogs");
                 });
 
+            modelBuilder.Entity("WasteWatchAuth.Models.Bin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Capacity")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("LastEmptied")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Bins");
+                });
+
+            modelBuilder.Entity("WasteWatchAuth.Models.BinLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BinLocations");
+                });
+
             modelBuilder.Entity("WasteWatchAuth.Models.Collaborator", b =>
                 {
                     b.Property<int>("Id")
@@ -372,6 +424,17 @@ namespace WasteWatchAuth.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WasteWatchAuth.Models.Bin", b =>
+                {
+                    b.HasOne("WasteWatchAuth.Models.BinLocation", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
