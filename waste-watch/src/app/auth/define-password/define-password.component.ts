@@ -57,6 +57,7 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
       email: this.email,
       token: this.token, // Send the token without showing it
       newPassword: this.password,
+      confirmPassword: this.confirmPassword, // Fixed syntax
     };
 
     this.http.post('https://localhost:7259/api/auth/reset-password', resetData).subscribe({
