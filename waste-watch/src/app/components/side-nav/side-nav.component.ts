@@ -3,16 +3,17 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome/free-solid-svg-icons';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-side-nav',
   standalone: true,
   imports: [CommonModule, RouterModule, FontAwesomeModule],
   template: `
-    <div class="sidebar">
+    <div class="sidebar" [@slideInOut]="isExpanded ? 'expanded' : 'collapsed'">
       <div class="logo-container">
         <img src="assets/images/logo2.png" alt="WasteWatch Logo" class="logo">
-        <span class="logo-text">WasteWatch</span>
+        <span class="logo-text" [@fadeInOut]="isExpanded ? 'visible' : 'hidden'">WasteWatch</span>
       </div>
 
       <ul class="nav flex-column">
@@ -21,7 +22,7 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
             <div class="icon-container">
               <fa-icon [icon]="faDashboard"></fa-icon>
             </div>
-            <span class="link-text">Fleet Dashboard</span>
+            <span class="link-text" [@fadeInOut]="isExpanded ? 'visible' : 'hidden'">Fleet Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
@@ -29,7 +30,7 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
             <div class="icon-container">
               <fa-icon [icon]="faMap"></fa-icon>
             </div>
-            <span class="link-text">Fleet Monitoring</span>
+            <span class="link-text" [@fadeInOut]="isExpanded ? 'visible' : 'hidden'">Fleet Monitoring</span>
           </a>
         </li>
         <li class="nav-item">
@@ -37,7 +38,7 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
             <div class="icon-container">
               <fa-icon [icon]="faTruck"></fa-icon>
             </div>
-            <span class="link-text">Vehicle Roster</span>
+            <span class="link-text" [@fadeInOut]="isExpanded ? 'visible' : 'hidden'">Vehicle Roster</span>
           </a>
         </li>
         <li class="nav-item mt-auto">
@@ -45,7 +46,7 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
             <div class="icon-container">
               <fa-icon [icon]="faSignOutAlt"></fa-icon>
             </div>
-            <span class="link-text">Logout</span>
+            <span class="link-text" [@fadeInOut]="isExpanded ? 'visible' : 'hidden'">Logout</span>
           </a>
         </li>
       </ul>
@@ -53,20 +54,14 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
   `,
   styles: [`
     .sidebar {
-      width: 70px;
       min-height: 100vh;
       background-color: #ffffff;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       padding-top: 16px;
       border-right: 1px solid #e5e7eb;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .sidebar:hover {
-      width: 220px;
     }
 
     .logo-container {
@@ -92,9 +87,6 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
       font-size: 16px;
       font-weight: 600;
       white-space: nowrap;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .nav {
@@ -160,31 +152,6 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
       font-size: 14px;
       font-weight: 500;
       white-space: nowrap;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Hover states */
-    .sidebar:hover {
-      width: 220px;
-    }
-
-    .sidebar:hover .logo-container {
-      justify-content: flex-start;
-      padding-left: 16px;
-    }
-
-    .sidebar:hover .logo-text,
-    .sidebar:hover .link-text {
-      display: block;
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .sidebar:hover .nav-link {
-      width: 100%;
-      padding: 10px 14px;
     }
 
     /* Active state */
@@ -215,7 +182,29 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
     .nav-link.logout fa-icon {
       color: #ef4444;
     }
-  `]
+  `],
+  animations: [
+    trigger('slideInOut', [
+      state('collapsed', style({
+        width: '70px'
+      })),
+      state('expanded', style({
+        width: '220px'
+      })),
+      transition('collapsed <=> expanded', animate('300ms cubic-bezier(0.4, 0, 0.2, 1)'))
+    ]),
+    trigger('fadeInOut', [
+      state('hidden', style({
+        opacity: 0,
+        transform: 'translateX(-10px)'
+      })),
+      state('visible', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition('hidden <=> visible', animate('300ms cubic-bezier(0.4, 0, 0.2, 1)'))
+    ])
+  ]
 })
 export class SideNavComponent {
   faTrash = faTrash;
@@ -223,6 +212,12 @@ export class SideNavComponent {
   faSignOutAlt = faSignOutAlt;
   faMap = faMap;
   faDashboard = faDashboard;
+
+  isExpanded = false;
+
+  toggleSidebar() {
+    this.isExpanded = !this.isExpanded;
+  }
 
   logout() {
     // Implement logout logic
