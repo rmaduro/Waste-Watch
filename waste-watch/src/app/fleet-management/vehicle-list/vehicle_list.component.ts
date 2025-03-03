@@ -18,9 +18,11 @@ import {
   faTools,
   faTrash,
   faExclamationTriangle,
-  faSpinner
+  faSpinner,
+  faMapMarkerAlt,
+  faIdBadge
 } from '@fortawesome/free-solid-svg-icons';
-import { VehicleService, Vehicle } from './vehicle-list-service/vehicle-list-service'
+import { VehicleService, Vehicle, Driver, Location } from './vehicle-list-service/vehicle-list-service'
 
 @Component({
   selector: 'app-vehicle-list',
@@ -46,8 +48,12 @@ export class VehicleListComponent implements OnInit {
   faTrash = faTrash;
   faExclamationTriangle = faExclamationTriangle;
   faSpinner = faSpinner;
+  faMapMarkerAlt = faMapMarkerAlt;
+  faIdBadge = faIdBadge;
 
   vehicles: Vehicle[] = [];
+  availableDrivers: Driver[] = [];
+  selectedDriverIndex: number = -1;
   isLoading = false;
   error = '';
 
@@ -58,20 +64,31 @@ export class VehicleListComponent implements OnInit {
   selectedVehicle: Vehicle | null = null;
   showAddForm = false;
   showDeleteConfirmation = false;
+  useCustomDriver = false;
 
   vehicle: Vehicle = {
     licensePlate: '',
-    driverName: '',
     status: 'Active',
     routeType: 'Commercial',
     maxCapacity: '1000kg',
-    lastMaintenance: new Date().toISOString().split('T')[0]
+    lastMaintenance: new Date().toISOString().split('T')[0],
+    location: {
+      latitude: 38.7169,
+      longitude: -9.1399
+    },
+    driver: {
+      name: '',
+      age: 30,
+      licenseNumber: '',
+      collaboratorType: 'Driver'
+    }
   };
 
   constructor(private vehicleService: VehicleService) {}
 
   ngOnInit(): void {
     this.loadVehicles();
+    this.availableDrivers = this.vehicleService.getAvailableDrivers();
   }
 
   loadVehicles(): void {
@@ -151,8 +168,11 @@ export class VehicleListComponent implements OnInit {
   }
 
   addVehicle() {
-    if (this.vehicle.licensePlate && this.vehicle.driverName) {
+    if (this.vehicle.licensePlate && this.vehicle.driver?.name && this.vehicle.driver?.licenseNumber) {
       this.isLoading = true;
+
+      // For backward compatibility with the table display
+      this.vehicle.driverName = this.vehicle.driver.name;
 
       this.vehicleService.addVehicle(this.vehicle).subscribe({
         next: () => {
@@ -173,12 +193,44 @@ export class VehicleListComponent implements OnInit {
   clearForm() {
     this.vehicle = {
       licensePlate: '',
-      driverName: '',
       status: 'Active',
       routeType: 'Commercial',
       maxCapacity: '1000kg',
-      lastMaintenance: new Date().toISOString().split('T')[0]
+      lastMaintenance: new Date().toISOString().split('T')[0],
+      location: {
+        latitude: 38.7169,
+        longitude: -9.1399
+      },
+      driver: {
+        name: '',
+        age: 30,
+        licenseNumber: '',
+        collaboratorType: 'Driver'
+      }
     };
+    this.selectedDriverIndex = -1;
+    this.useCustomDriver = false;
+  }
+
+  onDriverSelect() {
+    if (this.selectedDriverIndex >= 0) {
+      this.vehicle.driver = { ...this.availableDrivers[this.selectedDriverIndex] };
+    }
+  }
+
+  toggleDriverMode() {
+    this.useCustomDriver = !this.useCustomDriver;
+    if (!this.useCustomDriver) {
+      this.selectedDriverIndex = -1;
+    } else {
+      // Reset custom driver fields
+      this.vehicle.driver = {
+        name: '',
+        age: 30,
+        licenseNumber: '',
+        collaboratorType: 'Driver'
+      };
+    }
   }
 
   // Helper method to format capacity for display
@@ -187,5 +239,10 @@ export class VehicleListComponent implements OnInit {
       return `${capacity}kg`;
     }
     return capacity;
+  }
+
+  // Helper method to get driver name for display
+  getDriverName(vehicle: Vehicle): string {
+    return vehicle.driver?.name || vehicle.driverName || 'N/A';
   }
 }
