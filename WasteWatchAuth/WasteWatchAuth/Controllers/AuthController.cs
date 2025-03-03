@@ -44,13 +44,21 @@ namespace WasteWatchAuth.Controllers
 			var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 			if (!result.Succeeded)
 				return Unauthorized(new { message = "Credenciais inválidas" });
-			
+
+			// Obter os roles do usuário
+			var roles = await _userManager.GetRolesAsync(user);
+
 			await _activityLogService.LogActivityAsync("Login", $"User {user.Email} logged in.");
 
 			return Ok(new
 			{
 				message = "Login bem-sucedido",
-				user = new { user.Email, user.UserName }
+				user = new
+				{
+					user.Email,
+					user.UserName,
+					roles // Inclui os roles na resposta
+				}
 			});
 		}
 
