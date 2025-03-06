@@ -327,6 +327,42 @@ namespace WasteWatchAuth.Migrations
                     b.ToTable("Collaborators");
                 });
 
+            modelBuilder.Entity("WasteWatchAuth.Models.MaintenanceHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BinId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MaintenanceType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BinId");
+
+                    b.ToTable("MaintenanceHistories");
+                });
+
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
                 {
                     b.Property<int>("Id")
@@ -432,6 +468,17 @@ namespace WasteWatchAuth.Migrations
                         .IsRequired();
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("WasteWatchAuth.Models.MaintenanceHistory", b =>
+                {
+                    b.HasOne("WasteWatchAuth.Models.Bin", "Bin")
+                        .WithMany()
+                        .HasForeignKey("BinId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bin");
                 });
 
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>

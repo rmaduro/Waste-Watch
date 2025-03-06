@@ -253,6 +253,30 @@ namespace WasteWatchAuth.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MaintenanceHistories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BinId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MaintenanceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaintenanceHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MaintenanceHistories_Bins_BinId",
+                        column: x => x.BinId,
+                        principalTable: "Bins",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -298,6 +322,11 @@ namespace WasteWatchAuth.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MaintenanceHistories_BinId",
+                table: "MaintenanceHistories",
+                column: "BinId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_DriverId",
                 table: "Vehicles",
                 column: "DriverId");
@@ -325,7 +354,7 @@ namespace WasteWatchAuth.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Bins");
+                name: "MaintenanceHistories");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
@@ -337,10 +366,13 @@ namespace WasteWatchAuth.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "BinLocations");
+                name: "Bins");
 
             migrationBuilder.DropTable(
                 name: "Collaborators");
+
+            migrationBuilder.DropTable(
+                name: "BinLocations");
         }
     }
 }

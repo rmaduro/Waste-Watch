@@ -132,6 +132,89 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "EndMaintenance",
+    "RelativePath": "api/Bins/{id}/maintenance/end",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "WasteWatchAuth.Models.EndMaintenanceRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "StartMaintenance",
+    "RelativePath": "api/Bins/{id}/maintenance/start",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "WasteWatchAuth.Models.MaintenanceRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "GetMaintenanceHistory",
+    "RelativePath": "api/Bins/maintenance-history",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "GetBinsInMaintenance",
+    "RelativePath": "api/Bins/maintenance-history/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "GetMaintenanceHistoryByDateRange",
+    "RelativePath": "api/Bins/maintenance-history/filter",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WasteWatchAuth.Controllers.VehiclesController",
     "Method": "CreateVehicle",
     "RelativePath": "api/Vehicles",
