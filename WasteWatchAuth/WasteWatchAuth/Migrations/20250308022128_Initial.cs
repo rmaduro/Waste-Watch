@@ -98,6 +98,23 @@ namespace WasteWatchAuth.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CollectionHistories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BinId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CollectionStatus = table.Column<int>(type: "int", nullable: false),
+                    IssuesLogged = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionHistories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -352,6 +369,9 @@ namespace WasteWatchAuth.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CollectionHistories");
 
             migrationBuilder.DropTable(
                 name: "MaintenanceHistories");

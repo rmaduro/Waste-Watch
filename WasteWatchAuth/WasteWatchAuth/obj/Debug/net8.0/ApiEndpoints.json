@@ -215,6 +215,90 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "CreateCollection",
+    "RelativePath": "api/collection-history",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "history",
+        "Type": "WasteWatchAuth.Models.CollectionHistory",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "GetAllCollections",
+    "RelativePath": "api/collection-history",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "GetCollectionByBin",
+    "RelativePath": "api/collection-history/bin/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "GetCollectionHistoryById",
+    "RelativePath": "api/collection-history/by-id/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "GetLatestCollectionForEachBin",
+    "RelativePath": "api/collection-history/latest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "GetLatestCollectionForBin",
+    "RelativePath": "api/collection-history/latest/{binId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "binId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WasteWatchAuth.Controllers.VehiclesController",
     "Method": "CreateVehicle",
     "RelativePath": "api/Vehicles",

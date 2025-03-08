@@ -18,6 +18,7 @@ namespace WasteWatchAuth.Data
 		public DbSet<Bin> Bins { get; set; }
 		public DbSet<BinLocation> BinLocations { get; set; }
 		public DbSet<MaintenanceHistory> MaintenanceHistories { get; set; }
+		public DbSet<CollectionHistory> CollectionHistories { get; set; }
 
 
 
