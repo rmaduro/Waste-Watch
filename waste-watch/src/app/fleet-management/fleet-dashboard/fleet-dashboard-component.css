@@ -1,0 +1,251 @@
+/* General Dashboard Styles */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f8fafc;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 35px;
+  transition: margin-left 0.3s;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  top: 0;
+  z-index: 10;
+  background-color: #f8fafc;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h1 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+  background-color: #15803d;
+  transform: translateY(-1px);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: #4b5563;
+}
+
+.stat-header fa-icon {
+  font-size: 1.25rem;
+  color: #16a34a;
+}
+
+.stat-header h3 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Collections Section */
+.collections-section {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.collections-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.collections-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.collections-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.collections-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.collections-trend {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.collections-trend.positive {
+  color: #16a34a;
+}
+
+.collections-comparison {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Chart Grid */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  gap: 1.5rem; /* Space between charts */
+  margin-top: 1.5rem;
+}
+
+.chart-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: 400px; /* Fixed height for consistency */
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-container h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.chart-container canvas {
+  flex: 1; /* Ensure the canvas fills the remaining space */
+}
+
+/* Alerts Section */
+.alerts-section {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.alerts-section h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 1rem 0;
+}
+
+.alerts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.alert-card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #fee2e2;
+  border-left: 4px solid #ef4444;
+  transition: transform 0.2s;
+}
+
+.alert-card:hover {
+  transform: translateX(4px);
+}
+
+.alert-card.warning {
+  background-color: #fef3c7;
+  border-left-color: #f59e0b;
+}
+
+.alert-card.critical {
+  background-color: #fee2e2;
+  border-left-color: #ef4444;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.alert-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.alert-card h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.alert-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #4b5563;
+}

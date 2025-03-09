@@ -1,0 +1,85 @@
+<div class="dashboard-container">
+  <app-side-nav></app-side-nav>
+
+  <div class="main-content">
+    <div class="dashboard-header">
+      <h1>
+        <fa-icon [icon]="faTruck"></fa-icon>
+        Fleet Management Dashboard
+      </h1>
+      <button class="refresh-btn" (click)="refreshData()">
+        <fa-icon [icon]="faSync"></fa-icon>
+        Refresh Data
+      </button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <fa-icon [icon]="faTruck"></fa-icon>
+          <h3>Active Trucks</h3>
+        </div>
+        <div class="stat-value">{{ activeTrucks }}</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <fa-icon [icon]="faGasPump"></fa-icon>
+          <h3>Average Fuel Efficiency</h3>
+        </div>
+        <div class="stat-value">{{ fuelEfficiency }}</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+          <h3>Nearing Capacity</h3>
+        </div>
+        <div class="stat-value">{{ nearingCapacity }}</div>
+      </div>
+    </div>
+
+    <div class="collections-section">
+      <div class="collections-header">
+        <h3>Today's Collections</h3>
+        <div class="collections-stats">
+          <span class="collections-value">{{ todayCollections }}</span>
+          <span class="collections-trend" [class.positive]="collectionTrend > 0">
+            {{ collectionTrend }}%
+            <fa-icon [icon]="faChartLine"></fa-icon>
+          </span>
+          <span class="collections-comparison">vs. previous day</span>
+        </div>
+      </div>
+
+      <!-- Chart Grid Container -->
+      <div class="chart-grid">
+        <div class="chart-container">
+          <h4>Monthly Collections Overview</h4>
+          <canvas #barChart></canvas> <!-- Line Chart -->
+        </div>
+        <div class="chart-container">
+          <h4>Monthly Collection Breakdown</h4>
+          <canvas #pieChart></canvas> <!-- Pie Chart -->
+        </div>
+      </div>
+    </div>
+
+    <div class="alerts-section">
+      <h3>Active Alerts</h3>
+      <div class="alerts-container">
+        <div *ngFor="let alert of activeAlerts"
+             class="alert-card"
+             [class.critical]="alert.type === 'Critical'"
+             [class.warning]="alert.type === 'Warning'">
+          <div class="alert-header">
+            <fa-icon [icon]="faTools"></fa-icon>
+            <span class="alert-type">{{ alert.type }}</span>
+          </div>
+          <h4>{{ alert.message }}</h4>
+          <p>{{ alert.details }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
