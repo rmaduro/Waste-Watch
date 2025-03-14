@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Drawing.Drawing2D;
-using System.Net.NetworkInformation;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WasteWatchAuth.Models
 {
@@ -16,7 +15,10 @@ namespace WasteWatchAuth.Models
 		public BinStatus Status { get; set; }
 
 		[Required]
-		public double Capacity { get; set; }
+		public double Capacity { get; set; } 
+
+		[Required]
+		public double CurrentFillLevel { get; set; } 
 
 		public DateTime LastEmptied { get; set; }
 

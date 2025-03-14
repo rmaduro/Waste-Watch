@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WasteWatchAuth.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -107,7 +107,8 @@ namespace WasteWatchAuth.Migrations
                     VehicleId = table.Column<int>(type: "int", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CollectionStatus = table.Column<int>(type: "int", nullable: false),
-                    IssuesLogged = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    IssuesLogged = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AmountCollected = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -229,6 +230,7 @@ namespace WasteWatchAuth.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Capacity = table.Column<double>(type: "float", nullable: false),
+                    CurrentFillLevel = table.Column<double>(type: "float", nullable: false),
                     LastEmptied = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false)
                 },

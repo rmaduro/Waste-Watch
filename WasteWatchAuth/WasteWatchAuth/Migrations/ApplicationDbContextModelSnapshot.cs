@@ -259,6 +259,9 @@ namespace WasteWatchAuth.Migrations
                     b.Property<double>("Capacity")
                         .HasColumnType("float");
 
+                    b.Property<double>("CurrentFillLevel")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("LastEmptied")
                         .HasColumnType("datetime2");
 
@@ -334,6 +337,9 @@ namespace WasteWatchAuth.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AmountCollected")
+                        .HasColumnType("float");
 
                     b.Property<int>("BinId")
                         .HasColumnType("int");

@@ -133,6 +133,43 @@
   },
   {
     "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "EmptyBin",
+    "RelativePath": "api/Bins/{id}/empty",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "UpdateFillLevel",
+    "RelativePath": "api/Bins/{id}/fill-level",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "data",
+        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Double, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
     "Method": "EndMaintenance",
     "RelativePath": "api/Bins/{id}/maintenance/end",
     "HttpMethod": "POST",
@@ -171,6 +208,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "GetAlmostFullBins",
+    "RelativePath": "api/Bins/almost-full",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -242,6 +289,32 @@
   },
   {
     "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "GetAverageConsumption",
+    "RelativePath": "api/collection-history/average-consumption",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "period",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
     "Method": "GetCollectionByBin",
     "RelativePath": "api/collection-history/bin/{id}",
     "HttpMethod": "GET",
@@ -274,6 +347,22 @@
   },
   {
     "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "GetDailyCollections",
+    "RelativePath": "api/collection-history/daily-collections",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
     "Method": "GetLatestCollectionForEachBin",
     "RelativePath": "api/collection-history/latest",
     "HttpMethod": "GET",
@@ -296,6 +385,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.CollectionHistoryController",
+    "Method": "GetTotalCollections",
+    "RelativePath": "api/collection-history/total",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

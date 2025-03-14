@@ -18,8 +18,8 @@ namespace WasteWatchAuth.Controllers
 		{
 			_context = context;
 		}
-		
-		
+
+
 		/// <summary>
 		/// Criar um novo registo de recolha manualmente.
 		/// </summary>
@@ -115,5 +115,95 @@ namespace WasteWatchAuth.Controllers
 			return Ok(latestCollection);
 		}
 
+		/// <summary>
+		/// Obtém o número total de coletas registradas.
+		/// </summary>
+		[HttpGet("total")]
+		public async Task<IActionResult> GetTotalCollections()
+		{
+			var totalCollections = await _context.CollectionHistories.CountAsync();
+			return Ok(new { totalCollections });
+		}
+
+		[HttpGet("daily-collections")]
+		public async Task<IActionResult> GetDailyCollections([FromQuery] DateTime? date)
+		{
+			try
+			{
+				var targetDate = date ?? DateTime.UtcNow.Date;
+				var totalCollections = await _context.CollectionHistories
+					.Where(ch => ch.Timestamp.Date == targetDate)
+					.CountAsync();
+
+				return Ok(new
+				{
+					date = targetDate,
+					totalCollections = totalCollections
+				});
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500,
+					new
+					{
+						message = "Unable to fetch daily collection data. Please try again later.", error = ex.Message
+					});
+			}
+		}
+
+		[HttpGet("average-consumption")]
+		public async Task<IActionResult> GetAverageConsumption(
+			[FromQuery] DateTime? startDate,
+			[FromQuery] DateTime? endDate,
+			[FromQuery] string? period)
+		{
+			DateTime fromDate;
+			DateTime toDate = DateTime.UtcNow;
+
+			// Determinar intervalo com base no período escolhido
+			switch (period?.ToLower())
+			{
+				case "daily":
+					fromDate = DateTime.UtcNow.Date;
+					break;
+				case "weekly":
+					fromDate = DateTime.UtcNow.AddDays(-7);
+					break;
+				case "monthly":
+					fromDate = DateTime.UtcNow.AddMonths(-1);
+					break;
+				default:
+					if (!startDate.HasValue || !endDate.HasValue)
+						return BadRequest(
+							"É necessário fornecer um período ('daily', 'weekly', 'monthly') ou um intervalo de datas (startDate e endDate).");
+
+					fromDate = startDate.Value;
+					toDate = endDate.Value;
+					break;
+			}
+
+			if (fromDate > toDate)
+				return BadRequest("A data de início não pode ser posterior à data de término.");
+
+			var collections = await _context.CollectionHistories
+				.Where(ch => ch.Timestamp >= fromDate && ch.Timestamp <= toDate)
+				.ToListAsync();
+
+			if (!collections.Any())
+				return NotFound(new { message = "Dados insuficientes para calcular o consumo médio." });
+
+			// 🔹 Agora usamos a propriedade AmountCollected
+			double averageConsumption = collections.Average(ch => ch.AmountCollected);
+
+			return Ok(new
+			{
+				averageConsumption,
+				startDate = fromDate,
+				endDate = toDate
+			});
+		}
+
+
 	}
+
 }

@@ -21,6 +21,9 @@ namespace WasteWatchAuth.Models
 		public CollectionStatus CollectionStatus { get; set; }
 
 		public string IssuesLogged { get; set; } // Campo opcional
+		
+		[Required]
+		public double AmountCollected { get; set; }
 	}
 
 	public enum CollectionStatus

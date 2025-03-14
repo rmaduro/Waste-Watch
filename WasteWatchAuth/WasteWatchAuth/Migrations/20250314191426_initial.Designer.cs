@@ -12,8 +12,8 @@ using WasteWatchAuth.Data;
 namespace WasteWatchAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250308022128_Initial")]
-    partial class Initial
+    [Migration("20250314191426_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -262,6 +262,9 @@ namespace WasteWatchAuth.Migrations
                     b.Property<double>("Capacity")
                         .HasColumnType("float");
 
+                    b.Property<double>("CurrentFillLevel")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("LastEmptied")
                         .HasColumnType("datetime2");
 
@@ -337,6 +340,9 @@ namespace WasteWatchAuth.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AmountCollected")
+                        .HasColumnType("float");
 
                     b.Property<int>("BinId")
                         .HasColumnType("int");
