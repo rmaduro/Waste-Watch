@@ -12,8 +12,8 @@ using WasteWatchAuth.Data;
 namespace WasteWatchAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250306205303_Initial")]
-    partial class Initial
+    [Migration("20250314191426_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -262,6 +262,9 @@ namespace WasteWatchAuth.Migrations
                     b.Property<double>("Capacity")
                         .HasColumnType("float");
 
+                    b.Property<double>("CurrentFillLevel")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("LastEmptied")
                         .HasColumnType("datetime2");
 
@@ -328,6 +331,38 @@ namespace WasteWatchAuth.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Collaborators");
+                });
+
+            modelBuilder.Entity("WasteWatchAuth.Models.CollectionHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AmountCollected")
+                        .HasColumnType("float");
+
+                    b.Property<int>("BinId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CollectionStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IssuesLogged")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CollectionHistories");
                 });
 
             modelBuilder.Entity("WasteWatchAuth.Models.MaintenanceHistory", b =>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WasteWatchAuth.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -95,6 +95,24 @@ namespace WasteWatchAuth.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Collaborators", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CollectionHistories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BinId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CollectionStatus = table.Column<int>(type: "int", nullable: false),
+                    IssuesLogged = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AmountCollected = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionHistories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,6 +230,7 @@ namespace WasteWatchAuth.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Capacity = table.Column<double>(type: "float", nullable: false),
+                    CurrentFillLevel = table.Column<double>(type: "float", nullable: false),
                     LastEmptied = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -352,6 +371,9 @@ namespace WasteWatchAuth.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CollectionHistories");
 
             migrationBuilder.DropTable(
                 name: "MaintenanceHistories");

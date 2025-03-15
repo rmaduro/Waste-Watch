@@ -21,14 +21,16 @@
 				_context = context;
 			}
 
-			/// <summary>
-			/// Criar um novo bin
-			/// </summary>
+		/// <summary>
+		/// Criar um novo bin
+		/// </summary>
 			[HttpPost]
 			public async Task<IActionResult> CreateBin([FromBody] Bin bin)
 			{
 				if (bin == null || bin.Location == null)
 					return BadRequest("Invalid bin or location data.");
+
+				bin.CurrentFillLevel = 0; // Definir nível inicial como 0
 
 				_context.Bins.Add(bin);
 				await _context.SaveChangesAsync();
@@ -36,10 +38,11 @@
 				return Ok(bin);
 			}
 
-			/// <summary>
-			/// Obter todos os bins
-			/// </summary>
-			[HttpGet]
+
+		/// <summary>
+		/// Obter todos os bins
+		/// </summary>
+		[HttpGet]
 			public IActionResult GetAllBins()
 			{
 				return Ok(_context.Bins.Include(b => b.Location).ToList());
@@ -183,7 +186,63 @@
 			return Ok(filteredRecords);
 		}
 
+
+
+		[HttpPut("{id}/fill-level")]
+		public async Task<IActionResult> UpdateFillLevel(int id, [FromBody] Dictionary<string, double> data)
+		{
+			if (!data.ContainsKey("amount"))
+				return BadRequest("O campo 'amount' é obrigatório.");
+
+			double amount = data["amount"];
+
+			var bin = await _context.Bins.FindAsync(id);
+			if (bin == null)
+				return NotFound("Bin não encontrado.");
+
+			if (amount < 0 || amount > bin.Capacity)
+				return BadRequest("O valor de enchimento deve estar entre 0 e a capacidade máxima do bin.");
+
+			bin.CurrentFillLevel = amount;
+			_context.Bins.Update(bin);
+			await _context.SaveChangesAsync();
+
+			return Ok(new { message = "Nível de enchimento atualizado com sucesso." });
+		}
+
+
+
+		[HttpPost("{id}/empty")]
+		public async Task<IActionResult> EmptyBin(int id)
+		{
+			var bin = await _context.Bins.FindAsync(id);
+			if (bin == null)
+				return NotFound("Bin não encontrado.");
+
+			bin.CurrentFillLevel = 0;
+			bin.LastEmptied = DateTime.UtcNow;
+
+			_context.Bins.Update(bin);
+			await _context.SaveChangesAsync();
+
+			return Ok(new { message = "Bin esvaziado com sucesso." });
+		}
+
+		[HttpGet("almost-full")]
+		public async Task<IActionResult> GetAlmostFullBins()
+		{
+			var almostFullBins = await _context.Bins
+				.Where(b => (b.CurrentFillLevel / b.Capacity) >= 0.65)
+				.ToListAsync();
+
+			if (almostFullBins.Count == 0)
+				return Ok(new { message = "No bins nearing full capacity." });
+
+			return Ok(almostFullBins);
+		}
+
 	}
+
 
 
 }
