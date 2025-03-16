@@ -1,15 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AuthService } from '../../auth/service/AuthService'; // Adjust the path as necessary
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
-import {
-  faTruck,
-  faGasPump,
-  faExclamationTriangle,
-  faChartLine,
-  faSync,
-  faTools
-} from '@fortawesome/free-solid-svg-icons';
+import { faTruck, faGasPump, faExclamationTriangle, faChartLine, faSync, faTools } from '@fortawesome/free-solid-svg-icons';
 import Chart from 'chart.js/auto';
 
 interface Alert {
@@ -30,7 +24,6 @@ export class FleetDashboardComponent implements OnInit {
   @ViewChild('barChart', { static: true }) barChart!: ElementRef<HTMLCanvasElement>;
   @ViewChild('pieChart', { static: true }) pieChart!: ElementRef<HTMLCanvasElement>;
 
-  // Font Awesome Icons
   faTruck = faTruck;
   faGasPump = faGasPump;
   faExclamationTriangle = faExclamationTriangle;
@@ -38,7 +31,6 @@ export class FleetDashboardComponent implements OnInit {
   faSync = faSync;
   faTools = faTools;
 
-  // Dashboard Data
   activeTrucks: number = 4;
   fuelEfficiency: number = 4;
   nearingCapacity: number = 4;
@@ -61,44 +53,44 @@ export class FleetDashboardComponent implements OnInit {
     }
   ];
 
-  // Mock Data for Monthly Collection Types
-  collectionTypeData: number[] = [40, 25, 20, 15]; // Example distribution (percentages)
+  collectionTypeData: number[] = [40, 25, 20, 15];
   collectionTypeLabels: string[] = ['General', 'Recycling', 'Compost', 'Hazardous'];
-
-  // Mock Data for Chart (Collections over the last 7 days)
   collectionsData: number[] = [120, 140, 160, 135, 150, 170, 145];
   collectionLabels: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   barChartInstance!: Chart;
   pieChartInstance!: Chart;
 
-  constructor() {}
+  currentUser: { email: string; userName: string; roles: string[] } | null = null;
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadDashboardData();
 
-    // Add a delay to ensure the DOM is fully loaded before rendering charts
+    // Subscribe to currentUser$ observable to get the logged-in user info
+    this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user; // Store the logged-in user data
+      console.log('Logged-in User Info:', this.currentUser); // Print the logged-in user info to the console
+    });
+
     setTimeout(() => {
       this.renderChart();
       this.renderPieChart();
-    }, 100); // 100ms delay
+    }, 100);
   }
 
   loadDashboardData(): void {
-    // Simulate data updates
     this.todayCollections = Math.floor(Math.random() * 50) + 130;
     this.collectionTrend = parseFloat((Math.random() * 10 - 5).toFixed(2));
 
-    // Update Chart Data
     this.collectionsData = this.collectionsData.map(value => value + Math.floor(Math.random() * 10 - 5));
 
-    // Update the bar chart if it exists
     if (this.barChartInstance) {
       this.barChartInstance.data.datasets[0].data = this.collectionsData;
       this.barChartInstance.update();
     }
 
-    // Update the pie chart if it exists
     if (this.pieChartInstance) {
       this.pieChartInstance.data.datasets[0].data = this.collectionTypeData;
       this.pieChartInstance.update();
@@ -106,28 +98,28 @@ export class FleetDashboardComponent implements OnInit {
   }
 
   renderChart(): void {
-    if (!this.barChart?.nativeElement) return; // Ensure canvas is available
+    if (!this.barChart?.nativeElement) return;
 
     this.barChartInstance = new Chart(this.barChart.nativeElement, {
-      type: 'line', // Line chart
+      type: 'line',
       data: {
         labels: this.collectionLabels,
         datasets: [
           {
             label: 'Collections',
             data: this.collectionsData,
-            borderColor: '#16a34a', // Line color
-            backgroundColor: 'rgba(22, 163, 74, 0.2)', // Light green fill
+            borderColor: '#16a34a',
+            backgroundColor: 'rgba(22, 163, 74, 0.2)',
             borderWidth: 2,
-            pointRadius: 5, // Bigger points for visibility
+            pointRadius: 5,
             pointBackgroundColor: '#16a34a',
-            fill: true, // Add area fill under the line
+            fill: true,
           }
         ]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false, // Ensure the chart fits the container
+        maintainAspectRatio: false,
         plugins: {
           legend: { display: false }
         },
@@ -140,7 +132,7 @@ export class FleetDashboardComponent implements OnInit {
   }
 
   renderPieChart(): void {
-    if (!this.pieChart?.nativeElement) return; // Ensure canvas is available
+    if (!this.pieChart?.nativeElement) return;
 
     this.pieChartInstance = new Chart(this.pieChart.nativeElement, {
       type: 'pie',
@@ -150,14 +142,14 @@ export class FleetDashboardComponent implements OnInit {
           {
             label: 'Monthly Collection Breakdown',
             data: this.collectionTypeData,
-            backgroundColor: ['#16a34a', '#3b82f6', '#f59e0b', '#ef4444'], // Green, Blue, Yellow, Red
+            backgroundColor: ['#16a34a', '#3b82f6', '#f59e0b', '#ef4444'],
             hoverOffset: 8
           }
         ]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false, // Ensure the chart fits the container
+        maintainAspectRatio: false,
         plugins: {
           legend: { position: 'right' }
         }

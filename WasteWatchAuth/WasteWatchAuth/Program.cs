@@ -28,20 +28,33 @@ builder.Services.AddScoped<ActivityLogService>();
 // Configuração para cookies (sessão e autenticação)
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(10); // Logout automático após 10 min de inatividade
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.None; // Must match the SameSite mode in CookieOptions
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Must match the Secure flag in CookieOptions
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Session expiration
     options.SlidingExpiration = true;
     options.LoginPath = "/Identity/Account/Login";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
+// Configuração para sessões
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Expiração de sessão
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // Habilitar CORS para permitir conexões do frontend específico
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy => policy.WithOrigins("http://localhost:4200") // Trocar pelo URL do frontend
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials()); // Permitir credenciais (cookies, autenticação baseada em tokens, etc.)
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200") // Replace with your frontend URL
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Allow credentials (cookies)
+    });
 });
 
 // Registrar o serviço de envio de emails (para recuperação de senha)
@@ -77,9 +90,9 @@ app.UseRouting();
 // Apply CORS policy before authentication and authorization
 app.UseCors("AllowFrontend");
 
+app.UseSession(); // Habilitar o uso de sessão
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 // Criar a base de dados e popular os seeders (Roles e Users)
 using (var scope = app.Services.CreateScope())

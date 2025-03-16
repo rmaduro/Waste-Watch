@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../service/AuthService'; // Import the AuthService
 
 @Component({
   selector: 'app-login',
@@ -11,120 +11,92 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-
 export class LoginComponent {
   email = '';
   password = '';
   currentImage = 'assets/images/login_image3.png';
+  errorMessage = ''; // To display login errors to the user
 
-  loggedInUser: any = {};
+  constructor(
+    private router: Router,
+    private authService: AuthService // Inject the AuthService
+  ) {
+    // Check if user is already authenticated on component init
+    this.checkAuthState();
+  }
 
-  constructor(private router: Router, private http: HttpClient) {}
-
-  onLogin() {
-    const loginData = { email: this.email, password: this.password };
-
-    this.http.post<any>('https://localhost:7259/api/auth/login', loginData).subscribe({
+  /**
+   * Checks if the user is already authenticated.
+   * If authenticated, redirects to the appropriate route based on roles.
+   */
+  private checkAuthState() {
+    this.authService.checkAuthState().subscribe({
       next: (response) => {
-        console.log('✅ Login successful');
-        console.log('Full response:', response);
-
-        if (!response || !response.user || !response.user.roles) {
-          console.error('❌ Invalid response format or missing roles:', response);
-          return;
-        }
-
-        console.log('Response roles:', response.user.roles);
-
-        localStorage.setItem('authToken', response.token);
-        localStorage.setItem('userInfo', JSON.stringify(response));
-        localStorage.setItem('userRoles', JSON.stringify(response.user.roles || []));
-
-
-        let roles = response.user.roles || [];
-
-        if (!roles || roles.length === 0) {
-          console.error('❌ No roles found in response:', roles);
-          return;
-        }
-
-        roles = roles.map((role: string) => {
-          const normalizedRole = role.trim().toLowerCase();
-          console.log(`📌 Normalized role: '${role}' -> '${normalizedRole}'`);
-          return normalizedRole;
-        });
-        console.log('📌 Normalized roles:', roles);
-
-        if (!roles.length) {
-          console.warn('⚠️ No roles found after normalization');
-        }
-
-
-        if (roles.includes('admin')) {
-          console.log('🟢 Redirecting to /register-user');
-          this.router.navigate(['/register-user']).then((success) => {
-            if (success) {
-              console.log('✅ Navigation to /register-user successful');
-            } else {
-              console.error('❌ Navigation to /register-user failed');
-            }
-          }).catch(err => {
-            console.error('❌ Navigation error:', err);
-          });
-        } else if (roles.includes('bin manager')) {
-          console.log('🟠 Redirecting to /bin-list');
-          this.router.navigate(['/bin-list']).then((success) => {
-            if (success) {
-              console.log('✅ Navigation to /bin-list successful');
-            } else {
-              console.error('❌ Navigation to /bin-list failed');
-            }
-          }).catch(err => {
-            console.error('❌ Navigation error:', err);
-          });
-        } else if (roles.includes('fleet manager')) {
-          console.log('🔵 Redirecting to /vehicle-list');
-          this.router.navigate(['/vehicle-list']).then((success) => {
-            if (success) {
-              console.log('✅ Navigation to /vehicle-list successful');
-            } else {
-              console.error('❌ Navigation to /vehicle-list failed');
-            }
-          }).catch(err => {
-            console.error('❌ Navigation error:', err);
-          });
+        if (response?.user?.roles) {
+          console.log('✅ User is already authenticated:', response.user);
+          this.handleNavigation(response.user.roles);
         } else {
-          console.warn('🔴 Role not recognized, redirecting to reset password');
-          this.router.navigate(['/reset-password']).then((success) => {
-            if (success) {
-              console.log('✅ Navigation to /reset-password successful');
-            } else {
-              console.error('❌ Navigation to /reset-password failed');
-            }
-          }).catch(err => {
-            console.error('❌ Navigation error:', err);
-          });
+          console.log('🚫 No authenticated user found.');
         }
       },
       error: (error) => {
-        console.error('❌ Login failed', error);
+        if (error.status === 401) {
+          console.log('🔑 User not authenticated, showing login page.');
+        } else {
+          console.error('⚠️ Error checking authentication state:', error);
+        }
       }
     });
   }
 
+  /**
+   * Handles the login form submission.
+   */
+  onLogin() {
+    this.errorMessage = ''; // Clear previous error messages
 
-  isLoggedIn(): boolean {
-    const token = localStorage.getItem('authToken');
-    return token !== null;
+    this.authService.login(this.email, this.password).subscribe({
+      next: (response) => {
+        console.log('✅ Login successful:', response);
+
+        if (!response?.user?.roles) {
+          console.error('❌ Invalid response format or missing roles:', response);
+          this.errorMessage = 'Invalid response from server. Please try again.';
+          return;
+        }
+
+        this.handleNavigation(response.user.roles);
+      },
+      error: (error) => {
+        console.error('❌ Login failed:', error);
+        this.errorMessage = 'Invalid email or password. Please try again.';
+      }
+    });
   }
 
-  logout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userInfo');
-    console.log('Logged out');
-    this.router.navigate(['/login']);
+  /**
+   * Navigates to the appropriate route based on the user's roles.
+   * @param roles - The roles assigned to the user.
+   */
+  private handleNavigation(roles: string[]) {
+    const normalizedRoles = roles.map(role => role.trim().toLowerCase());
+    console.log('📌 User roles:', normalizedRoles);
+
+    if (normalizedRoles.includes('admin')) {
+      this.router.navigate(['/register-user']); // Only Admin can register users
+    } else if (normalizedRoles.includes('bin manager')) {
+      this.router.navigate(['/bin-dashboard']); // Redirect Bin Manager
+    } else if (normalizedRoles.includes('fleet manager')) {
+      this.router.navigate(['/fleet-dashboard']); // Redirect Fleet Manager
+    } else {
+      console.warn('⚠️ User has no recognized role, redirecting to reset password.');
+      this.router.navigate(['/reset-password']); // Default fallback
+    }
   }
 
+  /**
+   * Navigates to the reset password page.
+   */
   navigateToResetPassword() {
     this.router.navigate(['/reset-password']);
   }

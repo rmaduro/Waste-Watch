@@ -90,15 +90,17 @@
           </select>
         </div>
         <button type="submit" class="btn btn-dark w-100">Register</button>
-        <div class="text-center mt-3">
-          <button
-            (click)="navigateToLogin()"
-            class="btn btn-link text-decoration-none p-0"
-          >
-            Already have an account? Login here.
-          </button>
-        </div>
       </form>
+
+      <!-- Logout Button (Moved outside the form) -->
+      <div class="text-center mt-3">
+        <button
+          (click)="logout()"
+          class="btn btn-link text-decoration-none p-0"
+        >
+          Logout and return to login
+        </button>
+      </div>
     </div>
   </div>
 </div>

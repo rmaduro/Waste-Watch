@@ -1,6 +1,16 @@
 [
   {
     "ContainingType": "WasteWatchAuth.Controllers.AuthController",
+    "Method": "GetCurrentUser",
+    "RelativePath": "api/Auth/current-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.AuthController",
     "Method": "ForgotPassword",
     "RelativePath": "api/Auth/forgot-password",
     "HttpMethod": "POST",
@@ -38,7 +48,13 @@
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "WasteWatchAuth.Controllers.AuthController\u002BLogoutRequest",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

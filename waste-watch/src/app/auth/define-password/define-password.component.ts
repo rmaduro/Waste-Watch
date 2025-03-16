@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../service/AuthService'; // Import the AuthService
 
 @Component({
   selector: 'app-reset-password',
@@ -23,7 +23,11 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
   errorMessage: string = ''; // Error message to show in UI
   successMessage: string = ''; // Success message to show in UI
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService // Inject the AuthService
+  ) {}
 
   ngOnInit() {
     // Get the email and token from URL
@@ -31,12 +35,27 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
       this.email = params['email'] || ''; // Automatically fill the email field
       (this as any).token = params['token'] || ''; // Store the token internally (not shown in UI)
     });
-    console.log(this.token);
+    console.log('Token from URL:', this.token);
+
+    // Print the current user's session info when the page is loaded
+    this.authService.checkAuthState().subscribe({
+      next: (response) => {
+        if (response?.user) {
+          console.log('Current user session info:', response.user);
+        } else {
+          console.log('No authenticated user found.');
+        }
+      },
+      error: (error) => {
+        console.error('Error checking authentication state:', error);
+      }
+    });
 
     if (this.backgroundVideo) {
       this.backgroundVideo.nativeElement.playbackRate = 0.5;
     }
   }
+  
 
   ngOnDestroy() {}
 
@@ -60,7 +79,7 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
       confirmPassword: this.confirmPassword, // Fixed syntax
     };
 
-    this.http.post('https://localhost:7259/api/auth/reset-password', resetData).subscribe({
+    this.authService.resetPassword(resetData).subscribe({
       next: (response) => {
         this.successMessage = 'Senha redefinida com sucesso! Redirecionando para login...';
         setTimeout(() => this.router.navigate(['/login']), 3000);
