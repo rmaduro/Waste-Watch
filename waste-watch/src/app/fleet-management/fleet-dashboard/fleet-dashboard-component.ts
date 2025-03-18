@@ -1,9 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AuthService } from '../../auth/service/AuthService'; // Adjust the path as necessary
+import { AuthService } from '../../services/AuthService'; // Adjust the path as necessary
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
-import { faTruck, faGasPump, faExclamationTriangle, faChartLine, faSync, faTools } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTruck,
+  faGasPump,
+  faExclamationTriangle,
+  faChartLine,
+  faSync,
+  faTools,
+} from '@fortawesome/free-solid-svg-icons';
 import Chart from 'chart.js/auto';
 
 interface Alert {
@@ -18,11 +25,13 @@ interface Alert {
   standalone: true,
   imports: [CommonModule, FontAwesomeModule, SideNavComponent],
   templateUrl: './fleet-dashboard-component.html',
-  styleUrls: ['./fleet-dashboard-component.css']
+  styleUrls: ['./fleet-dashboard-component.css'],
 })
 export class FleetDashboardComponent implements OnInit {
-  @ViewChild('barChart', { static: true }) barChart!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('pieChart', { static: true }) pieChart!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('barChart', { static: true })
+  barChart!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('pieChart', { static: true })
+  pieChart!: ElementRef<HTMLCanvasElement>;
 
   faTruck = faTruck;
   faGasPump = faGasPump;
@@ -43,25 +52,39 @@ export class FleetDashboardComponent implements OnInit {
       id: 'T001',
       type: 'Critical',
       message: 'Truck #T001 Critical',
-      details: 'Requires immediate maintenance - structural damage'
+      details: 'Requires immediate maintenance - structural damage',
     },
     {
       id: 'T002',
       type: 'Warning',
       message: 'Truck #T002 Warning',
-      details: 'Approaching full capacity'
-    }
+      details: 'Approaching full capacity',
+    },
   ];
 
   collectionTypeData: number[] = [40, 25, 20, 15];
-  collectionTypeLabels: string[] = ['General', 'Recycling', 'Compost', 'Hazardous'];
+  collectionTypeLabels: string[] = [
+    'General',
+    'Recycling',
+    'Compost',
+    'Hazardous',
+  ];
   collectionsData: number[] = [120, 140, 160, 135, 150, 170, 145];
-  collectionLabels: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  collectionLabels: string[] = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
 
   barChartInstance!: Chart;
   pieChartInstance!: Chart;
 
-  currentUser: { email: string; userName: string; roles: string[] } | null = null;
+  currentUser: { email: string; userName: string; roles: string[] } | null =
+    null;
 
   constructor(private authService: AuthService) {}
 
@@ -69,7 +92,7 @@ export class FleetDashboardComponent implements OnInit {
     this.loadDashboardData();
 
     // Subscribe to currentUser$ observable to get the logged-in user info
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user; // Store the logged-in user data
       console.log('Logged-in User Info:', this.currentUser); // Print the logged-in user info to the console
     });
@@ -84,7 +107,9 @@ export class FleetDashboardComponent implements OnInit {
     this.todayCollections = Math.floor(Math.random() * 50) + 130;
     this.collectionTrend = parseFloat((Math.random() * 10 - 5).toFixed(2));
 
-    this.collectionsData = this.collectionsData.map(value => value + Math.floor(Math.random() * 10 - 5));
+    this.collectionsData = this.collectionsData.map(
+      (value) => value + Math.floor(Math.random() * 10 - 5)
+    );
 
     if (this.barChartInstance) {
       this.barChartInstance.data.datasets[0].data = this.collectionsData;
@@ -114,20 +139,20 @@ export class FleetDashboardComponent implements OnInit {
             pointRadius: 5,
             pointBackgroundColor: '#16a34a',
             fill: true,
-          }
-        ]
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false }
+          legend: { display: false },
         },
         scales: {
           y: { beginAtZero: true },
-          x: { display: true }
-        }
-      }
+          x: { display: true },
+        },
+      },
     });
   }
 
@@ -143,17 +168,17 @@ export class FleetDashboardComponent implements OnInit {
             label: 'Monthly Collection Breakdown',
             data: this.collectionTypeData,
             backgroundColor: ['#16a34a', '#3b82f6', '#f59e0b', '#ef4444'],
-            hoverOffset: 8
-          }
-        ]
+            hoverOffset: 8,
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'right' }
-        }
-      }
+          legend: { position: 'right' },
+        },
+      },
     });
   }
 

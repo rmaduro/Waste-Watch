@@ -17,16 +17,22 @@ import {
   faExclamationTriangle,
   faSpinner
 } from '@fortawesome/free-solid-svg-icons';
-import { BinService } from './bin-list-service/bin-list-service';
+import { BinService } from '../../services/BinService';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 
-// Moved Bin interface directly into the component
+// ✅ Updated Bin Interface with the new fillLevel property for local use only
 export interface Bin {
   id?: number;
-  location: string;
-  fillLevel: number;
-  status: string;
-  type: string;
+  type: number;
+  status: number;
+  capacity: number;
+  lastEmptied: string;
+  location: {
+    longitude: number;
+    latitude: number;
+    timestamp: string;
+  };
+  fillLevel?: number;  // Added for local use
 }
 
 @Component({
@@ -57,17 +63,24 @@ export class BinListComponent implements OnInit {
   error = '';
 
   selectedStatus = '';
-  selectedType = '';
+  selectedType: string = '';
   searchQuery = '';
   selectedBin: Bin | null = null;
   showAddForm = false;
   showDeleteConfirmation = false;
 
+  // ✅ Initialize fillLevel to 0 for new bins
   bin: Bin = {
-    location: '',
-    fillLevel: 0,
-    status: 'Empty',
-    type: 'General'
+    type: 0,
+    status: 0,
+    capacity: 100,
+    lastEmptied: new Date().toISOString(),
+    location: {
+      longitude: 0,
+      latitude: 0,
+      timestamp: new Date().toISOString()
+    },
+    fillLevel: 0 // This will remain local and will be updated later
   };
 
   constructor(private binService: BinService) {}
@@ -81,8 +94,13 @@ export class BinListComponent implements OnInit {
     this.error = '';
 
     this.binService.getBins().subscribe({
-      next: (data) => {
-        this.bins = data;
+      next: (data: Bin[]) => {
+        // Assuming bins are fetched and fillLevel is calculated here
+        this.bins = data.map(bin => {
+          // Calculate and set the fillLevel if not set
+          const fillLevel = this.calculateFillLevel(bin);
+          return { ...bin, fillLevel: fillLevel, status: this.getStatusBasedOnFillLevel(fillLevel) };
+        });
         this.isLoading = false;
       },
       error: (err) => {
@@ -93,24 +111,32 @@ export class BinListComponent implements OnInit {
     });
   }
 
+  // Calculate fillLevel as a percentage based on capacity and some other factor (e.g., current fill weight)
+  calculateFillLevel(bin: Bin): number {
+    // For simplicity, let's assume the bin's fill level is based on the capacity
+    // You can replace this with an actual formula if you have more data
+    return (bin.capacity > 0) ? (bin.status * 25) : 0;  // Dummy example, replace with actual logic
+  }
+
+  // Get filtered bins based on the status, type, and search query
+  get filteredBins() {
+    return this.bins.filter((bin) => {
+      const statusMatches =
+        this.selectedStatus === '' || bin.status === parseInt(this.selectedStatus, 10);
+      const typeMatches =
+        this.selectedType === '' || bin.type.toString() === this.selectedType;
+      const searchMatches =
+        this.searchQuery === '' || (bin.id && bin.id.toString().includes(this.searchQuery));
+
+      return statusMatches && typeMatches && searchMatches;
+    });
+  }
+
   toggleAddForm() {
     this.showAddForm = !this.showAddForm;
     if (this.showAddForm) {
-      // Reset form when opening
       this.clearForm();
     }
-  }
-
-  get filteredBins() {
-    return this.bins.filter((bin) => {
-      return (
-        (this.selectedStatus === '' || bin.status === this.selectedStatus) &&
-        (this.selectedType === '' || bin.type === this.selectedType) &&
-        (this.searchQuery === '' ||
-          (bin.id && bin.id.toString().includes(this.searchQuery)) ||
-          bin.location.toLowerCase().includes(this.searchQuery.toLowerCase()))
-      );
-    });
   }
 
   selectBin(bin: Bin) {
@@ -149,47 +175,124 @@ export class BinListComponent implements OnInit {
   }
 
   addBin() {
-    if (this.bin.location) {
-      this.isLoading = true;
+    this.isLoading = true;
 
-      this.binService.addBin(this.bin).subscribe({
-        next: () => {
-          this.loadBins();
-          this.clearForm();
-          this.showAddForm = false;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Error adding bin:', err);
-          this.error = 'Failed to add bin. Please try again later.';
-          this.isLoading = false;
-        }
-      });
-    }
+    // Prepare the bin data, but do not send fillLevel to the backend
+    const newBin: Bin = {
+      ...this.bin,
+      type: this.getTypeNumericValue(this.bin.type.toString()),
+      lastEmptied: new Date().toISOString(),
+      location: {
+        longitude: this.bin.location.longitude,
+        latitude: this.bin.location.latitude,
+        timestamp: new Date().toISOString()
+      },
+      // Exclude `fillLevel` from sending to backend
+    };
+
+    console.log('📌 Sending bin data:', JSON.stringify(newBin, null, 2)); // Debugging
+
+    this.binService.createBin(newBin).subscribe({
+      next: () => {
+        console.log('✅ Bin added successfully');
+        this.loadBins();
+        this.clearForm();
+        this.showAddForm = false;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('❌ Error adding bin:', err);
+        this.error = 'Failed to add bin. Please check the data and try again.';
+        this.isLoading = false;
+      }
+    });
   }
 
   clearForm() {
     this.bin = {
-      location: '',
-      fillLevel: 0,
-      status: 'Empty',
-      type: 'General'
+      type: 0,
+      status: 0,
+      capacity: 0,
+      lastEmptied: new Date().toISOString(),
+      location: {
+        longitude: 0,
+        latitude: 0,
+        timestamp: new Date().toISOString()
+      },
+      fillLevel: 0 // Reset fillLevel when clearing the form
     };
   }
 
-  // Helper method to get status class
-  getStatusClass(status: string): string {
-    switch (status.toLowerCase()) {
-      case 'empty':
+  getStatusClass(status?: number): string {
+    switch (status) {
+      case 0:
         return 'status-empty';
-      case 'partial':
+      case 1:
         return 'status-partial';
-      case 'full':
+      case 2:
         return 'status-full';
-      case 'overflow':
+      case 3:
         return 'status-overflow';
       default:
         return '';
+    }
+  }
+
+  setDefaultLocation() {
+    this.bin.location.longitude = 0;  // Static longitude
+    this.bin.location.latitude = 0;   // Static latitude
+  }
+
+  getStatusText(status: number): string {
+    switch (status) {
+      case 0:
+        return 'Empty';
+      case 1:
+        return 'Partial';
+      case 2:
+        return 'Full';
+      case 3:
+        return 'Overflow';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  // This method returns a status based on the fill level (in percentage)
+  getStatusBasedOnFillLevel(fillLevel: number): number {
+    if (fillLevel === 0) {
+      return 0; // Empty
+    } else if (fillLevel > 0 && fillLevel <= 50) {
+      return 1; // Partial
+    } else if (fillLevel > 50 && fillLevel <= 100) {
+      return 2; // Full
+    } else {
+      return 3; // Overflow
+    }
+  }
+
+  getTypeNumericValue(type: string): number {
+    switch (type) {
+      case 'General':
+        return 0;
+      case 'Recycling':
+        return 1;
+      case 'Compost':
+        return 2;
+      case 'Hazardous':
+        return 3;
+      default:
+        return 0; // Default to General
+    }
+  }
+
+  getTypeText(type: number): string {
+    switch (type) {
+      case 0: return 'General';
+      case 1: return 'Recycling';
+      case 2: return 'Compost';
+      case 3: return 'Hazardous';
+      default: return 'Unknown';
     }
   }
 }

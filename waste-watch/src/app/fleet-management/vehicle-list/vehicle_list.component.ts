@@ -5,24 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
-  faPlus,
-  faMinus,
-  faSearch,
-  faFilter,
-  faTruck,
-  faIdCard,
-  faUser,
-  faCircle,
-  faRoute,
-  faWeight,
-  faTools,
-  faTrash,
-  faExclamationTriangle,
-  faSpinner,
-  faMapMarkerAlt,
-  faIdBadge
+  faPlus, faMinus, faSearch, faFilter, faTruck, faIdCard, faUser,
+  faCircle, faRoute, faWeight, faTools, faTrash, faExclamationTriangle,
+  faSpinner, faMapMarkerAlt, faIdBadge
 } from '@fortawesome/free-solid-svg-icons';
-import { VehicleService, Vehicle, Driver, Location } from './vehicle-list-service/vehicle-list-service'
+import { VehicleService, Vehicle, Driver } from '../../services/FleetService';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -66,56 +53,36 @@ export class VehicleListComponent implements OnInit {
   showDeleteConfirmation = false;
   useCustomDriver = false;
 
-  vehicle: Vehicle = {
-    licensePlate: '',
-    status: 'Active',
-    routeType: 'Commercial',
-    maxCapacity: '1000kg',
-    lastMaintenance: new Date().toISOString().split('T')[0],
-    location: {
-      latitude: 38.7169,
-      longitude: -9.1399
-    },
-    driver: {
-      name: '',
-      age: 30,
-      licenseNumber: '',
-      collaboratorType: 'Driver'
-    }
-  };
+  vehicle: Vehicle = this.getDefaultVehicle();
 
   constructor(private vehicleService: VehicleService) {}
 
   ngOnInit(): void {
-    this.loadVehicles();
-    this.availableDrivers = this.vehicleService.getAvailableDrivers();
-  }
-
-  loadVehicles(): void {
-    this.isLoading = true;
-    this.error = '';
-
-    this.vehicleService.getVehicles().subscribe({
-      next: (data) => {
-        this.vehicles = data;
-        this.isLoading = false;
-      },
+    // Subscribe to live vehicle updates
+    this.vehicleService.vehicles$.subscribe({
+      next: (data) => (this.vehicles = data),
       error: (err) => {
         console.error('Error fetching vehicles:', err);
         this.error = 'Failed to load vehicles. Please try again later.';
-        this.isLoading = false;
       }
     });
+
+    this.availableDrivers = this.vehicleService.getAvailableDrivers();
   }
 
+  /**
+   * Shows or hides the vehicle form
+   */
   toggleAddForm() {
     this.showAddForm = !this.showAddForm;
     if (this.showAddForm) {
-      // Reset form when opening
-      this.clearForm();
+      this.vehicle = this.getDefaultVehicle();
     }
   }
 
+  /**
+   * Filters vehicles based on selected criteria
+   */
   get filteredVehicles() {
     return this.vehicles.filter((vehicle) => {
       const maxCapacityString = typeof vehicle.maxCapacity === 'number'
@@ -132,41 +99,54 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
+  /**
+   * Selects a vehicle for details
+   */
   selectVehicle(vehicle: Vehicle) {
     this.selectedVehicle = vehicle;
   }
 
+  /**
+   * Shows the delete confirmation dialog
+   */
   showDeleteDialog() {
     if (this.selectedVehicle) {
       this.showDeleteConfirmation = true;
     }
   }
 
+  /**
+   * Cancels the delete action
+   */
   cancelDelete() {
     this.showDeleteConfirmation = false;
   }
 
+  /**
+   * Confirms and deletes a vehicle
+   */
   confirmDelete() {
-    if (this.selectedVehicle && this.selectedVehicle.id) {
+    if (this.selectedVehicle?.id) {
       this.isLoading = true;
 
       this.vehicleService.deleteVehicle(this.selectedVehicle.id).subscribe({
         next: () => {
-          this.loadVehicles();
-          this.selectedVehicle = null;
           this.showDeleteConfirmation = false;
+          this.selectedVehicle = null;
           this.isLoading = false;
         },
         error: (err) => {
           console.error('Error deleting vehicle:', err);
           this.error = 'Failed to delete vehicle. Please try again later.';
           this.isLoading = false;
-          this.showDeleteConfirmation = false;
         }
       });
     }
   }
 
+  /**
+   * Adds a new vehicle
+   */
   addVehicle() {
     if (this.vehicle.licensePlate && this.vehicle.driver?.name && this.vehicle.driver?.licenseNumber) {
       this.isLoading = true;
@@ -176,8 +156,7 @@ export class VehicleListComponent implements OnInit {
 
       this.vehicleService.addVehicle(this.vehicle).subscribe({
         next: () => {
-          this.loadVehicles();
-          this.clearForm();
+          this.vehicle = this.getDefaultVehicle();
           this.showAddForm = false;
           this.isLoading = false;
         },
@@ -190,40 +169,32 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
+  /**
+   * Clears the form and resets the vehicle object
+   */
   clearForm() {
-    this.vehicle = {
-      licensePlate: '',
-      status: 'Active',
-      routeType: 'Commercial',
-      maxCapacity: '1000kg',
-      lastMaintenance: new Date().toISOString().split('T')[0],
-      location: {
-        latitude: 38.7169,
-        longitude: -9.1399
-      },
-      driver: {
-        name: '',
-        age: 30,
-        licenseNumber: '',
-        collaboratorType: 'Driver'
-      }
-    };
+    this.vehicle = this.getDefaultVehicle();
     this.selectedDriverIndex = -1;
     this.useCustomDriver = false;
   }
 
+  /**
+   * Handles driver selection from the list
+   */
   onDriverSelect() {
     if (this.selectedDriverIndex >= 0) {
       this.vehicle.driver = { ...this.availableDrivers[this.selectedDriverIndex] };
     }
   }
 
+  /**
+   * Toggles between custom driver entry and dropdown selection
+   */
   toggleDriverMode() {
     this.useCustomDriver = !this.useCustomDriver;
     if (!this.useCustomDriver) {
       this.selectedDriverIndex = -1;
     } else {
-      // Reset custom driver fields
       this.vehicle.driver = {
         name: '',
         age: 30,
@@ -233,16 +204,50 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-  // Helper method to format capacity for display
+  /**
+   * Formats capacity for display
+   */
   formatCapacity(capacity: string | number): string {
-    if (typeof capacity === 'number') {
-      return `${capacity}kg`;
-    }
-    return capacity;
+    return typeof capacity === 'number' ? `${capacity}kg` : capacity;
   }
 
-  // Helper method to get driver name for display
+  /**
+   * Gets the driver's name for display
+   */
   getDriverName(vehicle: Vehicle): string {
     return vehicle.driver?.name || vehicle.driverName || 'N/A';
   }
+
+  /**
+   * Returns a default vehicle object
+   */
+  private getDefaultVehicle(): Vehicle {
+    return {
+      licensePlate: '',
+      status: 'Active',
+      routeType: 'Commercial',
+      maxCapacity: '1000kg',
+      lastMaintenance: new Date().toISOString().split('T')[0],
+      location: { latitude: 38.7169, longitude: -9.1399 },
+      driver: { name: '', age: 30, licenseNumber: '', collaboratorType: 'Driver' }
+    };
+  }
+
+  refreshVehicles() {
+    this.isLoading = true;
+    this.error = '';
+
+    this.vehicleService.getVehicles().subscribe({
+      next: (data) => {
+        this.vehicles = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching vehicles:', err);
+        this.error = 'Failed to load vehicles. Please try again later.';
+        this.isLoading = false;
+      }
+    });
+  }
+
 }

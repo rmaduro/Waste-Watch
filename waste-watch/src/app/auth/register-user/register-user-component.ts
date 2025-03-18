@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../service/AuthService'; // Import the AuthService
+import { AuthService } from '../../services/AuthService'; // Import the AuthService
 
 @Component({
   selector: 'app-register-user',
@@ -68,7 +68,9 @@ export class RegisterUserComponent implements OnInit {
 
         if (error.error && Array.isArray(error.error)) {
           // If backend returns an array of errors
-          const errorMessage = error.error.map((err: any) => err.message).join('\n');
+          const errorMessage = error.error
+            .map((err: any) => err.message)
+            .join('\n');
           alert(`⚠️ Registration failed: ${errorMessage}`);
         } else if (error.error && error.error.message) {
           // If backend returns a single error message
@@ -83,7 +85,6 @@ export class RegisterUserComponent implements OnInit {
       },
     });
   }
-
 
   /**
    * Logs out the current user.
@@ -108,7 +109,10 @@ export class RegisterUserComponent implements OnInit {
               console.log('✅ Logged out successfully.');
               this.router.navigate(['/login']);
             } else {
-              console.log('⚠️ Logout failed, user still active:', response.user);
+              console.log(
+                '⚠️ Logout failed, user still active:',
+                response.user
+              );
             }
           },
           error: (error) => {

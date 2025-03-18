@@ -30,10 +30,10 @@
             </label>
             <select class="filter-select" [(ngModel)]="selectedStatus">
               <option value="">All Status</option>
-              <option value="Empty">Empty</option>
-              <option value="Partial">Partial</option>
-              <option value="Full">Full</option>
-              <option value="Overflow">Overflow</option>
+              <option value="0">Empty</option>
+              <option value="1">Partial</option>
+              <option value="2">Full</option>
+              <option value="3">Overflow</option>
             </select>
             <select class="filter-select" [(ngModel)]="selectedType">
               <option value="">All Types</option>
@@ -68,10 +68,12 @@
             <thead>
               <tr>
                 <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> ID</th>
-                <th><fa-icon [icon]="faLocationDot" class="me-2"></fa-icon> Location</th>
-                <th><fa-icon [icon]="faPercent" class="me-2"></fa-icon> Fill Level</th>
-                <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status</th>
                 <th><fa-icon [icon]="faTrashCan" class="me-2"></fa-icon> Type</th>
+                <th><fa-icon [icon]="faLocationDot" class="me-2"></fa-icon> Location</th>
+                <th><fa-icon [icon]="faPercent" class="me-2"></fa-icon> Fill Level</th> <!-- Added Fill Level Column -->
+                <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status</th>
+                <th><fa-icon [icon]="faPercent" class="me-2"></fa-icon> Max Capacity</th>
+                <th><fa-icon [icon]="faExclamationTriangle" class="me-2"></fa-icon> Last Emptied</th>
               </tr>
             </thead>
             <tbody>
@@ -79,18 +81,20 @@
                   (click)="selectBin(bin)"
                   [class.selected-row]="selectedBin && selectedBin.id === bin.id">
                 <td>{{ bin.id }}</td>
-                <td>{{ bin.location }}</td>
-                <td>{{ bin.fillLevel }}%</td>
+                <td>{{ getTypeText(bin.type) }}</td>
+                <td>{{ bin.location.latitude }}, {{ bin.location.longitude }}</td>
+                <td>{{ bin.fillLevel }}%</td> <!-- Display Fill Level -->
                 <td>
-                  <span class="status-badge" [class]="getStatusClass(bin.status)">
+                  <span class="status-badge" [ngClass]="getStatusClass(bin.status)">
                     <fa-icon [icon]="faCircle" class="me-1" size="xs"></fa-icon>
-                    {{ bin.status }}
+                    {{ getStatusText(bin.status) }}
                   </span>
                 </td>
-                <td>{{ bin.type }}</td>
+                <td>{{ bin.capacity }} kg</td>
+                <td>{{ bin.lastEmptied | date:'short' }}</td>
               </tr>
               <tr *ngIf="filteredBins.length === 0">
-                <td colspan="5" class="no-data">No bins found</td>
+                <td colspan="7" class="no-data">No bins found</td>
               </tr>
             </tbody>
           </table>
@@ -100,38 +104,31 @@
   </div>
 </div>
 
-<div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
-
 <div class="bin-form-container" *ngIf="showAddForm">
   <h2 class="form-title">Add New Bin</h2>
   <form class="bin-form" (ngSubmit)="addBin()">
+
+    <!-- Location (Static for Now) -->
     <div class="form-group">
-      <label for="location">Location:</label>
-      <input type="text" id="location" class="form-control" [(ngModel)]="bin.location" name="location" required>
+      <label>Location:</label>
+      <p>Latitude: {{ bin.location.latitude }}, Longitude: {{ bin.location.longitude }}</p>
+      <p>(This will be selected from a map in the future)</p>
     </div>
 
+    <!-- Capacity Field (kg) -->
     <div class="form-group">
-      <label for="fillLevel">Fill Level (%):</label>
-      <input type="number" id="fillLevel" class="form-control" [(ngModel)]="bin.fillLevel" name="fillLevel" min="0" max="100" required>
+      <label for="capacity">Max Capacity (kg):</label>
+      <input type="number" id="capacity" class="form-control" [(ngModel)]="bin.capacity" name="capacity" min="1" required>
     </div>
 
-    <div class="form-group">
-      <label for="status">Status:</label>
-      <select id="status" class="form-control" [(ngModel)]="bin.status" name="status">
-        <option value="Empty">Empty</option>
-        <option value="Partial">Partial</option>
-        <option value="Full">Full</option>
-        <option value="Overflow">Overflow</option>
-      </select>
-    </div>
-
+    <!-- Type Field -->
     <div class="form-group">
       <label for="type">Type:</label>
       <select id="type" class="form-control" [(ngModel)]="bin.type" name="type">
-        <option value="General">General</option>
-        <option value="Recycling">Recycling</option>
-        <option value="Compost">Compost</option>
-        <option value="Hazardous">Hazardous</option>
+        <option value="General">General</option> <!-- Updated here -->
+        <option value="Recycling">Recycling</option> <!-- Updated here -->
+        <option value="Compost">Compost</option> <!-- Updated here -->
+        <option value="Hazardous">Hazardous</option> <!-- Updated here -->
       </select>
     </div>
 
@@ -162,11 +159,11 @@
     <div class="bin-details" *ngIf="selectedBin">
       <div class="detail-item">
         <span class="detail-label">Location:</span>
-        <span class="detail-value">{{ selectedBin.location }}</span>
+        <span class="detail-value">{{ selectedBin.location.latitude }}, {{ selectedBin.location.longitude }}</span>
       </div>
       <div class="detail-item">
         <span class="detail-label">Type:</span>
-        <span class="detail-value">{{ selectedBin.type }}</span>
+        <span class="detail-value">{{ getTypeText(selectedBin.type) }}</span> <!-- Updated here -->
       </div>
     </div>
   </div>

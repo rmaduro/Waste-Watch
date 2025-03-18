@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../service/AuthService'; // Import the AuthService
+import { AuthService } from '../../services/AuthService'; // Import the AuthService
 
 @Component({
   selector: 'app-login',
@@ -45,7 +45,7 @@ export class LoginComponent {
         } else {
           console.error('⚠️ Error checking authentication state:', error);
         }
-      }
+      },
     });
   }
 
@@ -60,7 +60,10 @@ export class LoginComponent {
         console.log('✅ Login successful:', response);
 
         if (!response?.user?.roles) {
-          console.error('❌ Invalid response format or missing roles:', response);
+          console.error(
+            '❌ Invalid response format or missing roles:',
+            response
+          );
           this.errorMessage = 'Invalid response from server. Please try again.';
           return;
         }
@@ -70,7 +73,7 @@ export class LoginComponent {
       error: (error) => {
         console.error('❌ Login failed:', error);
         this.errorMessage = 'Invalid email or password. Please try again.';
-      }
+      },
     });
   }
 
@@ -79,7 +82,7 @@ export class LoginComponent {
    * @param roles - The roles assigned to the user.
    */
   private handleNavigation(roles: string[]) {
-    const normalizedRoles = roles.map(role => role.trim().toLowerCase());
+    const normalizedRoles = roles.map((role) => role.trim().toLowerCase());
     console.log('📌 User roles:', normalizedRoles);
 
     if (normalizedRoles.includes('admin')) {
@@ -89,7 +92,9 @@ export class LoginComponent {
     } else if (normalizedRoles.includes('fleet manager')) {
       this.router.navigate(['/fleet-dashboard']); // Redirect Fleet Manager
     } else {
-      console.warn('⚠️ User has no recognized role, redirecting to reset password.');
+      console.warn(
+        '⚠️ User has no recognized role, redirecting to reset password.'
+      );
       this.router.navigate(['/reset-password']); // Default fallback
     }
   }

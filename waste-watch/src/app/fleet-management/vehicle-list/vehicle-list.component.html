@@ -66,7 +66,7 @@
         <!-- Error message -->
         <div class="error-message" *ngIf="error">
           <p>{{ error }}</p>
-          <button class="btn-retry" (click)="loadVehicles()">Try Again</button>
+          <button class="btn-retry" (click)="refreshVehicles()">Try Again</button>
         </div>
 
         <div class="table-container" *ngIf="!isLoading && !error">

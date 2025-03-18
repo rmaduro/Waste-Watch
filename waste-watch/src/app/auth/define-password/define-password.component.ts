@@ -1,8 +1,14 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../service/AuthService'; // Import the AuthService
+import { AuthService } from '../../services/AuthService'; // Import the AuthService
 
 @Component({
   selector: 'app-reset-password',
@@ -31,7 +37,7 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Get the email and token from URL
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.email = params['email'] || ''; // Automatically fill the email field
       (this as any).token = params['token'] || ''; // Store the token internally (not shown in UI)
     });
@@ -48,14 +54,13 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error checking authentication state:', error);
-      }
+      },
     });
 
     if (this.backgroundVideo) {
       this.backgroundVideo.nativeElement.playbackRate = 0.5;
     }
   }
-  
 
   ngOnDestroy() {}
 
@@ -81,12 +86,15 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
 
     this.authService.resetPassword(resetData).subscribe({
       next: (response) => {
-        this.successMessage = 'Senha redefinida com sucesso! Redirecionando para login...';
+        this.successMessage =
+          'Senha redefinida com sucesso! Redirecionando para login...';
         setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       error: (error) => {
-        this.errorMessage = error.error?.message || 'Falha ao redefinir a senha. Tente novamente.';
-      }
+        this.errorMessage =
+          error.error?.message ||
+          'Falha ao redefinir a senha. Tente novamente.';
+      },
     });
   }
 
