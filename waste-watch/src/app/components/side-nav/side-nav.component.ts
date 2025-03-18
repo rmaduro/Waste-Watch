@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../../services/AuthService'; // Import AuthService
 
 @Component({
   selector: 'app-side-nav',
   standalone: true,
-  imports: [CommonModule, RouterModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule],
   template: `
     <div class="sidebar">
       <div class="logo-container">
@@ -16,30 +17,57 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
       </div>
 
       <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/bin-dashboard" routerLinkActive="active">
+        <!-- Conditional Rendering of Fleet Manager or Bin Manager Links -->
+        <li *ngIf="isFleetManager" class="nav-item">
+          <a class="nav-link" routerLink="/fleet-dashboard" routerLinkActive="active">
             <div class="icon-container">
               <fa-icon [icon]="faDashboard"></fa-icon>
             </div>
             <span class="link-text">Fleet Dashboard</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/fleet-dashboard" routerLinkActive="active">
-            <div class="icon-container">
-              <fa-icon [icon]="faMap"></fa-icon>
-            </div>
-            <span class="link-text">Fleet Monitoring</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/map" routerLinkActive="active">
+        <li *ngIf="isFleetManager" class="nav-item">
+          <a class="nav-link" routerLink="/vehicle-list" routerLinkActive="active">
             <div class="icon-container">
               <fa-icon [icon]="faTruck"></fa-icon>
             </div>
             <span class="link-text">Vehicle Roster</span>
           </a>
         </li>
+        <li *ngIf="isFleetManager" class="nav-item">
+          <a class="nav-link" routerLink="/fleet-map" routerLinkActive="active">
+            <div class="icon-container">
+              <fa-icon [icon]="faMap"></fa-icon>
+            </div>
+            <span class="link-text">Fleet Monitoring</span>
+          </a>
+        </li>
+
+        <li *ngIf="isBinManager" class="nav-item">
+          <a class="nav-link" routerLink="/bin-dashboard" routerLinkActive="active">
+            <div class="icon-container">
+              <fa-icon [icon]="faDashboard"></fa-icon>
+            </div>
+            <span class="link-text">Bin Dashboard</span>
+          </a>
+        </li>
+        <li *ngIf="isBinManager" class="nav-item">
+          <a class="nav-link" routerLink="/bin-list" routerLinkActive="active">
+            <div class="icon-container">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </div>
+            <span class="link-text">Bin List</span>
+          </a>
+        </li>
+        <li *ngIf="isBinManager" class="nav-item">
+          <a class="nav-link" routerLink="/bin-map" routerLinkActive="active">
+            <div class="icon-container">
+              <fa-icon [icon]="faMap"></fa-icon>
+            </div>
+            <span class="link-text">Bin Monitoring</span>
+          </a>
+        </li>
+
         <li class="nav-item mt-auto">
           <a class="nav-link logout" (click)="logout()">
             <div class="icon-container">
@@ -217,14 +245,37 @@ import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome
     }
   `]
 })
-export class SideNavComponent {
+export class SideNavComponent implements OnInit {
   faTrash = faTrash;
   faTruck = faTruck;
   faSignOutAlt = faSignOutAlt;
   faMap = faMap;
   faDashboard = faDashboard;
 
+  isFleetManager = false;
+  isBinManager = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    // Check the user roles on initialization
+    this.authService.userRoles$.subscribe(roles => {
+      this.isFleetManager = roles.includes('Fleet Manager');
+      this.isBinManager = roles.includes('Bin Manager');
+    });
+  }
+
   logout() {
-    // Implement logout logic
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.authService.logout(user.email).subscribe(() => {
+        // Handle successful logout
+        // Redirect to login page after successful logout
+        this.router.navigate(['/login']);  // Redirect to login page
+      }, error => {
+        // Handle error, if any
+        console.error('Logout failed', error);
+      });
+    }
   }
 }

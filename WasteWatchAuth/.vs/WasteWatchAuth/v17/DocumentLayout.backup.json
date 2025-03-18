@@ -89,31 +89,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "VehiclesController.cs",
-              "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\VehiclesController.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\VehiclesController.cs",
-              "ToolTip": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\VehiclesController.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Controllers\\VehiclesController.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAA1wHMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-14T18:25:22.987Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "20250314172339_initial.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Migrations\\20250314172339_initial.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Migrations\\20250314172339_initial.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-14T17:23:39.461Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -162,6 +139,29 @@
               "ViewState": "AgIAAA8AAAAAAAAAAAAuwN0AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-02T18:41:01.843Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "20250314172339_initial.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Migrations\\20250314172339_initial.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Migrations\\20250314172339_initial.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-14T17:23:39.461Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VehiclesController.cs",
+              "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\VehiclesController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\VehiclesController.cs",
+              "ToolTip": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\VehiclesController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\VehiclesController.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAA1wHMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-14T18:25:22.987Z",
               "EditorCaption": ""
             },
             {
