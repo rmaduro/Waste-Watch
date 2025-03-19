@@ -19,7 +19,7 @@ namespace WasteWatchAuthTests
         public BinsControllerTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Banco único por teste
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
             _context = new ApplicationDbContext(options);

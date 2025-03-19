@@ -20,7 +20,7 @@ namespace WasteWatchAuth.Models
 		[Required]
 		public CollectionStatus CollectionStatus { get; set; }
 
-		public string IssuesLogged { get; set; } // Campo opcional
+		public string IssuesLogged { get; set; } = string.Empty; // Campo opcional
 		
 		[Required]
 		public double AmountCollected { get; set; }
