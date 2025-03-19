@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WasteWatchAuth")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d493c799c561cbcdd239390096506d7120cf2c2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+018f33b80ea347b7843fa0d1260f452fc7b259f7")]
 [assembly: System.Reflection.AssemblyProductAttribute("WasteWatchAuth")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WasteWatchAuth")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
