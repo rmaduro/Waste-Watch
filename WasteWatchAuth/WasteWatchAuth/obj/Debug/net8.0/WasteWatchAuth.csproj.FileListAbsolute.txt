@@ -1191,3 +1191,4 @@ C:\Users\user\OneDrive\Ambiente de Trabalho\Escola\3ºAno\ESA_GPI\Waste-Watch\Wa
 C:\Users\user\OneDrive\Ambiente de Trabalho\Escola\3ºAno\ESA_GPI\Waste-Watch\WasteWatchAuth\WasteWatchAuth\obj\Debug\net8.0\WasteWatchAuth.pdb
 C:\Users\user\OneDrive\Ambiente de Trabalho\Escola\3ºAno\ESA_GPI\Waste-Watch\WasteWatchAuth\WasteWatchAuth\obj\Debug\net8.0\WasteWatchAuth.genruntimeconfig.cache
 C:\Users\user\OneDrive\Ambiente de Trabalho\Escola\3ºAno\ESA_GPI\Waste-Watch\WasteWatchAuth\WasteWatchAuth\obj\Debug\net8.0\ref\WasteWatchAuth.dll
+C:\Users\user\OneDrive\Ambiente de Trabalho\Escola\3ºAno\ESA_GPI\Waste-Watch\WasteWatchAuth\WasteWatchAuth\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
