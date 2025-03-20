@@ -1,16 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AuthService } from '../../services/AuthService'; // Adjust the path as necessary
+import { AuthService } from '../../services/AuthService';
+import { BinService } from '../../services/BinService';
+import { VehicleService } from '../../services/FleetService';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
-import {
-  faTruck,
-  faGasPump,
-  faExclamationTriangle,
-  faChartLine,
-  faSync,
-  faTools,
-} from '@fortawesome/free-solid-svg-icons';
+import { faTruck, faGasPump, faExclamationTriangle, faChartLine, faSync, faTools } from '@fortawesome/free-solid-svg-icons';
 import Chart from 'chart.js/auto';
 
 interface Alert {
@@ -20,6 +15,19 @@ interface Alert {
   details: string;
 }
 
+export interface CollectionData {
+  activeTrucks: number;
+  fuelEfficiency: number;
+  nearingCapacity: number;
+  todayCollections: number;
+  totalCollections: number;
+  collectionTrend: number;
+  activeAlerts: Alert[];
+  collectionTypeData: number[];
+  collectionsData: number[];
+}
+
+
 @Component({
   selector: 'app-fleet-dashboard',
   standalone: true,
@@ -28,10 +36,8 @@ interface Alert {
   styleUrls: ['./fleet-dashboard-component.css'],
 })
 export class FleetDashboardComponent implements OnInit {
-  @ViewChild('barChart', { static: true })
-  barChart!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('pieChart', { static: true })
-  pieChart!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('barChart', { static: true }) barChart!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('pieChart', { static: true }) pieChart!: ElementRef<HTMLCanvasElement>;
 
   faTruck = faTruck;
   faGasPump = faGasPump;
@@ -40,61 +46,37 @@ export class FleetDashboardComponent implements OnInit {
   faSync = faSync;
   faTools = faTools;
 
-  activeTrucks: number = 4;
-  fuelEfficiency: number = 4;
-  nearingCapacity: number = 4;
-  todayCollections: number = 145;
-  collectionTrend: number = 5.25;
+  activeTrucks: number = 0;
+  fuelEfficiency: number = 0;
+  avgCO2Emissions: number = 0;
+  todayCollections: number = 0;
+  totalCollections: number = 0;
+  collectionTrend: number = 0;
   isLoading: boolean = false;
 
-  activeAlerts: Alert[] = [
-    {
-      id: 'T001',
-      type: 'Critical',
-      message: 'Truck #T001 Critical',
-      details: 'Requires immediate maintenance - structural damage',
-    },
-    {
-      id: 'T002',
-      type: 'Warning',
-      message: 'Truck #T002 Warning',
-      details: 'Approaching full capacity',
-    },
-  ];
-
-  collectionTypeData: number[] = [40, 25, 20, 15];
-  collectionTypeLabels: string[] = [
-    'General',
-    'Recycling',
-    'Compost',
-    'Hazardous',
-  ];
-  collectionsData: number[] = [120, 140, 160, 135, 150, 170, 145];
-  collectionLabels: string[] = [
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-    'Sun',
-  ];
+  activeAlerts: Alert[] = [];
+  collectionTypeData: number[] = [];
+  collectionTypeLabels: string[] = ['General', 'Recycling', 'Compost', 'Hazardous'];
+  collectionsData: number[] = [];
+  collectionLabels: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   barChartInstance!: Chart;
   pieChartInstance!: Chart;
 
-  currentUser: { email: string; userName: string; roles: string[] } | null =
-    null;
+  currentUser: { email: string; userName: string; roles: string[] } | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private binService: BinService,
+    private vehicleService: VehicleService
+  ) {}
 
   ngOnInit(): void {
     this.loadDashboardData();
 
-    // Subscribe to currentUser$ observable to get the logged-in user info
     this.authService.currentUser$.subscribe((user) => {
-      this.currentUser = user; // Store the logged-in user data
-      console.log('Logged-in User Info:', this.currentUser); // Print the logged-in user info to the console
+      this.currentUser = user;
+      console.log('Logged-in User Info:', this.currentUser);
     });
 
     setTimeout(() => {
@@ -104,13 +86,56 @@ export class FleetDashboardComponent implements OnInit {
   }
 
   loadDashboardData(): void {
-    this.todayCollections = Math.floor(Math.random() * 50) + 130;
-    this.collectionTrend = parseFloat((Math.random() * 10 - 5).toFixed(2));
+    this.isLoading = true;
 
-    this.collectionsData = this.collectionsData.map(
-      (value) => value + Math.floor(Math.random() * 10 - 5)
+    // Fetch overall collection data
+    this.binService.getCollectionData().subscribe(
+      (data: CollectionData) => {
+        console.log('Fetched Collection Data:', data);
+
+        this.fuelEfficiency = data.fuelEfficiency || 0;
+        this.totalCollections = data.totalCollections || 0;
+        console.log('Total Collections:', this.totalCollections);
+
+        this.collectionTrend = data.collectionTrend || 0;
+        this.activeAlerts = data.activeAlerts || [];
+        this.collectionTypeData = data.collectionTypeData || [];
+        this.collectionsData = data.collectionsData || [];
+
+        this.countActiveTrucks();
+        this.updateCharts();
+      },
+      (error) => {
+        console.error('Error fetching collection data:', error);
+      }
     );
 
+    // Fetch daily collection data
+    this.binService.getDailyCollections().subscribe(
+      (dailyCollections) => {
+        this.todayCollections = dailyCollections; // Now correctly a number
+        console.log("Today's Collections:", this.todayCollections);
+      },
+      (error) => {
+        console.error('Error fetching daily collection data:', error);
+        this.todayCollections = 0;
+      }
+    );
+
+
+
+
+    this.isLoading = false;
+  }
+
+  countActiveTrucks(): void {
+    this.vehicleService.getVehicles().subscribe((vehicles) => {
+      this.activeTrucks = vehicles.filter((vehicle) => vehicle.status === 'Active').length;
+      console.log('Active Trucks:', this.activeTrucks);
+    });
+  }
+
+  updateCharts(): void {
     if (this.barChartInstance) {
       this.barChartInstance.data.datasets[0].data = this.collectionsData;
       this.barChartInstance.update();
@@ -184,9 +209,6 @@ export class FleetDashboardComponent implements OnInit {
 
   refreshData(): void {
     this.isLoading = true;
-    setTimeout(() => {
-      this.loadDashboardData();
-      this.isLoading = false;
-    }, 1000);
+    this.loadDashboardData();
   }
 }

@@ -12,6 +12,9 @@
   transition: margin-left 0.3s;
   overflow-y: auto;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Adds consistent spacing between sections */
 }
 
 /* Dashboard Header */
@@ -20,16 +23,17 @@
   top: 0;
   z-index: 10;
   background-color: #f8fafc;
-  padding: 1rem 0;
-  margin-bottom: 2rem;
+  padding: 1.5rem 0;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .dashboard-header h1 {
-  font-size: 1.875rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   color: #111827;
   display: flex;
   align-items: center;
@@ -41,12 +45,12 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
+  padding: 0.75rem 1.5rem;
   background-color: #16a34a;
   color: white;
   border: none;
   border-radius: 0.5rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -61,7 +65,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .stat-card {
@@ -70,6 +74,10 @@
   border-radius: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .stat-card:hover {
@@ -81,24 +89,23 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1rem;
   color: #4b5563;
 }
 
 .stat-header fa-icon {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: #16a34a;
 }
 
 .stat-header h3 {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
   margin: 0;
 }
 
 .stat-value {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 2.25rem;
+  font-weight: 700;
   color: #111827;
 }
 
@@ -108,19 +115,21 @@
   padding: 1.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .collections-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
 }
 
 .collections-header h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: #111827;
   margin: 0;
 }
@@ -132,8 +141,8 @@
 }
 
 .collections-value {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: #111827;
 }
 
@@ -142,7 +151,7 @@
   align-items: center;
   gap: 0.25rem;
   color: #ef4444;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .collections-trend.positive {
@@ -154,12 +163,11 @@
   font-size: 0.875rem;
 }
 
-/* Chart Grid */
+/* Chart Grid - Adjusted for Single Chart */
 .chart-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns */
-  gap: 1.5rem; /* Space between charts */
-  margin-top: 1.5rem;
+  grid-template-columns: 1fr; /* Only one column for the pie chart */
+  gap: 1.5rem;
 }
 
 .chart-container {
@@ -167,20 +175,23 @@
   padding: 1.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  height: 400px; /* Fixed height for consistency */
+  height: 400px;
   display: flex;
   flex-direction: column;
+  border: 1px solid #e5e7eb;
 }
 
 .chart-container h4 {
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.25rem;
+  font-weight: 600;
   color: #4b5563;
   margin-bottom: 1rem;
 }
 
 .chart-container canvas {
-  flex: 1; /* Ensure the canvas fills the remaining space */
+  flex: 1;
+  max-height: 300px; /* To avoid excessive stretching */
+  width: 100%;
 }
 
 /* Alerts Section */
@@ -189,13 +200,17 @@
   padding: 1.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .alerts-section h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: #111827;
-  margin: 0 0 1rem 0;
+  margin: 0;
 }
 
 .alerts-container {
@@ -234,15 +249,15 @@
 }
 
 .alert-type {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
 }
 
 .alert-card h4 {
   margin: 0 0 0.5rem 0;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 
 .alert-card p {

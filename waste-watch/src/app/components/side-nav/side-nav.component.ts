@@ -19,7 +19,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
       <ul class="nav flex-column">
         <!-- Fleet Manager Links -->
         <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" (click)="navigateToFleetDashboard()">
+          <a class="nav-link" (click)="navigateTo('/fleet-dashboard')">
             <div class="icon-container">
               <fa-icon [icon]="faDashboard"></fa-icon>
             </div>
@@ -27,7 +27,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" (click)="navigateToVehicleList()">
+          <a class="nav-link" (click)="navigateTo('/vehicle-list')">
             <div class="icon-container">
               <fa-icon [icon]="faTruck"></fa-icon>
             </div>
@@ -35,7 +35,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" (click)="navigateToFleetMap()">
+          <a class="nav-link" (click)="navigateTo('/fleet-map')">
             <div class="icon-container">
               <fa-icon [icon]="faMap"></fa-icon>
             </div>
@@ -45,7 +45,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
 
         <!-- Bin Manager Links -->
         <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" (click)="navigateToBinDashboard()">
+          <a class="nav-link" (click)="navigateTo('/bin-dashboard')">
             <div class="icon-container">
               <fa-icon [icon]="faDashboard"></fa-icon>
             </div>
@@ -53,7 +53,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" (click)="navigateToBinList()">
+          <a class="nav-link" (click)="navigateTo('/bin-list')">
             <div class="icon-container">
               <fa-icon [icon]="faTrash"></fa-icon>
             </div>
@@ -61,7 +61,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" (click)="navigateToBinMap()">
+          <a class="nav-link" (click)="navigateTo('/bin-map')">
             <div class="icon-container">
               <fa-icon [icon]="faMap"></fa-icon>
             </div>
@@ -265,62 +265,12 @@ export class SideNavComponent implements OnInit {
     });
   }
 
-  navigateToFleetDashboard() {
-    this.router.navigate(['/fleet-dashboard']).then(success => {
+  navigateTo(path: string) {
+    this.router.navigate([path]).then(success => {
       if (success) {
-        console.log('Navigation to Fleet Dashboard successful');
+        console.log(`Navigation to ${path} successful`);
       } else {
-        console.error('Navigation to Fleet Dashboard failed');
-      }
-    });
-  }
-
-  navigateToVehicleList() {
-    this.router.navigate(['/vehicle-list']).then(success => {
-      if (success) {
-        console.log('Navigation to Vehicle List successful');
-      } else {
-        console.error('Navigation to Vehicle List failed');
-      }
-    });
-  }
-
-  navigateToFleetMap() {
-    this.router.navigate(['/fleet-map']).then(success => {
-      if (success) {
-        console.log('Navigation to Fleet Map successful');
-      } else {
-        console.error('Navigation to Fleet Map failed');
-      }
-    });
-  }
-
-  navigateToBinDashboard() {
-    this.router.navigate(['/bin-dashboard']).then(success => {
-      if (success) {
-        console.log('Navigation to Bin Dashboard successful');
-      } else {
-        console.error('Navigation to Bin Dashboard failed');
-      }
-    });
-  }
-
-  navigateToBinList() {
-    this.router.navigate(['/bin-list']).then(success => {
-      if (success) {
-        console.log('Navigation to Bin List successful');
-      } else {
-        console.error('Navigation to Bin List failed');
-      }
-    });
-  }
-
-  navigateToBinMap() {
-    this.router.navigate(['/bin-map']).then(success => {
-      if (success) {
-        console.log('Navigation to Bin Map successful');
-      } else {
-        console.error('Navigation to Bin Map failed');
+        console.error(`Navigation to ${path} failed`);
       }
     });
   }
