@@ -17,6 +17,8 @@ export class RegisterUserComponent implements OnInit {
   confirmPassword = '';
   role = '';
   currentImage = 'assets/images/login_image3.png';
+  message: string = ''; // Variable to hold the success or error message
+  messageType: string = ''; // This will hold the class based on success or failure
 
   constructor(
     private router: Router,
@@ -47,7 +49,8 @@ export class RegisterUserComponent implements OnInit {
   onRegister() {
     if (this.password !== this.confirmPassword) {
       console.error('❌ Passwords do not match');
-      alert('Passwords do not match!');
+      this.message = 'Passwords do not match!';
+      this.messageType = 'alert-danger'; // Set message type to danger
       return;
     }
 
@@ -62,25 +65,31 @@ export class RegisterUserComponent implements OnInit {
     this.authService.register(registerData).subscribe({
       next: (response: any) => {
         console.log('✅ Registration Successful:', response);
+        this.message = 'User registered successfully!'; // Set the success message
+        this.messageType = 'alert-success'; // Set message type to success
       },
       error: (error) => {
         console.error('❌ Registration failed:', error);
 
+        // Handle different error scenarios
         if (error.error && Array.isArray(error.error)) {
           // If backend returns an array of errors
-          const errorMessage = error.error
+          this.message = error.error
             .map((err: any) => err.message)
             .join('\n');
-          alert(`⚠️ Registration failed: ${errorMessage}`);
+          this.messageType = 'alert-danger'; // Set message type to danger
         } else if (error.error && error.error.message) {
           // If backend returns a single error message
           if (error.error.message.includes('already exists')) {
-            alert('⚠️ A user with this email already exists!');
+            this.message = '⚠️ A user with this email already exists!';
+            this.messageType = 'alert-danger'; // Set message type to danger
           } else {
-            alert(`⚠️ Registration failed: ${error.error.message}`);
+            this.message = `⚠️ Registration failed: ${error.error.message}`;
+            this.messageType = 'alert-danger'; // Set message type to danger
           }
         } else {
-          alert('⚠️ Registration failed. Please try again.');
+          this.message = '⚠️ Registration failed. Please try again.';
+          this.messageType = 'alert-danger'; // Set message type to danger
         }
       },
     });

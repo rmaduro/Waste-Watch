@@ -181,12 +181,4 @@ export class FleetDashboardComponent implements OnInit {
       },
     });
   }
-
-  refreshData(): void {
-    this.isLoading = true;
-    setTimeout(() => {
-      this.loadDashboardData();
-      this.isLoading = false;
-    }, 1000);
-  }
 }

@@ -1,0 +1,100 @@
+<div class="dashboard-container">
+  <!-- Sidebar Navigation -->
+  <app-side-nav></app-side-nav>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <!-- Header Section -->
+    <header class="dashboard-header">
+      <h1 class="dashboard-title">
+        <fa-icon [icon]="faTrash"></fa-icon>
+        Bin Management Dashboard
+      </h1>
+      <button class="btn refresh-btn" (click)="refreshData()">
+        <fa-icon [icon]="faSync"></fa-icon>
+        Refresh Data
+      </button>
+    </header>
+
+    <!-- Key Metrics Section -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        <!-- In Maintenance Bins -->
+        <div class="stat-card">
+          <div class="stat-header">
+            <fa-icon [icon]="faTools"></fa-icon>
+            <h3>In Maintenance Bins</h3>
+          </div>
+          <div class="stat-value">{{ inMaintenanceBins }}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collection History Table -->
+    <section class="table-section">
+      <h4><fa-icon [icon]="faHistory"></fa-icon> Collection History</h4>
+      <div class="table-container">
+        <table class="bin-table">
+          <thead>
+            <tr>
+              <th><fa-icon [icon]="faIdCard"></fa-icon> ID</th>
+              <th><fa-icon [icon]="faBinoculars"></fa-icon> Bin ID</th>
+              <th><fa-icon [icon]="faClock"></fa-icon> Timestamp</th>
+              <th><fa-icon [icon]="faArrowUp"></fa-icon> Amount Collected</th>
+              <th><fa-icon [icon]="faExclamationTriangle"></fa-icon> Issues Logged</th>
+              <th><fa-icon [icon]="faTools"></fa-icon> Collection Status</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="collectionHistory.length > 0; else noData">
+            <tr *ngFor="let history of collectionHistory">
+              <td>{{ history.id }}</td>
+              <td>{{ history.binId }}</td>
+              <td>{{ history.timestamp | date:'short' }}</td>
+              <td>{{ history.amountCollected }} Kg</td>
+              <td>{{ history.issuesLogged }}</td>
+              <td>
+                <span *ngIf="history.collectionStatus === 0">Pending</span>
+                <span *ngIf="history.collectionStatus === 1">Completed</span>
+                <span *ngIf="history.collectionStatus === 2">Failed</span>
+              </td>
+            </tr>
+          </tbody>
+          <ng-template #noData>
+            <tr><td colspan="6">No collection history data available.</td></tr>
+          </ng-template>
+        </table>
+      </div>
+    </section>
+
+    <!-- Maintenance History Table -->
+    <section class="table-section">
+      <h4><fa-icon [icon]="faWrench"></fa-icon> Maintenance History</h4>
+      <div class="table-container">
+        <table class="bin-table">
+          <thead>
+            <tr>
+              <th><fa-icon [icon]="faIdCard"></fa-icon> Bin ID</th>
+              <th><fa-icon [icon]="faWrench"></fa-icon> Maintenance Type</th>
+              <th><fa-icon [icon]="faTools"></fa-icon> Description</th>
+              <th><fa-icon [icon]="faClock"></fa-icon> Start Date</th>
+              <th><fa-icon [icon]="faClock"></fa-icon> End Date</th>
+              <th><fa-icon [icon]="faIdCard"></fa-icon> User ID</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="maintenanceHistory.length > 0; else noMaintenance">
+            <tr *ngFor="let maintenance of maintenanceHistory">
+              <td>{{ maintenance.binId }}</td>
+              <td>{{ maintenance.maintenanceType }}</td>
+              <td>{{ maintenance.description }}</td>
+              <td>{{ maintenance.startDate | date:'short' }}</td>
+              <td>{{ maintenance.endDate ? (maintenance.endDate | date:'short') : 'Ongoing' }}</td>
+            </tr>
+          </tbody>
+          <ng-template #noMaintenance>
+            <tr><td colspan="6">No maintenance history available.</td></tr>
+          </ng-template>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>

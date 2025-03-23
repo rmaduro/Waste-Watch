@@ -6,7 +6,9 @@ import { VehicleListComponent } from './fleet-management/vehicle-list/vehicle_li
 import { DefinePasswordComponent } from "./auth/define-password/define-password.component";
 import { BinListComponent } from "./bin-management/bin-list/bin-list-component";
 import { RegisterUserComponent } from "./auth/register-user/register-user-component";
-import { FleetDashboardComponent} from "./fleet-management/fleet-dashboard/fleet-dashboard-component";
+import { FleetDashboardComponent } from "./fleet-management/fleet-dashboard/fleet-dashboard-component";
+import { BinDashboardComponent} from "./bin-management/bin-dashboard/bin-dashboard-component";
+
 
 
 
@@ -20,6 +22,9 @@ export const routes: Routes = [
   { path: 'vehicle-list', component: VehicleListComponent },
   { path: 'bin-list', component: BinListComponent },
   { path: 'fleet-dashboard', component: FleetDashboardComponent },
+  { path: 'bin-dashboard', component: BinDashboardComponent },
+
+
   ];
 
 @NgModule({

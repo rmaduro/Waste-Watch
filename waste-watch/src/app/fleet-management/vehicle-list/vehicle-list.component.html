@@ -28,19 +28,20 @@
               <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
               Filters:
             </label>
-            <select class="filter-select" [(ngModel)]="selectedStatus">
+            <select class="filter-select" [(ngModel)]="selectedStatus" name="status">
               <option value="">All Status</option>
               <option value="Active">Active</option>
               <option value="Idle">Idle</option>
               <option value="Maintenance">Maintenance</option>
             </select>
-            <select class="filter-select" [(ngModel)]="selectedRoute">
+
+            <select class="filter-select" [(ngModel)]="selectedRoute" name="routes">
               <option value="">All Routes</option>
               <option value="Commercial">Commercial</option>
               <option value="Industrial">Industrial</option>
               <option value="Residential">Residential</option>
             </select>
-            <select class="filter-select" [(ngModel)]="selectedCapacity">
+            <select class="filter-select" [(ngModel)]="selectedCapacity" name="capacities">
               <option value="">All Capacities</option>
               <option value="1000kg">1000kg</option>
               <option value="1500kg">1500kg</option>
@@ -175,6 +176,7 @@
               {{ driver.name }} ({{ driver.licenseNumber }})
             </option>
           </select>
+
         </div>
       </div>
 

@@ -34,9 +34,16 @@
         <img
           src="assets/images/logo1.png"
           alt="WasteWatch Logo"
-          style="width: 250px;"
+          style="width: 150px;"
         />
       </div>
+
+      <!-- Display error message if login fails -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 w-100" role="alert">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Login Form -->
       <form (ngSubmit)="onLogin()" class="w-100">
         <div class="mb-2">
           <label for="email" class="form-label">Email</label>
@@ -62,7 +69,13 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-dark w-100">Log in</button>
+
+        <!-- Submit Button with Loading State -->
+        <button type="submit" class="btn btn-dark w-100" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Log in
+        </button>
+
         <div class="text-center mt-3">
           <button
             (click)="navigateToResetPassword()"

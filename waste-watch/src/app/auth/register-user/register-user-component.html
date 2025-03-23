@@ -30,13 +30,12 @@
       class="login-form-container p-4 d-flex flex-column align-items-center justify-content-center"
       style="flex: 2;"
     >
-      <div class="text-center">
-        <img
-          src="assets/images/logo1.png"
-          alt="WasteWatch Logo"
-          style="width: 80px;"
-        />
-      </div>
+
+<!-- Success or Error Message -->
+<div *ngIf="message" class="alert alert-sm" [ngClass]="messageType">
+  {{ message }}
+</div>
+
       <form (ngSubmit)="onRegister()" class="w-100">
         <div class="mb-2">
           <label for="email" class="form-label">Email</label>

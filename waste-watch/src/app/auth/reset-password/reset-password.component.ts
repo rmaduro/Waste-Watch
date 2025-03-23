@@ -16,6 +16,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   email = '';
   currentImage = 'assets/images/login_image5.jpeg'; // Use only login_image5.jpeg
+  errorMessage: string | null = null; // To store error message
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -39,16 +40,18 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Password reset failed', error);
+
+          // Handle specific errors
           if (error.status === 404) {
-            console.error('Endpoint not found');
+            this.errorMessage = 'Email not found. Please check the email address and try again.';
+          } else if (error.status === 400) {
+            this.errorMessage = 'Please check your email and try again.';
           } else {
-            console.error(`Error: ${error.message}`);
+            this.errorMessage = `Error: ${error.message}`; // General error message
           }
         }
       });
   }
-
-
 
   navigateToLogin() {
     this.router.navigate(['/login']);
