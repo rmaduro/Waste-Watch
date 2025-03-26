@@ -123,8 +123,9 @@ export class BinListComponent implements OnInit {
     return this.bins.filter((bin) => {
       const statusMatches =
         this.selectedStatus === '' || bin.status === parseInt(this.selectedStatus, 10);
-      const typeMatches =
-        this.selectedType === '' || bin.type.toString() === this.selectedType;
+        const typeMatches =
+        this.selectedType === '' || this.getTypeNumericValue(this.selectedType) === bin.type;
+
       const searchMatches =
         this.searchQuery === '' || (bin.id && bin.id.toString().includes(this.searchQuery));
 
@@ -165,8 +166,8 @@ export class BinListComponent implements OnInit {
           this.isLoading = false;
         },
         error: (err) => {
-          console.error('Error deleting bin:', err);
-          this.error = 'Failed to delete bin. Please try again later.';
+          console.error('❌ Error deleting bin:', err);
+          this.error = 'Failed to delete bin. Please try again later.'; // Custom error message for deletion
           this.isLoading = false;
           this.showDeleteConfirmation = false;
         }
@@ -174,10 +175,11 @@ export class BinListComponent implements OnInit {
     }
   }
 
+
   addBin() {
     this.isLoading = true;
+    this.error = ''; // Clear previous errors if any
 
-    // Prepare the bin data, but do not send fillLevel to the backend
     const newBin: Bin = {
       ...this.bin,
       type: this.getTypeNumericValue(this.bin.type.toString()),
@@ -186,15 +188,11 @@ export class BinListComponent implements OnInit {
         longitude: this.bin.location.longitude,
         latitude: this.bin.location.latitude,
         timestamp: new Date().toISOString()
-      },
-      // Exclude `fillLevel` from sending to backend
+      }
     };
-
-    console.log('📌 Sending bin data:', JSON.stringify(newBin, null, 2)); // Debugging
 
     this.binService.createBin(newBin).subscribe({
       next: () => {
-        console.log('✅ Bin added successfully');
         this.loadBins();
         this.clearForm();
         this.showAddForm = false;
@@ -202,11 +200,12 @@ export class BinListComponent implements OnInit {
       },
       error: (err) => {
         console.error('❌ Error adding bin:', err);
-        this.error = 'Failed to add bin. Please check the data and try again.';
+        this.error = 'Failed to add bin. Please check the data and try again.'; // Custom error message
         this.isLoading = false;
       }
     });
   }
+
 
   clearForm() {
     this.bin = {

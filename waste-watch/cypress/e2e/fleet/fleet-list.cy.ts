@@ -1,5 +1,5 @@
-describe('Vehicle List Component', () => {
-  let vehicleId: string;  // Explicitly define the type as string
+describe('Bin List Component', () => {
+  let newBinId: string = ''; // Explicitly type the newBinId as a string
 
   before(() => {
     Cypress.config('baseUrl', 'http://localhost:4200');
@@ -7,104 +7,85 @@ describe('Vehicle List Component', () => {
   });
 
   beforeEach(() => {
-    cy.visit('/vehicle-list');
+    cy.visit('/bin-list');
   });
 
-  it('should display a "No vehicles found" message if no vehicles exist', () => {
-    cy.intercept('GET', '/api/vehicles', { body: [] });  // Mock empty vehicle list response
-    cy.visit('/vehicle-list');  // Visit the page again to refresh the vehicle list
-    cy.contains('No vehicles found').should('be.visible');  // Verify the message is visible
-    cy.wait(2000);
-
+  it('should load the bin list and display bins from the database', () => {
+    cy.request('GET', '/api/bins').then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.length.greaterThan(0);
+      cy.get('.bin-table tbody tr').should('have.length.greaterThan', 0);
+    });
   });
 
+  it('should open the add bin form and add a new bin', () => {
+    cy.get('.btn-add').click(); // Click the add bin button
+    cy.get('.bin-form-container').should('be.visible'); // Ensure the form is visible
 
-  it('should load the page and display the vehicle list', () => {
-    cy.get('.vehicle-list-container').should('exist');
-    cy.get('.title').contains('Vehicle List').should('be.visible');
-    cy.get('.vehicle-table').should('exist');
-    cy.wait(2000);
+    // Fill in the bin form
+    cy.get('#capacity').type('200');
+    cy.get('#type').select('General');
 
-  });
+    // Intercept the POST request to /api/bins
+    cy.intercept('POST', '/api/bins').as('addBin');
 
-  it('should add a new vehicle and capture its ID', () => {
-    // Open the Add Vehicle form
-    cy.get('.btn-add').click();
+    cy.get('.btn-submit').click(); // Submit the form
 
-    // Fill the form with vehicle data
-    cy.get('input[name="licensePlate"]').type('ABC123');
-    cy.get('select[name="routeType"]').select('Commercial');
-    cy.get('select[name="maxCapacity"]').select('1000kg');
-    cy.get('input[name="lastMaintenance"]').type('2025-03-23');
+    // Wait for the POST request to complete
+    cy.wait('@addBin').then((interception) => {
+      if (interception.response && interception.response.body) {
+        newBinId = interception.response.body.id; // Capture the new bin ID
 
-    cy.get('select[name="driverSelect"]').should('not.have.attr', 'disabled');
-    cy.get('select[name="driverSelect"] option').should('have.length.greaterThan', 1);
-    cy.get('select[name="driverSelect"]').select(1); // Select first driver
-
-    // Submit the form
-    cy.get('.btn-submit').click();
-
-    // Capture the ID of the added vehicle (Assuming the ID is shown or available in the response)
-    cy.get('.vehicle-table tbody tr').last().find('td:first').invoke('text').then((text) => {
-      vehicleId = text.trim();  // Capture the ID from the first column
+        // Store the new bin ID in localStorage for future use
+        window.localStorage.setItem('newBinId', newBinId);
+        cy.log(`Stored bin ID in localStorage: ${newBinId}`);
+      } else {
+        cy.log('Error: POST request response is invalid or missing.');
+      }
     });
 
-    // Ensure the new vehicle appears in the list
-    cy.get('.vehicle-table tbody tr').should('have.length.greaterThan', 0);
-    cy.contains('ABC123').should('be.visible');
-    cy.wait(2000);
+    // Ensure the bin form is closed after submission
+    cy.get('.bin-form-container').should('not.exist');
   });
 
+  it('should search and select a bin dynamically by ID', function () {
+    // Retrieve the bin ID from localStorage
+    const binId = window.localStorage.getItem('newBinId');
+    if (!binId) {
+      throw new Error('Bin ID is not available in localStorage');
+    }
 
-  it('should search vehicles by ID (dynamically)', () => {
-    // Assuming the ID of the newly added vehicle is stored in 'vehicleId'
-    cy.get('input.search-input').type(vehicleId);  // Use the dynamically captured ID
-
-    cy.wait(500);
-
-    // Verify that the row with the added vehicle is visible
-    cy.get('tbody tr').contains(vehicleId).should('be.visible');
-    cy.wait(2000);
-
+    // Ensure we are typing the correct bin ID into the search field
+    cy.get('.search-input').type(binId);
+    cy.get('.bin-table tbody tr').contains(binId).should('be.visible'); // Verify the bin is visible in the table
   });
 
-  it('should filter vehicles by route type', () => {
-    cy.get('select[name="routes"]').select('Commercial'); // Route type filter
+  it('should delete the selected bin', function () {
+    // Retrieve the bin ID from localStorage
+    const binId = window.localStorage.getItem('newBinId');
+    if (!binId) {
+      throw new Error('Bin ID is not available in localStorage');
+    }
 
-    cy.wait(500);
+    // Search for the bin by ID
+    cy.get('.search-input').type(binId);
+    cy.get('.bin-table tbody tr').contains(binId).click(); // Click the row containing the bin ID
 
-    cy.get('tbody tr').each(($tr) => {
-      cy.wrap($tr).contains('Commercial'); // Ensure each row has Commercial route type
-    });
-    cy.wait(2000);
-
-  });
-
-  it('should filter vehicles by capacity', () => {
-    cy.get('select[name="capacities"]').select('1000kg'); // Capacity filter
-
-    cy.wait(500);
-
-    cy.get('tbody tr').each(($tr) => {
-      cy.wrap($tr).contains('1000kg'); // Ensure each row has 1000kg capacity
-    });
-    cy.wait(2000);
-
-  });
-
-  it('should delete the selected vehicle', () => {
-    // Select the row of the added vehicle dynamically
-    cy.get('tbody tr').contains(vehicleId).click();
-
+    // Click the remove button
     cy.get('.btn-remove').click();
-    cy.get('.delete-confirmation-container').should('be.visible');
-    cy.contains('Confirm Deletion').should('be.visible');
+    cy.get('.delete-confirmation-container').should('be.visible'); // Ensure the delete confirmation is visible
 
+    // Confirm the deletion
     cy.get('.btn-delete').click();
 
-    // Verify that the vehicle is deleted and no longer in the list
-    cy.contains('No vehicles found').should('be.visible');
+    // Verify the bin is removed from the database
+    cy.request('DELETE', `/api/bins/${binId}`).then((response) => {
+      expect(response.status).to.eq(200); // Ensure the DELETE request was successful
+      cy.log(`Bin with ID ${binId} deleted from the database`);
+    });
 
+    // Verify the bin is removed from the table by searching again
+    cy.get('.search-input').clear().type(binId); // Clear the search input
+    cy.get('.bin-table tbody tr').should('have.length', 0); // The bin should no longer exist
   });
-
 });
