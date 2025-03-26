@@ -112,7 +112,7 @@ namespace WasteWatchAuthTests
 
             Assert.IsType<OkObjectResult>(result);
         }
-
+    
         [Fact]
         public async Task ForgotPassword_InvalidEmail_ReturnsBadRequest()
         {
