@@ -129,6 +129,8 @@ export class BinDashboardComponent implements OnInit {
     // Fetch maintenance history and map the data correctly
     this.binService.getMaintenanceHistory().subscribe(
       (data: any[]) => {
+        console.log('Raw Maintenance History API Response:', data); // Log raw data for debugging
+
         this.maintenanceHistory = data.map((record) => ({
           binId: record.binId,
           type: record.type,
@@ -142,7 +144,8 @@ export class BinDashboardComponent implements OnInit {
           maintenanceType: record.maintenanceType,
           description: record.description,
         }));
-        console.log('Mapped Maintenance History:', this.maintenanceHistory);
+
+        console.log('Mapped Maintenance History:', this.maintenanceHistory); // Log mapped data
       },
       (error) => {
         console.error('Error fetching maintenance history:', error);

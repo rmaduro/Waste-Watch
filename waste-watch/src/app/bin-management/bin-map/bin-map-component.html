@@ -1,0 +1,79 @@
+<div class="dashboard-container">
+  <!-- Sidebar Navigation -->
+  <app-side-nav></app-side-nav>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <!-- Header Section -->
+    <header class="dashboard-header">
+      <h1 class="dashboard-title">
+        <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+        Bin Map
+      </h1>
+      <button class="btn refresh-btn" (click)="refreshMap()">
+        <fa-icon [icon]="faSync"></fa-icon>
+        Refresh Data
+      </button>
+    </header>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+      <p>Loading bin data...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+      <button class="btn-retry" (click)="refreshMap()">Retry</button>
+    </div>
+
+    <!-- Content Container -->
+    <div class="content-container" *ngIf="!isLoading && !errorMessage">
+      <!-- Bin List Section -->
+      <div class="bin-list-section">
+        <h3><fa-icon [icon]="faMapMarkerAlt"></fa-icon> Available Bins</h3>
+        <div class="bin-grid">
+          <div *ngFor="let bin of bins" class="bin-card" (click)="selectedBin = bin" [class.selected]="selectedBin?.id === bin.id">
+            <div class="bin-header">
+              <span class="bin-id">#{{ bin.id }}</span>
+              <span class="bin-status" [ngClass]="getStatusClass(bin)">
+                {{ getStatusText(bin) }}
+              </span>
+            </div>
+            <div class="bin-details">
+              <p><strong>Type:</strong> {{ getBinTypeText(bin.type) }}</p>
+              <p><strong>Capacity:</strong> {{ bin.capacity }} kg</p>
+              <p><strong>Last Emptied:</strong> {{ bin.lastEmptied | date:'short' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bin Details Section -->
+      <div class="details-section" *ngIf="selectedBin">
+        <div class="info-panel">
+          <div class="info-header">
+            <h3>Bin Details</h3>
+            <fa-icon [icon]="faLock" *ngIf="!isAuthorized"></fa-icon>
+            <fa-icon [icon]="faUnlock" *ngIf="isAuthorized"></fa-icon>
+          </div>
+          <div class="info-content">
+            <p><strong>ID:</strong> {{ selectedBin.id }}</p>
+            <p><strong>Type:</strong> {{ getBinTypeText(selectedBin.type) }}</p>
+            <p><strong>Status:</strong>
+              <span [ngClass]="getStatusClass(selectedBin)">
+                {{ getStatusText(selectedBin) }}
+              </span>
+            </p>
+            <p><strong>Capacity:</strong> {{ selectedBin.capacity }} kg</p>
+            <p><strong>Last Emptied:</strong> {{ selectedBin.lastEmptied | date:'short' }}</p>
+            <p><strong>Location:</strong>
+              {{ selectedBin.location.latitude | number:'1.4-4' }},
+              {{ selectedBin.location.longitude | number:'1.4-4' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
