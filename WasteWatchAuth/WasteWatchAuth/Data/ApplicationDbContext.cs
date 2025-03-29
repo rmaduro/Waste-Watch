@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WasteWatchAuth.Models;
+using WasteWatchAuth.Models.Bin;
+using WasteWatchAuth.Models.Colaborator;
+using WasteWatchAuth.Models.Maintenance;
+using WasteWatchAuth.Models.Vehicle;
 
 namespace WasteWatchAuth.Data
 {

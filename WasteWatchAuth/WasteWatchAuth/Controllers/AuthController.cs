@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using WasteWatchAuth.Services;
 using Microsoft.AspNetCore.Antiforgery;
+using WasteWatchAuth.Models.Auth;
 
 namespace WasteWatchAuth.Controllers
 {
@@ -309,49 +310,5 @@ namespace WasteWatchAuth.Controllers
 
             return Ok(new { message = "Password redefinida com sucesso" });
         }
-    }
-
-    public class LoginModel
-    {
-        [Required(ErrorMessage = "O email é obrigatório")]
-        [EmailAddress(ErrorMessage = "Formato de email inválido")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "A password é obrigatória")]
-        public string Password { get; set; }
-    }
-
-    public class RegisterModel
-    {
-        [Required(ErrorMessage = "O email é obrigatório")]
-        [EmailAddress(ErrorMessage = "Formato de email inválido")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "A password é obrigatória")]
-        [MinLength(6, ErrorMessage = "A password deve ter pelo menos 6 caracteres")]
-        public string Password { get; set; }
-
-        public string Role { get; set; }
-    }
-
-    public class ForgotPasswordModel
-    {
-        [Required(ErrorMessage = "O email é obrigatório")]
-        [EmailAddress(ErrorMessage = "Formato de email inválido")]
-        public string Email { get; set; }
-    }
-
-    public class ResetPasswordModel
-    {
-        [Required(ErrorMessage = "O email é obrigatório")]
-        [EmailAddress(ErrorMessage = "Formato de email inválido")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "O token é obrigatório")]
-        public string Token { get; set; }
-
-        [Required(ErrorMessage = "A nova password é obrigatória")]
-        [MinLength(6, ErrorMessage = "A password deve ter pelo menos 6 caracteres")]
-        public string NewPassword { get; set; }
     }
 }

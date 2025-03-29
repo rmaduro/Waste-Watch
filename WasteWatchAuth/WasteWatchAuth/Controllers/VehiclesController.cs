@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using WasteWatchAuth.Data;
-using WasteWatchAuth.Models;
+using WasteWatchAuth.Models.Colaborator;
+using WasteWatchAuth.Models.Vehicle;
 
 namespace WasteWatchAuth.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class VehiclesController : ControllerBase
 	{

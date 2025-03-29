@@ -8,6 +8,7 @@ using WasteWatchAuth.Controllers;
 using WasteWatchAuth.Data;
 using WasteWatchAuth.Models;
 using Moq;
+using WasteWatchAuth.Models.Bin;
 
 namespace WasteWatchAuthTests
 {
