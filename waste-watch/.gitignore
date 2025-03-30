@@ -43,3 +43,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Ignore environment files to prevent API key leaks
+src/environments/environment.ts
