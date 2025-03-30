@@ -14,8 +14,8 @@ export interface Bin {
   capacity: number; // Maximum capacity of the bin
   lastEmptied: string; // Timestamp of when the bin was last emptied
   location: {
-    longitude: number; // Longitude of the bin's location
-    latitude: number;  // Latitude of the bin's location
+    longitude: string; // Longitude of the bin's location
+    latitude: string;  // Latitude of the bin's location
     timestamp: string; // Timestamp of the last location update
   };
 }
@@ -116,30 +116,42 @@ export class BinService {
   }
 
 
-  /**
-   * Creates a new bin.
-   * @param bin - The bin to be created.
-   * @returns Observable<Bin> - The created bin data.
-   */
-  createBin(bin: Bin): Observable<Bin> {
-    // ✅ Ensure `id` is NOT included in the location before sending to the backend
-    const newBin = {
-      ...bin,
-      location: {
-        longitude: bin.location.longitude,
-        latitude: bin.location.latitude,
-        timestamp: bin.location.timestamp
-      }
-    };
+/**
+ * Creates a new bin.
+ * @param bin - The bin to be created.
+ * @returns Observable<Bin> - The created bin data.
+ */
+createBin(bin: Bin): Observable<Bin> {
+  // Log the bin object to inspect its properties
+  console.log('Bin object passed to createBin:', bin);
 
-    return this.http.post<Bin>(this.apiUrl, newBin, this.httpOptions).pipe(
-      tap(() => this.loadBins()),
-      catchError((error) => {
-        console.error('Error adding bin:', error);
-        return of({} as Bin); // Return an empty bin object in case of error
-      })
-    );
+  // Check if latitude and longitude are valid
+  if (!bin.location.latitude || !bin.location.longitude) {
+    console.error('Latitude or Longitude is missing');
+    return of({} as Bin); // Return an empty bin object if required fields are missing
   }
+
+  // ✅ Ensure `id` is NOT included in the location before sending to the backend
+  const newBin = {
+    ...bin,
+    location: {
+      longitude: bin.location.longitude,
+      latitude: bin.location.latitude,
+      timestamp: bin.location.timestamp
+    }
+  };
+
+  // Log the bin data after transforming it to ensure it's correct
+  console.log('Creating new bin with the following data:', newBin);
+
+  return this.http.post<Bin>(this.apiUrl, newBin, this.httpOptions).pipe(
+    tap(() => this.loadBins()), // Reload bins after successfully adding a new one
+    catchError((error) => {
+      console.error('Error adding bin:', error); // Log any error that occurs
+      return of({} as Bin); // Return an empty bin object in case of error
+    })
+  );
+}
 
   /**
    * Deletes a bin by its ID.

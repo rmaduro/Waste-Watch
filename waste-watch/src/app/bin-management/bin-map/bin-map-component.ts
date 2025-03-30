@@ -179,21 +179,24 @@ export class BinMapComponent implements OnInit {
     this.bins.forEach(bin => {
       let lat: number, lng: number;
 
-      // Check if the latitude and longitude are in DDMM.mmmm format
-      if (typeof bin.location.latitude === 'number') {
-        lat = this.convertToDecimal(bin.location.latitude); // Convert DDMM.mmmm to Decimal Degrees
+      // Convert DMS coordinates to decimal degrees
+      if (typeof bin.location.latitude === 'string') {
+        lat = this.convertDMSToDecimal(bin.location.latitude);  // Convert string to decimal degrees
       } else {
-        lat = bin.location.latitude; // Already in Decimal Degrees format
+        lat = bin.location.latitude;  // If it's already a number, use it directly
       }
 
-      if (typeof bin.location.longitude === 'number') {
-        lng = this.convertToDecimal(bin.location.longitude, true); // Convert DDMM.mmmm to Decimal Degrees (Longitude)
+      if (typeof bin.location.longitude === 'string') {
+        lng = this.convertDMSToDecimal(bin.location.longitude, true);  // Convert string to decimal degrees
       } else {
-        lng = bin.location.longitude; // Already in Decimal Degrees format
+        lng = bin.location.longitude;  // If it's already a number, use it directly
       }
 
-      // Log the location in the console
-      console.log(`Bin ${bin.id} Location: Latitude = ${lat}, Longitude = ${lng}`);
+      // Check if the coordinates are valid numbers
+      if (isNaN(lat) || isNaN(lng)) {
+        console.error(`Invalid coordinates for Bin ${bin.id}: Latitude = ${lat}, Longitude = ${lng}`);
+        return;  // Skip this bin if the coordinates are invalid
+      }
 
       const marker = new window.google.maps.Marker({
         position: { lat: lat, lng: lng },
@@ -212,10 +215,12 @@ export class BinMapComponent implements OnInit {
 
       // Add click event to focus the map on this bin when clicked
       window.google.maps.event.addListener(marker, 'click', () => {
-        this.selectBin(bin);
+        this.selectCard(bin);
       });
     });
   }
+
+
 
 
   // Helper function to set marker visibility based on zoom level
@@ -230,37 +235,58 @@ export class BinMapComponent implements OnInit {
     }
   }
 
-  // Focus the map on the selected bin's location
-  selectBin(bin: Bin): void {
+  selectCard(bin: Bin): void {
+    // Set the selected bin
     this.selectedBin = bin;
-    const latLng = new window.google.maps.LatLng(bin.location.latitude, bin.location.longitude);
-    this.map.panTo(latLng);  // Focus the map on the selected bin
-    this.map.setZoom(15);  // Optional: zoom in when a bin is selected
+
+    // Get the latitude and longitude of the selected bin
+    const lat = this.convertDMSToDecimal(bin.location.latitude);  // Convert DMS to decimal degrees if necessary
+    const lng = this.convertDMSToDecimal(bin.location.longitude, true);  // Convert DMS to decimal degrees if necessary
+
+    // Check if coordinates are valid
+    if (isNaN(lat) || isNaN(lng)) {
+      console.error('Invalid coordinates for Bin:', bin.id);
+      return;  // Prevent map centering if coordinates are invalid
+    }
+
+    // Focus the map on the selected bin's coordinates
+    if (this.map) {
+      this.map.setCenter({ lat, lng });  // Center the map on the selected bin
+      this.map.setZoom(15);  // Set zoom level to a level that is appropriate for viewing the bin (e.g., 15)
+    }
   }
 
+
+
+
+
+  // Convert DMS (Degrees, Minutes, Seconds) format to Decimal Degrees
   // Convert DMS (Degrees, Minutes, Seconds) format to Decimal Degrees
   convertDMSToDecimal(dms: string, isLongitude: boolean = false): number {
-    const regex = /(\d+)[^\d]+(\d+)[^\d]+([\d.]+)/;  // Matches degrees, minutes, and seconds
+    const regex = /(\d{1,3})°(\d{1,2})'(\d+(\.\d+)?)"/;
     const matches = dms.match(regex);
 
     if (matches) {
-      const degrees = parseInt(matches[1], 10);
-      const minutes = parseInt(matches[2], 10);
-      const seconds = parseFloat(matches[3]);
+      const degrees = parseInt(matches[1], 10);  // Degrees
+      const minutes = parseInt(matches[2], 10);  // Minutes
+      const seconds = parseFloat(matches[3]);   // Seconds with decimal part
 
       let decimal = degrees + minutes / 60 + seconds / 3600;
 
-      // If it's a longitude (West), make it negative
       if (isLongitude && degrees > 0) {
         decimal = -decimal;
       }
 
-      return decimal;
+      return decimal; // Return decimal value (as a number)
     }
 
     console.error(`Invalid DMS format: ${dms}`);
-    return 0;  // Return 0 if the format is invalid
+    return NaN; // Return NaN if invalid
   }
+
+
+
+
 
   getStatusClass(bin: Bin): string {
     switch (bin.status) {

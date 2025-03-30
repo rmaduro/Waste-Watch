@@ -28,8 +28,8 @@ export interface Bin {
   capacity: number;
   lastEmptied: string;
   location: {
-    longitude: number;
-    latitude: number;
+    longitude: string;
+    latitude: string;
     timestamp: string;
   };
   fillLevel?: number;  // Added for local use
@@ -77,8 +77,8 @@ export class BinListComponent implements OnInit {
     capacity: 100,
     lastEmptied: new Date().toISOString(),
     location: {
-      longitude: 0,
-      latitude: 0,
+      longitude: "",
+      latitude: "",
       timestamp: new Date().toISOString()
     },
     fillLevel: 0 // This will remain local and will be updated later
@@ -213,8 +213,8 @@ export class BinListComponent implements OnInit {
       type: this.getTypeNumericValue(this.bin.type.toString()),
       lastEmptied: new Date().toISOString(),
       location: {
-        longitude: Number(this.bin.location.longitude),  // Ensure it's a number
-        latitude: Number(this.bin.location.latitude),    // Ensure it's a number
+        longitude: this.bin.location.longitude,  // Ensure it's a number
+        latitude: this.bin.location.latitude,    // Ensure it's a number
         timestamp: new Date().toISOString()
       }
     };
@@ -242,8 +242,8 @@ export class BinListComponent implements OnInit {
       capacity: 0,
       lastEmptied: new Date().toISOString(),
       location: {
-        longitude: 0,
-        latitude: 0,
+        longitude: "",
+        latitude: "",
         timestamp: new Date().toISOString()
       },
       fillLevel: 0 // Reset fillLevel when clearing the form
@@ -266,8 +266,8 @@ export class BinListComponent implements OnInit {
   }
 
   setDefaultLocation() {
-    this.bin.location.longitude = 0;  // Static longitude
-    this.bin.location.latitude = 0;   // Static latitude
+    this.bin.location.longitude = "";  // Static longitude
+    this.bin.location.latitude = "";   // Static latitude
   }
 
   getStatusText(status: number): string {
