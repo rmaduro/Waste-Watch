@@ -500,3 +500,54 @@
 .bin-table tbody tr {
   animation: fadeIn 0.3s ease-in-out;
 }
+
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;  /* Space between elements */
+  margin: 20px 0;  /* Space above and below the pagination */
+}
+
+.pagination-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pagination-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #0056b3;  /* Darker blue on hover */
+  transform: scale(1.05);  /* Slight scale effect on hover */
+}
+
+.pagination-info {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Responsive design for small screens */
+@media (max-width: 600px) {
+  .pagination-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pagination-btn {
+    width: 100%;
+    max-width: 150px;
+  }
+}

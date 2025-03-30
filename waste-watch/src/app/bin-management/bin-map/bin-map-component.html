@@ -29,21 +29,31 @@
 
     <!-- Content Container -->
     <div class="content-container" *ngIf="!isLoading && !errorMessage">
-      <!-- Bin List Section -->
-      <div class="bin-list-section">
-        <h3><fa-icon [icon]="faMapMarkerAlt"></fa-icon> Available Bins</h3>
-        <div class="bin-grid">
-          <div *ngFor="let bin of bins" class="bin-card" (click)="selectedBin = bin" [class.selected]="selectedBin?.id === bin.id">
-            <div class="bin-header">
-              <span class="bin-id">#{{ bin.id }}</span>
-              <span class="bin-status" [ngClass]="getStatusClass(bin)">
-                {{ getStatusText(bin) }}
-              </span>
-            </div>
-            <div class="bin-details">
-              <p><strong>Type:</strong> {{ getBinTypeText(bin.type) }}</p>
-              <p><strong>Capacity:</strong> {{ bin.capacity }} kg</p>
-              <p><strong>Last Emptied:</strong> {{ bin.lastEmptied | date:'short' }}</p>
+      <!-- Map and List Container -->
+      <div class="map-list-container">
+        <!-- Map Section -->
+        <div class="map-section">
+          <div #mapContainer class="map-container"></div>
+        </div>
+
+        <!-- Bin List Section -->
+        <div class="bin-list-section">
+          <h3><fa-icon [icon]="faMapMarkerAlt"></fa-icon> Available Bins</h3>
+          <div class="bin-grid">
+            <div *ngFor="let bin of bins" class="bin-card"
+                 (click)="selectedBin = bin"
+                 [class.selected]="selectedBin?.id === bin.id">
+              <div class="bin-header">
+                <span class="bin-id">#{{ bin.id }}</span>
+                <span class="bin-status" [ngClass]="getStatusClass(bin)">
+                  {{ getStatusText(bin) }}
+                </span>
+              </div>
+              <div class="bin-details">
+                <p><strong>Type:</strong> {{ getBinTypeText(bin.type) }}</p>
+                <p><strong>Capacity:</strong> {{ bin.capacity }} kg</p>
+                <p><strong>Last Emptied:</strong> {{ bin.lastEmptied | date:'short' }}</p>
+              </div>
             </div>
           </div>
         </div>

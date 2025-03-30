@@ -19,6 +19,7 @@ import { faTrash, faTruck, faSignOutAlt, faMap } from '@fortawesome/free-solid-s
   `,
 })
 export class AppComponent {
+  title = 'waste-watch';
   isLoggedIn = false;
 
   // FontAwesome Icons

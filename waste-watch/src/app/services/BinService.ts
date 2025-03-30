@@ -397,5 +397,5 @@ export class BinService {
     );
   }
 
-  
+
 }

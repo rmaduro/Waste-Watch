@@ -58,6 +58,7 @@ export class BinListComponent implements OnInit {
   faExclamationTriangle = faExclamationTriangle;
   faSpinner = faSpinner;
 
+
   bins: Bin[] = [];
   isLoading = false;
   error = '';
@@ -82,6 +83,14 @@ export class BinListComponent implements OnInit {
     },
     fillLevel: 0 // This will remain local and will be updated later
   };
+
+  // Pagination
+  currentPage: number = 1;
+  pageSize: number = 7;
+
+  get totalPages(): number {
+    return Math.ceil(this.bins.length / this.pageSize);
+  }
 
   constructor(private binService: BinService) {}
 
@@ -109,6 +118,25 @@ export class BinListComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  // Pagination Logic
+  get paginatedBins() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.bins.slice(start, end); // Returns the bins for the current page
+  }
+
+  nextPage() {
+    if (this.currentPage * this.pageSize < this.bins.length) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
   }
 
   // Calculate fillLevel as a percentage based on capacity and some other factor (e.g., current fill weight)
@@ -144,6 +172,7 @@ export class BinListComponent implements OnInit {
     this.selectedBin = bin;
   }
 
+
   showDeleteDialog() {
     if (this.selectedBin) {
       this.showDeleteConfirmation = true;
@@ -175,7 +204,6 @@ export class BinListComponent implements OnInit {
     }
   }
 
-
   addBin() {
     this.isLoading = true;
     this.error = ''; // Clear previous errors if any
@@ -185,11 +213,12 @@ export class BinListComponent implements OnInit {
       type: this.getTypeNumericValue(this.bin.type.toString()),
       lastEmptied: new Date().toISOString(),
       location: {
-        longitude: this.bin.location.longitude,
-        latitude: this.bin.location.latitude,
+        longitude: Number(this.bin.location.longitude),  // Ensure it's a number
+        latitude: Number(this.bin.location.latitude),    // Ensure it's a number
         timestamp: new Date().toISOString()
       }
     };
+
 
     this.binService.createBin(newBin).subscribe({
       next: () => {
@@ -205,7 +234,6 @@ export class BinListComponent implements OnInit {
       }
     });
   }
-
 
   clearForm() {
     this.bin = {
