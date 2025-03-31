@@ -108,6 +108,8 @@ using (var scope = app.Services.CreateScope())
     // Chamar os seeders
     await RoleSeeder.SeedRoles(roleManager);
     await UserSeeder.SeedUsersAsync(userManager);
+
+    DbInitializer.Initialize(context);
 }
 
 // Mapear as rotas padrão e API

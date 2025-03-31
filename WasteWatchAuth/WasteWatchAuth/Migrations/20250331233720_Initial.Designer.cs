@@ -12,7 +12,7 @@ using WasteWatchAuth.Data;
 namespace WasteWatchAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250330220819_Initial")]
+    [Migration("20250331233720_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
