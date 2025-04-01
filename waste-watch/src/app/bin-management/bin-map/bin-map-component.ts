@@ -87,10 +87,12 @@ export class BinMapComponent implements OnInit {
 
     this.binService.getBins().subscribe({
       next: (bins) => {
+        console.log("Bins received from service:", bins); // Debugging log
         this.bins = bins;
         this.isLoading = false;
         this.plotBinsOnMap();
       },
+
       error: (err) => {
         console.error('Error loading bins:', err);
         this.errorMessage = 'Failed to load bin data. Please try again later.';
@@ -100,31 +102,35 @@ export class BinMapComponent implements OnInit {
   }
 
   loadGoogleMaps(): void {
+    // Check if Google Maps is already loaded
     if (window.google?.maps) {
       this.initMap();
       return;
     }
 
+    // Remove any existing callback from window
+    (window as any).initMap = undefined;
+
+    // Create a unique callback name to avoid conflicts
+    const callbackName = `initMap_${Date.now()}`;
+
+    // Assign the callback to window
+    (window as any)[callbackName] = () => {
+      this.initMap();
+      // Clean up after ourselves
+      delete (window as any)[callbackName];
+    };
+
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&v=3.44&libraries=places&callback=initMap`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&v=3.44&libraries=places&callback=${callbackName}`;
     script.async = true;
     script.defer = true;
-
-    script.onload = () => {
-      // Delay the initialization slightly to ensure everything is ready
-      setTimeout(() => {
-        if (window.google?.maps) {
-          this.initMap();
-        } else {
-          console.error('Google Maps API not available after loading');
-          this.fallbackMapLoading();
-        }
-      }, 1000); // Delay the initialization by 1 second
-    };
 
     script.onerror = () => {
       console.error('Google Maps failed to load - trying fallback');
       this.fallbackMapLoading();
+      // Clean up the callback if loading failed
+      delete (window as any)[callbackName];
     };
 
     document.head.appendChild(script);
@@ -173,56 +179,74 @@ export class BinMapComponent implements OnInit {
   plotBinsOnMap(): void {
     if (!this.map || !this.bins.length) return;
 
-    const customIcon = 'assets/images/bin.png';  // Path to your custom icon
+    // Custom icon configuration to match Google's default marker size
+    const customIcon = {
+      url: 'assets/images/bin.png', // Path to your custom icon
+      scaledSize: new google.maps.Size(22, 40), // Standard Google Maps marker size (width, height)
+      origin: new google.maps.Point(0, 0), // Origin point
+      anchor: new google.maps.Point(11, 40) // Anchor point (centered horizontally, bottom-aligned)
+    };
 
-    // Store markers globally to easily hide or show them based on zoom level
     this.bins.forEach(bin => {
-      let lat: number, lng: number;
+      let latStr: string = bin.location.latitude?.toString().trim() || "";
+      let lngStr: string = bin.location.longitude?.toString().trim() || "";
 
-      // Convert DMS coordinates to decimal degrees
-      if (typeof bin.location.latitude === 'string') {
-        lat = this.convertDMSToDecimal(bin.location.latitude);  // Convert string to decimal degrees
-      } else {
-        lat = bin.location.latitude;  // If it's already a number, use it directly
+      // Ensure latitude and longitude are not empty or undefined
+      if (!latStr || !lngStr) {
+        console.error(`Missing coordinates for Bin ${bin.id}:`, bin);
+        return;
       }
 
-      if (typeof bin.location.longitude === 'string') {
-        lng = this.convertDMSToDecimal(bin.location.longitude, true);  // Convert string to decimal degrees
+      let lat: number;
+      let lng: number;
+
+      // Parse latitude (handle both decimal and DMS formats)
+      if (/^-?\d+(\.\d+)?$/.test(latStr)) {
+        lat = parseFloat(latStr);
       } else {
-        lng = bin.location.longitude;  // If it's already a number, use it directly
+        lat = this.convertDMSToDecimal(latStr);
+        if (isNaN(lat)) {
+          console.error(`Invalid latitude format for Bin ${bin.id}: ${latStr}`);
+          return;
+        }
       }
 
-      // Check if the coordinates are valid numbers
+      // Parse longitude (handle both decimal and DMS formats)
+      if (/^-?\d+(\.\d+)?$/.test(lngStr)) {
+        lng = parseFloat(lngStr);
+      } else {
+        lng = this.convertDMSToDecimal(lngStr);
+        if (isNaN(lng)) {
+          console.error(`Invalid longitude format for Bin ${bin.id}: ${lngStr}`);
+          return;
+        }
+      }
+
+      // Ensure coordinates are valid numbers
       if (isNaN(lat) || isNaN(lng)) {
         console.error(`Invalid coordinates for Bin ${bin.id}: Latitude = ${lat}, Longitude = ${lng}`);
-        return;  // Skip this bin if the coordinates are invalid
+        return;
       }
 
-      const marker = new window.google.maps.Marker({
+      const marker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
         map: this.map,
         title: `Bin ${bin.id} - ${this.getStatusText(bin)}`,
-        icon: customIcon,
+        icon: customIcon, // Use the configured icon
+        optimized: false // Helps with performance when using custom icons
       });
 
-      // Set an initial marker visibility based on zoom level
       this.setMarkerVisibility(marker);
 
-      // Listen for zoom level changes and update marker visibility
-      window.google.maps.event.addListener(this.map, 'zoom_changed', () => {
+      google.maps.event.addListener(this.map, 'zoom_changed', () => {
         this.setMarkerVisibility(marker);
       });
 
-      // Add click event to focus the map on this bin when clicked
-      window.google.maps.event.addListener(marker, 'click', () => {
+      google.maps.event.addListener(marker, 'click', () => {
         this.selectCard(bin);
       });
     });
   }
-
-
-
-
   // Helper function to set marker visibility based on zoom level
   setMarkerVisibility(marker: any): void {
     const zoomLevel = this.map.getZoom();
@@ -240,21 +264,54 @@ export class BinMapComponent implements OnInit {
     this.selectedBin = bin;
 
     // Get the latitude and longitude of the selected bin
-    const lat = this.convertDMSToDecimal(bin.location.latitude);  // Convert DMS to decimal degrees if necessary
-    const lng = this.convertDMSToDecimal(bin.location.longitude, true);  // Convert DMS to decimal degrees if necessary
+    let lat: number;
+    let lng: number;
+    const latStr = bin.location.latitude?.toString().trim() || "";
+    const lngStr = bin.location.longitude?.toString().trim() || "";
+
+    // Parse latitude
+    if (/^-?\d+(\.\d+)?$/.test(latStr)) {
+        lat = parseFloat(latStr);
+    } else {
+        lat = this.convertDMSToDecimal(latStr);
+    }
+
+    // Parse longitude
+    if (/^-?\d+(\.\d+)?$/.test(lngStr)) {
+        lng = parseFloat(lngStr);
+    } else {
+        lng = this.convertDMSToDecimal(lngStr);
+    }
 
     // Check if coordinates are valid
     if (isNaN(lat) || isNaN(lng)) {
-      console.error('Invalid coordinates for Bin:', bin.id);
-      return;  // Prevent map centering if coordinates are invalid
+        console.error('Invalid coordinates for Bin:', bin.id);
+        return;  // Prevent map centering if coordinates are invalid
     }
 
-    // Focus the map on the selected bin's coordinates
+    // Focus the map on the selected bin's coordinates with a smooth zoom transition
     if (this.map) {
-      this.map.setCenter({ lat, lng });  // Center the map on the selected bin
-      this.map.setZoom(15);  // Set zoom level to a level that is appropriate for viewing the bin (e.g., 15)
+        this.map.setCenter({ lat, lng });  // Center the map on the selected bin
+
+        // Use animation for zoom transition (e.g., using Google Maps' animateZoom)
+        const currentZoom = this.map.getZoom();
+        const targetZoom = 17;  // Set zoom level to a level that is appropriate for viewing the bin
+
+        // Gradually adjust zoom level with ease-in animation
+        let zoomStep = currentZoom < targetZoom ? 1 : -1;  // Determine direction
+        let zoomInterval = setInterval(() => {
+            let currentZoomLevel = this.map.getZoom();
+            if (zoomStep > 0 && currentZoomLevel < targetZoom) {
+                this.map.setZoom(currentZoomLevel + zoomStep);
+            } else if (zoomStep < 0 && currentZoomLevel > targetZoom) {
+                this.map.setZoom(currentZoomLevel + zoomStep);
+            } else {
+                clearInterval(zoomInterval);  // Stop the zooming animation when the target zoom is reached
+            }
+        }, 100);  // Update zoom every 100ms for smooth transition
     }
-  }
+}
+
 
 
 
@@ -262,28 +319,41 @@ export class BinMapComponent implements OnInit {
 
   // Convert DMS (Degrees, Minutes, Seconds) format to Decimal Degrees
   // Convert DMS (Degrees, Minutes, Seconds) format to Decimal Degrees
-  convertDMSToDecimal(dms: string, isLongitude: boolean = false): number {
-    const regex = /(\d{1,3})°(\d{1,2})'(\d+(\.\d+)?)"/;
-    const matches = dms.match(regex);
-
-    if (matches) {
-      const degrees = parseInt(matches[1], 10);  // Degrees
-      const minutes = parseInt(matches[2], 10);  // Minutes
-      const seconds = parseFloat(matches[3]);   // Seconds with decimal part
-
-      let decimal = degrees + minutes / 60 + seconds / 3600;
-
-      if (isLongitude && degrees > 0) {
-        decimal = -decimal;
-      }
-
-      return decimal; // Return decimal value (as a number)
-    }
-
-    console.error(`Invalid DMS format: ${dms}`);
-    return NaN; // Return NaN if invalid
+// Also handles decimal degrees directly
+convertDMSToDecimal(dms: string | number): number {
+  // If it's already a number, return it directly
+  if (typeof dms === 'number') {
+    return dms;
   }
 
+  // If it's a string that's already in decimal format, parse it
+  if (/^-?\d+(\.\d+)?$/.test(dms.trim())) {
+    return parseFloat(dms.trim());
+  }
+
+  // Otherwise, try to parse as DMS format
+  const regex = /(\d{1,3})°\s*(\d{1,2})'\s*(\d+(\.\d+)?)"?\s*([NSEW])?/i;
+  const matches = dms.match(regex);
+
+  if (!matches) {
+    console.error(`Invalid coordinate format: ${dms}`);
+    return NaN;
+  }
+
+  const degrees = parseFloat(matches[1]);
+  const minutes = parseFloat(matches[2]) || 0;
+  const seconds = parseFloat(matches[3]) || 0;
+  const direction = matches[5] ? matches[5].toUpperCase() : '';
+
+  let decimal = degrees + minutes / 60 + seconds / 3600;
+
+  // Convert to negative for South (S) or West (W)
+  if (direction === 'S' || direction === 'W') {
+    decimal = -decimal;
+  }
+
+  return decimal;
+}
 
 
 

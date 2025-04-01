@@ -59,46 +59,22 @@
                   <strong>Last Emptied:</strong> {{ bin.lastEmptied |
                   date:'short' }}
                 </p>
+
+                <p>
+                  <strong>Latitude:</strong> {{
+                  convertDMSToDecimal(bin.location.latitude) | number:'1.4-4' }}
+                </p>
+                <p>
+                  <strong>Longitude:</strong> {{
+                  convertDMSToDecimal(bin.location.longitude) |
+                  number:'1.4-4' }}
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Bin Details Section -->
-        <div class="details-section" *ngIf="selectedBin">
-          <div class="info-panel">
-            <div class="info-header">
-              <h3>Bin Details</h3>
-              <fa-icon [icon]="faLock" *ngIf="!isAuthorized"></fa-icon>
-              <fa-icon [icon]="faUnlock" *ngIf="isAuthorized"></fa-icon>
-            </div>
-            <div class="info-content">
-              <p><strong>ID:</strong> {{ selectedBin.id }}</p>
-              <p>
-                <strong>Type:</strong> {{ getBinTypeText(selectedBin.type) }}
-              </p>
-              <p>
-                <strong>Status:</strong>
-                <span [ngClass]="getStatusClass(selectedBin)">
-                  {{ getStatusText(selectedBin) }}
-                </span>
-              </p>
-              <p><strong>Capacity:</strong> {{ selectedBin.capacity }} kg</p>
-              <p>
-                <strong>Last Emptied:</strong> {{ selectedBin.lastEmptied |
-                date:'short' }}
-              </p>
-              <p>
-                <strong>Location:</strong>
-                {{ convertDMSToDecimal(selectedBin.location.latitude) |
-                number:'1.4-4' }}, {{
-                convertDMSToDecimal(selectedBin.location.longitude, true) |
-                number:'1.4-4' }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+              </div>
     </div>
   </div>
 </div>
