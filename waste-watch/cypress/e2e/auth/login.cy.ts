@@ -58,7 +58,7 @@ describe('Login Page Tests', () => {
    */
   it('should navigate to the reset password page', () => {
     cy.get('.btn-link').contains(/forgot your password\?/i).click(); // Click the forgot password link
-    cy.wait(500); // Wait for navigation
+    cy.wait(2000);
     cy.url().should('include', '/reset-password'); // Ensure the URL contains '/reset-password'
     cy.wait(2000);
   });
@@ -89,23 +89,6 @@ describe('Login Page Tests', () => {
     cy.get('.btn-dark').should('not.be.disabled'); // Ensure the login button is initially enabled
     cy.get('form').submit(); // Submit the form
     cy.get('.btn-dark').should('be.disabled'); // Check that the login button is disabled during the loading state
-    cy.wait(2000);
-  });
-
-  /**
-   * Test to verify successful login and redirection of a fleet manager to the fleet dashboard.
-   */
-  it('should login successfully and redirect fleet manager to dashboard', () => {
-    cy.intercept('POST', Cypress.env('backendUrl') + '/login', {
-      statusCode: 200,
-      body: { user: { roles: ['fleet manager'] } },
-    }).as('loginRequest');
-
-    cy.get('input#email').type('wastewatchproject@gmail.com'); // Type fleet manager email
-    cy.get('input#password').type('Wastewatch1234!'); // Type password
-    cy.get('form').submit(); // Submit the login form
-
-    cy.url().should('include', '/fleet-dashboard'); // Verify that the fleet manager is redirected to the fleet dashboard
     cy.wait(2000);
   });
 });

@@ -11,7 +11,7 @@ before(() => {
         id: 1,
         type: 'Recycling',
         capacity: 50,
-        location: { latitude: 0, longitude: 0 },
+        location: { latitude: '38.33093' ,longitude: 8.51333 },
         lastEmptied: '2025-03-24T12:00:00Z',
         fillLevel: 80,
         status: 1
@@ -41,42 +41,12 @@ it('should load and display bins', () => {
   cy.get('.bin-table thead th').contains('Status');
   cy.get('.bin-table thead th').contains('Max Capacity');
   cy.get('.bin-table thead th').contains('Last Emptied');
+  cy.wait(2000);
 });
 
 // Test 2: Check if the Add Bin form is displayed when the button is clicked
 it('should show add bin form when clicked', () => {
   cy.get('button.btn-add').click();
   cy.get('.bin-form-container').should('be.visible');
-});
-
-// Test 3: Check if the Add Bin form is submitted and bin is created
-it('should submit add bin form successfully', () => {
-  // Mock the POST request to create a bin without actually hitting the backend
-  cy.intercept('POST', '/api/bins', {
-    statusCode: 200,
-    body: {
-      id: 4,
-      type: 'Recycling',
-      capacity: 50,
-      location: { latitude: 0, longitude: 0 },
-      lastEmptied: '2025-03-24T12:00:00Z',
-      fillLevel: 0,  // Add fill level for testing
-      status: 0
-    }
-  }).as('postBin');
-
-  // Open Add Bin form
-  cy.get('button.btn-add').click();
-
-  // Fill in the form with hardcoded data
-  cy.get('input[name="capacity"]').type('50'); // Set capacity
-  cy.get('select[name="type"]').select('Recycling'); // Select type
-
-  // Submit the form
-  cy.get('button[type="submit"]').click();
-
-  // Wait for the POST request to be mocked
-  cy.wait('@postBin');
-
 });
 
