@@ -1,3 +1,5 @@
+
+
 /* Dashboard Container */
 .dashboard-container {
   display: flex;
@@ -179,55 +181,6 @@
 .status-overflow {
   background-color: #fecaca;
   color: #7f1d1d;
-}
-
-/* Details Panel */
-.details-section {
-  margin-top: 1.5rem;
-}
-
-.info-panel {
-  background-color: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  border: 1px solid #e5e7eb;
-}
-
-.info-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.info-header h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #111827;
-  margin: 0;
-}
-
-.info-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.info-content p {
-  margin: 0;
-  font-size: 0.9375rem;
-  color: #4b5563;
-  display: flex;
-}
-
-.info-content strong {
-  color: #111827;
-  font-weight: 500;
-  min-width: 100px;
-  display: inline-block;
 }
 
 /* Loading State */

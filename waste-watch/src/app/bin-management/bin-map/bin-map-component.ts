@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BinService, Bin } from '../../services/BinService';
-import { faMapMarkerAlt, faRoute, faLock, faUnlock, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faRoute, faLock, faUnlock, faSync, faTrashAlt, faInfoCircle, faWeight, faClock } from '@fortawesome/free-solid-svg-icons';
+
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../../services/AuthService';
 import { environment } from '../../../environments/environtment';
 
-// Type declarations for Google Maps
 interface MapOptions {
   center: { lat: number; lng: number };
   zoom: number;
-  mapTypeId: string;  // Satellite view
-  streetViewControl: boolean;  // Remove Street View option
+  mapTypeId: string;
+  streetViewControl: boolean;
   [key: string]: any;
 }
 
@@ -26,6 +26,7 @@ interface MarkerOptions {
 interface GoogleMaps {
   Map: new (element: HTMLElement, options?: MapOptions) => any;
   Marker: new (options: MarkerOptions) => any;
+  InfoWindow: new (options: any) => any;
 }
 
 declare global {
@@ -46,13 +47,20 @@ declare global {
 export class BinMapComponent implements OnInit {
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
   map: any = null;
+  infoWindow: any = null;
 
-  // Icons
+  // Existing Icons
   faMapMarkerAlt = faMapMarkerAlt;
   faRoute = faRoute;
   faLock = faLock;
   faUnlock = faUnlock;
   faSync = faSync;
+
+  // New Icons for Info Window
+  faTrashAlt = faTrashAlt;
+  faInfoCircle = faInfoCircle;
+  faWeight = faWeight;
+  faClock = faClock;
 
   // Component state
   bins: Bin[] = [];
@@ -62,8 +70,10 @@ export class BinMapComponent implements OnInit {
   errorMessage: string | null = null;
 
   // Latitude and Longitude of the specific location
-  lat: number = 38.552583;  // 38º33'09.340'' N
-  lng: number = -8.859192;  // 8º51'33.310'' W
+  lat: number = 38.552583;
+  lng: number = -8.859192;
+
+
 
   constructor(
     private binService: BinService,
@@ -87,12 +97,10 @@ export class BinMapComponent implements OnInit {
 
     this.binService.getBins().subscribe({
       next: (bins) => {
-        console.log("Bins received from service:", bins); // Debugging log
         this.bins = bins;
         this.isLoading = false;
         this.plotBinsOnMap();
       },
-
       error: (err) => {
         console.error('Error loading bins:', err);
         this.errorMessage = 'Failed to load bin data. Please try again later.';
@@ -102,22 +110,15 @@ export class BinMapComponent implements OnInit {
   }
 
   loadGoogleMaps(): void {
-    // Check if Google Maps is already loaded
     if (window.google?.maps) {
       this.initMap();
       return;
     }
 
-    // Remove any existing callback from window
     (window as any).initMap = undefined;
-
-    // Create a unique callback name to avoid conflicts
     const callbackName = `initMap_${Date.now()}`;
-
-    // Assign the callback to window
     (window as any)[callbackName] = () => {
       this.initMap();
-      // Clean up after ourselves
       delete (window as any)[callbackName];
     };
 
@@ -129,7 +130,6 @@ export class BinMapComponent implements OnInit {
     script.onerror = () => {
       console.error('Google Maps failed to load - trying fallback');
       this.fallbackMapLoading();
-      // Clean up the callback if loading failed
       delete (window as any)[callbackName];
     };
 
@@ -138,20 +138,19 @@ export class BinMapComponent implements OnInit {
 
   private fallbackMapLoading() {
     this.errorMessage = 'Map loading delayed by browser security settings or failed to load';
-    setTimeout(() => this.loadGoogleMaps(), 2000); // Retry after delay
+    setTimeout(() => this.loadGoogleMaps(), 2000);
   }
 
   initMap(): void {
     if (!this.mapContainer?.nativeElement) return;
 
     try {
-      // Make sure google.maps.Map is accessible
       if (window.google?.maps?.Map) {
         this.map = new window.google.maps.Map(this.mapContainer.nativeElement, {
-          center: { lat: this.lat, lng: this.lng },  // Start at the specific location
+          center: { lat: this.lat, lng: this.lng },
           zoom: 12,
-          mapTypeId: 'satellite', // Set map type to Satellite
-          streetViewControl: false, // Remove Street View control
+          mapTypeId: 'satellite',
+          streetViewControl: false,
         });
         this.plotBinsOnMap();
       } else {
@@ -164,67 +163,28 @@ export class BinMapComponent implements OnInit {
     }
   }
 
-  convertToDecimal(coordinate: number, isLongitude: boolean = false): number {
-    const coordinateStr = coordinate.toString();
-    const degrees = parseInt(coordinateStr.substring(0, 2)); // First 2 digits for degrees
-    const minutes = parseFloat(coordinateStr.substring(2)); // Remaining part for minutes
-
-    const decimal = degrees + minutes / 60;
-
-    // For longitude, negative values need to be adjusted (assuming west longitude is negative)
-    return isLongitude ? -decimal : decimal;
-  }
-
-
   plotBinsOnMap(): void {
     if (!this.map || !this.bins.length) return;
 
-    // Custom icon configuration to match Google's default marker size
-    const customIcon = {
-      url: 'assets/images/bin.png', // Path to your custom icon
-      scaledSize: new google.maps.Size(22, 40), // Standard Google Maps marker size (width, height)
-      origin: new google.maps.Point(0, 0), // Origin point
-      anchor: new google.maps.Point(11, 40) // Anchor point (centered horizontally, bottom-aligned)
-    };
+    this.infoWindow = new google.maps.InfoWindow({
+      maxWidth: 400,
+      minWidth: 300
+    });
 
     this.bins.forEach(bin => {
       let latStr: string = bin.location.latitude?.toString().trim() || "";
       let lngStr: string = bin.location.longitude?.toString().trim() || "";
 
-      // Ensure latitude and longitude are not empty or undefined
       if (!latStr || !lngStr) {
         console.error(`Missing coordinates for Bin ${bin.id}:`, bin);
         return;
       }
 
-      let lat: number;
-      let lng: number;
+      let lat: number = this.convertDMSToDecimal(latStr);
+      let lng: number = this.convertDMSToDecimal(lngStr);
 
-      // Parse latitude (handle both decimal and DMS formats)
-      if (/^-?\d+(\.\d+)?$/.test(latStr)) {
-        lat = parseFloat(latStr);
-      } else {
-        lat = this.convertDMSToDecimal(latStr);
-        if (isNaN(lat)) {
-          console.error(`Invalid latitude format for Bin ${bin.id}: ${latStr}`);
-          return;
-        }
-      }
-
-      // Parse longitude (handle both decimal and DMS formats)
-      if (/^-?\d+(\.\d+)?$/.test(lngStr)) {
-        lng = parseFloat(lngStr);
-      } else {
-        lng = this.convertDMSToDecimal(lngStr);
-        if (isNaN(lng)) {
-          console.error(`Invalid longitude format for Bin ${bin.id}: ${lngStr}`);
-          return;
-        }
-      }
-
-      // Ensure coordinates are valid numbers
       if (isNaN(lat) || isNaN(lng)) {
-        console.error(`Invalid coordinates for Bin ${bin.id}: Latitude = ${lat}, Longitude = ${lng}`);
+        console.error(`Invalid coordinates for Bin ${bin.id}:`, bin);
         return;
       }
 
@@ -232,8 +192,13 @@ export class BinMapComponent implements OnInit {
         position: { lat: lat, lng: lng },
         map: this.map,
         title: `Bin ${bin.id} - ${this.getStatusText(bin)}`,
-        icon: customIcon, // Use the configured icon
-        optimized: false // Helps with performance when using custom icons
+        icon: {
+          url: this.getBinIcon(bin.type),  // Get icon based on bin type
+          scaledSize: new google.maps.Size(50, 55),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(11, 40)
+        },
+        optimized: false
       });
 
       this.setMarkerVisibility(marker);
@@ -243,120 +208,161 @@ export class BinMapComponent implements OnInit {
       });
 
       google.maps.event.addListener(marker, 'click', () => {
-        this.selectCard(bin);
+        this.showBinInfo(bin, marker);
       });
     });
   }
-  // Helper function to set marker visibility based on zoom level
+
+
+  showBinInfo(bin: Bin, marker: any): void {
+    const content = `
+      <div class="gm-style-iw p-2 rounded shadow" style="max-width: 280px; font-family: Arial, sans-serif;">
+        <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 5px;">
+          <h5 class="fw-bold text-primary mb-1" style="font-size: 16px;">
+            <i class="fas fa-trash-alt me-2"></i> Bin #${bin.id}
+          </h5>
+          <span class="small text-muted">${this.getBinTypeText(bin.type)}</span>
+        </div>
+
+        <div class="info-content" style="font-size: 14px;">
+          <p class="mb-1"><i class="fas fa-info-circle me-1 text-secondary"></i>
+            <strong>Status:</strong> <span class="badge ${this.getStatusClass(bin)}">${this.getStatusText(bin)}</span>
+          </p>
+          <p class="mb-1"><i class="fas fa-weight me-1 text-secondary"></i>
+            <strong>Capacity:</strong> ${bin.capacity} kg
+          </p>
+          <p class="mb-1"><i class="fas fa-clock me-1 text-secondary"></i>
+            <strong>Last Emptied:</strong> ${new Date(bin.lastEmptied).toLocaleString()}
+          </p>
+
+          <hr class="my-2">
+
+          <div class="location-details">
+            <p class="mb-1"><i class="fas fa-map-marker-alt me-1 text-danger"></i>
+              <strong>Location:</strong>
+            </p>
+            <p class="small text-muted mb-0">
+              Latitude: <strong>${this.convertDMSToDecimal(bin.location.latitude).toFixed(6)}</strong>
+            </p>
+            <p class="small text-muted">
+              Longitude: <strong>${this.convertDMSToDecimal(bin.location.longitude).toFixed(6)}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    this.infoWindow.setContent(content);
+    this.infoWindow.open(this.map, marker);
+
+    this.selectedBin = bin;
+    this.map.panTo(marker.getPosition());
+
+    if (this.map.getZoom() < 16) {
+      this.map.setZoom(16);
+    }
+}
+
+getBinIcon(binType: number): string {
+  switch (binType) {
+    case 0:
+      return 'assets/images/general-waste.png';  // General Waste Bin
+    case 1:
+      return 'assets/images/bin.png';  // Recycling Bin
+    case 2:
+      return 'assets/images/organic-bin.png';    // Organic Waste Bin
+    case 3:
+      return 'assets/images/hazardous-bin.png';  // Hazardous Waste Bin
+    default:
+      return 'assets/images/default-bin.png';    // Default Bin Icon
+  }
+}
+
+
+
   setMarkerVisibility(marker: any): void {
     const zoomLevel = this.map.getZoom();
-
-    // Display markers only if zoom level is 12 or greater
-    if (zoomLevel >= 12) {
-      marker.setVisible(true);
-    } else {
-      marker.setVisible(false);
-    }
+    marker.setVisible(zoomLevel >= 12);
   }
 
   selectCard(bin: Bin): void {
-    // Set the selected bin
-    this.selectedBin = bin;
-
-    // Get the latitude and longitude of the selected bin
     let lat: number;
     let lng: number;
     const latStr = bin.location.latitude?.toString().trim() || "";
     const lngStr = bin.location.longitude?.toString().trim() || "";
 
-    // Parse latitude
     if (/^-?\d+(\.\d+)?$/.test(latStr)) {
-        lat = parseFloat(latStr);
+      lat = parseFloat(latStr);
     } else {
-        lat = this.convertDMSToDecimal(latStr);
+      lat = this.convertDMSToDecimal(latStr);
     }
 
-    // Parse longitude
     if (/^-?\d+(\.\d+)?$/.test(lngStr)) {
-        lng = parseFloat(lngStr);
+      lng = parseFloat(lngStr);
     } else {
-        lng = this.convertDMSToDecimal(lngStr);
+      lng = this.convertDMSToDecimal(lngStr);
     }
 
-    // Check if coordinates are valid
     if (isNaN(lat) || isNaN(lng)) {
-        console.error('Invalid coordinates for Bin:', bin.id);
-        return;  // Prevent map centering if coordinates are invalid
+      console.error('Invalid coordinates for Bin:', bin.id);
+      return;
     }
 
-    // Focus the map on the selected bin's coordinates with a smooth zoom transition
     if (this.map) {
-        this.map.setCenter({ lat, lng });  // Center the map on the selected bin
+      const position = new google.maps.LatLng(lat, lng);
+      this.map.panTo(position);
 
-        // Use animation for zoom transition (e.g., using Google Maps' animateZoom)
-        const currentZoom = this.map.getZoom();
-        const targetZoom = 17;  // Set zoom level to a level that is appropriate for viewing the bin
+      const currentZoom = this.map.getZoom();
+      const targetZoom = 17;
 
-        // Gradually adjust zoom level with ease-in animation
-        let zoomStep = currentZoom < targetZoom ? 1 : -1;  // Determine direction
-        let zoomInterval = setInterval(() => {
-            let currentZoomLevel = this.map.getZoom();
-            if (zoomStep > 0 && currentZoomLevel < targetZoom) {
-                this.map.setZoom(currentZoomLevel + zoomStep);
-            } else if (zoomStep < 0 && currentZoomLevel > targetZoom) {
-                this.map.setZoom(currentZoomLevel + zoomStep);
-            } else {
-                clearInterval(zoomInterval);  // Stop the zooming animation when the target zoom is reached
-            }
-        }, 100);  // Update zoom every 100ms for smooth transition
+      if (currentZoom !== targetZoom) {
+        this.map.setZoom(targetZoom);
+      }
+
+      // Find and click the corresponding marker
+      const markers = this.map.markers;
+      if (markers) {
+        const marker = markers.find((m: any) =>
+          m.getPosition().lat() === lat &&
+          m.getPosition().lng() === lng
+        );
+        if (marker) {
+          google.maps.event.trigger(marker, 'click');
+        }
+      }
     }
-}
-
-
-
-
-
-
-  // Convert DMS (Degrees, Minutes, Seconds) format to Decimal Degrees
-  // Convert DMS (Degrees, Minutes, Seconds) format to Decimal Degrees
-// Also handles decimal degrees directly
-convertDMSToDecimal(dms: string | number): number {
-  // If it's already a number, return it directly
-  if (typeof dms === 'number') {
-    return dms;
   }
 
-  // If it's a string that's already in decimal format, parse it
-  if (/^-?\d+(\.\d+)?$/.test(dms.trim())) {
-    return parseFloat(dms.trim());
+  convertDMSToDecimal(dms: string | number): number {
+    if (typeof dms === 'number') {
+      return dms;
+    }
+
+    if (/^-?\d+(\.\d+)?$/.test(dms.trim())) {
+      return parseFloat(dms.trim());
+    }
+
+    const regex = /(\d{1,3})°\s*(\d{1,2})'\s*(\d+(\.\d+)?)"?\s*([NSEW])?/i;
+    const matches = dms.match(regex);
+
+    if (!matches) {
+      console.error(`Invalid coordinate format: ${dms}`);
+      return NaN;
+    }
+
+    const degrees = parseFloat(matches[1]);
+    const minutes = parseFloat(matches[2]) || 0;
+    const seconds = parseFloat(matches[3]) || 0;
+    const direction = matches[5] ? matches[5].toUpperCase() : '';
+
+    let decimal = degrees + minutes / 60 + seconds / 3600;
+
+    if (direction === 'S' || direction === 'W') {
+      decimal = -decimal;
+    }
+
+    return decimal;
   }
-
-  // Otherwise, try to parse as DMS format
-  const regex = /(\d{1,3})°\s*(\d{1,2})'\s*(\d+(\.\d+)?)"?\s*([NSEW])?/i;
-  const matches = dms.match(regex);
-
-  if (!matches) {
-    console.error(`Invalid coordinate format: ${dms}`);
-    return NaN;
-  }
-
-  const degrees = parseFloat(matches[1]);
-  const minutes = parseFloat(matches[2]) || 0;
-  const seconds = parseFloat(matches[3]) || 0;
-  const direction = matches[5] ? matches[5].toUpperCase() : '';
-
-  let decimal = degrees + minutes / 60 + seconds / 3600;
-
-  // Convert to negative for South (S) or West (W)
-  if (direction === 'S' || direction === 'W') {
-    decimal = -decimal;
-  }
-
-  return decimal;
-}
-
-
-
 
   getStatusClass(bin: Bin): string {
     switch (bin.status) {

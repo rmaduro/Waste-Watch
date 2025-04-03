@@ -340,7 +340,7 @@ namespace WasteWatchAuth.Controllers
         [EmailAddress(ErrorMessage = "Formato de email inválido")]
         public string Email { get; set; }
     }
-
+    
     public class ResetPasswordModel
     {
         [Required(ErrorMessage = "O email é obrigatório")]

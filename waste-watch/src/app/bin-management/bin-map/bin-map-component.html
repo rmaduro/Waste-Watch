@@ -55,26 +55,11 @@
               <div class="bin-details">
                 <p><strong>Type:</strong> {{ getBinTypeText(bin.type) }}</p>
                 <p><strong>Capacity:</strong> {{ bin.capacity }} kg</p>
-                <p>
-                  <strong>Last Emptied:</strong> {{ bin.lastEmptied |
-                  date:'short' }}
-                </p>
-
-                <p>
-                  <strong>Latitude:</strong> {{
-                  convertDMSToDecimal(bin.location.latitude) | number:'1.4-4' }}
-                </p>
-                <p>
-                  <strong>Longitude:</strong> {{
-                  convertDMSToDecimal(bin.location.longitude) |
-                  number:'1.4-4' }}
-                </p>
               </div>
             </div>
           </div>
         </div>
-
-              </div>
+      </div>
     </div>
   </div>
 </div>
