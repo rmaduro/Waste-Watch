@@ -238,6 +238,16 @@
   },
   {
     "ContainingType": "WasteWatchAuth.Controllers.BinsController",
+    "Method": "GetDamagedBins",
+    "RelativePath": "api/Bins/damagedbins",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.BinsController",
     "Method": "GetMaintenanceHistory",
     "RelativePath": "api/Bins/maintenance-history",
     "HttpMethod": "GET",

@@ -241,6 +241,25 @@
 			return Ok(almostFullBins);
 		}
 
+
+		/// <summary>
+		/// Obtém todos os bins com o estado NotFunctional (danificados).
+		/// </summary>
+		[HttpGet("damagedbins")]
+		public async Task<IActionResult> GetDamagedBins()
+		{
+			var damagedBins = await _context.Bins
+				.Where(b => b.Status == BinStatus.NotFunctional)
+				.Include(b => b.Location)
+				.ToListAsync();
+
+			if (damagedBins.Count == 0)
+				return Ok(new { message = "Não existem contentores danificados." });
+
+			return Ok(damagedBins);
+		}
+
+
 	}
 }
 

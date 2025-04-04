@@ -28,10 +28,10 @@ namespace WasteWatchAuth.Data
 			// 2. Vehicles
 			var vehicles = new Vehicle[]
 			{
-				new() { LicensePlate = "22-ZZ-22", Status = "Active", RouteType = "Commercial", MaxCapacity = 3000, LastMaintenance = DateTime.Parse("2024-04-15"), Type = VehicleType.FrontLoader, Latitude = 38.7169, Longitude = -9.1399, DriverId = collaborators[0].Id },
-				new() { LicensePlate = "11-AA-11", Status = "Active", RouteType = "Industrial", MaxCapacity = 4000, LastMaintenance = DateTime.Parse("2024-04-14"), Type = VehicleType.UrbanMini, Latitude = 38.7100, Longitude = -9.1400, DriverId = collaborators[1].Id },
-				new() { LicensePlate = "33-BB-33", Status = "Active", RouteType = "Commercial", MaxCapacity = 3500, LastMaintenance = DateTime.Parse("2024-04-13"), Type = VehicleType.SideLoader, Latitude = 38.7130, Longitude = -9.1420, DriverId = collaborators[2].Id },
-				new() { LicensePlate = "44-CC-44", Status = "Active", RouteType = "Industrial", MaxCapacity = 3200, LastMaintenance = DateTime.Parse("2024-04-12"), Type = VehicleType.RearLoader, Latitude = 38.7155, Longitude = -9.1412, DriverId = collaborators[3].Id }
+				new() { LicensePlate = "22-ZZ-22", Status = "Active", RouteType = "Commercial", MaxCapacity = 3000, LastMaintenance = DateTime.Parse("2024-04-15"), Type = VehicleType.FrontLoader, Latitude = "38.7169", Longitude = "-9.1399", DriverId = collaborators[0].Id },
+				new() { LicensePlate = "11-AA-11", Status = "Active", RouteType = "Industrial", MaxCapacity = 4000, LastMaintenance = DateTime.Parse("2024-04-14"), Type = VehicleType.UrbanMini, Latitude = "38.7100", Longitude = "-9.1400", DriverId = collaborators[1].Id },
+				new() { LicensePlate = "33-BB-33", Status = "Active", RouteType = "Commercial", MaxCapacity = 3500, LastMaintenance = DateTime.Parse("2024-04-13"), Type = VehicleType.SideLoader, Latitude = "38.7130", Longitude = "-9.1420", DriverId = collaborators[2].Id },
+				new() { LicensePlate = "44-CC-44", Status = "Active", RouteType = "Industrial", MaxCapacity = 3200, LastMaintenance = DateTime.Parse("2024-04-12"), Type = VehicleType.RearLoader, Latitude = "38.7155", Longitude = "-9.1412", DriverId = collaborators[3].Id }
 			};
 			context.Vehicles.AddRange(vehicles);
 			context.SaveChanges();
@@ -44,7 +44,11 @@ namespace WasteWatchAuth.Data
 				new() { Latitude = "38.7150", Longitude = "-9.1401" },
 				new() { Latitude = "38.7175", Longitude = "-9.1415" },
 				new() { Latitude = "38.7190", Longitude = "-9.1380" },
-				new() { Latitude = "38.7182", Longitude = "-9.1370" }
+				new() { Latitude = "38.7182", Longitude = "-9.1370" },
+				new() { Latitude = "38.7201", Longitude = "-9.1365" },
+				new() { Latitude = "38.7215", Longitude = "-9.1350" },
+				new() { Latitude = "38.7228", Longitude = "-9.1332" },
+				new() { Latitude = "38.7240", Longitude = "-9.1320" }
 			};
 			context.BinLocations.AddRange(locations);
 			context.SaveChanges();
@@ -57,8 +61,13 @@ namespace WasteWatchAuth.Data
 				new() { Type = BinType.General, Status = BinStatus.Active, Capacity = 1800, LastEmptied = DateTime.Parse("2024-04-09"), Location = locations[1] },
 				new() { Type = BinType.Recycling, Status = BinStatus.Maintenance, Capacity = 2200, LastEmptied = DateTime.Parse("2024-04-08"), Location = locations[2] },
 				new() { Type = BinType.General, Status = BinStatus.NotFunctional, Capacity = 2500, LastEmptied = DateTime.Parse("2024-04-07"), Location = locations[3] },
-				new() { Type = BinType.Recycling, Status = BinStatus.Active, Capacity = 2100, LastEmptied = DateTime.Parse("2024-04-06"), Location = locations[4] }
+				new() { Type = BinType.Recycling, Status = BinStatus.Active, Capacity = 2100, LastEmptied = DateTime.Parse("2024-04-06"), Location = locations[4] },
+				new() { Type = BinType.General, Status = BinStatus.NotFunctional, Capacity = 2000, LastEmptied = DateTime.Parse("2024-04-05"), Location = locations[5] },
+				new() { Type = BinType.Recycling, Status = BinStatus.NotFunctional, Capacity = 1900, LastEmptied = DateTime.Parse("2024-04-04"), Location = locations[6] },
+				new() { Type = BinType.General, Status = BinStatus.NotFunctional, Capacity = 2300, LastEmptied = DateTime.Parse("2024-04-03"), Location = locations[7] },
+				new() { Type = BinType.Recycling, Status = BinStatus.NotFunctional, Capacity = 2100, LastEmptied = DateTime.Parse("2024-04-02"), Location = locations[8] }
 			};
+		
 			context.Bins.AddRange(bins);
 			context.SaveChanges();
 		}

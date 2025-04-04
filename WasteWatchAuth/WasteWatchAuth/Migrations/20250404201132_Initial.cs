@@ -257,8 +257,8 @@ namespace WasteWatchAuth.Migrations
                     RouteType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaxCapacity = table.Column<int>(type: "int", nullable: false),
                     LastMaintenance = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Latitude = table.Column<double>(type: "float", nullable: false),
-                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    Latitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Longitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DriverId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
