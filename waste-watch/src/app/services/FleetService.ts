@@ -12,14 +12,14 @@ export interface Driver {
 }
 
 export interface Location {
-  latitude: number;
-  longitude: number;
+  latitude: string;
+  longitude: string;
 }
 
 export interface Vehicle {
   id?: number;
   licensePlate: string;
-  driverName?: string; // Kept for backward compatibility
+  driverName?: string;
   status: string;
   routeType: string;
   maxCapacity: string | number;
@@ -43,7 +43,6 @@ export class VehicleService {
   private vehiclesSubject = new BehaviorSubject<Vehicle[]>([]);
   vehicles$ = this.vehiclesSubject.asObservable();
 
-  // Hardcoded list of available drivers
   private availableDrivers: Driver[] = [
     { name: 'Carlos Silva', age: 40, licenseNumber: 'ABC-12345', collaboratorType: 'Driver' },
     { name: 'Maria Santos', age: 35, licenseNumber: 'DEF-67890', collaboratorType: 'Employee' },
@@ -56,9 +55,6 @@ export class VehicleService {
     this.loadVehicles();
   }
 
-  /**
-   * Fetches all vehicles and keeps them updated.
-   */
   loadVehicles(): void {
     this.http.get<Vehicle[]>(this.apiUrl).pipe(
       tap((vehicles) => this.vehiclesSubject.next(vehicles)),
@@ -69,16 +65,10 @@ export class VehicleService {
     ).subscribe();
   }
 
-  /**
-   * Returns a list of vehicles as an Observable.
-   */
   getVehicles(): Observable<Vehicle[]> {
     return this.vehicles$;
   }
 
-  /**
-   * Adds a new vehicle.
-   */
   addVehicle(vehicle: Vehicle): Observable<Vehicle> {
     const vehicleToSend = this.prepareVehicleData(vehicle);
 
@@ -93,9 +83,6 @@ export class VehicleService {
     );
   }
 
-  /**
-   * Deletes a vehicle.
-   */
   deleteVehicle(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, this.httpOptions).pipe(
       tap(() => {
@@ -108,27 +95,22 @@ export class VehicleService {
     );
   }
 
-  /**
-   * Gets available drivers.
-   */
   getAvailableDrivers(): Driver[] {
     return this.availableDrivers;
   }
 
-  /**
-   * Prepares vehicle data before sending to the API.
-   */
   private prepareVehicleData(vehicle: Vehicle): Vehicle {
     const processedVehicle = { ...vehicle };
 
-    // Convert maxCapacity to number if it's a string with 'kg'
     if (typeof processedVehicle.maxCapacity === 'string' && processedVehicle.maxCapacity.includes('kg')) {
       processedVehicle.maxCapacity = parseInt(processedVehicle.maxCapacity.replace('kg', ''), 10);
     }
 
-    // Set default location if not provided
     if (!processedVehicle.location) {
-      processedVehicle.location = { latitude: 38.7169, longitude: -9.1399 };
+      processedVehicle.location = {
+        latitude: "38°43'00.8\"N",
+        longitude: "9°08'23.6\"W"
+      };
     }
 
     return processedVehicle;

@@ -58,7 +58,6 @@ export class VehicleListComponent implements OnInit {
   constructor(private vehicleService: VehicleService) {}
 
   ngOnInit(): void {
-    // Subscribe to live vehicle updates
     this.vehicleService.vehicles$.subscribe({
       next: (data) => (this.vehicles = data),
       error: (err) => {
@@ -70,9 +69,6 @@ export class VehicleListComponent implements OnInit {
     this.availableDrivers = this.vehicleService.getAvailableDrivers();
   }
 
-  /**
-   * Shows or hides the vehicle form
-   */
   toggleAddForm() {
     this.showAddForm = !this.showAddForm;
     if (this.showAddForm) {
@@ -80,9 +76,6 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-  /**
-   * Filters vehicles based on selected criteria
-   */
   get filteredVehicles() {
     return this.vehicles.filter((vehicle) => {
       const maxCapacityString = typeof vehicle.maxCapacity === 'number'
@@ -99,32 +92,20 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
-  /**
-   * Selects a vehicle for details
-   */
   selectVehicle(vehicle: Vehicle) {
     this.selectedVehicle = vehicle;
   }
 
-  /**
-   * Shows the delete confirmation dialog
-   */
   showDeleteDialog() {
     if (this.selectedVehicle) {
       this.showDeleteConfirmation = true;
     }
   }
 
-  /**
-   * Cancels the delete action
-   */
   cancelDelete() {
     this.showDeleteConfirmation = false;
   }
 
-  /**
-   * Confirms and deletes a vehicle
-   */
   confirmDelete() {
     if (this.selectedVehicle?.id) {
       this.isLoading = true;
@@ -144,9 +125,6 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-  /**
-   * Adds a new vehicle
-   */
   addVehicle() {
     if (this.vehicle.licensePlate && this.vehicle.driver?.name && this.vehicle.driver?.licenseNumber) {
       this.isLoading = true;
@@ -169,27 +147,18 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-  /**
-   * Clears the form and resets the vehicle object
-   */
   clearForm() {
     this.vehicle = this.getDefaultVehicle();
     this.selectedDriverIndex = -1;
     this.useCustomDriver = false;
   }
 
-  /**
-   * Handles driver selection from the list
-   */
   onDriverSelect() {
     if (this.selectedDriverIndex >= 0) {
       this.vehicle.driver = { ...this.availableDrivers[this.selectedDriverIndex] };
     }
   }
 
-  /**
-   * Toggles between custom driver entry and dropdown selection
-   */
   toggleDriverMode() {
     this.useCustomDriver = !this.useCustomDriver;
     if (!this.useCustomDriver) {
@@ -204,23 +173,14 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-  /**
-   * Formats capacity for display
-   */
   formatCapacity(capacity: string | number): string {
     return typeof capacity === 'number' ? `${capacity}kg` : capacity;
   }
 
-  /**
-   * Gets the driver's name for display
-   */
   getDriverName(vehicle: Vehicle): string {
     return vehicle.driver?.name || vehicle.driverName || 'N/A';
   }
 
-  /**
-   * Returns a default vehicle object
-   */
   private getDefaultVehicle(): Vehicle {
     return {
       licensePlate: '',
@@ -228,8 +188,16 @@ export class VehicleListComponent implements OnInit {
       routeType: 'Commercial',
       maxCapacity: '1000kg',
       lastMaintenance: new Date().toISOString().split('T')[0],
-      location: { latitude: 38.7169, longitude: -9.1399 },
-      driver: { name: '', age: 30, licenseNumber: '', collaboratorType: 'Driver' }
+      location: {
+        latitude: "38°43'00.8\"N",
+        longitude: "9°08'23.6\"W"
+      },
+      driver: {
+        name: '',
+        age: 30,
+        licenseNumber: '',
+        collaboratorType: 'Driver'
+      }
     };
   }
 
@@ -249,5 +217,4 @@ export class VehicleListComponent implements OnInit {
       }
     });
   }
-
 }
