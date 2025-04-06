@@ -396,7 +396,7 @@ createBin(bin: Bin): Observable<Bin> {
   }
 
   /**
-   * Fetches bins that are almost full.
+   * Fetches bins that are almost full. 
    * @returns Observable<any[]> - The bins nearing full capacity.
    */
   getAlmostFullBins(): Observable<any[]> {
@@ -408,6 +408,17 @@ createBin(bin: Bin): Observable<Bin> {
       })
     );
   }
+
+  getDamagedBins(): Observable<any[]> {
+    const url = `${this.apiUrl}/damagedbins`;
+    return this.http.get<any[]>(url).pipe(
+      catchError((error) => {
+        console.error('Error fetching damaged bins:', error);
+        return of([]);
+      })
+    );
+  }
+
 
 
 }

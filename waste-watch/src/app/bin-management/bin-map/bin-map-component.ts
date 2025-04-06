@@ -1,11 +1,20 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BinService, Bin } from '../../services/BinService';
-import { faMapMarkerAlt, faRoute, faLock, faUnlock, faSync, faTrashAlt, faInfoCircle, faWeight, faClock } from '@fortawesome/free-solid-svg-icons';
-
-import { SideNavComponent } from '../../components/side-nav/side-nav.component';
+import { AuthService } from '../../services/AuthService';
+import {
+  faMapMarkerAlt,
+  faRoute,
+  faLock,
+  faUnlock,
+  faSync,
+  faTrashAlt,
+  faInfoCircle,
+  faWeight,
+  faClock,
+} from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AuthService } from '../../services/AuthService';
+import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { environment } from '../../../environments/environtment';
 
 interface MapOptions {
@@ -49,31 +58,25 @@ export class BinMapComponent implements OnInit {
   map: any = null;
   infoWindow: any = null;
 
-  // Existing Icons
   faMapMarkerAlt = faMapMarkerAlt;
   faRoute = faRoute;
   faLock = faLock;
   faUnlock = faUnlock;
   faSync = faSync;
-
-  // New Icons for Info Window
   faTrashAlt = faTrashAlt;
   faInfoCircle = faInfoCircle;
   faWeight = faWeight;
   faClock = faClock;
 
-  // Component state
   bins: Bin[] = [];
+  damagedBins: Set<number> = new Set();
   selectedBin: Bin | null = null;
   isAuthorized: boolean = false;
   isLoading: boolean = true;
   errorMessage: string | null = null;
 
-  // Latitude and Longitude of the specific location
   lat: number = 38.552583;
   lng: number = -8.859192;
-
-
 
   constructor(
     private binService: BinService,
@@ -87,25 +90,41 @@ export class BinMapComponent implements OnInit {
   }
 
   checkAuthorization(): void {
-    this.isAuthorized = this.authService.getUserRoles().includes('Admin') ||
-                        this.authService.getUserRoles().includes('Maintenance');
+    this.isAuthorized =
+      this.authService.getUserRoles().includes('Admin') ||
+      this.authService.getUserRoles().includes('Maintenance');
   }
 
   loadBins(): void {
     this.isLoading = true;
     this.errorMessage = null;
 
-    this.binService.getBins().subscribe({
-      next: (bins) => {
-        this.bins = bins;
-        this.isLoading = false;
-        this.plotBinsOnMap();
+    // First load damaged bins
+    this.binService.getDamagedBins().subscribe({
+      next: (damagedBins) => {
+        this.damagedBins = new Set(damagedBins.map((bin) => bin.id));
+
+        // Then load all bins
+        this.binService.getBins().subscribe({
+          next: (bins) => {
+            this.bins = bins;
+            this.isLoading = false;
+            this.plotBinsOnMap();
+          },
+          error: (err) => {
+            console.error('Error loading bins:', err);
+            this.errorMessage =
+              'Failed to load bin data. Please try again later.';
+            this.isLoading = false;
+          },
+        });
       },
       error: (err) => {
-        console.error('Error loading bins:', err);
-        this.errorMessage = 'Failed to load bin data. Please try again later.';
+        console.error('Error loading damaged bins:', err);
+        this.errorMessage =
+          'Failed to load damaged bin data. Please try again later.';
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -137,7 +156,8 @@ export class BinMapComponent implements OnInit {
   }
 
   private fallbackMapLoading() {
-    this.errorMessage = 'Map loading delayed by browser security settings or failed to load';
+    this.errorMessage =
+      'Map loading delayed by browser security settings or failed to load';
     setTimeout(() => this.loadGoogleMaps(), 2000);
   }
 
@@ -155,7 +175,8 @@ export class BinMapComponent implements OnInit {
         this.plotBinsOnMap();
       } else {
         console.error('Google Maps API is not loaded correctly');
-        this.errorMessage = 'Failed to initialize the map. Please try again later.';
+        this.errorMessage =
+          'Failed to initialize the map. Please try again later.';
       }
     } catch (error) {
       console.error('Error initializing Google Maps:', error);
@@ -168,12 +189,12 @@ export class BinMapComponent implements OnInit {
 
     this.infoWindow = new google.maps.InfoWindow({
       maxWidth: 400,
-      minWidth: 300
+      minWidth: 300,
     });
 
-    this.bins.forEach(bin => {
-      let latStr: string = bin.location.latitude?.toString().trim() || "";
-      let lngStr: string = bin.location.longitude?.toString().trim() || "";
+    this.bins.forEach((bin) => {
+      let latStr: string = bin.location.latitude?.toString().trim() || '';
+      let lngStr: string = bin.location.longitude?.toString().trim() || '';
 
       if (!latStr || !lngStr) {
         console.error(`Missing coordinates for Bin ${bin.id}:`, bin);
@@ -193,12 +214,12 @@ export class BinMapComponent implements OnInit {
         map: this.map,
         title: `Bin ${bin.id} - ${this.getStatusText(bin)}`,
         icon: {
-          url: this.getBinIcon(bin.type),  // Get icon based on bin type
+          url: this.getBinIcon(bin),
           scaledSize: new google.maps.Size(50, 55),
           origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(11, 40)
+          anchor: new google.maps.Point(11, 40),
         },
-        optimized: false
+        optimized: false,
       });
 
       this.setMarkerVisibility(marker);
@@ -213,40 +234,107 @@ export class BinMapComponent implements OnInit {
     });
   }
 
+  async showBinInfo(bin: Bin, marker: any): Promise<void> {
+    const isDamaged =
+      (bin.id !== undefined && this.damagedBins.has(bin.id)) ||
+      bin.status === 4;
 
-  showBinInfo(bin: Bin, marker: any): void {
+    const lat = this.convertDMSToDecimal(bin.location.latitude);
+    const lng = this.convertDMSToDecimal(bin.location.longitude);
+    const address = await this.getAddressFromCoords(lat, lng);
+
     const content = `
-      <div class="gm-style-iw p-2 rounded shadow" style="max-width: 280px; font-family: Arial, sans-serif;">
-        <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 5px;">
-          <h5 class="fw-bold text-primary mb-1" style="font-size: 16px;">
-            <i class="fas fa-trash-alt me-2"></i> Bin #${bin.id}
-          </h5>
-          <span class="small text-muted">${this.getBinTypeText(bin.type)}</span>
+      <div class="info-window-container" style="font-family: 'Segoe UI', system-ui, sans-serif; max-width: 320px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <!-- Header -->
+        <div style="background: ${
+          isDamaged ? '#FEE2E2' : '#F3F4F6'
+        }; padding: 16px; border-bottom: 1px solid ${
+      isDamaged ? '#FCA5A5' : '#E5E7EB'
+    };">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <h3 style="margin: 0; color: ${
+              isDamaged ? '#991B1B' : '#111827'
+            }; font-size: 18px; font-weight: 600;">
+              Bin #${bin.id}
+            </h3>
+            <span style="
+              padding: 4px 12px;
+              border-radius: 9999px;
+              font-size: 12px;
+              font-weight: 500;
+              background: ${isDamaged ? '#FEE2E2' : '#F3F4F6'};
+              color: ${isDamaged ? '#991B1B' : '#1F2937'};
+              border: 1px solid ${isDamaged ? '#FCA5A5' : '#E5E7EB'};
+            ">
+              ${this.getStatusText(bin)}
+            </span>
+          </div>
+          <p style="margin: 0; color: ${
+            isDamaged ? '#991B1B' : '#6B7280'
+          }; font-size: 14px;">
+            ${this.getBinTypeText(bin.type)}
+          </p>
         </div>
 
-        <div class="info-content" style="font-size: 14px;">
-          <p class="mb-1"><i class="fas fa-info-circle me-1 text-secondary"></i>
-            <strong>Status:</strong> <span class="badge ${this.getStatusClass(bin)}">${this.getStatusText(bin)}</span>
-          </p>
-          <p class="mb-1"><i class="fas fa-weight me-1 text-secondary"></i>
-            <strong>Capacity:</strong> ${bin.capacity} kg
-          </p>
-          <p class="mb-1"><i class="fas fa-clock me-1 text-secondary"></i>
-            <strong>Last Emptied:</strong> ${new Date(bin.lastEmptied).toLocaleString()}
-          </p>
+        <!-- Damage Alert -->
+        ${
+          isDamaged
+            ? `
+          <div style="background: #FEF2F2; padding: 12px 16px; border-bottom: 1px solid #FCA5A5;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: #991B1B;">⚠️</span>
+              <p style="margin: 0; color: #991B1B; font-size: 14px; font-weight: 500;">
+                Maintenance Required
+              </p>
+            </div>
+          </div>`
+            : ''
+        }
 
-          <hr class="my-2">
+        <!-- Info Section -->
+        <div style="padding: 16px;">
+          <!-- Capacity -->
+          <div style="margin-bottom: 16px;">
+            <h4 style="margin: 0 0 8px 0; color: #374151; font-size: 14px; font-weight: 600;">
+              Capacity Information
+            </h4>
+            <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #6B7280; font-size: 14px;">Maximum Capacity</span>
+                <span style="color: #111827; font-weight: 500; font-size: 14px;">${
+                  bin.capacity
+                } kg</span>
+              </div>
+            </div>
+          </div>
 
-          <div class="location-details">
-            <p class="mb-1"><i class="fas fa-map-marker-alt me-1 text-danger"></i>
-              <strong>Location:</strong>
-            </p>
-            <p class="small text-muted mb-0">
-              Latitude: <strong>${this.convertDMSToDecimal(bin.location.latitude).toFixed(6)}</strong>
-            </p>
-            <p class="small text-muted">
-              Longitude: <strong>${this.convertDMSToDecimal(bin.location.longitude).toFixed(6)}</strong>
-            </p>
+          <!-- Last Emptied -->
+          <div style="margin-bottom: 16px;">
+            <h4 style="margin: 0 0 8px 0; color: #374151; font-size: 14px; font-weight: 600;">
+              Last Collection
+            </h4>
+            <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #6B7280; font-size: 14px;">Timestamp</span>
+                <span style="color: #111827; font-weight: 500; font-size: 14px;">
+                  ${new Date(bin.lastEmptied).toLocaleString()}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div>
+            <h4 style="margin: 0 0 8px 0; color: #374151; font-size: 14px; font-weight: 600;">
+              Address
+            </h4>
+            <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">
+              <div>
+                <span style="display: block; color: #111827; font-weight: 500; font-size: 14px;">
+                  ${address}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -261,24 +349,46 @@ export class BinMapComponent implements OnInit {
     if (this.map.getZoom() < 16) {
       this.map.setZoom(16);
     }
-}
-
-getBinIcon(binType: number): string {
-  switch (binType) {
-    case 0:
-      return 'assets/images/general-waste.png';  // General Waste Bin
-    case 1:
-      return 'assets/images/bin.png';  // Recycling Bin
-    case 2:
-      return 'assets/images/organic-bin.png';    // Organic Waste Bin
-    case 3:
-      return 'assets/images/hazardous-bin.png';  // Hazardous Waste Bin
-    default:
-      return 'assets/images/default-bin.png';    // Default Bin Icon
   }
-}
 
+  getAddressFromCoords(lat: number, lng: number): Promise<string> {
+    return new Promise((resolve) => {
+      const geocoder = new google.maps.Geocoder();
+      const latLng = { lat, lng };
 
+      geocoder.geocode({ location: latLng }, (results, status) => {
+        if (status === 'OK' && results && results.length > 0) {
+          resolve(results[0].formatted_address);
+        } else {
+          console.warn(`Geocoder failed: ${status}`);
+          resolve('Address not available');
+        }
+      });
+    });
+  }
+
+  getBinIcon(bin: Bin): string {
+    const isDamaged =
+      (bin.id !== undefined && this.damagedBins.has(bin.id)) ||
+      bin.status === 4;
+
+    if (isDamaged) {
+      return 'assets/images/transferir.jpeg'; // make sure this image exists in your assets/images folder
+    }
+
+    switch (bin.type) {
+      case 0:
+        return 'assets/images/general-waste.png';
+      case 1:
+        return 'assets/images/bin.png';
+      case 2:
+        return 'assets/images/organic-bin.png';
+      case 3:
+        return 'assets/images/hazardous-bin.png';
+      default:
+        return 'assets/images/default-bin.png';
+    }
+  }
 
   setMarkerVisibility(marker: any): void {
     const zoomLevel = this.map.getZoom();
@@ -288,8 +398,8 @@ getBinIcon(binType: number): string {
   selectCard(bin: Bin): void {
     let lat: number;
     let lng: number;
-    const latStr = bin.location.latitude?.toString().trim() || "";
-    const lngStr = bin.location.longitude?.toString().trim() || "";
+    const latStr = bin.location.latitude?.toString().trim() || '';
+    const lngStr = bin.location.longitude?.toString().trim() || '';
 
     if (/^-?\d+(\.\d+)?$/.test(latStr)) {
       lat = parseFloat(latStr);
@@ -319,12 +429,11 @@ getBinIcon(binType: number): string {
         this.map.setZoom(targetZoom);
       }
 
-      // Find and click the corresponding marker
       const markers = this.map.markers;
       if (markers) {
-        const marker = markers.find((m: any) =>
-          m.getPosition().lat() === lat &&
-          m.getPosition().lng() === lng
+        const marker = markers.find(
+          (m: any) =>
+            m.getPosition().lat() === lat && m.getPosition().lng() === lng
         );
         if (marker) {
           google.maps.event.trigger(marker, 'click');
@@ -333,10 +442,10 @@ getBinIcon(binType: number): string {
     }
   }
 
-  convertDMSToDecimal(dms: string | number): number {
-    if (typeof dms === 'number') {
-      return dms;
-    }
+  convertDMSToDecimal(dms: string | number | undefined): number {
+    if (dms === undefined || dms === null) return NaN;
+
+    if (typeof dms === 'number') return dms;
 
     if (/^-?\d+(\.\d+)?$/.test(dms.trim())) {
       return parseFloat(dms.trim());
@@ -365,32 +474,61 @@ getBinIcon(binType: number): string {
   }
 
   getStatusClass(bin: Bin): string {
+    if (
+      (bin.id !== undefined && this.damagedBins.has(bin.id)) ||
+      bin.status === 4
+    ) {
+      return 'Damaged';
+    }
+
     switch (bin.status) {
-      case 0: return 'status-empty';
-      case 1: return 'status-partial';
-      case 2: return 'status-full';
-      case 3: return 'status-overflow';
-      default: return 'status-empty';
+      case 0:
+        return 'status-empty';
+      case 1:
+        return 'status-partial';
+      case 2:
+        return 'status-full';
+      case 3:
+        return 'status-overflow';
+      default:
+        return 'status-empty';
     }
   }
 
   getStatusText(bin: Bin): string {
+    if (
+      (bin.id !== undefined && this.damagedBins.has(bin.id)) ||
+      bin.status === 4
+    ) {
+      return 'Damaged';
+    }
+
     switch (bin.status) {
-      case 0: return 'Empty';
-      case 1: return 'Partial';
-      case 2: return 'Almost Full';
-      case 3: return 'Full';
-      default: return 'Unknown';
+      case 0:
+        return 'Empty';
+      case 1:
+        return 'Partial';
+      case 2:
+        return 'Almost Full';
+      case 3:
+        return 'Full';
+      default:
+        return 'Unknown';
     }
   }
 
   getBinTypeText(type: number): string {
-    switch(type) {
-      case 0: return 'General Waste';
-      case 1: return 'Recycling';
-      case 2: return 'Organic';
-      case 3: return 'Hazardous';
-      default: return 'Unknown';
+    switch (type) {
+      case 0:
+        return 'General Waste';
+      case 1:
+        return 'Recycling';
+      case 2:
+        return 'Organic';
+      case 3:
+        return 'Hazardous';
+      default:
+        return 'Unknown';
     }
   }
 
