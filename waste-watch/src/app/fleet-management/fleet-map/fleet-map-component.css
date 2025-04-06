@@ -1,3 +1,6 @@
+
+
+/* Dashboard Container */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -13,6 +16,7 @@
   gap: 1.5rem;
 }
 
+/* Header Styles */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -36,7 +40,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.625rem 1.25rem;
-  background-color: #2563eb;
+  background-color: #16a34a;
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -46,10 +50,11 @@
 }
 
 .refresh-btn:hover {
-  background-color: #1d4ed8;
+  background-color: #15803d;
   transform: translateY(-1px);
 }
 
+/* Map and List Layout */
 .map-list-container {
   display: grid;
   grid-template-columns: 1fr 350px;
@@ -71,6 +76,7 @@
   background-color: #e5e7eb;
 }
 
+/* Vehicle List Styles */
 .vehicle-list-section {
   display: flex;
   flex-direction: column;
@@ -78,6 +84,7 @@
   border-radius: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 1.25rem;
+  overflow: hidden;
 }
 
 .vehicle-list-section h3 {

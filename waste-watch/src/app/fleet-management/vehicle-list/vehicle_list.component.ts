@@ -188,10 +188,8 @@ export class VehicleListComponent implements OnInit {
       routeType: 'Commercial',
       maxCapacity: '1000kg',
       lastMaintenance: new Date().toISOString().split('T')[0],
-      location: {
         latitude: "38°43'00.8\"N",
-        longitude: "9°08'23.6\"W"
-      },
+        longitude: "9°08'23.6\"W",
       driver: {
         name: '',
         age: 30,

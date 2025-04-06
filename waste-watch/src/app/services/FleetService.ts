@@ -11,11 +11,6 @@ export interface Driver {
   collaboratorType: string;
 }
 
-export interface Location {
-  latitude: string;
-  longitude: string;
-}
-
 export interface Vehicle {
   id?: number;
   licensePlate: string;
@@ -24,7 +19,8 @@ export interface Vehicle {
   routeType: string;
   maxCapacity: string | number;
   lastMaintenance: string;
-  location?: Location;
+  latitude: string;
+  longitude: string;
   driver?: Driver;
 }
 
@@ -104,13 +100,6 @@ export class VehicleService {
 
     if (typeof processedVehicle.maxCapacity === 'string' && processedVehicle.maxCapacity.includes('kg')) {
       processedVehicle.maxCapacity = parseInt(processedVehicle.maxCapacity.replace('kg', ''), 10);
-    }
-
-    if (!processedVehicle.location) {
-      processedVehicle.location = {
-        latitude: "38°43'00.8\"N",
-        longitude: "9°08'23.6\"W"
-      };
     }
 
     return processedVehicle;
