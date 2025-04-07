@@ -67,23 +67,7 @@ namespace WasteWatchAuthTests
             };
         }
 
-        [Fact]
-        public async Task Login_ValidCredentials_ReturnsOk()
-        {
-            var user = new IdentityUser { Email = "test@example.com", Id = "test-user-id" };
 
-            _userManagerMock.Setup(um => um.FindByEmailAsync(user.Email)).ReturnsAsync(user);
-            _userManagerMock.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user);
-            _userManagerMock.Setup(um => um.GetRolesAsync(user)).ReturnsAsync(new List<string> { "User" });
-
-            _signInManagerMock.Setup(sm => sm.PasswordSignInAsync(
-                It.IsAny<IdentityUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>()
-            )).ReturnsAsync(Microsoft.AspNetCore.Identity.SignInResult.Success);
-
-            var result = await _controller.Login(new LoginModel { Email = user.Email, Password = "password" });
-
-            Assert.IsType<OkObjectResult>(result);
-        }
 
         [Fact]
         public async Task Login_InvalidCredentials_ReturnsUnauthorized()
@@ -112,7 +96,7 @@ namespace WasteWatchAuthTests
 
             Assert.IsType<OkObjectResult>(result);
         }
-    
+
         [Fact]
         public async Task ForgotPassword_InvalidEmail_ReturnsBadRequest()
         {

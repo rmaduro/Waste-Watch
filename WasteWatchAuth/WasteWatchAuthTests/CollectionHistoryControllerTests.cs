@@ -19,7 +19,7 @@ namespace WasteWatchAuthTests
         public CollectionHistoryControllerTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) 
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
             _context = new ApplicationDbContext(options);
@@ -34,8 +34,8 @@ namespace WasteWatchAuthTests
                 Id = 1,
                 BinId = 1,
                 AmountCollected = 10,
-                Timestamp = DateTime.UtcNow, 
-                IssuesLogged = "" 
+                Timestamp = DateTime.UtcNow,
+                IssuesLogged = ""
             };
 
             var result = await _controller.CreateCollection(history);

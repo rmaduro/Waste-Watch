@@ -29,31 +29,107 @@ namespace WasteWatchAuthTests
         [Fact]
         public async Task CreateVehicle_ValidVehicle_ReturnsOk()
         {
-            var vehicle = new Vehicle { LicensePlate = "ABC-123", Driver = new Collaborator { Name = "John Doe", Age = 30, LicenseNumber = "XYZ789" } };
+            // Arrange
+            var vehicle = new Vehicle
+            {
+                LicensePlate = "ABC-123",
+                Type = VehicleType.FrontLoader,
+                Status = "Active",
+                RouteType = "Commercial",
+                MaxCapacity = 3000,
+                LastMaintenance = DateTime.UtcNow,
+                Latitude = "38.7169",
+                Longitude = "-9.1399",
+                Driver = new Collaborator
+                {
+                    Name = "John Doe",
+                    Age = 30,
+                    LicenseNumber = "XYZ789",
+                    CollaboratorType = CollaboratorType.Driver
+                }
+            };
+
+            // Act
             var result = await _controller.CreateVehicle(vehicle);
-            Assert.IsType<OkObjectResult>(result);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedVehicle = Assert.IsType<Vehicle>(okResult.Value);
+            Assert.Equal("ABC-123", returnedVehicle.LicensePlate);
         }
+
 
         [Fact]
         public async Task GetAllVehicles_ReturnsVehicles()
         {
-            _context.Vehicles.Add(new Vehicle { LicensePlate = "ABC-123", Driver = new Collaborator { Name = "John Doe", Age = 30, LicenseNumber = "XYZ789" } });
+            // Arrange
+            var vehicle = new Vehicle
+            {
+                LicensePlate = "ABC-123",
+                Type = VehicleType.FrontLoader,
+                Status = "Active",
+                RouteType = "Commercial",
+                MaxCapacity = 3000,
+                LastMaintenance = DateTime.UtcNow,
+                Latitude = "38.7169",
+                Longitude = "-9.1399",
+                Driver = new Collaborator
+                {
+                    Name = "John Doe",
+                    Age = 30,
+                    LicenseNumber = "XYZ789",
+                    CollaboratorType = CollaboratorType.Driver
+                }
+            };
+
+            _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();
+
+            // Act
             var result = await _controller.GetAllVehicles();
+
+            // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
             var vehicles = Assert.IsType<List<Vehicle>>(okResult.Value);
             Assert.Single(vehicles);
         }
 
+
         [Fact]
         public async Task GetVehicleById_ExistingId_ReturnsVehicle()
         {
-            var vehicle = new Vehicle { LicensePlate = "ABC-123", Driver = new Collaborator { Name = "John Doe", Age = 30, LicenseNumber = "XYZ789" } };
+            // Arrange
+            var vehicle = new Vehicle
+            {
+                LicensePlate = "ABC-123",
+                Type = VehicleType.FrontLoader,
+                Status = "Active",
+                RouteType = "Commercial",
+                MaxCapacity = 3000,
+                LastMaintenance = DateTime.UtcNow,
+                Latitude = "38.7169",
+                Longitude = "-9.1399",
+                Driver = new Collaborator
+                {
+                    Name = "John Doe",
+                    Age = 30,
+                    LicenseNumber = "XYZ789",
+                    CollaboratorType = CollaboratorType.Driver
+                }
+            };
+
             _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();
+
+            // Act
             var result = await _controller.GetVehicleById(vehicle.Id);
-            Assert.IsType<OkObjectResult>(result);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedVehicle = Assert.IsType<Vehicle>(okResult.Value);
+            Assert.Equal(vehicle.LicensePlate, returnedVehicle.LicensePlate);
         }
+
 
         [Fact]
         public async Task GetVehicleById_NonExistingId_ReturnsNotFound()
@@ -65,12 +141,36 @@ namespace WasteWatchAuthTests
         [Fact]
         public async Task DeleteVehicle_ExistingId_ReturnsNoContent()
         {
-            var vehicle = new Vehicle { LicensePlate = "ABC-123", Driver = new Collaborator { Name = "John Doe", Age = 30, LicenseNumber = "XYZ789" } };
+            // Arrange
+            var vehicle = new Vehicle
+            {
+                LicensePlate = "ABC-123",
+                Type = VehicleType.FrontLoader,
+                Status = "Active",
+                RouteType = "Commercial",
+                MaxCapacity = 3000,
+                LastMaintenance = DateTime.UtcNow,
+                Latitude = "38.7169",
+                Longitude = "-9.1399",
+                Driver = new Collaborator
+                {
+                    Name = "John Doe",
+                    Age = 30,
+                    LicenseNumber = "XYZ789",
+                    CollaboratorType = CollaboratorType.Driver
+                }
+            };
+
             _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();
+
+            // Act
             var result = await _controller.DeleteVehicle(vehicle.Id);
+
+            // Assert
             Assert.IsType<NoContentResult>(result);
         }
+
 
         [Fact]
         public async Task DeleteVehicle_NonExistingId_ReturnsNotFound()
