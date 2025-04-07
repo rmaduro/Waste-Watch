@@ -1,126 +1,218 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
-import { CommonModule } from '@angular/common'; // Import CommonModule
-import { SideNavComponent } from '../../components/side-nav/side-nav.component';  // Import SideNavComponent
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { SideNavComponent } from '../../components/side-nav/side-nav.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  faPlus, faMinus, faSearch, faFilter, faTruck, faIdCard, faUser,
+  faCircle, faRoute, faWeight, faTools, faTrash, faExclamationTriangle,
+  faSpinner, faMapMarkerAlt, faIdBadge
+} from '@fortawesome/free-solid-svg-icons';
+import { VehicleService, Vehicle, Driver } from '../../services/FleetService';
 
 @Component({
   selector: 'app-vehicle-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, SideNavComponent],  // Import SideNavComponent
-  template: `
-    <div class="d-flex">
-      <!-- SideNav Component -->
-      <app-side-nav></app-side-nav>
-
-      <!-- Main Content Area (Vehicle List) -->
-      <div class="container-fluid p-4" style="flex-grow: 1;">
-        <div class="container mt-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="fw-bold">Vehicle List</h2>
-            <div>
-              <button class="btn btn-success me-2">+ Add Vehicle</button>
-              <button class="btn btn-danger">Remove Vehicle</button>
-            </div>
-          </div>
-
-          <!-- Horizontal line below header -->
-          <hr class="mb-3" style="border-color: black; border-width: 2px;" />
-
-          <!-- Filters -->
-          <div class="d-flex justify-content-between mb-3">
-            <div>
-              <label class="me-2">Filters:</label>
-              <select class="form-select d-inline w-auto" [(ngModel)]="selectedStatus">
-                <option value="">All Status</option>
-                <option value="Active">Active</option>
-                <option value="Idle">Idle</option>
-                <option value="Maintenance">Maintenance</option>
-              </select>
-              <select class="form-select d-inline w-auto ms-2" [(ngModel)]="selectedRoute">
-                <option value="">All Routes</option>
-                <option value="Commercial">Commercial</option>
-                <option value="Industrial">Industrial</option>
-                <option value="Residential">Residential</option>
-              </select>
-              <select class="form-select d-inline w-auto ms-2" [(ngModel)]="selectedCapacity">
-                <option value="">All Capacities</option>
-                <option value="1000kg">1000kg</option>
-                <option value="1500kg">1500kg</option>
-                <option value="2000kg">2000kg</option>
-                <option value="2500kg">2500kg</option>
-                <option value="3000kg">3000kg</option>
-              </select>
-            </div>
-            <input type="text" class="form-control w-auto" placeholder="Search by ID..." [(ngModel)]="searchQuery">
-          </div>
-
-          <!-- Vehicle List Table -->
-          <table class="table table-bordered table-striped">
-            <thead class="table-light">
-              <tr>
-                <th>ID</th>
-                <th>License Plate</th>
-                <th>Driver's Name</th>
-                <th>Status</th>
-                <th>Route Type</th>
-                <th>Max Capacity</th>
-                <th>Last Maintenance</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let vehicle of filteredVehicles">
-                <td>{{ vehicle.id }}</td>
-                <td>{{ vehicle.licensePlate }}</td>
-                <td>{{ vehicle.driverName }}</td>
-                <td>{{ vehicle.status }}</td>
-                <td>{{ vehicle.routeType }}</td>
-                <td>{{ vehicle.maxCapacity }}</td>
-                <td>{{ vehicle.lastMaintenance }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  `,
+  imports: [CommonModule, FormsModule, SideNavComponent, FontAwesomeModule, HttpClientModule],
+  providers: [VehicleService],
+  templateUrl: './vehicle-list.component.html',
   styleUrls: ['./vehicle-list.component.css']
 })
-export class VehicleListComponent {
-  vehicles = [
-    {
-      id: 1,
-      licensePlate: '00-XX-00',
-      driverName: 'Alexandra Atkins',
-      status: 'Active',
-      routeType: 'Commercial',
-      maxCapacity: '1000kg',
-      lastMaintenance: '02-May-2024',
-    },
-    {
-      id: 2,
-      licensePlate: '00-XX-00',
-      driverName: 'Alice Adams',
-      status: 'Idle',
-      routeType: 'Industrial',
-      maxCapacity: '1500kg',
-      lastMaintenance: '18-Jun-2024',
-    },
-    // Add other vehicle objects here...
-  ];
+export class VehicleListComponent implements OnInit {
+  // Font Awesome Icons
+  faPlus = faPlus;
+  faMinus = faMinus;
+  faSearch = faSearch;
+  faFilter = faFilter;
+  faTruck = faTruck;
+  faIdCard = faIdCard;
+  faUser = faUser;
+  faCircle = faCircle;
+  faRoute = faRoute;
+  faWeight = faWeight;
+  faTools = faTools;
+  faTrash = faTrash;
+  faExclamationTriangle = faExclamationTriangle;
+  faSpinner = faSpinner;
+  faMapMarkerAlt = faMapMarkerAlt;
+  faIdBadge = faIdBadge;
+
+  vehicles: Vehicle[] = [];
+  availableDrivers: Driver[] = [];
+  selectedDriverIndex: number = -1;
+  isLoading = false;
+  error = '';
 
   selectedStatus = '';
   selectedRoute = '';
   selectedCapacity = '';
   searchQuery = '';
+  selectedVehicle: Vehicle | null = null;
+  showAddForm = false;
+  showDeleteConfirmation = false;
+  useCustomDriver = false;
+
+  vehicle: Vehicle = this.getDefaultVehicle();
+
+  constructor(private vehicleService: VehicleService) {}
+
+  ngOnInit(): void {
+    this.vehicleService.vehicles$.subscribe({
+      next: (data) => (this.vehicles = data),
+      error: (err) => {
+        console.error('Error fetching vehicles:', err);
+        this.error = 'Failed to load vehicles. Please try again later.';
+      }
+    });
+
+    this.availableDrivers = this.vehicleService.getAvailableDrivers();
+  }
+
+  toggleAddForm() {
+    this.showAddForm = !this.showAddForm;
+    if (this.showAddForm) {
+      this.vehicle = this.getDefaultVehicle();
+    }
+  }
 
   get filteredVehicles() {
     return this.vehicles.filter((vehicle) => {
+      const maxCapacityString = typeof vehicle.maxCapacity === 'number'
+        ? `${vehicle.maxCapacity}kg`
+        : vehicle.maxCapacity;
+
       return (
         (this.selectedStatus === '' || vehicle.status === this.selectedStatus) &&
         (this.selectedRoute === '' || vehicle.routeType === this.selectedRoute) &&
-        (this.selectedCapacity === '' || vehicle.maxCapacity === this.selectedCapacity) &&
-        (this.searchQuery === '' || vehicle.id.toString().includes(this.searchQuery))
+        (this.selectedCapacity === '' || maxCapacityString === this.selectedCapacity) &&
+        (this.searchQuery === '' ||
+          (vehicle.id && vehicle.id.toString().includes(this.searchQuery)))
       );
+    });
+  }
+
+  selectVehicle(vehicle: Vehicle) {
+    this.selectedVehicle = vehicle;
+  }
+
+  showDeleteDialog() {
+    if (this.selectedVehicle) {
+      this.showDeleteConfirmation = true;
+    }
+  }
+
+  cancelDelete() {
+    this.showDeleteConfirmation = false;
+  }
+
+  confirmDelete() {
+    if (this.selectedVehicle?.id) {
+      this.isLoading = true;
+
+      this.vehicleService.deleteVehicle(this.selectedVehicle.id).subscribe({
+        next: () => {
+          this.showDeleteConfirmation = false;
+          this.selectedVehicle = null;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error deleting vehicle:', err);
+          this.error = 'Failed to delete vehicle. Please try again later.';
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  addVehicle() {
+    if (this.vehicle.licensePlate && this.vehicle.driver?.name && this.vehicle.driver?.licenseNumber) {
+      this.isLoading = true;
+
+      // For backward compatibility with the table display
+      this.vehicle.driverName = this.vehicle.driver.name;
+
+      this.vehicleService.addVehicle(this.vehicle).subscribe({
+        next: () => {
+          this.vehicle = this.getDefaultVehicle();
+          this.showAddForm = false;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error adding vehicle:', err);
+          this.error = 'Failed to add vehicle. Please try again later.';
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  clearForm() {
+    this.vehicle = this.getDefaultVehicle();
+    this.selectedDriverIndex = -1;
+    this.useCustomDriver = false;
+  }
+
+  onDriverSelect() {
+    if (this.selectedDriverIndex >= 0) {
+      this.vehicle.driver = { ...this.availableDrivers[this.selectedDriverIndex] };
+    }
+  }
+
+  toggleDriverMode() {
+    this.useCustomDriver = !this.useCustomDriver;
+    if (!this.useCustomDriver) {
+      this.selectedDriverIndex = -1;
+    } else {
+      this.vehicle.driver = {
+        name: '',
+        age: 30,
+        licenseNumber: '',
+        collaboratorType: 'Driver'
+      };
+    }
+  }
+
+  formatCapacity(capacity: string | number): string {
+    return typeof capacity === 'number' ? `${capacity}kg` : capacity;
+  }
+
+  getDriverName(vehicle: Vehicle): string {
+    return vehicle.driver?.name || vehicle.driverName || 'N/A';
+  }
+
+  private getDefaultVehicle(): Vehicle {
+    return {
+      licensePlate: '',
+      status: 'Active',
+      routeType: 'Commercial',
+      maxCapacity: '1000kg',
+      lastMaintenance: new Date().toISOString().split('T')[0],
+        latitude: "38°43'00.8\"N",
+        longitude: "9°08'23.6\"W",
+      driver: {
+        name: '',
+        age: 30,
+        licenseNumber: '',
+        collaboratorType: 'Driver'
+      }
+    };
+  }
+
+  refreshVehicles() {
+    this.isLoading = true;
+    this.error = '';
+
+    this.vehicleService.getVehicles().subscribe({
+      next: (data) => {
+        this.vehicles = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching vehicles:', err);
+        this.error = 'Failed to load vehicles. Please try again later.';
+        this.isLoading = false;
+      }
     });
   }
 }

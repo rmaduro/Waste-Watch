@@ -1,64 +1,293 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="fw-bold">Vehicle List</h2>
-    <div>
-      <button class="btn btn-success me-2">+ Add Vehicle</button>
-      <button class="btn btn-danger">Remove Vehicle</button>
+<div [class.blur-background]="showAddForm || showDeleteConfirmation">
+  <div class="d-flex vehicle-list-container">
+    <app-side-nav></app-side-nav>
+    <div class="main-content">
+      <div class="content-wrapper">
+        <div class="header">
+          <h2 class="title">
+            <fa-icon [icon]="faTruck" class="me-2"></fa-icon>
+            Vehicle List
+          </h2>
+          <div class="button-group">
+            <button class="btn-action btn-add" (click)="toggleAddForm()">
+              <fa-icon [icon]="faPlus"></fa-icon>
+              <span class="ms-2">Add Vehicle</span>
+            </button>
+            <button class="btn-action btn-remove" [disabled]="!selectedVehicle" (click)="showDeleteDialog()">
+              <fa-icon [icon]="faMinus"></fa-icon>
+              <span class="ms-2">Remove Vehicle</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="filters-section">
+          <div class="filters-group">
+            <label class="filter-label">
+              <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
+              Filters:
+            </label>
+            <select class="filter-select" [(ngModel)]="selectedStatus" name="status">
+              <option value="">All Status</option>
+              <option value="Active">Active</option>
+              <option value="Idle">Idle</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
+
+            <select class="filter-select" [(ngModel)]="selectedRoute" name="routes">
+              <option value="">All Routes</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Industrial">Industrial</option>
+              <option value="Residential">Residential</option>
+            </select>
+            <select class="filter-select" [(ngModel)]="selectedCapacity" name="capacities">
+              <option value="">All Capacities</option>
+              <option value="1000kg">1000kg</option>
+              <option value="1500kg">1500kg</option>
+              <option value="2000kg">2000kg</option>
+              <option value="2500kg">2500kg</option>
+              <option value="3000kg">3000kg</option>
+            </select>
+          </div>
+          <div class="search-group">
+            <div class="search-input-wrapper">
+              <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
+              <input type="text" class="search-input" placeholder="Search by ID..." [(ngModel)]="searchQuery">
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading indicator -->
+        <div class="loading-container" *ngIf="isLoading">
+          <fa-icon [icon]="faSpinner" size="2x"></fa-icon>
+          <p>Loading...</p>
+        </div>
+
+        <!-- Error message -->
+        <div class="error-message" *ngIf="error">
+          <p>{{ error }}</p>
+          <button class="btn-retry" (click)="refreshVehicles()">Try Again</button>
+        </div>
+
+        <div class="table-container" *ngIf="!isLoading && !error">
+          <table class="vehicle-table">
+            <thead>
+              <tr>
+                <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> ID</th>
+                <th><fa-icon [icon]="faTruck" class="me-2"></fa-icon> License Plate</th>
+                <th><fa-icon [icon]="faUser" class="me-2"></fa-icon> Driver's Name</th>
+                <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status</th>
+                <th><fa-icon [icon]="faRoute" class="me-2"></fa-icon> Route Type</th>
+                <th><fa-icon [icon]="faWeight" class="me-2"></fa-icon> Max Capacity</th>
+                <th><fa-icon [icon]="faTools" class="me-2"></fa-icon> Last Maintenance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vehicle of filteredVehicles"
+                  (click)="selectVehicle(vehicle)"
+                  [class.selected-row]="selectedVehicle && selectedVehicle.id === vehicle.id">
+                <td>{{ vehicle.id }}</td>
+                <td>{{ vehicle.licensePlate }}</td>
+                <td>{{ getDriverName(vehicle) }}</td>
+                <td>
+                  <span class="status-badge" [class]="'status-' + vehicle.status.toLowerCase()">
+                    <fa-icon [icon]="faCircle" class="me-1" size="xs"></fa-icon>
+                    {{ vehicle.status }}
+                  </span>
+                </td>
+                <td>{{ vehicle.routeType }}</td>
+                <td>{{ formatCapacity(vehicle.maxCapacity) }}</td>
+                <td>{{ vehicle.lastMaintenance | date:'yyyy-MM-dd' }}</td>
+              </tr>
+              <tr *ngIf="filteredVehicles.length === 0">
+                <td colspan="7" class="no-data">No vehicles found</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
+
+<div class="vehicle-form-container" *ngIf="showAddForm">
+  <h2 class="form-title">Add New Vehicle</h2>
+  <form class="vehicle-form" (ngSubmit)="addVehicle()">
+    <!-- Vehicle Information -->
+    <h3 class="form-section-title">Vehicle Information</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="licensePlate">License Plate:</label>
+        <input type="text" id="licensePlate" class="form-control" [(ngModel)]="vehicle.licensePlate" name="licensePlate" required>
+      </div>
+      <div class="form-group">
+        <label for="routeType">Route Type:</label>
+        <select id="routeType" class="form-control" [(ngModel)]="vehicle.routeType" name="routeType">
+          <option value="Commercial">Commercial</option>
+          <option value="Industrial">Industrial</option>
+          <option value="Residential">Residential</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="maxCapacity">Max Capacity:</label>
+        <select id="maxCapacity" class="form-control" [(ngModel)]="vehicle.maxCapacity" name="maxCapacity">
+          <option value="1000kg">1000kg</option>
+          <option value="1500kg">1500kg</option>
+          <option value="2000kg">2000kg</option>
+          <option value="2500kg">2500kg</option>
+          <option value="3000kg">3000kg</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="lastMaintenance">Last Maintenance Date:</label>
+        <input type="date" id="lastMaintenance" class="form-control" [(ngModel)]="vehicle.lastMaintenance" name="lastMaintenance" required>
+      </div>
+    </div>
+
+    <!-- Driver Information -->
+    <h3 class="form-section-title">Driver Information</h3>
+
+    <div class="form-row driver-selection-row">
+      <div class="form-group driver-toggle">
+        <div class="toggle-container">
+          <label class="toggle-label" [class.active]="!useCustomDriver">Select Driver</label>
+          <div class="toggle-switch" (click)="toggleDriverMode()">
+            <div class="toggle-slider" [class.right]="useCustomDriver"></div>
+          </div>
+          <label class="toggle-label" [class.active]="useCustomDriver">Custom Driver</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Driver Selection Dropdown -->
+    <div *ngIf="!useCustomDriver">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="driverSelect">Select a Driver:</label>
+          <select id="driverSelect" class="form-control" [(ngModel)]="selectedDriverIndex" name="driverSelect" (change)="onDriverSelect()">
+            <option [value]="-1" disabled selected>-- Select a Driver --</option>
+            <option *ngFor="let driver of availableDrivers; let i = index" [value]="i">
+              {{ driver.name }} ({{ driver.licenseNumber }})
+            </option>
+          </select>
+
+        </div>
+      </div>
+
+      <div class="driver-preview" *ngIf="selectedDriverIndex >= 0">
+        <h4 class="driver-preview-title">Driver Details</h4>
+        <div class="driver-preview-details">
+          <div class="preview-item">
+            <span class="preview-label">Name:</span>
+            <span class="preview-value">{{ vehicle.driver?.name }}</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">Age:</span>
+            <span class="preview-value">{{ vehicle.driver?.age }}</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">License Number:</span>
+            <span class="preview-value">{{ vehicle.driver?.licenseNumber }}</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">Type:</span>
+            <span class="preview-value">{{ vehicle.driver?.collaboratorType }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Driver Form -->
+    <div *ngIf="useCustomDriver">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="driverName">Driver's Name:</label>
+          <input type="text" id="driverName" class="form-control" [(ngModel)]="vehicle.driver!.name" name="driverName" required>
+        </div>
+        <div class="form-group">
+          <label for="driverAge">Driver's Age:</label>
+          <input type="number" id="driverAge" class="form-control" [(ngModel)]="vehicle.driver!.age" name="driverAge" required min="18" max="70">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="licenseNumber">License Number:</label>
+          <input type="text" id="licenseNumber" class="form-control" [(ngModel)]="vehicle.driver!.licenseNumber" name="licenseNumber" required>
+        </div>
+        <div class="form-group">
+          <label for="collaboratorType">Collaborator Type:</label>
+          <select id="collaboratorType" class="form-control" [(ngModel)]="vehicle.driver!.collaboratorType" name="collaboratorType">
+            <option value="Driver">Driver</option>
+            <option value="Contractor">Contractor</option>
+            <option value="Employee">Employee</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location Information -->
+    <h3 class="form-section-title">Current Location</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="latitude">Latitude:</label>
+        <input type="number" id="latitude" class="form-control" [(ngModel)]="vehicle.latitude" name="latitude" step="0.0001">
+      </div>
+      <div class="form-group">
+        <label for="longitude">Longitude:</label>
+        <input type="number" id="longitude" class="form-control" [(ngModel)]="vehicle.longitude" name="longitude" step="0.0001">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit" [disabled]="isLoading">
+        <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
+        <span *ngIf="!isLoading">Save Vehicle</span>
+        <span *ngIf="isLoading">Saving...</span>
+      </button>
+      <button type="button" class="btn-cancel" (click)="toggleAddForm()" [disabled]="isLoading">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="overlay" *ngIf="showDeleteConfirmation" (click)="cancelDelete()"></div>
+
+<div class="delete-confirmation-container" *ngIf="showDeleteConfirmation">
+  <div class="delete-confirmation-header">
+    <fa-icon [icon]="faExclamationTriangle" class="warning-icon"></fa-icon>
+    <h2>Confirm Deletion</h2>
+  </div>
+
+  <div class="delete-confirmation-body">
+    <p>Are you sure you want to delete vehicle with ID: <strong>{{ selectedVehicle?.id }}</strong>?</p>
+    <p>This action cannot be undone.</p>
+
+    <div class="vehicle-details" *ngIf="selectedVehicle">
+      <div class="detail-item">
+        <span class="detail-label">License Plate:</span>
+        <span class="detail-value">{{ selectedVehicle.licensePlate }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Driver:</span>
+        <span class="detail-value">{{ getDriverName(selectedVehicle) }}</span>
+      </div>
     </div>
   </div>
 
-  <!-- Add a horizontal line below the header -->
-  <hr class="mb-3" style="border-color: black; border-width: 2px;" />
-
-  <div class="d-flex justify-content-between mb-3">
-    <div>
-      <label class="me-2">Filters:</label>
-      <select class="form-select d-inline w-auto" [(ngModel)]="selectedStatus">
-        <option value="">All Status</option>
-        <option value="Active">Active</option>
-        <option value="Idle">Idle</option>
-        <option value="Maintenance">Maintenance</option>
-      </select>
-      <select class="form-select d-inline w-auto ms-2" [(ngModel)]="selectedRoute">
-        <option value="">All Routes</option>
-        <option value="Commercial">Commercial</option>
-        <option value="Industrial">Industrial</option>
-        <option value="Residential">Residential</option>
-      </select>
-      <select class="form-select d-inline w-auto ms-2" [(ngModel)]="selectedCapacity">
-        <option value="">All Capacities</option>
-        <option value="1000kg">1000kg</option>
-        <option value="1500kg">1500kg</option>
-        <option value="2000kg">2000kg</option>
-        <option value="2500kg">2500kg</option>
-        <option value="3000kg">3000kg</option>
-      </select>
-    </div>
-    <input type="text" class="form-control w-auto" placeholder="Search by ID..." [(ngModel)]="searchQuery">
+  <div class="delete-confirmation-actions">
+    <button class="btn-delete" (click)="confirmDelete()" [disabled]="isLoading">
+      <fa-icon *ngIf="!isLoading" [icon]="faTrash"></fa-icon>
+      <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
+      <span *ngIf="!isLoading">Delete Vehicle</span>
+      <span *ngIf="isLoading">Deleting...</span>
+    </button>
+    <button class="btn-cancel" (click)="cancelDelete()" [disabled]="isLoading">Cancel</button>
   </div>
-
-  <table class="table table-bordered table-striped">
-    <thead class="table-light">
-      <tr>
-        <th>ID</th>
-        <th>License Plate</th>
-        <th>Driver's Name</th>
-        <th>Status</th>
-        <th>Route Type</th>
-        <th>Max Capacity</th>
-        <th>Last Maintenance</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let vehicle of filteredVehicles">
-        <td>{{ vehicle.id }}</td>
-        <td>{{ vehicle.licensePlate }}</td>
-        <td>{{ vehicle.driverName }}</td>
-        <td>{{ vehicle.status }}</td>
-        <td>{{ vehicle.routeType }}</td>
-        <td>{{ vehicle.maxCapacity }}</td>
-        <td>{{ vehicle.lastMaintenance }}</td>
-      </tr>
-    </tbody>
-  </table>
 </div>

@@ -28,6 +28,9 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
+# Visual Studio
+.vs/
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/
@@ -40,3 +43,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Ignore environment files to prevent API key leaks
+src/environments/environment.ts

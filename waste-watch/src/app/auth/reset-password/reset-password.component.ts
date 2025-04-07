@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { CommonModule } from '@angular/common'; // Import CommonModule
 
@@ -15,8 +16,9 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   email = '';
   currentImage = 'assets/images/login_image5.jpeg'; // Use only login_image5.jpeg
+  errorMessage: string | null = null; // To store error message
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
     // Slow down the video playback rate
@@ -28,9 +30,27 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   onResetPassword() {
-    // Perform reset password logic
-    console.log('Reset password requested for email:', this.email);
-    this.router.navigate(['/login']); // Redirect to login after reset
+    const resetData = { email: this.email };
+
+    this.http.post('https://localhost:7259/api/auth/forgot-password', resetData)
+      .subscribe({
+        next: (response) => {
+          console.log('Password reset email sent successfully:', response);
+          this.router.navigate(['/login']); // Redirect to login after password reset
+        },
+        error: (error) => {
+          console.error('Password reset failed', error);
+
+          // Handle specific errors
+          if (error.status === 404) {
+            this.errorMessage = 'Email not found. Please check the email address and try again.';
+          } else if (error.status === 400) {
+            this.errorMessage = 'Please check your email and try again.';
+          } else {
+            this.errorMessage = `Error: ${error.message}`; // General error message
+          }
+        }
+      });
   }
 
   navigateToLogin() {
