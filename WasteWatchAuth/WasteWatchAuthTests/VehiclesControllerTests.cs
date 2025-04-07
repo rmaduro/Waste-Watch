@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using WasteWatchAuth.Controllers;
 using WasteWatchAuth.Data;
 using WasteWatchAuth.Models;
-using WasteWatchAuth.Models.Colaborator;
-using WasteWatchAuth.Models.Vehicle;
 using Xunit;
 
 namespace WasteWatchAuthTests

@@ -5,7 +5,7 @@ using WasteWatchAuth.Data;
 
 namespace WasteWatchAuth.Controllers
 {
-	[Authorize(Roles = "Admin")] 
+	[Authorize(Roles = "Admin")] // Apenas Admin pode ver os logs
 	public class LogsController : Controller
 	{
 		private readonly ApplicationDbContext _context;

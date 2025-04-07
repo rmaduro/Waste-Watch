@@ -11,7 +11,6 @@ using Moq;
 using WasteWatchAuth.Controllers;
 using WasteWatchAuth.Data;
 using WasteWatchAuth.Models;
-using WasteWatchAuth.Models.Auth;
 using WasteWatchAuth.Services;
 using Xunit;
 
