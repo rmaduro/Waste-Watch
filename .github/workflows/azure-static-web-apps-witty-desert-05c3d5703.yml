@@ -36,7 +36,7 @@ jobs:
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ 00721f46da533c98126c3104efd7456cd45020f72ac4d3b91a91a12f5bd1bac106-ed3fe3cd-0fd4-4bd5-9a14-dac4aee47df9003290805c3d5703 }}
+          azure_static_web_apps_api_token: "00721f46da533c98126c3104efd7456cd45020f72ac4d3b91a91a12f5bd1bac106-ed3fe3cd-0fd4-4bd5-9a14-dac4aee47df9003290805c3d5703"
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
