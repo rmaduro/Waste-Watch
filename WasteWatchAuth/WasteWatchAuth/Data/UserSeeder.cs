@@ -30,7 +30,7 @@ namespace WasteWatchAuth.Data
 			}
 
 			// 📌 Criar utilizador Fleet Manager
-			string fleetEmail = "fleetmanager@wastewatch.com";
+			string fleetEmail = "fleetmanager.wastewatch@gmail.com";
 			string fleetPassword = "Fleet@123";
 			string fleetRole = "Fleet Manager";
 
@@ -52,7 +52,7 @@ namespace WasteWatchAuth.Data
 			}
 
 			// 📌 Criar utilizador Bin Manager
-			string binEmail = "binmanager@wastewatch.com";
+			string binEmail = "binmanager.wastewatch@gmail.com";
 			string binPassword = "Bin@123";
 			string binRole = "Bin Manager";
 

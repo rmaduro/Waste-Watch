@@ -19,7 +19,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
       <ul class="nav flex-column">
         <!-- Conditional Rendering of Fleet Manager or Bin Manager Links -->
         <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" routerLink="/fleet-dashboard" routerLinkActive="active">
+          <a class="nav-link" (click)="navigateTo('/fleet-dashboard', $event)">
             <div class="icon-container">
               <fa-icon [icon]="faDashboard"></fa-icon>
             </div>
@@ -27,7 +27,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" routerLink="/vehicle-list" routerLinkActive="active">
+          <a class="nav-link" (click)="navigateTo('/vehicle-list', $event)">
             <div class="icon-container">
               <fa-icon [icon]="faTruck"></fa-icon>
             </div>
@@ -35,7 +35,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" routerLink="/fleet-map" routerLinkActive="active">
+          <a class="nav-link" (click)="navigateTo('/vehicle-map', $event)">
             <div class="icon-container">
               <fa-icon [icon]="faMap"></fa-icon>
             </div>
@@ -44,7 +44,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
         </li>
 
         <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" routerLink="/bin-dashboard" routerLinkActive="active">
+          <a class="nav-link" (click)="navigateTo('/bin-dashboard', $event)">
             <div class="icon-container">
               <fa-icon [icon]="faDashboard"></fa-icon>
             </div>
@@ -52,7 +52,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" routerLink="/bin-list" routerLinkActive="active">
+          <a class="nav-link" (click)="navigateTo('/bin-list', $event)">
             <div class="icon-container">
               <fa-icon [icon]="faTrash"></fa-icon>
             </div>
@@ -60,7 +60,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" routerLink="/bin-map" routerLinkActive="active">
+          <a class="nav-link" (click)="navigateTo('/bin-map', $event)">
             <div class="icon-container">
               <fa-icon [icon]="faMap"></fa-icon>
             </div>
@@ -91,6 +91,7 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
       padding-top: 16px;
       border-right: 1px solid #e5e7eb;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+      z-index: 1000;
     }
 
     .sidebar:hover {
@@ -265,16 +266,23 @@ export class SideNavComponent implements OnInit {
     });
   }
 
+  // Programmatic navigation with console log
+  navigateTo(route: string, event: Event) {
+    event.preventDefault(); // Prevent default anchor tag behavior
+    console.log(`Navigating to ${route}`);
+    this.router.navigate([route]);
+  }
+
+  // Logout with console log
   logout() {
+    console.log('Logging out...');
     const user = this.authService.getCurrentUser();
     if (user) {
       this.authService.logout(user.email).subscribe(() => {
-        // Handle successful logout
-        // Redirect to login page after successful logout
+        console.log('Logout successful, redirecting to login page');
         this.router.navigate(['/login']);  // Redirect to login page
       }, error => {
-        // Handle error, if any
-        console.error('Logout failed', error);
+        console.error('Logout failed', error); // Log error if logout fails
       });
     }
   }
