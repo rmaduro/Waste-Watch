@@ -26,6 +26,34 @@
           "Children": [
             {
               "$type": "Document",
+<<<<<<< Updated upstream
+=======
+              "DocumentIndex": 0,
+              "Title": "azure-static-web-apps-witty-desert-05c3d5703.yml",
+              "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\.github\\workflows\\azure-static-web-apps-witty-desert-05c3d5703.yml",
+              "RelativeDocumentMoniker": "..\\.github\\workflows\\azure-static-web-apps-witty-desert-05c3d5703.yml",
+              "ToolTip": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\.github\\workflows\\azure-static-web-apps-witty-desert-05c3d5703.yml",
+              "RelativeToolTip": "..\\.github\\workflows\\azure-static-web-apps-witty-desert-05c3d5703.yml",
+              "ViewState": "AgIAACAAAAAAAAAAAAAgwBIAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2025-04-07T02:40:53.116Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20250407005851_Initial.cs",
+              "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Migrations\\20250407005851_Initial.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Migrations\\20250407005851_Initial.cs",
+              "ToolTip": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Migrations\\20250407005851_Initial.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Migrations\\20250407005851_Initial.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T00:58:51.643Z"
+            },
+            {
+              "$type": "Document",
+>>>>>>> Stashed changes
               "DocumentIndex": 2,
               "Title": "BinsController.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\BinsController.cs",
