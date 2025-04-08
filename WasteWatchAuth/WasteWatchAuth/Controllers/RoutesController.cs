@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WasteWatchAuth.Data;
@@ -34,8 +33,6 @@ namespace WasteWatchAuth.Controllers
 			return Ok(route);
 		}
 
-
-
 		/// <summary>
 		/// Obter todas as rotas.
 		/// </summary>
@@ -43,7 +40,7 @@ namespace WasteWatchAuth.Controllers
 		public async Task<IActionResult> GetAllRoutes()
 		{
 			var routes = await _context.Routes
-				.Include(r => r.Vehicle)
+				// Agora, apenas inclua as Locations
 				.Include(r => r.Locations)
 				.ToListAsync();
 
@@ -57,7 +54,6 @@ namespace WasteWatchAuth.Controllers
 		public async Task<IActionResult> GetRouteById(int id)
 		{
 			var route = await _context.Routes
-				.Include(r => r.Vehicle)
 				.Include(r => r.Locations)
 				.FirstOrDefaultAsync(r => r.Id == id);
 

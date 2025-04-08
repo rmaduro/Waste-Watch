@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using WasteWatchAuth.Models;
 
 namespace WasteWatchAuth.Models
 {
@@ -14,13 +15,6 @@ namespace WasteWatchAuth.Models
 		[Required]
 		public string Type { get; set; } = null!;
 
-		// Torne o VehicleId opcional (int?) e remova o [Required]
-		public int? VehicleId { get; set; }
-
-		[ForeignKey("VehicleId")]
-		public Vehicle? Vehicle { get; set; }
-
-		// Para não dar problema de null, inicialize a lista:
 		public List<RouteLocation> Locations { get; set; } = new();
 	}
 }

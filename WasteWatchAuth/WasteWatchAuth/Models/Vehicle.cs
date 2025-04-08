@@ -12,7 +12,7 @@ namespace WasteWatchAuth.Models
 		public string LicensePlate { get; set; } = string.Empty;
 
 		[Required]
-		public VehicleType Type { get; set; } // Enumeração dos tipos de veículos
+		public VehicleType Type { get; set; } 
 
 		[Required]
 		public string Status { get; set; } = string.Empty;
@@ -24,14 +24,16 @@ namespace WasteWatchAuth.Models
 
 		public DateTime LastMaintenance { get; set; }
 
-		// Localização do Veículo
 		public string Latitude { get; set; }
 		public string Longitude { get; set; }
 
-		// Relação com o Collaborator (Driver)
 		public int DriverId { get; set; }
 
 		[ForeignKey("DriverId")]
 		public Collaborator Driver { get; set; }
+
+		public int? RouteId { get; set; }
+		[ForeignKey("RouteId")]
+		public Routes? Route { get; set; }
 	}
 }
