@@ -2,5 +2,7 @@
     "editor.formatOnType": true,
     "[commonlisp]": {
         "editor.wordSeparators": "`|;:'\",()"
-    }
+    },
+    "appService.defaultWebAppToDeploy": "/subscriptions/fadfe847-ba39-48b8-ad46-76525db9d7b1/resourceGroups/Waste-Watch/providers/Microsoft.Web/sites/Waste-Watch",
+    "appService.deploySubpath": "dist\\waste-watch"
 }
