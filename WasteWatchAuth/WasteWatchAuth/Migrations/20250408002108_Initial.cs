@@ -296,6 +296,47 @@ namespace WasteWatchAuth.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Routes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Routes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Routes_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RouteLocations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Latitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Longitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RouteId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RouteLocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RouteLocations_Routes_RouteId",
+                        column: x => x.RouteId,
+                        principalTable: "Routes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -346,6 +387,16 @@ namespace WasteWatchAuth.Migrations
                 column: "BinId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RouteLocations_RouteId",
+                table: "RouteLocations",
+                column: "RouteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Routes_VehicleId",
+                table: "Routes",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_DriverId",
                 table: "Vehicles",
                 column: "DriverId");
@@ -379,7 +430,7 @@ namespace WasteWatchAuth.Migrations
                 name: "MaintenanceHistories");
 
             migrationBuilder.DropTable(
-                name: "Vehicles");
+                name: "RouteLocations");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -391,10 +442,16 @@ namespace WasteWatchAuth.Migrations
                 name: "Bins");
 
             migrationBuilder.DropTable(
-                name: "Collaborators");
+                name: "Routes");
 
             migrationBuilder.DropTable(
                 name: "BinLocations");
+
+            migrationBuilder.DropTable(
+                name: "Vehicles");
+
+            migrationBuilder.DropTable(
+                name: "Collaborators");
         }
     }
 }
