@@ -9,21 +9,21 @@ namespace WasteWatchAuth.Data
 			// Aplicar migrações automaticamente (opcional)
 			context.Database.EnsureCreated();
 
-			// Se já existirem registos, não faz nada
+			// Se já existirem registros de Bin, entendemos que já foi inicializado
 			if (context.Bins.Any()) return;
 
 			// ─────────────────────────────────────────────────────────
 			// 1. Collaborators (Drivers)
 			var collaborators = new Collaborator[]
 			{
-                // Dados originais
-                new() { Name = "Carlos Silva", Age = 40, LicenseNumber = "ABC-12345", CollaboratorType = CollaboratorType.Driver },
+				// Dados originais
+				new() { Name = "Carlos Silva", Age = 40, LicenseNumber = "ABC-12345", CollaboratorType = CollaboratorType.Driver },
 				new() { Name = "Ana Ribeiro", Age = 35, LicenseNumber = "DEF-67890", CollaboratorType = CollaboratorType.Driver },
 				new() { Name = "João Costa", Age = 45, LicenseNumber = "GHI-98765", CollaboratorType = CollaboratorType.Driver },
 				new() { Name = "Marta Dias", Age = 38, LicenseNumber = "JKL-11223", CollaboratorType = CollaboratorType.Driver },
 
-                // Dados adicionais
-                new() { Name = "Bruno Marques", Age = 42, LicenseNumber = "LMN-44444", CollaboratorType = CollaboratorType.Driver },
+				// Dados adicionais
+				new() { Name = "Bruno Marques", Age = 42, LicenseNumber = "LMN-44444", CollaboratorType = CollaboratorType.Driver },
 				new() { Name = "Carla Pinto", Age = 33, LicenseNumber = "OPQ-55555", CollaboratorType = CollaboratorType.Driver },
 				new() { Name = "Ricardo Santos", Age = 50, LicenseNumber = "RST-66666", CollaboratorType = CollaboratorType.Driver },
 				new() { Name = "Sofia Rocha", Age = 29, LicenseNumber = "UVW-77777", CollaboratorType = CollaboratorType.Driver },
@@ -44,35 +44,260 @@ namespace WasteWatchAuth.Data
 			context.SaveChanges();
 
 			// ─────────────────────────────────────────────────────────
-			// 2. Vehicles
-			// Usaremos rotativamente os ids dos colaboradores criados acima
+			// 2. Vehicles (20 registros estáticos)
 			var allCollabs = collaborators.ToList();
-			var vehicles = new List<Vehicle>();
-			var routeTypes = new[] { "Commercial", "Industrial", "Mixed" };
-			var vehicleTypes = new[] { VehicleType.FrontLoader, VehicleType.SideLoader, VehicleType.RearLoader, VehicleType.UrbanMini };
-
-			for (int i = 0; i < 20; i++)
+			var vehicles = new Vehicle[]
 			{
-				vehicles.Add(new Vehicle
+				// ───── 10 em Lisboa ─────────────────
+				new()
 				{
-					LicensePlate = $"{i:D2}-XX-{(i + 10):D2}",
+					LicensePlate = "01-XX-11",
 					Status = "Active",
-					RouteType = routeTypes[i % routeTypes.Length],
-					MaxCapacity = 3000 + (i * 100),
-					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-i),
-					Type = vehicleTypes[i % vehicleTypes.Length],
-					Latitude = $"38.7{i % 10}9",
-					Longitude = $"-9.13{i % 10}9",
-					// Escolhe um driver de forma aleatória
-					DriverId = allCollabs[i % allCollabs.Count].Id
-				});
-			}
+					RouteType = "Commercial",
+					MaxCapacity = 3000,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-1),
+					Type = VehicleType.FrontLoader,
+					Latitude = "38.7213",
+					Longitude = "-9.1393",
+					DriverId = allCollabs[0].Id
+				},
+				new()
+				{
+					LicensePlate = "02-XX-22",
+					Status = "Active",
+					RouteType = "Industrial",
+					MaxCapacity = 3100,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-2),
+					Type = VehicleType.SideLoader,
+					Latitude = "38.7224",
+					Longitude = "-9.1401",
+					DriverId = allCollabs[1].Id
+				},
+				new()
+				{
+					LicensePlate = "03-XX-33",
+					Status = "Active",
+					RouteType = "Mixed",
+					MaxCapacity = 3200,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-3),
+					Type = VehicleType.RearLoader,
+					Latitude = "38.7232",
+					Longitude = "-9.1356",
+					DriverId = allCollabs[2].Id
+				},
+				new()
+				{
+					LicensePlate = "04-XX-44",
+					Status = "Active",
+					RouteType = "Commercial",
+					MaxCapacity = 3300,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-4),
+					Type = VehicleType.UrbanMini,
+					Latitude = "38.7257",
+					Longitude = "-9.1305",
+					DriverId = allCollabs[3].Id
+				},
+				new()
+				{
+					LicensePlate = "05-XX-55",
+					Status = "Active",
+					RouteType = "Industrial",
+					MaxCapacity = 3400,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-5),
+					Type = VehicleType.FrontLoader,
+					Latitude = "38.7290",
+					Longitude = "-9.1284",
+					DriverId = allCollabs[4].Id
+				},
+				new()
+				{
+					LicensePlate = "06-XX-66",
+					Status = "Active",
+					RouteType = "Mixed",
+					MaxCapacity = 3500,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-6),
+					Type = VehicleType.SideLoader,
+					Latitude = "38.7150",
+					Longitude = "-9.1401",
+					DriverId = allCollabs[5].Id
+				},
+				new()
+				{
+					LicensePlate = "07-XX-77",
+					Status = "Active",
+					RouteType = "Commercial",
+					MaxCapacity = 3600,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-7),
+					Type = VehicleType.RearLoader,
+					Latitude = "38.7169",
+					Longitude = "-9.1399",
+					DriverId = allCollabs[6].Id
+				},
+				new()
+				{
+					LicensePlate = "08-XX-88",
+					Status = "Active",
+					RouteType = "Industrial",
+					MaxCapacity = 3700,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-8),
+					Type = VehicleType.UrbanMini,
+					Latitude = "38.7175",
+					Longitude = "-9.1415",
+					DriverId = allCollabs[7].Id
+				},
+				new()
+				{
+					LicensePlate = "09-XX-99",
+					Status = "Active",
+					RouteType = "Mixed",
+					MaxCapacity = 3800,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-9),
+					Type = VehicleType.FrontLoader,
+					Latitude = "38.7201",
+					Longitude = "-9.1365",
+					DriverId = allCollabs[8].Id
+				},
+				new()
+				{
+					LicensePlate = "10-XX-10",
+					Status = "Active",
+					RouteType = "Commercial",
+					MaxCapacity = 3900,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-10),
+					Type = VehicleType.SideLoader,
+					Latitude = "38.7240",
+					Longitude = "-9.1320",
+					DriverId = allCollabs[9].Id
+				},
+
+				// ───── 10 em Setúbal ─────────────────
+				new()
+				{
+					LicensePlate = "11-YY-11",
+					Status = "Active",
+					RouteType = "Industrial",
+					MaxCapacity = 3000,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-11),
+					Type = VehicleType.RearLoader,
+					Latitude = "38.5245",
+					Longitude = "-8.8880",
+					DriverId = allCollabs[10].Id
+				},
+				new()
+				{
+					LicensePlate = "12-YY-22",
+					Status = "Active",
+					RouteType = "Mixed",
+					MaxCapacity = 3100,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-12),
+					Type = VehicleType.UrbanMini,
+					Latitude = "38.5201",
+					Longitude = "-8.8965",
+					DriverId = allCollabs[11].Id
+				},
+				new()
+				{
+					LicensePlate = "13-YY-33",
+					Status = "Active",
+					RouteType = "Commercial",
+					MaxCapacity = 3200,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-13),
+					Type = VehicleType.FrontLoader,
+					Latitude = "38.5228",
+					Longitude = "-8.8972",
+					DriverId = allCollabs[12].Id
+				},
+				new()
+				{
+					LicensePlate = "14-YY-44",
+					Status = "Active",
+					RouteType = "Industrial",
+					MaxCapacity = 3300,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-14),
+					Type = VehicleType.SideLoader,
+					Latitude = "38.5250",
+					Longitude = "-8.8941",
+					DriverId = allCollabs[13].Id
+				},
+				new()
+				{
+					LicensePlate = "15-YY-55",
+					Status = "Active",
+					RouteType = "Mixed",
+					MaxCapacity = 3400,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-15),
+					Type = VehicleType.RearLoader,
+					Latitude = "38.5282",
+					Longitude = "-8.8905",
+					DriverId = allCollabs[14].Id
+				},
+				new()
+				{
+					LicensePlate = "16-YY-66",
+					Status = "Active",
+					RouteType = "Commercial",
+					MaxCapacity = 3500,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-16),
+					Type = VehicleType.UrbanMini,
+					Latitude = "38.5301",
+					Longitude = "-8.8892",
+					DriverId = allCollabs[15].Id
+				},
+				new()
+				{
+					LicensePlate = "17-YY-77",
+					Status = "Active",
+					RouteType = "Industrial",
+					MaxCapacity = 3600,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-17),
+					Type = VehicleType.FrontLoader,
+					Latitude = "38.5331",
+					Longitude = "-8.8912",
+					DriverId = allCollabs[16].Id
+				},
+				new()
+				{
+					LicensePlate = "18-YY-88",
+					Status = "Active",
+					RouteType = "Mixed",
+					MaxCapacity = 3700,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-18),
+					Type = VehicleType.SideLoader,
+					Latitude = "38.5370",
+					Longitude = "-8.8935",
+					DriverId = allCollabs[17].Id
+				},
+				new()
+				{
+					LicensePlate = "19-YY-99",
+					Status = "Active",
+					RouteType = "Commercial",
+					MaxCapacity = 3800,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-19),
+					Type = VehicleType.RearLoader,
+					Latitude = "38.5402",
+					Longitude = "-8.8950",
+					DriverId = allCollabs[18].Id
+				},
+				new()
+				{
+					LicensePlate = "20-YY-10",
+					Status = "Active",
+					RouteType = "Industrial",
+					MaxCapacity = 3900,
+					LastMaintenance = DateTime.Parse("2024-04-15").AddDays(-20),
+					Type = VehicleType.UrbanMini,
+					Latitude = "38.5440",
+					Longitude = "-8.8870",
+					DriverId = allCollabs[19].Id
+				},
+			};
+
 			context.Vehicles.AddRange(vehicles);
 			context.SaveChanges();
 
 			// ─────────────────────────────────────────────────────────
-			// 3. BinLocations (aprox. Lisboa / Setúbal)
-			// Geraremos 20 localizações diferentes
+			// 3. BinLocations (aprox. Lisboa / Setúbal) - 20 localizações
 			var binLocations = new BinLocation[]
 			{
 				new() { Latitude = "38.5245", Longitude = "-8.8880" },
@@ -100,8 +325,7 @@ namespace WasteWatchAuth.Data
 			context.SaveChanges();
 
 			// ─────────────────────────────────────────────────────────
-			// 4. Bins
-			// Vamos criar 20 lixeiras (bins), cada uma ligada a uma das 20 localizações
+			// 4. Bins (20 lixeiras - 1 para cada BinLocation)
 			var binTypes = new[] { BinType.Recycling, BinType.General };
 			var binStatuses = new[] { BinStatus.Active, BinStatus.Maintenance, BinStatus.NotFunctional };
 
@@ -119,6 +343,121 @@ namespace WasteWatchAuth.Data
 			}
 			context.Bins.AddRange(bins);
 			context.SaveChanges();
+
+			// ─────────────────────────────────────────────────────────
+			// 5. CollectionHistory (20 registos aleatórios)
+			var allBins = context.Bins.ToList();
+			var allVehiclesInDb = context.Vehicles.ToList();
+
+			if (allBins.Count > 0 && allVehiclesInDb.Count > 0)
+			{
+				var rnd = new Random();
+				var statuses = new[] { CollectionStatus.Completed, CollectionStatus.Pending, CollectionStatus.Failed };
+				var issueMessages = new[]
+				{
+					"",
+					"Nenhum problema registrado.",
+					"Obstrução leve na área.",
+					"Tampão quebrado.",
+					"Reclamação de mau cheiro.",
+					"Deslocamento atrasado por trânsito."
+				};
+
+				var historyList = new List<CollectionHistory>();
+
+				for (int i = 0; i < 20; i++)
+				{
+					var randomBin = allBins[rnd.Next(allBins.Count)];
+					var randomVehicle = allVehiclesInDb[rnd.Next(allVehiclesInDb.Count)];
+
+					// Gera uma data aleatória nos últimos 30 dias
+					var daysAgo = rnd.Next(30); // 0..29
+					var randomDate = DateTime.Now
+						.AddDays(-daysAgo)
+						.AddHours(rnd.Next(24))
+						.AddMinutes(rnd.Next(60));
+
+					var status = statuses[rnd.Next(statuses.Length)];
+					var issue = issueMessages[rnd.Next(issueMessages.Length)];
+
+					// Gera uma quantidade entre 0 e 300 (em kg, por exemplo)
+					var amount = Math.Round(rnd.NextDouble() * 300, 1);
+
+					historyList.Add(new CollectionHistory
+					{
+						BinId = randomBin.Id,
+						VehicleId = randomVehicle.Id,
+						Timestamp = randomDate,
+						CollectionStatus = status,
+						IssuesLogged = issue,
+						AmountCollected = amount
+					});
+				}
+
+				context.CollectionHistories.AddRange(historyList);
+				context.SaveChanges();
+			}
+
+			// ─────────────────────────────────────────────────────────
+			// 6. MaintenanceHistory (20 registos aleatórios)
+			var allBinsForMaint = context.Bins.ToList();
+
+			if (allBinsForMaint.Count > 0)
+			{
+				var rnd = new Random();
+
+				// Possíveis tipos de manutenção
+				var maintenanceTypes = new[] { "Repair", "Replacement", "Inspection" };
+				// Exemplos de descrições
+				var descriptions = new[]
+				{
+					"",
+					"Substituição da tampa danificada.",
+					"Limpeza interna do contentor.",
+					"Tampa travada, substituída a dobradiça.",
+				};
+
+				var maintHistoryList = new List<MaintenanceHistory>();
+
+				for (int i = 0; i < 20; i++)
+				{
+					var randomBin = allBinsForMaint[rnd.Next(allBinsForMaint.Count)];
+
+					// Início da manutenção nos últimos 30 dias
+					var daysAgo = rnd.Next(30);
+					var startDate = DateTime.UtcNow
+						.AddDays(-daysAgo)
+						.AddHours(rnd.Next(24))
+						.AddMinutes(rnd.Next(60));
+
+					// Em ~metade dos casos, gera um EndDate
+					DateTime? endDate = null;
+					if (rnd.Next(2) == 0) // 0 ou 1
+					{
+						// Entre 1 e 48 horas após o início
+						var hoursAfter = rnd.Next(1, 48);
+						endDate = startDate.AddHours(hoursAfter);
+					}
+
+					var mType = maintenanceTypes[rnd.Next(maintenanceTypes.Length)];
+					var desc = descriptions[rnd.Next(descriptions.Length)];
+					// Exemplo de UserId aleatório (6 dígitos)
+					var userId = rnd.Next(100000, 999999).ToString();
+
+					maintHistoryList.Add(new MaintenanceHistory
+					{
+						BinId = randomBin.Id,
+						UserId = userId,
+						StartDate = startDate,
+						EndDate = endDate,
+						MaintenanceType = mType,
+						Description = desc
+					});
+				}
+
+				context.MaintenanceHistories.AddRange(maintHistoryList);
+				context.SaveChanges();
+			}
 		}
 	}
 }
