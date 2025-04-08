@@ -19,6 +19,9 @@ namespace WasteWatchAuth.Data
 		public DbSet<BinLocation> BinLocations { get; set; }
 		public DbSet<MaintenanceHistory> MaintenanceHistories { get; set; }
 		public DbSet<CollectionHistory> CollectionHistories { get; set; }
+		public DbSet<Routes> Routes { get; set; }
+		public DbSet<RouteLocation> RouteLocations { get; set; }
+
 
 
 
