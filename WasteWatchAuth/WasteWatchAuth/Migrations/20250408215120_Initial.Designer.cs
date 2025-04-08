@@ -12,7 +12,7 @@ using WasteWatchAuth.Data;
 namespace WasteWatchAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250408175410_Initial")]
+    [Migration("20250408215120_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -445,12 +445,7 @@ namespace WasteWatchAuth.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VehicleId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Routes");
                 });
@@ -484,6 +479,9 @@ namespace WasteWatchAuth.Migrations
                     b.Property<int>("MaxCapacity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RouteId")
+                        .HasColumnType("int");
+
                     b.Property<string>("RouteType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -498,6 +496,8 @@ namespace WasteWatchAuth.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DriverId");
+
+                    b.HasIndex("RouteId");
 
                     b.ToTable("Vehicles");
                 });
@@ -586,15 +586,6 @@ namespace WasteWatchAuth.Migrations
                     b.Navigation("Route");
                 });
 
-            modelBuilder.Entity("WasteWatchAuth.Models.Routes", b =>
-                {
-                    b.HasOne("WasteWatchAuth.Models.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId");
-
-                    b.Navigation("Vehicle");
-                });
-
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
                 {
                     b.HasOne("WasteWatchAuth.Models.Collaborator", "Driver")
@@ -603,7 +594,13 @@ namespace WasteWatchAuth.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WasteWatchAuth.Models.Routes", "Route")
+                        .WithMany()
+                        .HasForeignKey("RouteId");
+
                     b.Navigation("Driver");
+
+                    b.Navigation("Route");
                 });
 
             modelBuilder.Entity("WasteWatchAuth.Models.Routes", b =>

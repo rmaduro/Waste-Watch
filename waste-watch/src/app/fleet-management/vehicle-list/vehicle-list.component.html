@@ -3,6 +3,7 @@
     <app-side-nav></app-side-nav>
     <div class="main-content">
       <div class="content-wrapper">
+        <!-- Header section remains unchanged -->
         <div class="header">
           <h2 class="title">
             <fa-icon [icon]="faTruck" class="me-2"></fa-icon>
@@ -22,26 +23,24 @@
 
         <div class="divider"></div>
 
+        <!-- Filters section remains unchanged -->
         <div class="filters-section">
           <div class="filters-group">
             <label class="filter-label">
               <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
               Filters:
             </label>
-            <select class="filter-select" [(ngModel)]="selectedStatus" name="status">
+            <select class="filter-select" [(ngModel)]="selectedStatus" name="status" (change)="onFilterChange()">
               <option value="">All Status</option>
               <option value="Active">Active</option>
               <option value="Idle">Idle</option>
               <option value="Maintenance">Maintenance</option>
-            </select>
-
-            <select class="filter-select" [(ngModel)]="selectedRoute" name="routes">
+            </select><select class="filter-select" [(ngModel)]="selectedRoute" name="routes" (change)="onFilterChange()">
               <option value="">All Routes</option>
               <option value="Commercial">Commercial</option>
               <option value="Industrial">Industrial</option>
               <option value="Residential">Residential</option>
-            </select>
-            <select class="filter-select" [(ngModel)]="selectedCapacity" name="capacities">
+            </select><select class="filter-select" [(ngModel)]="selectedCapacity" name="capacities" (change)="onFilterChange()">
               <option value="">All Capacities</option>
               <option value="1000kg">1000kg</option>
               <option value="1500kg">1500kg</option>
@@ -53,23 +52,23 @@
           <div class="search-group">
             <div class="search-input-wrapper">
               <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
-              <input type="text" class="search-input" placeholder="Search by ID..." [(ngModel)]="searchQuery">
+              <input type="text" class="search-input" placeholder="Search by ID..." [(ngModel)]="searchQuery" (input)="onFilterChange()">
             </div>
           </div>
         </div>
 
-        <!-- Loading indicator -->
+        <!-- Loading and error states remain unchanged -->
         <div class="loading-container" *ngIf="isLoading">
           <fa-icon [icon]="faSpinner" size="2x"></fa-icon>
           <p>Loading...</p>
         </div>
 
-        <!-- Error message -->
         <div class="error-message" *ngIf="error">
           <p>{{ error }}</p>
           <button class="btn-retry" (click)="refreshVehicles()">Try Again</button>
         </div>
 
+        <!-- Updated table with route column -->
         <div class="table-container" *ngIf="!isLoading && !error">
           <table class="vehicle-table">
             <thead>
@@ -81,10 +80,11 @@
                 <th><fa-icon [icon]="faRoute" class="me-2"></fa-icon> Route Type</th>
                 <th><fa-icon [icon]="faWeight" class="me-2"></fa-icon> Max Capacity</th>
                 <th><fa-icon [icon]="faTools" class="me-2"></fa-icon> Last Maintenance</th>
+                <th><fa-icon [icon]="faMapMarked" class="me-2"></fa-icon> Route</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let vehicle of filteredVehicles"
+              <tr *ngFor="let vehicle of paginatedVehicles"
                   (click)="selectVehicle(vehicle)"
                   [class.selected-row]="selectedVehicle && selectedVehicle.id === vehicle.id">
                 <td>{{ vehicle.id }}</td>
@@ -99,17 +99,43 @@
                 <td>{{ vehicle.routeType }}</td>
                 <td>{{ formatCapacity(vehicle.maxCapacity) }}</td>
                 <td>{{ vehicle.lastMaintenance | date:'yyyy-MM-dd' }}</td>
+                <td>
+                  <button
+                    class="btn-route"
+                    [class.btn-view-route]="vehicle.route"
+                    [class.btn-create-route]="!vehicle.route"
+                    (click)="navigateToRoute(vehicle.id!); $event.stopPropagation()">
+                    <fa-icon [icon]="vehicle.route ? faEye : faRoute" class="me-1"></fa-icon>
+                    {{ vehicle.route ? 'See Route' : 'Create Route' }}
+                  </button>
+                </td>
               </tr>
               <tr *ngIf="filteredVehicles.length === 0">
-                <td colspan="7" class="no-data">No vehicles found</td>
+                <td colspan="8" class="no-data">No vehicles found</td>
               </tr>
             </tbody>
           </table>
+          <!-- Add this right after the closing </table> tag inside the table-container div -->
+<div class="pagination-controls">
+  <button class="pagination-btn" (click)="prevPage()" [disabled]="currentPage === 1">
+    Previous
+  </button>
+  <span class="pagination-info">
+    Page {{ currentPage }} of {{ totalPages }}
+  </span>
+  <button class="pagination-btn"
+          (click)="nextPage()"
+          [disabled]="currentPage >= totalPages">
+    Next
+  </button>
+</div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Rest of the template (forms and modals) remains unchanged -->
 
 <div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
 

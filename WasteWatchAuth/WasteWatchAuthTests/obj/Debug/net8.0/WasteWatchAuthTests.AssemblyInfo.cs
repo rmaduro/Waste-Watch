@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WasteWatchAuthTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+78a1941b58927659efd8237c145236558b1f4014")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7879a4aacb696ce6d5b462ad88de015968259020")]
 [assembly: System.Reflection.AssemblyProductAttribute("WasteWatchAuthTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WasteWatchAuthTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

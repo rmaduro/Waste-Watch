@@ -11,6 +11,21 @@ export interface Driver {
   collaboratorType: string;
 }
 
+export type VehicleType = 'Truck' | 'Van' | 'Car'; // Adjust to match your C# enum
+
+export interface RouteLocation {
+  id: number;
+  latitude: string;
+  longitude: string;
+}
+
+export interface Route {
+  id: number;
+  name: string;
+  type: string;
+  locations: RouteLocation[];
+}
+
 export interface Vehicle {
   id?: number;
   licensePlate: string;
@@ -22,6 +37,8 @@ export interface Vehicle {
   latitude: string;
   longitude: string;
   driver?: Driver;
+  routeId?: number;
+  route?: Route;
 }
 
 @Injectable({
@@ -40,11 +57,11 @@ export class VehicleService {
   vehicles$ = this.vehiclesSubject.asObservable();
 
   private availableDrivers: Driver[] = [
-    { name: 'Carlos Silva', age: 40, licenseNumber: 'ABC-12345', collaboratorType: 'Driver' },
-    { name: 'Maria Santos', age: 35, licenseNumber: 'DEF-67890', collaboratorType: 'Employee' },
-    { name: 'João Oliveira', age: 42, licenseNumber: 'GHI-24680', collaboratorType: 'Driver' },
-    { name: 'Ana Costa', age: 38, licenseNumber: 'JKL-13579', collaboratorType: 'Contractor' },
-    { name: 'Pedro Ferreira', age: 45, licenseNumber: 'MNO-97531', collaboratorType: 'Employee' }
+    { id: 1, name: 'Carlos Silva', age: 40, licenseNumber: 'ABC-12345', collaboratorType: 'Driver' },
+    { id: 2, name: 'Maria Santos', age: 35, licenseNumber: 'DEF-67890', collaboratorType: 'Employee' },
+    { id: 3, name: 'João Oliveira', age: 42, licenseNumber: 'GHI-24680', collaboratorType: 'Driver' },
+    { id: 4, name: 'Ana Costa', age: 38, licenseNumber: 'JKL-13579', collaboratorType: 'Contractor' },
+    { id: 5, name: 'Pedro Ferreira', age: 45, licenseNumber: 'MNO-97531', collaboratorType: 'Employee' }
   ];
 
   constructor(private http: HttpClient) {
@@ -105,3 +122,4 @@ export class VehicleService {
     return processedVehicle;
   }
 }
+

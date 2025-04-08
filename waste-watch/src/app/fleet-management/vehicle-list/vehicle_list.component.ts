@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faPlus, faMinus, faSearch, faFilter, faTruck, faIdCard, faUser,
   faCircle, faRoute, faWeight, faTools, faTrash, faExclamationTriangle,
-  faSpinner, faMapMarkerAlt, faIdBadge
+  faSpinner, faMapMarkerAlt, faIdBadge, faEye, faMapMarked
 } from '@fortawesome/free-solid-svg-icons';
 import { VehicleService, Vehicle, Driver } from '../../services/FleetService';
 
@@ -37,6 +38,8 @@ export class VehicleListComponent implements OnInit {
   faSpinner = faSpinner;
   faMapMarkerAlt = faMapMarkerAlt;
   faIdBadge = faIdBadge;
+  faEye = faEye;
+  faMapMarked = faMapMarked;
 
   vehicles: Vehicle[] = [];
   availableDrivers: Driver[] = [];
@@ -55,7 +58,39 @@ export class VehicleListComponent implements OnInit {
 
   vehicle: Vehicle = this.getDefaultVehicle();
 
-  constructor(private vehicleService: VehicleService) {}
+  // Pagination
+  currentPage: number = 1;
+  pageSize: number = 7;
+
+  // Add these methods to the VehicleListComponent class:
+
+get paginatedVehicles() {
+  const start = (this.currentPage - 1) * this.pageSize;
+  const end = start + this.pageSize;
+  return this.filteredVehicles.slice(start, end);
+}
+
+nextPage() {
+  if (this.currentPage * this.pageSize < this.filteredVehicles.length) {
+    this.currentPage++;
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+  }
+}
+
+// Also update the totalPages getter to use filteredVehicles:
+get totalPages(): number {
+  return Math.ceil(this.filteredVehicles.length / this.pageSize);
+}
+
+  constructor(
+    private vehicleService: VehicleService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.vehicleService.vehicles$.subscribe({
@@ -69,6 +104,10 @@ export class VehicleListComponent implements OnInit {
     this.availableDrivers = this.vehicleService.getAvailableDrivers();
   }
 
+  navigateToRoute(vehicleId: number) {
+    this.router.navigate(['/routes', vehicleId]);
+  }
+
   toggleAddForm() {
     this.showAddForm = !this.showAddForm;
     if (this.showAddForm) {
@@ -76,21 +115,27 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-  get filteredVehicles() {
-    return this.vehicles.filter((vehicle) => {
-      const maxCapacityString = typeof vehicle.maxCapacity === 'number'
-        ? `${vehicle.maxCapacity}kg`
-        : vehicle.maxCapacity;
+ // Update the filteredVehicles getter to not reset currentPage automatically
+get filteredVehicles() {
+  return this.vehicles.filter((vehicle) => {
+    const maxCapacityString = typeof vehicle.maxCapacity === 'number'
+      ? `${vehicle.maxCapacity}kg`
+      : vehicle.maxCapacity;
 
-      return (
-        (this.selectedStatus === '' || vehicle.status === this.selectedStatus) &&
-        (this.selectedRoute === '' || vehicle.routeType === this.selectedRoute) &&
-        (this.selectedCapacity === '' || maxCapacityString === this.selectedCapacity) &&
-        (this.searchQuery === '' ||
-          (vehicle.id && vehicle.id.toString().includes(this.searchQuery)))
-      );
-    });
-  }
+    return (
+      (this.selectedStatus === '' || vehicle.status === this.selectedStatus) &&
+      (this.selectedRoute === '' || vehicle.routeType === this.selectedRoute) &&
+      (this.selectedCapacity === '' || maxCapacityString === this.selectedCapacity) &&
+      (this.searchQuery === '' ||
+        (vehicle.id && vehicle.id.toString().includes(this.searchQuery)))
+    );
+  });
+}
+
+// Add this method to reset page when filters change
+onFilterChange() {
+  this.currentPage = 1;
+}
 
   selectVehicle(vehicle: Vehicle) {
     this.selectedVehicle = vehicle;
@@ -172,6 +217,9 @@ export class VehicleListComponent implements OnInit {
       };
     }
   }
+
+
+
 
   formatCapacity(capacity: string | number): string {
     return typeof capacity === 'number' ? `${capacity}kg` : capacity;
