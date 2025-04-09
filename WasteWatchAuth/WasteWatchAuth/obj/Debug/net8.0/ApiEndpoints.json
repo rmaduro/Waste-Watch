@@ -424,6 +424,42 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WasteWatchAuth.Controllers.NotificationsController",
+    "Method": "CreateNotification",
+    "RelativePath": "api/Notifications",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "notification",
+        "Type": "WasteWatchAuth.Models.Notification",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.NotificationsController",
+    "Method": "GetBinNotifications",
+    "RelativePath": "api/Notifications/bin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.NotificationsController",
+    "Method": "GetFleetNotifications",
+    "RelativePath": "api/Notifications/fleet",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WasteWatchAuth.Controllers.RoutesController",
     "Method": "CreateRoute",
     "RelativePath": "api/Routes",
