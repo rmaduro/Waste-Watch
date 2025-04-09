@@ -66,8 +66,8 @@ builder.Services.AddControllers()
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 // Adicionar controladores e vistas
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+//builder.Services.AddControllersWithViews();
+//builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -113,10 +113,12 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Mapear as rotas padrão e API
-app.MapControllerRoute(
+/*
+ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+*/
 
 // Adicionar rotas para a API
 app.MapControllers();
