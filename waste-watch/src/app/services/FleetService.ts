@@ -11,10 +11,8 @@ export interface Driver {
   collaboratorType: string;
 }
 
-export type VehicleType = 'Truck' | 'Van' | 'Car'; // Adjust to match your C# enum
-
 export interface RouteLocation {
-  id: number;
+  id?: number;
   latitude: string;
   longitude: string;
 }
@@ -46,6 +44,7 @@ export interface Vehicle {
 })
 export class VehicleService {
   private apiUrl = 'https://localhost:7259/api/vehicles';
+  private routesUrl = 'https://localhost:7259/api/routes';
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -108,6 +107,23 @@ export class VehicleService {
     );
   }
 
+  updateVehicleRoute(vehicleId: number, route: Route): Observable<Vehicle> {
+    return this.http.put<Vehicle>(`${this.apiUrl}/${vehicleId}/route`, route, this.httpOptions).pipe(
+      tap((updatedVehicle) => {
+        const vehicles = this.vehiclesSubject.value;
+        const index = vehicles.findIndex(v => v.id === vehicleId);
+        if (index !== -1) {
+          vehicles[index] = updatedVehicle;
+          this.vehiclesSubject.next([...vehicles]);
+        }
+      }),
+      catchError((error) => {
+        console.error('Error updating vehicle route:', error);
+        return of(error);
+      })
+    );
+  }
+
   getAvailableDrivers(): Driver[] {
     return this.availableDrivers;
   }
@@ -122,4 +138,3 @@ export class VehicleService {
     return processedVehicle;
   }
 }
-

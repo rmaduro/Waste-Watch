@@ -1,4 +1,4 @@
-<div [class.blur-background]="showAddForm || showDeleteConfirmation">
+<div [class.blur-background]="showAddForm || showDeleteConfirmation || showRouteForm">
   <div class="d-flex vehicle-list-container">
     <app-side-nav></app-side-nav>
     <div class="main-content">
@@ -115,28 +115,74 @@
               </tr>
             </tbody>
           </table>
-          <!-- Add this right after the closing </table> tag inside the table-container div -->
-<div class="pagination-controls">
-  <button class="pagination-btn" (click)="prevPage()" [disabled]="currentPage === 1">
-    Previous
-  </button>
-  <span class="pagination-info">
-    Page {{ currentPage }} of {{ totalPages }}
-  </span>
-  <button class="pagination-btn"
-          (click)="nextPage()"
-          [disabled]="currentPage >= totalPages">
-    Next
-  </button>
-</div>
+          <div class="pagination-controls">
+            <button class="pagination-btn" (click)="prevPage()" [disabled]="currentPage === 1">
+              Previous
+            </button>
+            <span class="pagination-info">
+              Page {{ currentPage }} of {{ totalPages }}
+            </span>
+            <button class="pagination-btn"
+                    (click)="nextPage()"
+                    [disabled]="currentPage >= totalPages">
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Rest of the template (forms and modals) remains unchanged -->
+<!-- Route Creation Form -->
+<div class="overlay" *ngIf="showRouteForm" (click)="showRouteForm = false"></div>
 
+<div class="vehicle-form-container" *ngIf="showRouteForm" (click)="$event.stopPropagation()">
+  <h2 class="form-title">Create New Route</h2>
+  <form class="vehicle-form">
+    <h3 class="form-section-title">Route Information</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="vehicleId">Vehicle ID:</label>
+        <input type="text" id="vehicleId" class="form-control" [value]="routeVehicleId" readonly>
+      </div>
+    </div>
+
+    <h3 class="form-section-title">Select Bins for Collection</h3>
+
+    <div class="form-row">
+      <div class="form-group" style="width: 100%;">
+        <div class="bin-selection-container">
+          <div *ngFor="let bin of availableBins"
+               class="bin-item"
+               [class.selected]="isBinSelected(bin)"
+               (click)="toggleBinSelection(bin)">
+            <div class="bin-info">
+              <span class="bin-id">Bin #{{ bin.id }}</span>
+              <span class="bin-type">Type: {{ bin.type }}</span>
+              <span class="bin-location">
+                <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+                {{ bin.location.latitude }}, {{ bin.location.longitude }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-submit" (click)="createRoute()">
+        Create Route
+      </button>
+      <button type="button" class="btn-cancel" (click)="showRouteForm = false">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Add Vehicle Form -->
 <div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
 
 <div class="vehicle-form-container" *ngIf="showAddForm">
@@ -202,7 +248,6 @@
               {{ driver.name }} ({{ driver.licenseNumber }})
             </option>
           </select>
-
         </div>
       </div>
 
