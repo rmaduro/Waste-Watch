@@ -3,8 +3,17 @@ using System.Threading.Tasks;
 
 namespace WasteWatchAuth.Data
 {
+	/// <summary>
+	/// Class responsible for seeding initial users into the database.
+	/// This includes an Admin, a Fleet Manager, and a Bin Manager.
+	/// </summary>
 	public class UserSeeder
 	{
+		/// <summary>
+		/// Seeds default users if they do not already exist in the system.
+		/// Assigns predefined roles to each user upon creation.
+		/// </summary>
+		/// <param name="userManager">The UserManager used to manage user creation and role assignment.</param>
 		public static async Task SeedUsersAsync(UserManager<IdentityUser> userManager)
 		{
 			// 📌 Criar utilizador ADMIN

@@ -2,6 +2,11 @@
 
 namespace WasteWatchAuth.Data
 {
+	/// <summary>
+	/// Provides initial seed data for the application database.
+	/// This class populates tables such as Collaborators, Vehicles, BinLocations, Bins,
+	/// CollectionHistories, and MaintenanceHistories with sample data.
+	/// </summary>
 	public class DbInitializer
 	{
 		public static void Initialize(ApplicationDbContext context)
