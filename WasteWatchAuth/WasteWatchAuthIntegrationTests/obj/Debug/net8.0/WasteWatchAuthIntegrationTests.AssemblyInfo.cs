@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("WasteWatchAuthTests")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("WasteWatchAuthIntegrationTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cca8480887f80ca77845fb1d3b521b52b1ab38d4")]
-[assembly: System.Reflection.AssemblyProductAttribute("WasteWatchAuthTests")]
-[assembly: System.Reflection.AssemblyTitleAttribute("WasteWatchAuthTests")]
+[assembly: System.Reflection.AssemblyProductAttribute("WasteWatchAuthIntegrationTests")]
+[assembly: System.Reflection.AssemblyTitleAttribute("WasteWatchAuthIntegrationTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Gerado pela classe WriteCodeFragment do MSBuild.
