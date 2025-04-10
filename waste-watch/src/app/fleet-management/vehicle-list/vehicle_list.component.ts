@@ -14,7 +14,6 @@ import {
 import { VehicleService, Vehicle, Driver, Route } from '../../services/FleetService';
 import { BinService, Bin } from '../../services/BinService';
 import { GoogleMapsService } from '../../services/GoogleMapsService';
-import { environment } from '../../../environments/environtment';
 
 
 @Component({

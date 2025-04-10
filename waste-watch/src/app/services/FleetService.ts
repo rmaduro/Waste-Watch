@@ -338,4 +338,15 @@ export class VehicleService {
 
     return processedVehicle;
   }
+
+  getFleetNotifications(): Observable<any> {
+    const url = 'https://localhost:7259/api/notifications/fleet';
+    return this.http.get<any>(url, this.httpOptions).pipe(
+      catchError((error) => {
+        console.error('Error fetching fleet notifications:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }

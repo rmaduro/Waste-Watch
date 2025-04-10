@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../../services/AuthService';
 import { environment } from '../../../environments/environtment';
 
+
 interface MapOptions {
   center: { lat: number; lng: number };
   zoom: number;

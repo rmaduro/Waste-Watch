@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard,faBell } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../services/AuthService'; // Import AuthService
 
 @Component({
@@ -42,6 +42,14 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
             <span class="link-text">Fleet Monitoring</span>
           </a>
         </li>
+        <li *ngIf="isFleetManager" class="nav-item">
+          <a class="nav-link" (click)="navigateTo('/fleet-notification-list', $event)">
+            <div class="icon-container">
+              <fa-icon [icon]="faBell"></fa-icon>
+            </div>
+            <span class="link-text">Fleet Notification List</span>
+          </a>
+        </li>
 
         <li *ngIf="isBinManager" class="nav-item">
           <a class="nav-link" (click)="navigateTo('/bin-dashboard', $event)">
@@ -65,6 +73,22 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
               <fa-icon [icon]="faMap"></fa-icon>
             </div>
             <span class="link-text">Bin Monitoring</span>
+          </a>
+        </li>
+        <li *ngIf="isBinManager" class="nav-item">
+          <a class="nav-link" (click)="navigateTo('/bin-list', $event)">
+            <div class="icon-container">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </div>
+            <span class="link-text">Bin List</span>
+          </a>
+        </li>
+        <li *ngIf="isBinManager" class="nav-item">
+          <a class="nav-link" (click)="navigateTo('/bin-notification-list', $event)">
+            <div class="icon-container">
+              <fa-icon [icon]="faBell"></fa-icon>
+            </div>
+            <span class="link-text">Bin Notification List</span>
           </a>
         </li>
 
@@ -252,6 +276,7 @@ export class SideNavComponent implements OnInit {
   faSignOutAlt = faSignOutAlt;
   faMap = faMap;
   faDashboard = faDashboard;
+  faBell = faBell;
 
   isFleetManager = false;
   isBinManager = false;
