@@ -392,15 +392,6 @@ private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-frie
                         <h3 style="margin: 0; color: white; font-size: 18px; font-weight: 600;">
                             Stop #${index + 1}
                         </h3>
-                        <span style="
-                            padding: 4px 12px;
-                            border-radius: 9999px;
-                            font-size: 12px;
-                            font-weight: 500;
-                            background: rgba(255,255,255,0.2);
-                            color: white;
-                        ">
-                        </span>
                     </div>
                     <p style="margin: 0; color: #E0E7FF; font-size: 14px;">
                         ${this.getStopType(index, path.length)}
