@@ -1,0 +1,71 @@
+<!-- vehicles-route-component.html -->
+<div class="dashboard-container">
+  <app-side-nav></app-side-nav>
+
+  <div class="main-content">
+    <header class="dashboard-header">
+      <h1 class="dashboard-title">
+        <fa-icon [icon]="faTruck"></fa-icon>
+        Vehicles & Routes
+      </h1>
+      <button class="refresh-btn" (click)="refreshMap()">
+        <fa-icon [icon]="faSync"></fa-icon>
+        Refresh Data
+      </button>
+    </header>
+
+    <div *ngIf="isLoading" class="loading-container">
+      <p>Loading fleet data...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+      <button class="btn-retry" (click)="refreshMap()">Retry</button>
+    </div>
+
+    <div class="content-container" *ngIf="!isLoading && !errorMessage">
+      <div class="map-list-container">
+        <div class="map-section">
+          <div #mapContainer class="map-container"></div>
+        </div>
+
+        <div class="vehicle-list-section">
+          <h3>
+            <fa-icon [icon]="faTruck"></fa-icon>
+            Active Vehicles
+          </h3>
+          <div class="vehicle-grid">
+            <div
+              *ngFor="let vehicle of vehicles"
+              class="vehicle-card"
+              (click)="selectVehicle(vehicle)"
+              [class.selected]="selectedVehicle?.id === vehicle.id"
+            >
+              <div class="vehicle-header">
+                <span class="vehicle-id">{{ vehicle.licensePlate }}</span>
+                <span class="vehicle-status" [ngClass]="getStatusClass(vehicle)">
+                  {{ vehicle.status }}
+                </span>
+              </div>
+              <div class="vehicle-details">
+                <p>
+                  <fa-icon [icon]="faUserAlt"></fa-icon>
+                  <strong>Driver:</strong> {{ vehicle.driver?.name || 'Unassigned' }}
+                </p>
+                <p>
+                  <fa-icon [icon]="faRoute"></fa-icon>
+                  <strong>Route:</strong> {{ vehicle.route?.name || 'No route assigned' }}
+                </p>
+                <p>
+                  <fa-icon [icon]="faCalendarAlt"></fa-icon>
+                  <strong>Last Maintenance:</strong>
+                  {{ vehicle.lastMaintenance | date:'shortDate' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

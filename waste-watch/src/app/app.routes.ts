@@ -10,6 +10,8 @@ import { FleetDashboardComponent } from './fleet-management/fleet-dashboard/flee
 import { BinDashboardComponent } from './bin-management/bin-dashboard/bin-dashboard-component';
 import { BinMapComponent } from '../app/bin-management/bin-map/bin-map-component';
 import { FleetMapComponent } from '../app/fleet-management/fleet-map/fleet-map-component';
+import { VehiclesRouteComponent } from './fleet-management/route-view/vehicle-route-component';
+
 
 
 // Define routes
@@ -25,6 +27,9 @@ export const routes: Routes = [
   { path: 'bin-dashboard', component: BinDashboardComponent },
   { path: 'bin-map', component: BinMapComponent },
   { path: 'vehicle-map', component: FleetMapComponent },
+  { path: 'vehicle-routes', component: VehiclesRouteComponent },
+  { path: 'route-view/:id', component: VehiclesRouteComponent }
+
 ];
 
 @NgModule({

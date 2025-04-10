@@ -16,11 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WasteWatchAuth")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+896cab104e935f28810993e072c3074787ad8d46")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+870c9379d40926bed2773fe7007c421f7eed3fd6")]
->>>>>>> rotas
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7fca26bbdc0ef2c36577d35e819dbc9d82dbfdf")]
 [assembly: System.Reflection.AssemblyProductAttribute("WasteWatchAuth")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WasteWatchAuth")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
