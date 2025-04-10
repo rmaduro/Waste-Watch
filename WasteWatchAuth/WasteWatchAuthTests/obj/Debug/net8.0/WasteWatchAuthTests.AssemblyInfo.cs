@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WasteWatchAuthTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7fca26bbdc0ef2c36577d35e819dbc9d82dbfdf")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fec8c0b869aa8f4516fff3bd1fb063d766696206")]
+>>>>>>> rotas
 [assembly: System.Reflection.AssemblyProductAttribute("WasteWatchAuthTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WasteWatchAuthTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
