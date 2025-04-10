@@ -11,10 +11,6 @@
       "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\routescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Migrations\\20250409171236_Initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WasteWatchAuth\\Migrations\\20250409171236_Initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|d:\\3\u00BA ano\\esa\\projeto\\waste-watch\\wastewatchauth\\wastewatchauth\\data\\roleseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\data\\roleseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -78,6 +74,10 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Bins.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|d:\\3\u00BA ano\\esa\\projeto\\waste-watch\\wastewatchauth\\wastewatchauth\\migrations\\20250409171236_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\migrations\\20250409171236_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -91,7 +91,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "NotificationsController.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\NotificationsController.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\NotificationsController.cs",
@@ -103,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "LogsController.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\LogsController.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\LogsController.cs",
@@ -115,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "RoleSeeder.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\RoleSeeder.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\RoleSeeder.cs",
@@ -123,8 +123,7 @@
               "RelativeToolTip": "WasteWatchAuth\\Data\\RoleSeeder.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAIAwwA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T03:03:10.587Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T03:03:10.587Z"
             },
             {
               "$type": "Document",
@@ -149,12 +148,11 @@
               "RelativeToolTip": "WasteWatchAuth\\Controllers\\RoutesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T03:11:50.137Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T03:11:50.137Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Program.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Program.cs",
@@ -162,12 +160,11 @@
               "RelativeToolTip": "WasteWatchAuth\\Program.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAAAHwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T03:16:40.607Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T03:16:40.607Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 19,
               "Title": "20250409171236_Initial.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Migrations\\20250409171236_Initial.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Migrations\\20250409171236_Initial.cs",
@@ -175,12 +172,11 @@
               "RelativeToolTip": "WasteWatchAuth\\Migrations\\20250409171236_Initial.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T17:12:36.986Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T17:12:36.986Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\HomeController.cs",
@@ -192,7 +188,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "CollectionHistoryController.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\CollectionHistoryController.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\CollectionHistoryController.cs",
@@ -204,7 +200,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "BinsController.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\BinsController.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\BinsController.cs",
@@ -216,7 +212,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\AuthController.cs",
@@ -228,7 +224,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "EmailSender.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Services\\EmailSender.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Services\\EmailSender.cs",
@@ -240,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "ActivityLogService.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Services\\ActivityLogService.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Services\\ActivityLogService.cs",
@@ -252,7 +248,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "UserSeeder.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\UserSeeder.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\UserSeeder.cs",
@@ -264,7 +260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\ApplicationDbContext.cs",
@@ -276,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "BinType.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\BinType.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\BinType.cs",
@@ -288,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "dbo.Bins.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Bins.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Bins.sql",
@@ -297,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "dbo.BinLocations.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.BinLocations.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.BinLocations.sql",
@@ -306,7 +302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "dbo.Collaborators.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Collaborators.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Collaborators.sql",
@@ -315,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "DbInitializer.cs",
               "DocumentMoniker": "D:\\3\u00BA Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\DbInitializer.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\DbInitializer.cs",

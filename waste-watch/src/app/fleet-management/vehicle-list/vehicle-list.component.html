@@ -1,4 +1,8 @@
-<div [class.blur-background]="showAddForm || showDeleteConfirmation || showRouteForm || showRouteView">
+<div
+  [class.blur-background]="
+    showAddForm || showDeleteConfirmation || showRouteForm || showRouteView
+  "
+>
   <div class="d-flex vehicle-list-container">
     <app-side-nav></app-side-nav>
     <div class="main-content">
@@ -14,7 +18,11 @@
               <fa-icon [icon]="faPlus"></fa-icon>
               <span class="ms-2">Add Vehicle</span>
             </button>
-            <button class="btn-action btn-remove" [disabled]="!selectedVehicle" (click)="showDeleteDialog()">
+            <button
+              class="btn-action btn-remove"
+              [disabled]="!selectedVehicle"
+              (click)="showDeleteDialog()"
+            >
               <fa-icon [icon]="faMinus"></fa-icon>
               <span class="ms-2">Remove Vehicle</span>
             </button>
@@ -30,19 +38,34 @@
               <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
               Filters:
             </label>
-            <select class="filter-select" [(ngModel)]="selectedStatus" name="status" (change)="onFilterChange()">
+            <select
+              class="filter-select"
+              [(ngModel)]="selectedStatus"
+              name="status"
+              (change)="onFilterChange()"
+            >
               <option value="">All Status</option>
               <option value="Active">Active</option>
               <option value="Idle">Idle</option>
               <option value="Maintenance">Maintenance</option>
             </select>
-            <select class="filter-select" [(ngModel)]="selectedRoute" name="routes" (change)="onFilterChange()">
+            <select
+              class="filter-select"
+              [(ngModel)]="selectedRoute"
+              name="routes"
+              (change)="onFilterChange()"
+            >
               <option value="">All Routes</option>
               <option value="Commercial">Commercial</option>
               <option value="Industrial">Industrial</option>
               <option value="Residential">Residential</option>
             </select>
-            <select class="filter-select" [(ngModel)]="selectedCapacity" name="capacities" (change)="onFilterChange()">
+            <select
+              class="filter-select"
+              [(ngModel)]="selectedCapacity"
+              name="capacities"
+              (change)="onFilterChange()"
+            >
               <option value="">All Capacities</option>
               <option value="1000kg">1000kg</option>
               <option value="1500kg">1500kg</option>
@@ -54,7 +77,13 @@
           <div class="search-group">
             <div class="search-input-wrapper">
               <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
-              <input type="text" class="search-input" placeholder="Search by ID..." [(ngModel)]="searchQuery" (input)="onFilterChange()">
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Search by ID..."
+                [(ngModel)]="searchQuery"
+                (input)="onFilterChange()"
+              />
             </div>
           </div>
         </div>
@@ -67,7 +96,9 @@
 
         <div class="error-message" *ngIf="error">
           <p>{{ error }}</p>
-          <button class="btn-retry" (click)="refreshVehicles()">Try Again</button>
+          <button class="btn-retry" (click)="refreshVehicles()">
+            Try Again
+          </button>
         </div>
 
         <!-- Vehicle table -->
@@ -76,39 +107,69 @@
             <thead>
               <tr>
                 <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> ID</th>
-                <th><fa-icon [icon]="faTruck" class="me-2"></fa-icon> License Plate</th>
-                <th><fa-icon [icon]="faUser" class="me-2"></fa-icon> Driver's Name</th>
-                <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status</th>
-                <th><fa-icon [icon]="faRoute" class="me-2"></fa-icon> Route Type</th>
-                <th><fa-icon [icon]="faWeight" class="me-2"></fa-icon> Max Capacity</th>
-                <th><fa-icon [icon]="faTools" class="me-2"></fa-icon> Last Maintenance</th>
-                <th><fa-icon [icon]="faMapMarked" class="me-2"></fa-icon> Route</th>
+                <th>
+                  <fa-icon [icon]="faTruck" class="me-2"></fa-icon> License
+                  Plate
+                </th>
+                <th>
+                  <fa-icon [icon]="faUser" class="me-2"></fa-icon> Driver's Name
+                </th>
+                <th>
+                  <fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status
+                </th>
+                <th>
+                  <fa-icon [icon]="faRoute" class="me-2"></fa-icon> Route Type
+                </th>
+                <th>
+                  <fa-icon [icon]="faWeight" class="me-2"></fa-icon> Max
+                  Capacity
+                </th>
+                <th>
+                  <fa-icon [icon]="faTools" class="me-2"></fa-icon> Last
+                  Maintenance
+                </th>
+                <th>
+                  <fa-icon [icon]="faMapMarked" class="me-2"></fa-icon> Route
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let vehicle of paginatedVehicles"
-                  (click)="selectVehicle(vehicle)"
-                  [class.selected-row]="selectedVehicle && selectedVehicle.id === vehicle.id">
+              <tr
+                *ngFor="let vehicle of paginatedVehicles"
+                (click)="selectVehicle(vehicle)"
+                [class.selected-row]="
+                  selectedVehicle && selectedVehicle.id === vehicle.id
+                "
+              >
                 <td>{{ vehicle.id }}</td>
                 <td>{{ vehicle.licensePlate }}</td>
                 <td>{{ getDriverName(vehicle) }}</td>
                 <td>
-                  <span class="status-badge" [class]="'status-' + vehicle.status.toLowerCase()">
+                  <span
+                    class="status-badge"
+                    [class]="'status-' + vehicle.status.toLowerCase()"
+                  >
                     <fa-icon [icon]="faCircle" class="me-1" size="xs"></fa-icon>
                     {{ vehicle.status }}
                   </span>
                 </td>
                 <td>{{ vehicle.routeType }}</td>
                 <td>{{ formatCapacity(vehicle.maxCapacity) }}</td>
-                <td>{{ vehicle.lastMaintenance | date:'yyyy-MM-dd' }}</td>
+                <td>{{ vehicle.lastMaintenance | date : "yyyy-MM-dd" }}</td>
                 <td>
                   <button
                     class="btn-route"
                     [class.btn-view-route]="vehicle.route"
                     [class.btn-create-route]="!vehicle.route"
-                    (click)="handleRouteButtonClick(vehicle); $event.stopPropagation()">
-                    <fa-icon [icon]="vehicle.route ? faEye : faRoute" class="me-1"></fa-icon>
-                    {{ vehicle.route ? 'View Route' : 'Create Route' }}
+                    (click)="
+                      handleRouteButtonClick(vehicle); $event.stopPropagation()
+                    "
+                  >
+                    <fa-icon
+                      [icon]="vehicle.route ? faEye : faRoute"
+                      class="me-1"
+                    ></fa-icon>
+                    {{ vehicle.route ? "View Route" : "Create Route" }}
                   </button>
                 </td>
               </tr>
@@ -118,15 +179,21 @@
             </tbody>
           </table>
           <div class="pagination-controls">
-            <button class="pagination-btn" (click)="prevPage()" [disabled]="currentPage === 1">
+            <button
+              class="pagination-btn"
+              (click)="prevPage()"
+              [disabled]="currentPage === 1"
+            >
               Previous
             </button>
             <span class="pagination-info">
               Page {{ currentPage }} of {{ totalPages }}
             </span>
-            <button class="pagination-btn"
-                    (click)="nextPage()"
-                    [disabled]="currentPage >= totalPages">
+            <button
+              class="pagination-btn"
+              (click)="nextPage()"
+              [disabled]="currentPage >= totalPages"
+            >
               Next
             </button>
           </div>
@@ -137,9 +204,17 @@
 </div>
 
 <!-- Route Creation Form -->
-<div class="overlay" *ngIf="showRouteForm" (click)="showRouteForm = false"></div>
+<div
+  class="overlay"
+  *ngIf="showRouteForm"
+  (click)="showRouteForm = false"
+></div>
 
-<div class="vehicle-form-container" *ngIf="showRouteForm" (click)="$event.stopPropagation()">
+<div
+  class="vehicle-form-container"
+  *ngIf="showRouteForm"
+  (click)="$event.stopPropagation()"
+>
   <h2 class="form-title">Create New Route</h2>
   <form class="vehicle-form">
     <h3 class="form-section-title">Route Information</h3>
@@ -147,30 +222,52 @@
     <div class="form-row">
       <div class="form-group">
         <label for="vehicleId">Vehicle ID:</label>
-        <input type="text" id="vehicleId" class="form-control" [value]="routeVehicleId" readonly>
+        <input
+          type="text"
+          id="vehicleId"
+          class="form-control"
+          [value]="routeVehicleId"
+          readonly
+        />
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label for="routeName">Route Name:</label>
-        <input type="text" id="routeName" class="form-control" [(ngModel)]="newRoute.name" name="routeName" required>
+        <input
+          type="text"
+          id="routeName"
+          class="form-control"
+          [(ngModel)]="newRoute.name"
+          name="routeName"
+          required
+        />
       </div>
       <div class="form-group">
         <label for="routeType">Route Type:</label>
-        <input type="text" id="routeType" class="form-control" [(ngModel)]="newRoute.type" name="routeType" required>
+        <input
+          type="text"
+          id="routeType"
+          class="form-control"
+          [(ngModel)]="newRoute.type"
+          name="routeType"
+          required
+        />
       </div>
     </div>
 
     <h3 class="form-section-title">Select Bins for Collection</h3>
 
     <div class="form-row">
-      <div class="form-group" style="width: 100%;">
+      <div class="form-group" style="width: 100%">
         <div class="bin-selection-container">
-          <div *ngFor="let bin of availableBins"
-               class="bin-item"
-               [class.selected]="isBinSelected(bin)"
-               (click)="toggleBinSelection(bin)">
+          <div
+            *ngFor="let bin of availableBins"
+            class="bin-item"
+            [class.selected]="isBinSelected(bin)"
+            (click)="toggleBinSelection(bin)"
+          >
             <div class="bin-info">
               <span class="bin-id">Bin #{{ bin.id }}</span>
               <span class="bin-type">Type: {{ bin.type }}</span>
@@ -185,83 +282,209 @@
     </div>
 
     <div class="form-actions">
-      <button type="button" class="btn-submit" (click)="createRoute()" [disabled]="isLoading">
+      <button
+        type="button"
+        class="btn-submit"
+        (click)="createRoute()"
+        [disabled]="isLoading"
+      >
         <span *ngIf="!isLoading">Create Route</span>
         <span *ngIf="isLoading">
           <fa-icon [icon]="faSpinner"></fa-icon> Creating...
         </span>
       </button>
-      <button type="button" class="btn-cancel" (click)="showRouteForm = false">Cancel</button>
+      <button type="button" class="btn-cancel" (click)="showRouteForm = false">
+        Cancel
+      </button>
     </div>
   </form>
 </div>
 
 <!-- Route View Modal -->
-<!-- Route View Modal -->
-<div class="overlay" *ngIf="showRouteView" (click)="showRouteView = false"></div>
+<div
+  class="overlay"
+  *ngIf="showRouteView"
+  (click)="showRouteView = false"
+></div>
 
-<div class="route-view-container" *ngIf="showRouteView" (click)="$event.stopPropagation()">
+<div class="route-view-container" *ngIf="showRouteView">
+  <!-- Modal Header -->
   <div class="route-view-header">
-    <h2>
-      <fa-icon [icon]="faRoute"></fa-icon>
-      Route for Vehicle {{ viewedVehicle?.licensePlate }}
-    </h2>
-    <button class="close-btn" (click)="showRouteView = false">
+    <div class="route-header-content">
+      <h2>
+        <fa-icon [icon]="faRoute" class="route-icon"></fa-icon>
+        <span class="route-title">{{
+          viewedVehicle?.route?.name || "Route Details"
+        }}</span>
+      </h2>
+      <div class="route-subtitle">
+        <span
+          class="route-type-badge"
+          [ngClass]="
+            'type-' + (viewedVehicle?.route?.type?.toLowerCase() || '')
+          "
+        >
+          {{ viewedVehicle?.route?.type || "No type specified" }}
+        </span>
+      </div>
+    </div>
+
+    <button
+      class="btn-close-modal"
+      (click)="showRouteView = false"
+      aria-label="Close modal"
+    >
       <fa-icon [icon]="faTimes"></fa-icon>
     </button>
   </div>
 
+  <!-- Modal Body -->
   <div class="route-view-body">
-    <div *ngIf="viewedVehicle?.route as route">
-      <div class="route-info-card">
-        <h3>
-          <fa-icon [icon]="faMapMarked"></fa-icon>
-          {{ route.name }} ({{ route.type }})
-        </h3>
+    <div *ngIf="viewedVehicle?.route;">
+      <!-- Route Summary Card -->
+      <div class="route-summary-card">
+        <div class="summary-grid">
+          <!-- First Column -->
+          <div class="summary-column">
+            <div class="summary-item">
+              <div class="summary-icon">
+                <fa-icon [icon]="faTruck"></fa-icon>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Assigned Vehicle</div>
+                <div class="summary-value">{{ viewedVehicle?.licensePlate }}</div>
+              </div>
+            </div>
 
-        <div class="info-grid">
-          <div class="info-item">
-            <fa-icon [icon]="faTruck"></fa-icon>
-            <span>Vehicle: {{ viewedVehicle?.licensePlate }}</span>
+            <div class="summary-item">
+              <div class="summary-icon">
+                <fa-icon [icon]="faUser"></fa-icon>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Driver</div>
+                <div class="summary-value">{{ getDriverName(viewedVehicle!) }}</div>
+              </div>
+            </div>
+
+            <div class="summary-item">
+              <div class="summary-icon">
+                <fa-icon [icon]="faClock"></fa-icon>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Estimated Time</div>
+                <div class="summary-value">{{ "~" + "" + estimatedTime }}</div>
+              </div>
+            </div>
           </div>
-          <div class="info-item">
-            <fa-icon [icon]="faHashtag"></fa-icon>
-            <span>Stops: {{ route.locations?.length || 0 }}</span>
+
+          <!-- Second Column -->
+          <div class="summary-column">
+            <div class="summary-item">
+              <div class="summary-icon">
+                <fa-icon [icon]="faLeaf"></fa-icon>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Eco-friendly Route</div>
+                <div class="summary-value">{{ isEcoFriendlyRoute ? 'Yes' : 'No' }}</div>
+              </div>
+            </div>
+
+            <div class="summary-item">
+              <div class="summary-icon">
+                <fa-icon [icon]="faMapMarked"></fa-icon>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Total Stops</div>
+                <div class="summary-value">{{ viewedVehicle?.route?.locations?.length || 0 }}</div>
+              </div>
+            </div>
+
+            <!-- New CO2 Emissions Item -->
+            <div class="summary-item">
+              <div class="summary-icon">
+                <fa-icon [icon]="faCloud"></fa-icon>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">CO2 Emissions</div>
+                <div class="summary-value">{{ co2Emissions | number:'1.0-0' }} g/km</div> <!-- Display the calculated CO2 emissions -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+<br>
+
+      <!-- Route Map Section -->
+      <div class="route-map-section">
+        <h3 class="section-title">
+          <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+          Route Map
+        </h3>
+        <div
+          #routeMapContainer
+          class="map-container"
+          style="height: 400px; width: 100%; border-radius: 8px"
+        ></div>
+      </div>
+
+
+
+      <!-- Stops List Section -->
+      <div class="stops-list-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <fa-icon [icon]="faListAlt"></fa-icon>
+            Collection Stops ({{ viewedVehicle?.route?.locations?.length || 0 }})
+          </h3>
+        </div>
+
+        <div class="stops-list-container">
+          <div *ngFor="let address of addresses; let i = index" class="stop-item">
+            <div class="stop-marker">
+              <div class="stop-number">{{ i + 1 }}</div>
+              <div class="stop-line" *ngIf="i < addresses.length - 1"></div>
+            </div>
+
+            <div class="stop-details">
+              <div class="stop-address">
+                <div class="address-main">{{ address }}</div>
+                <div class="address-coordinates">
+                  {{ (viewedVehicle?.route?.locations)![i].latitude }},
+                  {{ (viewedVehicle?.route?.locations)![i].longitude }}
+                </div>
+              </div>
+
+              <div class="stop-actions">
+                <button class="btn-stop-action">
+                  <fa-icon [icon]="faDirections"></fa-icon>
+                  Directions
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="route-info-card">
-        <h3>
-          <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-          Collection Addresses
-        </h3>
-
-        <ul class="address-list">
-          <li *ngFor="let location of route.locations; let i = index" class="address-item">
-            <div class="address-marker">
-              <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-            </div>
-            <div class="address-details">
-              <div class="address-street">
-                {{ addresses[i] || 'Loading address...' }}
-              </div>
-            </div>
-            <div class="stop-number">
-              {{ i + 1 }}
-            </div>
-          </li>
-        </ul>
-
+    <!-- No Route Template -->
+    <ng-template #noRouteTemplate>
+      <div class="no-route-message">
+        <div class="no-route-icon">
+          <fa-icon [icon]="faRoute" size="3x"></fa-icon>
+        </div>
+        <h3>No Route Assigned</h3>
+        <p>This vehicle doesn't have an assigned route yet</p>
+        <button
+          class="btn-create-route"
+          (click)="navigateToRoute(viewedVehicle?.id!); showRouteView = false"
+        >
+          <fa-icon [icon]="faPlus"></fa-icon>
+          Create Route
+        </button>
       </div>
-    </div>
-
-    <div *ngIf="!viewedVehicle?.route" class="no-route">
-      <fa-icon [icon]="faExclamationTriangle" size="2x"></fa-icon>
-      <p>No route assigned to this vehicle</p>
-    </div>
+    </ng-template>
   </div>
-</div>
 
 <!-- Add Vehicle Form -->
 <div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
@@ -543,44 +766,5 @@
     <button class="btn-cancel" (click)="cancelDelete()" [disabled]="isLoading">
       Cancel
     </button>
-  </div>
-</div>
-
-<!-- Add this at the bottom of your vehicle-list.component.html -->
-<div class="overlay" *ngIf="showRouteView" (click)="showRouteView = false"></div>
-
-<div class="route-view-container" *ngIf="showRouteView" (click)="$event.stopPropagation()">
-  <div class="route-view-header">
-    <h2>Route Details for Vehicle {{ viewedVehicle?.licensePlate }}</h2>
-    <button class="close-btn" (click)="showRouteView = false">
-      <fa-icon [icon]="faTimes"></fa-icon>
-    </button>
-  </div>
-
-  <div class="route-view-body">
-    <div *ngIf="viewedVehicle?.route as route">
-      <div class="route-info">
-        <h3>{{ route.name }}</h3>
-        <p><strong>Type:</strong> {{ route.type }}</p>
-        <p><strong>Stops:</strong> {{ route.locations?.length || 0 }}</p>
-      </div>
-
-      <div class="route-map-container">
-        <!-- You can add a map here later if needed -->
-        <div class="route-stops">
-          <h4>Route Stops:</h4>
-          <ul>
-            <li *ngFor="let location of route.locations">
-              <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-              {{ location.latitude }}, {{ location.longitude }}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="!viewedVehicle?.route">
-      <p>No route assigned to this vehicle</p>
-    </div>
   </div>
 </div>
