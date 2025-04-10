@@ -19,8 +19,10 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Criar uma nova rota com localizações.
+		/// Creates a new route with associated locations.
 		/// </summary>
+		/// <param name="route">The route object to be created.</param>
+		/// <returns>The newly created route or validation errors.</returns>
 		[HttpPost]
 		public async Task<IActionResult> CreateRoute([FromBody] Routes route)
 		{
@@ -34,13 +36,13 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Obter todas as rotas.
+		/// Retrieves all routes with their associated locations.
 		/// </summary>
+		/// <returns>A list of all routes.</returns>
 		[HttpGet]
 		public async Task<IActionResult> GetAllRoutes()
 		{
 			var routes = await _context.Routes
-				// Agora, apenas inclua as Locations
 				.Include(r => r.Locations)
 				.ToListAsync();
 
@@ -48,8 +50,10 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Obter uma rota específica por ID.
+		/// Retrieves a specific route by its ID.
 		/// </summary>
+		/// <param name="id">The ID of the route.</param>
+		/// <returns>The route with the given ID or NotFound if it does not exist.</returns>
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetRouteById(int id)
 		{
@@ -64,8 +68,10 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Eliminar uma rota.
+		/// Deletes a route and its associated locations by route ID.
 		/// </summary>
+		/// <param name="id">The ID of the route to delete.</param>
+		/// <returns>NoContent if successfully deleted, NotFound if the route does not exist.</returns>
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteRoute(int id)
 		{
@@ -76,7 +82,7 @@ namespace WasteWatchAuth.Controllers
 			if (route == null)
 				return NotFound();
 
-			// Remover localizações associadas
+			// Remove the associated locations first
 			_context.RouteLocations.RemoveRange(route.Locations);
 			_context.Routes.Remove(route);
 

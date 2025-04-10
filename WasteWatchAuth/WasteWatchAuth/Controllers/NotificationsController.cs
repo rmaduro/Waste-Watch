@@ -16,6 +16,10 @@ namespace WasteWatchAuth.Controllers
 			_context = context;
 		}
 
+		/// <summary>
+		/// Retrieves all bin-related notifications ordered by creation date (most recent first).
+		/// </summary>
+		/// <returns>A list of bin notifications.</returns>
 		[HttpGet("bin")]
 		public async Task<IActionResult> GetBinNotifications()
 		{
@@ -27,6 +31,10 @@ namespace WasteWatchAuth.Controllers
 			return Ok(notifications);
 		}
 
+		/// <summary>
+		/// Retrieves all fleet-related notifications ordered by creation date (most recent first).
+		/// </summary>
+		/// <returns>A list of fleet notifications.</returns>
 		[HttpGet("fleet")]
 		public async Task<IActionResult> GetFleetNotifications()
 		{
@@ -38,6 +46,11 @@ namespace WasteWatchAuth.Controllers
 			return Ok(notifications);
 		}
 
+		/// <summary>
+		/// Creates a new notification.
+		/// </summary>
+		/// <param name="notification">The notification object to be created.</param>
+		/// <returns>The created notification.</returns>
 		[HttpPost]
 		public async Task<IActionResult> CreateNotification([FromBody] Notification notification)
 		{
@@ -46,5 +59,4 @@ namespace WasteWatchAuth.Controllers
 			return Ok(notification);
 		}
 	}
-
 }

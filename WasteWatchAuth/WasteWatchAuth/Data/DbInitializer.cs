@@ -460,6 +460,103 @@ namespace WasteWatchAuth.Data
 					});
 				}
 
+				// ─────────────────────────────────────────────────────────
+				// 7.
+
+				var fleetNotifications = new Notification[]
+				{
+					new()
+					{
+						Title = "Manutenção Programada",
+						Message = "O veículo 44-CC-44 foi agendado para manutenção.",
+						CreatedAt = DateTime.Parse("2025-04-09T02:07:23.6168925Z"),
+						Type = "Fleet",
+						ReferenceId = 1
+					},
+					new()
+					{
+						Title = "Verificação de Óleo",
+						Message = "O veículo 55-DD-55 necessita de verificação de óleo.",
+						CreatedAt = DateTime.Parse("2025-04-09T03:15:00Z"),
+						Type = "Fleet",
+						ReferenceId = 2
+					},
+					new()
+					{
+						Title = "Inspeção Técnica",
+						Message = "O veículo 66-EE-66 passou na inspeção técnica.",
+						CreatedAt = DateTime.Parse("2025-04-09T09:45:13Z"),
+						Type = "Fleet",
+						ReferenceId = 3
+					},
+					new()
+					{
+						Title = "Problema de Travões",
+						Message = "Foi detetado um problema nos travões do veículo 77-FF-77.",
+						CreatedAt = DateTime.Parse("2025-04-09T10:30:00Z"),
+						Type = "Fleet",
+						ReferenceId = 4
+					},
+					new()
+					{
+						Title = "Revisão Geral",
+						Message = "O veículo 88-GG-88 está em revisão completa.",
+						CreatedAt = DateTime.Parse("2025-04-09T11:00:00Z"),
+						Type = "Fleet",
+						ReferenceId = 5
+					}
+				};
+				context.Notifications.AddRange(fleetNotifications);
+
+
+				// ─────────────────────────────────────────────────────────
+				// 8.
+				var binNotifications = new Notification[]
+				{
+					new()
+					{
+						Title = "Contentor Cheio",
+						Message = "O contentor junto ao Mercado Central está quase cheio (85%).",
+						CreatedAt = DateTime.Parse("2025-04-09T02:14:13.1928653Z"),
+						Type = "Bin",
+						ReferenceId = 3
+					},
+					new()
+					{
+						Title = "Danos Visíveis",
+						Message = "Contentor nº 4 apresenta danos na tampa.",
+						CreatedAt = DateTime.Parse("2025-04-09T07:32:12Z"),
+						Type = "Bin",
+						ReferenceId = 4
+					},
+					new()
+					{
+						Title = "Localização Atualizada",
+						Message = "O contentor nº 5 foi movido para a Rua Nova.",
+						CreatedAt = DateTime.Parse("2025-04-09T08:00:00Z"),
+						Type = "Bin",
+						ReferenceId = 5
+					},
+					new()
+					{
+						Title = "Incêndio Detetado",
+						Message = "Alerta: Possível incêndio no contentor nº 6.",
+						CreatedAt = DateTime.Parse("2025-04-09T08:45:00Z"),
+						Type = "Bin",
+						ReferenceId = 6
+					},
+					new()
+					{
+						Title = "Vandalismo Reportado",
+						Message = "Vandalismo reportado no contentor nº 7.",
+						CreatedAt = DateTime.Parse("2025-04-09T09:10:00Z"),
+						Type = "Bin",
+						ReferenceId = 7
+					}
+				};
+				context.Notifications.AddRange(binNotifications);
+
+
 				context.MaintenanceHistories.AddRange(maintHistoryList);
 				context.SaveChanges();
 			}

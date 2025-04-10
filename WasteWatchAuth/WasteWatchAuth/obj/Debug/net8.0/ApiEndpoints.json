@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WasteWatchAuth.Controllers.ForgotPasswordModel",
+        "Type": "WasteWatchAuth.Models.ForgotPasswordModel",
         "IsRequired": true
       }
     ],
@@ -35,7 +35,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WasteWatchAuth.Controllers.LoginModel",
+        "Type": "WasteWatchAuth.Models.LoginModel",
         "IsRequired": true
       }
     ],
@@ -67,7 +67,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WasteWatchAuth.Controllers.RegisterModel",
+        "Type": "WasteWatchAuth.Models.RegisterModel",
         "IsRequired": true
       }
     ],
@@ -83,7 +83,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WasteWatchAuth.Controllers.ResetPasswordModel",
+        "Type": "WasteWatchAuth.Models.ResetPasswordModel",
         "IsRequired": true
       }
     ],

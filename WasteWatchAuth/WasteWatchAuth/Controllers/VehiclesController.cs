@@ -7,205 +7,116 @@ using WasteWatchAuth.Models;
 
 namespace WasteWatchAuth.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class VehiclesController : ControllerBase
-    {
-        private readonly ApplicationDbContext _context;
+	[Route("api/[controller]")]
+	[ApiController]
+	public class VehiclesController : ControllerBase
+	{
+		private readonly ApplicationDbContext _context;
 
-        public VehiclesController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+		public VehiclesController(ApplicationDbContext context)
+		{
+			_context = context;
+		}
 
-        /// <summary>
-        /// Criar um veículo e o seu motorista (Driver)
-        /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] Vehicle vehicle)
-        {
-            if (vehicle == null || vehicle.Driver == null)
-                return BadRequest("Dados do veículo ou do motorista inválidos.");
+		/// <summary>
+		/// Creates a new vehicle and assigns a driver (collaborator of type Driver).
+		/// </summary>
+		/// <param name="vehicle">The vehicle object containing vehicle and driver information.</param>
+		/// <returns>A newly created vehicle or an error message.</returns>
+		[HttpPost]
+		public async Task<IActionResult> CreateVehicle([FromBody] Vehicle vehicle)
+		{
+			if (vehicle == null || vehicle.Driver == null)
+				return BadRequest("Invalid vehicle or driver data.");
 
-            // Verifica se já existe um veículo com a mesma matrícula
-            bool exists = await _context.Vehicles.AnyAsync(v => v.LicensePlate == vehicle.LicensePlate);
-            if (exists)
-                return Conflict(new { message = "Já existe um veículo com esta matrícula." });
+			// Check if a vehicle with the same license plate already exists
+			bool exists = await _context.Vehicles.AnyAsync(v => v.LicensePlate == vehicle.LicensePlate);
+			if (exists)
+				return Conflict(new { message = "A vehicle with this license plate already exists." });
 
-            // Verifica se o colaborador já existe na base de dados
-            var existingCollaborator = await _context.Collaborators
-                .FirstOrDefaultAsync(c => c.LicenseNumber == vehicle.Driver.LicenseNumber);
+			// Check if the driver (collaborator) already exists in the database
+			var existingCollaborator = await _context.Collaborators
+				.FirstOrDefaultAsync(c => c.LicenseNumber == vehicle.Driver.LicenseNumber);
 
-            if (existingCollaborator == null)
-            {
-                // Criar novo colaborador do tipo Driver
-                var newDriver = new Collaborator
-                {
-                    Name = vehicle.Driver.Name,
-                    Age = vehicle.Driver.Age,
-                    LicenseNumber = vehicle.Driver.LicenseNumber,
-                    CollaboratorType = CollaboratorType.Driver
-                };
+			if (existingCollaborator == null)
+			{
+				// Create a new collaborator of type Driver
+				var newDriver = new Collaborator
+				{
+					Name = vehicle.Driver.Name,
+					Age = vehicle.Driver.Age,
+					LicenseNumber = vehicle.Driver.LicenseNumber,
+					CollaboratorType = CollaboratorType.Driver
+				};
 
-                _context.Collaborators.Add(newDriver);
-                await _context.SaveChangesAsync();
+				_context.Collaborators.Add(newDriver);
+				await _context.SaveChangesAsync();
 
-                vehicle.DriverId = newDriver.Id;
-            }
-            else
-            {
-                // Se o colaborador já existir, garantir que é um Driver
-                if (existingCollaborator.CollaboratorType != CollaboratorType.Driver)
-                    return BadRequest("O colaborador associado deve ser um motorista (Driver).");
+				vehicle.DriverId = newDriver.Id;
+			}
+			else
+			{
+				// Ensure the existing collaborator is of type Driver
+				if (existingCollaborator.CollaboratorType != CollaboratorType.Driver)
+					return BadRequest("The associated collaborator must be a driver.");
 
-                vehicle.DriverId = existingCollaborator.Id;
-            }
+				vehicle.DriverId = existingCollaborator.Id;
+			}
 
-            // Se um RouteId foi fornecido, associamos a rota ao veículo
-            if (vehicle.RouteId != null)
-            {
-                var existingRoute = await _context.Routes
-                    .FirstOrDefaultAsync(r => r.Id == vehicle.RouteId);
+			// Add the vehicle to the database
+			_context.Vehicles.Add(vehicle);
+			await _context.SaveChangesAsync();
 
-                if (existingRoute != null)
-                {
-                    vehicle.Route = existingRoute; // Atribui a rota ao veículo
-                }
-                else
-                {
-                    return BadRequest("Rota não encontrada.");
-                }
-            }
+			return Ok(vehicle);
+		}
 
-            // Adicionar veículo à base de dados
-            _context.Vehicles.Add(vehicle);
-            await _context.SaveChangesAsync();
+		/// <summary>
+		/// Retrieves all vehicles along with their assigned drivers.
+		/// </summary>
+		/// <returns>A list of all vehicles.</returns>
+		[HttpGet]
+		public async Task<IActionResult> GetAllVehicles()
+		{
+			var vehicles = await _context.Vehicles
+				.Include(v => v.Driver)
+				.ToListAsync();
+			return Ok(vehicles);
+		}
 
-            return Ok(vehicle);
-        }
+		/// <summary>
+		/// Retrieves a specific vehicle by its ID.
+		/// </summary>
+		/// <param name="id">The ID of the vehicle to retrieve.</param>
+		/// <returns>The vehicle object or NotFound if not exists.</returns>
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetVehicleById(int id)
+		{
+			var vehicle = await _context.Vehicles
+				.Include(v => v.Driver)
+				.FirstOrDefaultAsync(v => v.Id == id);
 
-        /// <summary>
-        /// Obter todos os veículos
-        /// </summary>
-        [HttpGet]
-        public async Task<IActionResult> GetAllVehicles()
-        {
-            var vehicles = await _context.Vehicles
-                .Include(v => v.Driver)
-                .ToListAsync();
-            return Ok(vehicles);
-        }
+			if (vehicle == null)
+				return NotFound();
 
-        /// <summary>
-        /// Obter um veículo por ID
-        /// </summary>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetVehicleById(int id)
-        {
-            var vehicle = await _context.Vehicles
-                .Include(v => v.Driver)
-                .FirstOrDefaultAsync(v => v.Id == id);
+			return Ok(vehicle);
+		}
 
-            if (vehicle == null)
-                return NotFound();
+		/// <summary>
+		/// Deletes a vehicle by its ID.
+		/// </summary>
+		/// <param name="id">The ID of the vehicle to delete.</param>
+		/// <returns>NoContent if deleted successfully, NotFound otherwise.</returns>
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteVehicle(int id)
+		{
+			var vehicle = await _context.Vehicles.FindAsync(id);
+			if (vehicle == null)
+				return NotFound();
 
-            return Ok(vehicle);
-        }
+			_context.Vehicles.Remove(vehicle);
+			await _context.SaveChangesAsync();
 
-        /// <summary>
-        /// Atualizar um veículo
-        /// </summary>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] Vehicle updatedVehicle)
-        {
-            if (updatedVehicle == null)
-                return BadRequest("Dados do veículo inválidos.");
-
-            var existingVehicle = await _context.Vehicles
-                .Include(v => v.Driver)
-                .Include(v => v.Route) // Certifica-se de que a rota também é carregada
-                .FirstOrDefaultAsync(v => v.Id == id);
-
-            if (existingVehicle == null)
-                return NotFound();
-
-            // Atualiza o veículo com os novos dados
-            existingVehicle.LicensePlate = updatedVehicle.LicensePlate;
-            existingVehicle.Status = updatedVehicle.Status;
-            existingVehicle.RouteType = updatedVehicle.RouteType;
-            existingVehicle.MaxCapacity = updatedVehicle.MaxCapacity;
-            existingVehicle.LastMaintenance = updatedVehicle.LastMaintenance;
-            existingVehicle.Latitude = updatedVehicle.Latitude;
-            existingVehicle.Longitude = updatedVehicle.Longitude;
-
-            // Atualiza o motorista, se fornecido
-            if (updatedVehicle.Driver != null)
-            {
-                var driver = await _context.Collaborators
-                    .FirstOrDefaultAsync(d => d.Id == updatedVehicle.Driver.Id);
-
-                if (driver != null)
-                {
-                    existingVehicle.DriverId = driver.Id;
-                    existingVehicle.Driver = driver;
-                }
-                else
-                {
-                    // Se o motorista não existe, criar um novo motorista
-                    var newDriver = new Collaborator
-                    {
-                        Name = updatedVehicle.Driver.Name,
-                        Age = updatedVehicle.Driver.Age,
-                        LicenseNumber = updatedVehicle.Driver.LicenseNumber,
-                        CollaboratorType = CollaboratorType.Driver
-                    };
-
-                    _context.Collaborators.Add(newDriver);
-                    await _context.SaveChangesAsync();
-
-                    existingVehicle.DriverId = newDriver.Id;
-                    existingVehicle.Driver = newDriver;
-                }
-            }
-
-            // Se necessário, atualize outras propriedades, como a rota
-            if (updatedVehicle.RouteId != null)
-            {
-                var existingRoute = await _context.Routes
-                    .FirstOrDefaultAsync(r => r.Id == updatedVehicle.RouteId);
-
-                if (existingRoute != null)
-                {
-                    existingVehicle.RouteId = updatedVehicle.RouteId;
-                    existingVehicle.Route = existingRoute; // Atribui a rota ao veículo
-                }
-                else
-                {
-                    return BadRequest("Rota não encontrada.");
-                }
-            }
-
-            // Salve as mudanças no banco de dados
-            _context.Vehicles.Update(existingVehicle);
-            await _context.SaveChangesAsync();
-
-            return Ok(existingVehicle);
-        }
-
-        /// <summary>
-        /// Remover um veículo
-        /// </summary>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVehicle(int id)
-        {
-            var vehicle = await _context.Vehicles.FindAsync(id);
-            if (vehicle == null)
-                return NotFound();
-
-            _context.Vehicles.Remove(vehicle);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-    }
+			return NoContent();
+		}
+	}
 }
