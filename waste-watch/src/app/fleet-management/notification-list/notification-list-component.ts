@@ -28,7 +28,6 @@ interface Notification {
   timestamp: Date;
   isRead: boolean;
   referenceId?: number;
-  priority: 'low' | 'medium' | 'high';
 }
 
 @Component({
@@ -56,10 +55,8 @@ export class FleetNotificationListComponent implements OnInit {
   isLoading = false;
   error = '';
   selectedType = '';
-  selectedPriority = '';
-  selectedStatus = '';
   currentPage = 1;
-  pageSize = 5;
+  pageSize = 4;
   showDetailsModal = false;
   currentNotificationDetails: Notification | null = null;
 
@@ -91,7 +88,6 @@ export class FleetNotificationListComponent implements OnInit {
         timestamp: new Date(item.createdAt),
         isRead: item.isRead || false,
         referenceId: item.referenceId,
-        priority: this.mapNotificationPriority(item.priority)
       }));
     });
   }
@@ -105,22 +101,12 @@ export class FleetNotificationListComponent implements OnInit {
     }
   }
 
-  private mapNotificationPriority(priority: string): 'low' | 'medium' | 'high' {
-    switch (priority?.toLowerCase()) {
-      case 'high': return 'high';
-      case 'medium': return 'medium';
-      default: return 'low';
-    }
-  }
 
   get filteredNotifications() {
     return this.notifications.filter(notification => {
       const matchesType = !this.selectedType || notification.type === this.selectedType;
-      const matchesPriority = !this.selectedPriority || notification.priority === this.selectedPriority;
-      const matchesStatus = !this.selectedStatus ||
-        (this.selectedStatus === 'read' ? notification.isRead : !notification.isRead);
 
-      return matchesType && matchesPriority && matchesStatus;
+      return matchesType;
     });
   }
 
@@ -151,17 +137,38 @@ export class FleetNotificationListComponent implements OnInit {
     this.selectedNotification = notification;
   }
 
-  markAsRead(notification: Notification) {
-    notification.isRead = true;
-  }
+  async clearAllNotifications() {
+    if (this.notifications.length === 0) return;
 
-  markAllAsRead() {
-    this.notifications.forEach(notification => notification.isRead = true);
-  }
+    this.isLoading = true;
+    const notificationIds = this.notifications.map(n => n.id);
+    const successfullyDeleted: number[] = [];
 
-  clearAllNotifications() {
-    this.notifications = [];
-    this.selectedNotification = null;
+    try {
+      for (const id of notificationIds) {
+        try {
+          await this.vehicleService.deleteFleetNotification(id).toPromise();
+          successfullyDeleted.push(id);
+        } catch (error) {
+          console.error(`Error deleting notification ${id}:`, error);
+        }
+      }
+
+      this.notifications = this.notifications.filter(
+        n => !successfullyDeleted.includes(n.id)
+      );
+
+      if (successfullyDeleted.length !== notificationIds.length) {
+        this.error = `Deleted ${successfullyDeleted.length} of ${notificationIds.length} notifications. Some could not be deleted.`;
+      } else {
+        this.selectedNotification = null;
+      }
+    } catch (error) {
+      console.error('Error during deletion process:', error);
+      this.error = 'Error occurred while deleting notifications.';
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   viewDetails(notification: Notification) {

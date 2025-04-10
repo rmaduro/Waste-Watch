@@ -76,14 +76,6 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
           </a>
         </li>
         <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/bin-list', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faTrash"></fa-icon>
-            </div>
-            <span class="link-text">Bin List</span>
-          </a>
-        </li>
-        <li *ngIf="isBinManager" class="nav-item">
           <a class="nav-link" (click)="navigateTo('/bin-notification-list', $event)">
             <div class="icon-container">
               <fa-icon [icon]="faBell"></fa-icon>

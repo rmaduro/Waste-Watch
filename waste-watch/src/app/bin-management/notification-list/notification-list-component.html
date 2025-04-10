@@ -1,0 +1,185 @@
+<div class="d-flex page-container">
+  <app-side-nav></app-side-nav>
+
+  <div class="notification-container">
+    <!-- Header section -->
+    <div class="header">
+      <h2 class="title">
+        <fa-icon [icon]="faBell" class="me-2"></fa-icon>
+        Bin Notifications
+      </h2>
+      <div class="button-group">
+        <button
+          class="btn-action btn-clear"
+          (click)="clearAllNotifications()"
+          [disabled]="notifications.length === 0 || isLoading"
+        >
+          <fa-icon [icon]="faTrash"></fa-icon>
+          <span class="ms-2">
+            {{ isLoading ? 'Clearing...' : 'Clear All' }}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Filters section -->
+    <div class="filters-section">
+      <div class="filters-group">
+        <label class="filter-label">
+          <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
+          Filters:
+        </label>
+        <select
+          class="filter-select"
+          [(ngModel)]="selectedType"
+          name="type"
+          (change)="onFilterChange()"
+        >
+          <option value="">All Types</option>
+          <option value="info">Information</option>
+          <option value="warning">Warning</option>
+          <option value="error">Error</option>
+          <option value="success">Success</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Loading and error states -->
+    <div class="loading-container" *ngIf="isLoading">
+      <fa-icon [icon]="faSpinner" size="2x"></fa-icon>
+      <p>Loading notifications...</p>
+    </div>
+
+    <div class="error-message" *ngIf="error">
+      <p>{{ error }}</p>
+      <button class="btn-retry" (click)="loadNotifications()">Try Again</button>
+    </div>
+
+    <!-- Notifications list -->
+    <div class="notifications-list" *ngIf="!isLoading && !error">
+      <div
+        class="notification-item"
+        *ngFor="let notification of paginatedNotifications"
+        [class.unread]="!notification.isRead"
+        [class.selected]="selectedNotification?.id === notification.id"
+        (click)="selectNotification(notification)"
+      >
+        <div class="notification-icon" [ngClass]="'type-' + notification.type">
+          <fa-icon [icon]="getNotificationIcon(notification.type)"></fa-icon>
+        </div>
+        <div class="notification-content">
+          <div class="notification-header">
+            <h3 class="notification-title">{{ notification.title }}</h3>
+          </div>
+          <p class="notification-message">{{ notification.message }}</p>
+          <div class="notification-footer">
+            <span class="notification-timestamp">
+              <fa-icon [icon]="faCalendarAlt" class="me-1"></fa-icon>
+              {{ notification.timestamp | date:'medium' }}
+            </span>
+            <div class="notification-actions">
+              <button
+                class="btn-action-small"
+                (click)="viewDetails(notification); $event.stopPropagation()"
+              >
+                <fa-icon [icon]="faEye"></fa-icon>
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-notifications" *ngIf="filteredNotifications.length === 0">
+        <fa-icon [icon]="faBell" size="3x"></fa-icon>
+        <p>No notifications found</p>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-controls" *ngIf="filteredNotifications.length > 0">
+      <button
+        class="pagination-btn"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </span>
+      <button
+        class="pagination-btn"
+        (click)="nextPage()"
+        [disabled]="currentPage >= totalPages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- Notification Details Modal -->
+  <div
+    class="modal-backdrop"
+    *ngIf="showDetailsModal"
+    (click)="closeModal()"
+  ></div>
+
+  <div
+    class="notification-modal"
+    *ngIf="showDetailsModal && currentNotificationDetails"
+  >
+    <div class="modal-header">
+      <h3>Notification Details</h3>
+      <button class="close-btn" (click)="closeModal()">
+        <fa-icon [icon]="faClose"></fa-icon>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="detail-row">
+        <span class="detail-label">Title:</span>
+        <span class="detail-value">{{ currentNotificationDetails.title }}</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Type:</span>
+        <span class="detail-value type-{{ currentNotificationDetails.type }}">
+          {{ currentNotificationDetails.type | titlecase }}
+        </span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Priority:</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Date:</span>
+        <span class="detail-value">
+          <fa-icon [icon]="faCalendarAlt" class="me-1"></fa-icon>
+          {{ currentNotificationDetails.timestamp | date:'medium' }}
+        </span>
+      </div>
+
+      <div class="detail-row" *ngIf="currentNotificationDetails.referenceId">
+        <span class="detail-label">Reference ID:</span>
+        <span class="detail-value"
+          >{{ currentNotificationDetails.referenceId }}</span
+        >
+      </div>
+
+      <div class="detail-row full-width">
+        <span class="detail-label">Message:</span>
+        <div class="message-content">
+          {{ currentNotificationDetails.message }}
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-action" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>

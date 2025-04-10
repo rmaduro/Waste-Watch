@@ -11,6 +11,8 @@ import { BinDashboardComponent } from './bin-management/bin-dashboard/bin-dashbo
 import { BinMapComponent } from '../app/bin-management/bin-map/bin-map-component';
 import { FleetMapComponent } from '../app/fleet-management/fleet-map/fleet-map-component';
 import { FleetNotificationListComponent } from '../app/fleet-management/notification-list/notification-list-component';
+import { BinNotificationListComponent } from '../app/bin-management/notification-list/notification-list-component';
+
 
 
 
@@ -29,7 +31,7 @@ export const routes: Routes = [
   { path: 'bin-map', component: BinMapComponent },
   { path: 'vehicle-map', component: FleetMapComponent },
   { path: 'fleet-notification-list', component: FleetNotificationListComponent },
-
+  { path: 'bin-notification-list', component: BinNotificationListComponent },
 
 ];
 

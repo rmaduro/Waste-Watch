@@ -349,4 +349,14 @@ export class VehicleService {
     );
   }
 
+  deleteFleetNotification(id: number): Observable<any> {
+    const url = `https://localhost:7259/api/notifications/${id}`;
+    return this.http.delete(url, this.httpOptions).pipe(
+      catchError((error) => {
+        console.error('Error deleting fleet notification:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }

@@ -58,5 +58,41 @@ namespace WasteWatchAuth.Controllers
 			await _context.SaveChangesAsync();
 			return Ok(notification);
 		}
-	}
+
+
+
+        /// <summary>
+        /// Deletes a specific notification by ID.
+        /// </summary>
+        /// <param name="id">The ID of the notification to delete.</param>
+        /// <returns>
+        /// Returns NoContent if the notification was successfully deleted,
+        /// NotFound if the notification doesn't exist.
+        /// </returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteNotification(int id)
+        {
+            try
+            {
+                var notification = await _context.Notifications.FindAsync(id);
+                if (notification == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Notifications.Remove(notification);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (you might want to inject ILogger<NotificationsController> for proper logging)
+                return Problem(
+                    title: "An error occurred while deleting the notification",
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError);
+            }
+        }
+    }
 }

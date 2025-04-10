@@ -9,13 +9,15 @@
         Fleet Notifications
       </h2>
       <div class="button-group">
-        <button class="btn-action btn-mark-all" (click)="markAllAsRead()" [disabled]="!hasUnreadNotifications">
-          <fa-icon [icon]="faCheck"></fa-icon>
-          <span class="ms-2">Mark All as Read</span>
-        </button>
-        <button class="btn-action btn-clear" (click)="clearAllNotifications()" [disabled]="notifications.length === 0">
+        <button
+          class="btn-action btn-clear"
+          (click)="clearAllNotifications()"
+          [disabled]="notifications.length === 0 || isLoading"
+        >
           <fa-icon [icon]="faTrash"></fa-icon>
-          <span class="ms-2">Clear All</span>
+          <span class="ms-2">
+            {{ isLoading ? 'Clearing...' : 'Clear All' }}
+          </span>
         </button>
       </div>
     </div>
@@ -41,27 +43,6 @@
           <option value="error">Error</option>
           <option value="success">Success</option>
         </select>
-        <select
-          class="filter-select"
-          [(ngModel)]="selectedPriority"
-          name="priority"
-          (change)="onFilterChange()"
-        >
-          <option value="">All Priorities</option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-        </select>
-        <select
-          class="filter-select"
-          [(ngModel)]="selectedStatus"
-          name="status"
-          (change)="onFilterChange()"
-        >
-          <option value="">All Status</option>
-          <option value="read">Read</option>
-          <option value="unread">Unread</option>
-        </select>
       </div>
     </div>
 
@@ -73,26 +54,24 @@
 
     <div class="error-message" *ngIf="error">
       <p>{{ error }}</p>
-      <button class="btn-retry" (click)="loadNotifications()">
-        Try Again
-      </button>
+      <button class="btn-retry" (click)="loadNotifications()">Try Again</button>
     </div>
 
     <!-- Notifications list -->
     <div class="notifications-list" *ngIf="!isLoading && !error">
-      <div class="notification-item" *ngFor="let notification of paginatedNotifications"
-           [class.unread]="!notification.isRead"
-           [class.selected]="selectedNotification?.id === notification.id"
-           (click)="selectNotification(notification)">
+      <div
+        class="notification-item"
+        *ngFor="let notification of paginatedNotifications"
+        [class.unread]="!notification.isRead"
+        [class.selected]="selectedNotification?.id === notification.id"
+        (click)="selectNotification(notification)"
+      >
         <div class="notification-icon" [ngClass]="'type-' + notification.type">
           <fa-icon [icon]="getNotificationIcon(notification.type)"></fa-icon>
         </div>
         <div class="notification-content">
           <div class="notification-header">
             <h3 class="notification-title">{{ notification.title }}</h3>
-            <span class="notification-priority" [class]="'priority-' + notification.priority">
-              {{ notification.priority }}
-            </span>
           </div>
           <p class="notification-message">{{ notification.message }}</p>
           <div class="notification-footer">
@@ -101,12 +80,10 @@
               {{ notification.timestamp | date:'medium' }}
             </span>
             <div class="notification-actions">
-              <button class="btn-action-small" (click)="markAsRead(notification); $event.stopPropagation()"
-                      *ngIf="!notification.isRead">
-                <fa-icon [icon]="faCheck"></fa-icon>
-                Mark as Read
-              </button>
-              <button class="btn-action-small" (click)="viewDetails(notification); $event.stopPropagation()">
+              <button
+                class="btn-action-small"
+                (click)="viewDetails(notification); $event.stopPropagation()"
+              >
                 <fa-icon [icon]="faEye"></fa-icon>
                 View Details
               </button>
@@ -144,9 +121,16 @@
   </div>
 
   <!-- Notification Details Modal -->
-  <div class="modal-backdrop" *ngIf="showDetailsModal" (click)="closeModal()"></div>
+  <div
+    class="modal-backdrop"
+    *ngIf="showDetailsModal"
+    (click)="closeModal()"
+  ></div>
 
-  <div class="notification-modal" *ngIf="showDetailsModal && currentNotificationDetails">
+  <div
+    class="notification-modal"
+    *ngIf="showDetailsModal && currentNotificationDetails"
+  >
     <div class="modal-header">
       <h3>Notification Details</h3>
       <button class="close-btn" (click)="closeModal()">
@@ -169,9 +153,6 @@
 
       <div class="detail-row">
         <span class="detail-label">Priority:</span>
-        <span class="detail-value priority-{{ currentNotificationDetails.priority }}">
-          {{ currentNotificationDetails.priority | titlecase }}
-        </span>
       </div>
 
       <div class="detail-row">
@@ -184,23 +165,21 @@
 
       <div class="detail-row" *ngIf="currentNotificationDetails.referenceId">
         <span class="detail-label">Reference ID:</span>
-        <span class="detail-value">{{ currentNotificationDetails.referenceId }}</span>
+        <span class="detail-value"
+          >{{ currentNotificationDetails.referenceId }}</span
+        >
       </div>
 
       <div class="detail-row full-width">
         <span class="detail-label">Message:</span>
-        <div class="message-content">{{ currentNotificationDetails.message }}</div>
+        <div class="message-content">
+          {{ currentNotificationDetails.message }}
+        </div>
       </div>
     </div>
 
     <div class="modal-footer">
-      <button class="btn-action" (click)="markAsRead(currentNotificationDetails); closeModal()" *ngIf="!currentNotificationDetails.isRead">
-        <fa-icon [icon]="faCheck"></fa-icon>
-        Mark as Read
-      </button>
-      <button class="btn-action" (click)="closeModal()">
-        Close
-      </button>
+      <button class="btn-action" (click)="closeModal()">Close</button>
     </div>
   </div>
 </div>
