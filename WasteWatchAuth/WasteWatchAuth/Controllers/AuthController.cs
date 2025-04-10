@@ -12,7 +12,12 @@ using WasteWatchAuth.Models;
 
 namespace WasteWatchAuth.Controllers
 {
-    [Route("api/[controller]")]
+	/// <summary>
+	/// Controller responsible for handling authentication operations such as login, logout,
+	/// registration, password reset, and user information retrieval.
+	/// </summary>
+
+	[Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -36,7 +41,15 @@ namespace WasteWatchAuth.Controllers
             _antiforgery = antiforgery;
         }
 
-        [HttpGet("current-user")]
+
+
+
+        /// <summary>
+        /// Retrieves the currently authenticated user's email, username, and roles.
+        /// </summary>
+        /// <returns>Returns the current user's details or Unauthorized if not authenticated.</returns>
+
+		[HttpGet("current-user")]
         public async Task<IActionResult> GetCurrentUser()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -57,7 +70,13 @@ namespace WasteWatchAuth.Controllers
             });
         }
 
-        [HttpPost("login")]
+        /// <summary>
+        /// Authenticates the user using email and password credentials.
+        /// </summary>
+        /// <param name="model">LoginModel containing email and password.</param>
+        /// <returns>Returns the user info and antiforgery token if login is successful; otherwise, returns Unauthorized.</returns>
+
+		[HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             if (!ModelState.IsValid)
@@ -95,7 +114,15 @@ namespace WasteWatchAuth.Controllers
             });
         }
 
-        [Authorize]
+
+
+        /// <summary>
+        /// Logs out the current user, deletes authentication cookies, clears the session, and logs the event.
+        /// </summary>
+        /// <param name="request">LogoutRequest containing the user's email.</param>
+        /// <returns>Returns a success message if logout is successful.</returns>
+
+		[Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
         {
@@ -125,12 +152,12 @@ namespace WasteWatchAuth.Controllers
             return Ok(new { message = "Logged out successfully" });
         }
 
-        public class LogoutRequest
-        {
-            public string Email { get; set; } 
-        }
-
-        [Authorize(Roles = "Admin")]
+		/// <summary>
+		/// Registers a new user with the specified email, password, and role. Only accessible by Admins.
+		/// </summary>
+		/// <param name="model">RegisterModel with user details.</param>
+		/// <returns>Returns success message or error details.</returns>
+		[Authorize(Roles = "Admin")]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
@@ -162,7 +189,13 @@ namespace WasteWatchAuth.Controllers
             });
         }
 
-        [HttpPost("forgot-password")]
+
+        /// <summary>
+        /// Initiates the password recovery process by generating a token and sending a reset email.
+        /// </summary>
+        /// <param name="model">ForgotPasswordModel containing the user's email.</param>
+        /// <returns>Returns a success message and the reset link if user exists.</returns>
+		[HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
             if (!ModelState.IsValid)
@@ -277,8 +310,13 @@ namespace WasteWatchAuth.Controllers
             return Ok(new { message = "E-mail de recuperação enviado com sucesso", resetLink = resetLink });
         }
 
+        /// <summary>
+        /// Resets the user's password using a reset token and the new password provided.
+        /// </summary>
+        /// <param name="model">ResetPasswordModel containing email, token, and new password.</param>
+        /// <returns>Returns a success message or validation errors.</returns>
 
-        [HttpPost("reset-password")]
+		[HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
         {
             if (!ModelState.IsValid)
