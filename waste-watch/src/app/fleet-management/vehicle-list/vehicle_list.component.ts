@@ -355,45 +355,136 @@ private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-frie
 
 
   private addMarkersToRoute(): void {
-    const path = this.viewedVehicle?.route!.locations!.map((loc) => ({
-      lat: this.convertToDecimal(loc.latitude),
-      lng: this.convertToDecimal(loc.longitude),
+    const path = this.viewedVehicle?.route?.locations?.map((loc) => ({
+        lat: this.convertToDecimal(loc.latitude),
+        lng: this.convertToDecimal(loc.longitude),
     }));
 
-    // Add markers for each stop
-    this.routeMarkers = path!.map((point, index) => {
-      const marker = new google.maps.Marker({
-        position: point,
-        map: this.routeMap,
-        title: `Stop ${index + 1}`,
-        label: {
-          text: (index + 1).toString(),
-          color: 'white',
-          fontWeight: 'bold',
-        },
-        icon: {
-          url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-          scaledSize: new google.maps.Size(32, 32),
-        },
-      });
+    if (!path) return;
 
-      // Add info window for each marker
-      const infoWindow = new google.maps.InfoWindow({
-        content: `<div style="padding: 8px;">
-          <strong>Stop ${index + 1}</strong><br>
-          ${this.addresses[index] || 'Address not available'}<br>
-          Coordinates: ${point.lat}, ${point.lng}
-        </div>`,
-      });
+    this.routeMarkers = path.map((point, index) => {
+        const marker = new google.maps.Marker({
+            position: point,
+            map: this.routeMap,
+            title: `Stop ${index + 1}`,
+            label: {
+                text: `${index + 1}`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                fontSize: '12px'
+            },
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: '#4F46E5',  // Indigo-600
+                fillOpacity: 1,
+                strokeColor: '#FFFFFF',
+                strokeWeight: 2,
+                scale: 10
+            },
+            optimized: false
+        });
 
-      marker.addListener('click', () => {
-        infoWindow.open(this.routeMap, marker);
-      });
+        const content = `
+            <div class="info-window-container" style="font-family: 'Segoe UI', system-ui, sans-serif; max-width: 320px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <!-- Header -->
+                <div style="background: #4F46E5; padding: 16px; border-bottom: 1px solid #4338CA;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                        <h3 style="margin: 0; color: white; font-size: 18px; font-weight: 600;">
+                            Stop #${index + 1}
+                        </h3>
+                        <span style="
+                            padding: 4px 12px;
+                            border-radius: 9999px;
+                            font-size: 12px;
+                            font-weight: 500;
+                            background: rgba(255,255,255,0.2);
+                            color: white;
+                        ">
+                            ${index === 0 ? 'Pickup' : index === path.length - 1 ? 'Dropoff' : 'Waypoint'}
+                        </span>
+                    </div>
+                    <p style="margin: 0; color: #E0E7FF; font-size: 14px;">
+                        ${this.getStopType(index, path.length)}
+                    </p>
+                </div>
 
-      return marker;
+                <!-- Info Section -->
+                <div style="padding: 16px;">
+                    <!-- Address -->
+                    <div style="margin-bottom: 16px;">
+                        <h4 style="margin: 0 0 8px 0; color: #374151; font-size: 14px; font-weight: 600;">
+                            Location
+                        </h4>
+                        <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">
+                            <div>
+                                <span style="display: block; color: #111827; font-weight: 500; font-size: 14px;">
+                                    ${this.addresses[index] || 'Address not specified'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coordinates -->
+                    <div style="margin-bottom: 16px;">
+                        <h4 style="margin: 0 0 8px 0; color: #374151; font-size: 14px; font-weight: 600;">
+                            Coordinates
+                        </h4>
+                        <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #6B7280; font-size: 14px;">Latitude</span>
+                                <span style="color: #111827; font-weight: 500; font-size: 14px;">${point.lat.toFixed(6)}</span>
+                            </div>
+                            <div style="height: 1px; background: #E5E7EB; margin: 8px 0;"></div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #6B7280; font-size: 14px;">Longitude</span>
+                                <span style="color: #111827; font-weight: 500; font-size: 14px;">${point.lng.toFixed(6)}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sequence -->
+                    <div>
+                        <h4 style="margin: 0 0 8px 0; color: #374151; font-size: 14px; font-weight: 600;">
+                            Route Information
+                        </h4>
+                        <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #6B7280; font-size: 14px;">Stop Sequence</span>
+                                <span style="color: #111827; font-weight: 500; font-size: 14px;">
+                                    ${index + 1} of ${path.length}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const infoWindow = new google.maps.InfoWindow({
+            content: content,
+            maxWidth: 320
+        });
+
+        marker.addListener('click', () => {
+            // Close all other info windows first
+            this.routeMarkers.forEach(m => {
+                const iw = m.get('infoWindow');
+                if (iw) iw.close();
+            });
+
+            infoWindow.open(this.routeMap, marker);
+            marker.set('infoWindow', infoWindow);
+        });
+
+        return marker;
     });
-  }
+}
 
+private getStopType(index: number, total: number): string {
+    if (index === 0) return 'Starting location for this route';
+    if (index === total - 1) return 'Final destination for this route';
+    return `Intermediate stop #${index}`;
+}
 
 
   loadRoutes() {
