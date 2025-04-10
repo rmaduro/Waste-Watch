@@ -400,7 +400,6 @@ private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-frie
                             background: rgba(255,255,255,0.2);
                             color: white;
                         ">
-                            ${index === 0 ? 'Pickup' : index === path.length - 1 ? 'Dropoff' : 'Waypoint'}
                         </span>
                     </div>
                     <p style="margin: 0; color: #E0E7FF; font-size: 14px;">
