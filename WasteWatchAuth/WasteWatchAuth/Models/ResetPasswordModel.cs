@@ -2,17 +2,29 @@
 
 namespace WasteWatchAuth.Models
 {
+	/// <summary>
+	/// Model used to reset a user's password.
+	/// </summary>
 	public class ResetPasswordModel
 	{
-		[Required(ErrorMessage = "O email é obrigatório")]
-		[EmailAddress(ErrorMessage = "Formato de email inválido")]
+		/// <summary>
+		/// User's email address.
+		/// </summary>
+		[Required(ErrorMessage = "Email is required")]
+		[EmailAddress(ErrorMessage = "Invalid email format")]
 		public string Email { get; set; }
 
-		[Required(ErrorMessage = "O token é obrigatório")]
+		/// <summary>
+		/// Verification token sent to the user to allow password reset.
+		/// </summary>
+		[Required(ErrorMessage = "Token is required")]
 		public string Token { get; set; }
 
-		[Required(ErrorMessage = "A nova password é obrigatória")]
-		[MinLength(6, ErrorMessage = "A password deve ter pelo menos 6 caracteres")]
+		/// <summary>
+		/// New user password. Must be at least 6 characters long.
+		/// </summary>
+		[Required(ErrorMessage = "New password is required")]
+		[MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
 		public string NewPassword { get; set; }
 	}
 }

@@ -2,10 +2,16 @@
 
 namespace WasteWatchAuth.Models
 {
+	/// <summary>
+	/// Model used for the forgot password request.
+	/// </summary>
 	public class ForgotPasswordModel
 	{
-		[Required(ErrorMessage = "O email é obrigatório")]
-		[EmailAddress(ErrorMessage = "Formato de email inválido")]
+		/// <summary>
+		/// User's email address.
+		/// </summary>
+		[Required(ErrorMessage = "Email is required")]
+		[EmailAddress(ErrorMessage = "Invalid email format")]
 		public string Email { get; set; }
 	}
 }

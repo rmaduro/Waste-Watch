@@ -1,50 +1,38 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\",
+  "WorkspaceRootPath": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\",
   "Documents": [
     {
-<<<<<<< Updated upstream
-      "AbsoluteMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|c:\\users\\user\\onedrive\\ambiente de trabalho\\escola\\3\u00BAano\\esa_gpi\\waste-watch\\wastewatchauth\\wastewatchauthtests\\notificationscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|solutionrelative:wastewatchauthtests\\notificationscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\user\\onedrive\\ambiente de trabalho\\escola\\3\u00BAano\\esa_gpi\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|c:\\users\\user\\onedrive\\ambiente de trabalho\\escola\\3\u00BAano\\esa_gpi\\waste-watch\\wastewatchauth\\wastewatchauthtests\\routescontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|solutionrelative:wastewatchauthtests\\routescontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\user\\onedrive\\ambiente de trabalho\\escola\\3\u00BAano\\esa_gpi\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\routes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\routes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\user\\onedrive\\ambiente de trabalho\\escola\\3\u00BAano\\esa_gpi\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\routelocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\routelocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\user\\onedrive\\ambiente de trabalho\\escola\\3\u00BAano\\esa_gpi\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\routescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\routescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-=======
       "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\binscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\binscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\collectionhistorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\collectionhistorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\logscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\logscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\routescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\routescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\vehiclescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\vehiclescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\resetpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\resetpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\forgotpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\forgotpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\data\\userseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\data\\userseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\services\\activitylogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\services\\activitylogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,38 +43,84 @@
       "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCB9572C-A6DC-425B-BD52-A2A093BD344F}|WasteWatchAuthIntegrationTests\\WasteWatchAuthIntegrationTests.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauthintegrationtests\\setup\\testbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCB9572C-A6DC-425B-BD52-A2A093BD344F}|WasteWatchAuthIntegrationTests\\WasteWatchAuthIntegrationTests.csproj|solutionrelative:wastewatchauthintegrationtests\\setup\\testbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\forgotpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\forgotpasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\collectionhistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\collectionhistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\collectionstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\collectionstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauthtests\\authcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|solutionrelative:wastewatchauthtests\\authcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\services\\emailsender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\services\\emailsender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\data\\roleseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\data\\roleseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\services\\activitylogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\services\\activitylogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\endmaintenancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\endmaintenancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\collaboratortype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\collaboratortype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\collaborator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\collaborator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\bintype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\bintype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Collaborators.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\binstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\binstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.BinLocations.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\binlocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\binlocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Bins.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
->>>>>>> Stashed changes
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\bin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\bin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\activitylog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\activitylog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauthtests\\notificationscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|solutionrelative:wastewatchauthtests\\notificationscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauthtests\\routescontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F8E544C-0A69-4C75-BCF6-B318B583A792}|WasteWatchAuthTests\\WasteWatchAuthTests.csproj|solutionrelative:wastewatchauthtests\\routescontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\routes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\routes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|c:\\users\\migue\\desktop\\faculdade\\3_ano_1_semestre\\esa\\project\\waste-watch\\wastewatchauth\\wastewatchauth\\models\\routelocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3ECED502-9FB8-41D7-95F1-8B8919DB1D92}|WasteWatchAuth\\WasteWatchAuth.csproj|solutionrelative:wastewatchauth\\models\\routelocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -96,51 +130,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-<<<<<<< Updated upstream
-          "SelectedChildIndex": 0,
-=======
-          "SelectedChildIndex": 7,
->>>>>>> Stashed changes
+          "SelectedChildIndex": 8,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "NotificationsControllerTests.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\NotificationsControllerTests.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuthTests\\NotificationsControllerTests.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\NotificationsControllerTests.cs",
-              "RelativeToolTip": "WasteWatchAuthTests\\NotificationsControllerTests.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAArwHcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T22:52:14.987Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RouteLocation.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\RouteLocation.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\RouteLocation.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\RouteLocation.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Models\\RouteLocation.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwB8AAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T22:48:05.353Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Routes.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Routes.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\Routes.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Routes.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Models\\Routes.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T22:47:53.242Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
@@ -151,105 +142,80 @@
             },
             {
               "$type": "Document",
-<<<<<<< Updated upstream
-              "DocumentIndex": 2,
-              "Title": "RoutesControllerTests.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\RoutesControllerTests.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuthTests\\RoutesControllerTests.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\RoutesControllerTests.cs",
-              "RelativeToolTip": "WasteWatchAuthTests\\RoutesControllerTests.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAjwIgAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "AuthControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\AuthControllerTests.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuthTests\\AuthControllerTests.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\AuthControllerTests.cs",
+              "RelativeToolTip": "WasteWatchAuthTests\\AuthControllerTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T22:41:43.855Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RoutesController.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\RoutesController.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\RoutesController.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\RoutesController.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Controllers\\RoutesController.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAkwEsAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T22:40:50.344Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "NotificationsController.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\NotificationsController.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\NotificationsController.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\Ambiente de Trabalho\\Escola\\3\u00BAAno\\ESA_GPI\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\NotificationsController.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Controllers\\NotificationsController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwCcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T22:40:47.864Z",
-              "EditorCaption": ""
-=======
-              "DocumentIndex": 1,
-              "Title": "ResetPasswordModel.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ResetPasswordModel.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\ResetPasswordModel.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ResetPasswordModel.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Models\\ResetPasswordModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T15:33:02.387Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ForgotPasswordModel.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ForgotPasswordModel.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\ForgotPasswordModel.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ForgotPasswordModel.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Models\\ForgotPasswordModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T15:32:01.371Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RegisterModel.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\RegisterModel.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\RegisterModel.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\RegisterModel.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Models\\RegisterModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T15:30:44.136Z",
+              "WhenOpened": "2025-04-10T16:19:45.385Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "LoginModel.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\LoginModel.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\LoginModel.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\LoginModel.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Models\\LoginModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAACAAAAAAAAAA==",
+              "Title": "VehiclesController.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\VehiclesController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\VehiclesController.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\VehiclesController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\VehiclesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T15:29:34.921Z",
+              "WhenOpened": "2025-04-10T16:14:03.024Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "TestBase.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthIntegrationTests\\Setup\\TestBase.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuthIntegrationTests\\Setup\\TestBase.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthIntegrationTests\\Setup\\TestBase.cs",
-              "RelativeToolTip": "WasteWatchAuthIntegrationTests\\Setup\\TestBase.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAAAwAAAArAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "LogsController.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\LogsController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\LogsController.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\LogsController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\LogsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T19:40:52.205Z",
+              "WhenOpened": "2025-04-10T16:13:12.309Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T16:13:10.344Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CollectionHistoryController.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\CollectionHistoryController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\CollectionHistoryController.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\CollectionHistoryController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\CollectionHistoryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T16:13:05.021Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BinsController.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\BinsController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\BinsController.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\BinsController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\BinsController.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAuwAkBAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T16:12:58.622Z",
               "EditorCaption": ""
             },
             {
@@ -260,124 +226,306 @@
               "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\AuthController.cs",
               "RelativeToolTip": "WasteWatchAuth\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAA+wDkBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA4BAAAAAAAAAAAkwC0BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T03:11:05.345Z",
+              "WhenOpened": "2025-04-10T16:12:48.797Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 15,
               "Title": "EmailSender.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Services\\EmailSender.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Services\\EmailSender.cs",
               "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Services\\EmailSender.cs",
               "RelativeToolTip": "WasteWatchAuth\\Services\\EmailSender.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAkwA8AAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T03:09:04.064Z"
+              "WhenOpened": "2025-04-10T16:12:09.781Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 16,
               "Title": "ActivityLogService.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Services\\ActivityLogService.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Services\\ActivityLogService.cs",
               "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Services\\ActivityLogService.cs",
               "RelativeToolTip": "WasteWatchAuth\\Services\\ActivityLogService.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAwwC4AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T03:06:50.615Z",
+              "WhenOpened": "2025-04-10T16:12:04.879Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserSeeder.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\UserSeeder.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\UserSeeder.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\UserSeeder.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Data\\UserSeeder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "ResetPasswordModel.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ResetPasswordModel.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\ResetPasswordModel.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ResetPasswordModel.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\ResetPasswordModel.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAQwB0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T03:04:05.874Z",
+              "WhenOpened": "2025-04-10T16:00:44.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RegisterModel.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\RegisterModel.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\RegisterModel.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\RegisterModel.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\RegisterModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:58:36.999Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Notification.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Notification.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\Notification.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Notification.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\Notification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:58:35.645Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "RoleSeeder.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\RoleSeeder.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\RoleSeeder.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\RoleSeeder.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Data\\RoleSeeder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Title": "LoginModel.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\LoginModel.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\LoginModel.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\LoginModel.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\LoginModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T03:03:10.587Z"
+              "WhenOpened": "2025-04-10T15:57:45.271Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAmwEgAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "ForgotPasswordModel.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ForgotPasswordModel.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\ForgotPasswordModel.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ForgotPasswordModel.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\ForgotPasswordModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T02:58:48.178Z"
+              "WhenOpened": "2025-04-10T15:56:47.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "EndMaintenanceRequest.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\EndMaintenanceRequest.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\EndMaintenanceRequest.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\EndMaintenanceRequest.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\EndMaintenanceRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:56:45.347Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
+              "Title": "CollectionStatus.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\CollectionStatus.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\CollectionStatus.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\CollectionStatus.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\CollectionStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:56:42.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CollectionHistory.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\CollectionHistory.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\CollectionHistory.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\CollectionHistory.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\CollectionHistory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:56:39.795Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "CollaboratorType.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\CollaboratorType.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\CollaboratorType.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\CollaboratorType.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\CollaboratorType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:56:37.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Collaborator.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Collaborator.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\Collaborator.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Collaborator.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\Collaborator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:56:34.343Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "BinType.cs",
               "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\BinType.cs",
               "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\BinType.cs",
               "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\BinType.cs",
               "RelativeToolTip": "WasteWatchAuth\\Models\\BinType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T19:05:32.608Z"
+              "WhenOpened": "2025-04-10T15:56:31.355Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "dbo.Bins.sql",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Bins.sql",
-              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Bins.sql",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-03-31T23:39:54.706Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "dbo.BinLocations.sql",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.BinLocations.sql",
-              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.BinLocations.sql",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-03-31T23:40:01.869Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "dbo.Collaborators.sql",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Collaborators.sql",
-              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/aspnet_WasteWatchAuth_ad1df073_6d97_4a23_8f43_06f2934912fa/True/SqlTable/dbo.Collaborators.sql",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-03-31T23:40:09.919Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "DbInitializer.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\DbInitializer.cs",
-              "RelativeDocumentMoniker": "WasteWatchAuth\\Data\\DbInitializer.cs",
-              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Data\\DbInitializer.cs",
-              "RelativeToolTip": "WasteWatchAuth\\Data\\DbInitializer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
+              "DocumentIndex": 22,
+              "Title": "BinStatus.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\BinStatus.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\BinStatus.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\BinStatus.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\BinStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T23:27:31.119Z"
->>>>>>> Stashed changes
+              "WhenOpened": "2025-04-10T15:56:27.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "BinLocation.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\BinLocation.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\BinLocation.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\BinLocation.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\BinLocation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:56:25.804Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Bin.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Bin.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\Bin.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Bin.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\Bin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:56:23.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ActivityLog.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ActivityLog.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\ActivityLog.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\ActivityLog.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\ActivityLog.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:56:21.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "NotificationsControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\NotificationsControllerTests.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuthTests\\NotificationsControllerTests.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\NotificationsControllerTests.cs",
+              "RelativeToolTip": "WasteWatchAuthTests\\NotificationsControllerTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:36:16.594Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "RouteLocation.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\RouteLocation.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\RouteLocation.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\RouteLocation.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\RouteLocation.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwB8AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:36:16.611Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Routes.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Routes.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Models\\Routes.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Models\\Routes.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Models\\Routes.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:36:16.618Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "RoutesControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\RoutesControllerTests.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuthTests\\RoutesControllerTests.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuthTests\\RoutesControllerTests.cs",
+              "RelativeToolTip": "WasteWatchAuthTests\\RoutesControllerTests.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAjwIgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:36:16.62Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RoutesController.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\RoutesController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\RoutesController.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\RoutesController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\RoutesController.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAowF4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:36:16.624Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NotificationsController.cs",
+              "DocumentMoniker": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\NotificationsController.cs",
+              "RelativeDocumentMoniker": "WasteWatchAuth\\Controllers\\NotificationsController.cs",
+              "ToolTip": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\Controllers\\NotificationsController.cs",
+              "RelativeToolTip": "WasteWatchAuth\\Controllers\\NotificationsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:36:16.624Z",
+              "EditorCaption": ""
             }
           ]
         },

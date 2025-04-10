@@ -19,26 +19,28 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Criar um veículo e o seu motorista (Driver)
+		/// Creates a new vehicle and assigns a driver (collaborator of type Driver).
 		/// </summary>
+		/// <param name="vehicle">The vehicle object containing vehicle and driver information.</param>
+		/// <returns>A newly created vehicle or an error message.</returns>
 		[HttpPost]
 		public async Task<IActionResult> CreateVehicle([FromBody] Vehicle vehicle)
 		{
 			if (vehicle == null || vehicle.Driver == null)
-				return BadRequest("Dados do veículo ou do motorista inválidos.");
+				return BadRequest("Invalid vehicle or driver data.");
 
-			// Verifica se já existe um veículo com a mesma matrícula
+			// Check if a vehicle with the same license plate already exists
 			bool exists = await _context.Vehicles.AnyAsync(v => v.LicensePlate == vehicle.LicensePlate);
 			if (exists)
-				return Conflict(new { message = "Já existe um veículo com esta matrícula." });
+				return Conflict(new { message = "A vehicle with this license plate already exists." });
 
-			// Verifica se o colaborador já existe na base de dados
+			// Check if the driver (collaborator) already exists in the database
 			var existingCollaborator = await _context.Collaborators
 				.FirstOrDefaultAsync(c => c.LicenseNumber == vehicle.Driver.LicenseNumber);
 
 			if (existingCollaborator == null)
 			{
-				// Criar novo colaborador do tipo Driver
+				// Create a new collaborator of type Driver
 				var newDriver = new Collaborator
 				{
 					Name = vehicle.Driver.Name,
@@ -54,14 +56,14 @@ namespace WasteWatchAuth.Controllers
 			}
 			else
 			{
-				// Se o colaborador já existir, garantir que é um Driver
+				// Ensure the existing collaborator is of type Driver
 				if (existingCollaborator.CollaboratorType != CollaboratorType.Driver)
-					return BadRequest("O colaborador associado deve ser um motorista (Driver).");
+					return BadRequest("The associated collaborator must be a driver.");
 
 				vehicle.DriverId = existingCollaborator.Id;
 			}
 
-			// Adicionar veículo à base de dados
+			// Add the vehicle to the database
 			_context.Vehicles.Add(vehicle);
 			await _context.SaveChangesAsync();
 
@@ -69,8 +71,9 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Obter todos os veículos
+		/// Retrieves all vehicles along with their assigned drivers.
 		/// </summary>
+		/// <returns>A list of all vehicles.</returns>
 		[HttpGet]
 		public async Task<IActionResult> GetAllVehicles()
 		{
@@ -81,8 +84,10 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Obter um veículo por ID
+		/// Retrieves a specific vehicle by its ID.
 		/// </summary>
+		/// <param name="id">The ID of the vehicle to retrieve.</param>
+		/// <returns>The vehicle object or NotFound if not exists.</returns>
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetVehicleById(int id)
 		{
@@ -97,8 +102,10 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Remover um veículo
+		/// Deletes a vehicle by its ID.
 		/// </summary>
+		/// <param name="id">The ID of the vehicle to delete.</param>
+		/// <returns>NoContent if deleted successfully, NotFound otherwise.</returns>
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteVehicle(int id)
 		{

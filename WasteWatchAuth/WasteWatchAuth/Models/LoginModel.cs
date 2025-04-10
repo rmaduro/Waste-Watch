@@ -2,13 +2,22 @@
 
 namespace WasteWatchAuth.Models
 {
+	/// <summary>
+	/// Model used for user login.
+	/// </summary>
 	public class LoginModel
 	{
-		[Required(ErrorMessage = "O email é obrigatório")]
-		[EmailAddress(ErrorMessage = "Formato de email inválido")]
+		/// <summary>
+		/// User's email address.
+		/// </summary>
+		[Required(ErrorMessage = "Email is required")]
+		[EmailAddress(ErrorMessage = "Invalid email format")]
 		public string Email { get; set; }
 
-		[Required(ErrorMessage = "A password é obrigatória")]
+		/// <summary>
+		/// User's password.
+		/// </summary>
+		[Required(ErrorMessage = "Password is required")]
 		public string Password { get; set; }
 	}
 }

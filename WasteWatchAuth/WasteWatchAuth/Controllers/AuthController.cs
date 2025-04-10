@@ -67,7 +67,6 @@ namespace WasteWatchAuth.Controllers
             if (user == null)
                 return Unauthorized(new { message = "Credenciais inválidas" });
 
-            // Set isPersistent to true for persistent cookie
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: false);
             if (!result.Succeeded)
                 return Unauthorized(new { message = "Credenciais inválidas" });
@@ -76,7 +75,6 @@ namespace WasteWatchAuth.Controllers
 
             await _activityLogService.LogActivityAsync("Login", $"User {user.Email} logged in.");
 
-            // Set anti-forgery cookie
             var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
             Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions
             {
@@ -101,40 +99,35 @@ namespace WasteWatchAuth.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
         {
-            // Get the current user
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
             {
                 return NotFound("User not found.");
             }
 
-            // Sign out the user
             await _signInManager.SignOutAsync();
 
-            // Clear the authentication cookie with matching settings
+            
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true, // Ensure this matches the original cookie settings
-                SameSite = SameSiteMode.None, // Ensure this matches the original cookie settings
-                Path = "/", // Ensure this matches the original cookie settings
-                Expires = DateTimeOffset.UtcNow.AddDays(-1) // Set expiration in the past to delete the cookie
+                Secure = true, 
+                SameSite = SameSiteMode.None, 
+                Path = "/", 
+                Expires = DateTimeOffset.UtcNow.AddDays(-1) 
             };
             Response.Cookies.Delete(".AspNetCore.Identity.Application", cookieOptions);
 
-            // Clear the session data (if using session-based authentication)
             HttpContext.Session.Clear();
 
-            // Log the activity
             await _activityLogService.LogActivityAsync("Logout", $"User {request.Email} logged out.");
 
-            // Return a success response
             return Ok(new { message = "Logged out successfully" });
         }
 
         public class LogoutRequest
         {
-            public string Email { get; set; } // User's email
+            public string Email { get; set; } 
         }
 
         [Authorize(Roles = "Admin")]
@@ -183,7 +176,6 @@ namespace WasteWatchAuth.Controllers
             var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
             var resetLink = $"http://localhost:4200/define-password?email={model.Email}&token={encodedToken}";
 
-            // Corpo do email
             var emailBody = $@"
     <html>
     <head>
@@ -276,7 +268,6 @@ namespace WasteWatchAuth.Controllers
     </body>
     </html>";
 
-            // Enviar o email de recuperação
             await _emailSender.SendEmailAsync(
                 model.Email,
                 "Recuperação de Palavra-Passe",
@@ -285,9 +276,6 @@ namespace WasteWatchAuth.Controllers
 
             return Ok(new { message = "E-mail de recuperação enviado com sucesso", resetLink = resetLink });
         }
-
-
-
 
 
         [HttpPost("reset-password")]
