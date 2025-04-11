@@ -67,34 +67,39 @@
     </section>
 
     <!-- Maintenance History Table -->
-    <section class="table-section">
-      <h4><fa-icon [icon]="faWrench"></fa-icon> Maintenance History</h4>
-      <div class="table-container">
-        <table class="bin-table">
-          <thead>
-            <tr>
-              <th><fa-icon [icon]="faIdCard"></fa-icon> Bin ID</th>
-              <th><fa-icon [icon]="faWrench"></fa-icon> Maintenance Type</th>
-              <th><fa-icon [icon]="faTools"></fa-icon> Description</th>
-              <th><fa-icon [icon]="faClock"></fa-icon> Start Date</th>
-              <th><fa-icon [icon]="faClock"></fa-icon> End Date</th>
-              <th><fa-icon [icon]="faIdCard"></fa-icon> User ID</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="maintenanceHistory.length > 0; else noMaintenance">
-            <tr *ngFor="let maintenance of maintenanceHistory">
-              <td>{{ maintenance.binId }}</td>
-              <td>{{ maintenance.maintenanceType }}</td>
-              <td>{{ maintenance.description }}</td>
-              <td>{{ maintenance.startDate | date:'short' }}</td>
-              <td>{{ maintenance.endDate ? (maintenance.endDate | date:'short') : 'Ongoing' }}</td>
-            </tr>
-          </tbody>
-          <ng-template #noMaintenance>
-            <tr><td colspan="6">No maintenance history available.</td></tr>
-          </ng-template>
-        </table>
-      </div>
-    </section>
+<section class="table-section">
+  <div class="header-container">
+    <h4><fa-icon [icon]="faWrench"></fa-icon> Maintenance History</h4>
+    <button class="btn-report" (click)="generateMaintenanceReport()" [disabled]="isLoading">
+      <fa-icon [icon]="faFilePdf"></fa-icon>
+      {{ isLoading ? 'Generating...' : 'Generate Report' }}
+    </button>
   </div>
+
+  <div class="table-container">
+    <table class="bin-table">
+      <thead>
+        <tr>
+          <th><fa-icon [icon]="faIdCard"></fa-icon> Bin ID</th>
+          <th><fa-icon [icon]="faWrench"></fa-icon> Maintenance Type</th>
+          <th><fa-icon [icon]="faTools"></fa-icon> Description</th>
+          <th><fa-icon [icon]="faClock"></fa-icon> Start Date</th>
+          <th><fa-icon [icon]="faClock"></fa-icon> End Date</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="maintenanceHistory.length > 0; else noMaintenance">
+        <tr *ngFor="let maintenance of maintenanceHistory">
+          <td>{{ maintenance.binId }}</td>
+          <td>{{ maintenance.maintenanceType }}</td>
+          <td>{{ maintenance.description }}</td>
+          <td>{{ maintenance.startDate | date:'short' }}</td>
+          <td>{{ maintenance.endDate ? (maintenance.endDate | date:'short') : 'Ongoing' }}</td>
+        </tr>
+      </tbody>
+      <ng-template #noMaintenance>
+        <tr><td colspan="6">No maintenance history available.</td></tr>
+      </ng-template>
+    </table>
+  </div>
+</section>
 </div>

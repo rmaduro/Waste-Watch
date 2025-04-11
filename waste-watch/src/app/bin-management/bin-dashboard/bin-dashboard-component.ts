@@ -15,10 +15,13 @@ import {
   faClock,
   faArrowUp,
   faWrench,
+  faFilePdf,
 } from '@fortawesome/free-solid-svg-icons';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { jsPDF } from 'jspdf';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -40,6 +43,7 @@ export class BinDashboardComponent implements OnInit {
   faClock = faClock;
   faArrowUp = faArrowUp;
   faWrench = faWrench;
+  faFilePdf = faFilePdf;
 
   // Correctly type the data here
   inMaintenanceBins: number = 0;
@@ -48,7 +52,11 @@ export class BinDashboardComponent implements OnInit {
   collectionHistory: CollectionHistory[] = []; // Now using the CollectionHistory type
   maintenanceHistory: any[] = [];
 
-  constructor(private binService: BinService) {}
+  constructor(private binService: BinService) { }
+
+  isLoading: boolean = false;
+  error: string | null = null;
+  reportGenerated: boolean = false;
 
   ngOnInit(): void {
     this.loadDashboardData();
@@ -157,4 +165,187 @@ export class BinDashboardComponent implements OnInit {
   refreshData(): void {
     this.loadDashboardData();
   }
-}
+
+  async generateMaintenanceReport() {
+    this.isLoading = true;
+
+    try {
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.width;
+      const margin = 20;
+      const contentWidth = pageWidth - margin * 2;
+      const pageHeight = pdf.internal.pageSize.height; // typically 297mm for A4
+      const bottomMargin = 25; // Leave space for footer
+      const maxTableHeight = pageHeight - bottomMargin; // the approximate area where we can safely write rows
+
+      // Helper to format date as DD/MM/YYYY
+      const formatDate = (dateStr: string) => {
+        if (!dateStr) return 'N/A';
+        const date = new Date(dateStr);
+        return `${date.getDate().toString().padStart(2, '0')}/${
+          (date.getMonth() + 1).toString().padStart(2, '0')
+        }/${date.getFullYear()}`;
+      };
+
+      const addPageHeader = () => {
+        pdf.setFillColor(240, 240, 240);
+        pdf.rect(0, 0, pageWidth, 15, 'F');
+        pdf.setFontSize(8);
+        pdf.setTextColor(100, 100, 100);
+        pdf.text('WasteWatch Maintenance Report', margin, 10);
+        const companyLogo = 'assets/images/logo2.png';
+        pdf.addImage(companyLogo, 'PNG', pageWidth - 30, 3, 15, 15);
+      };
+
+      const addPageFooter = (pageNum: number, totalPages: number) => {
+        pdf.setFillColor(240, 240, 240);
+        pdf.rect(0, pageHeight - 15, pageWidth, 15, 'F');
+        pdf.setFontSize(8);
+        pdf.setTextColor(100, 100, 100);
+        pdf.text(`Page ${pageNum} of ${totalPages}`, margin, pageHeight - 5);
+        pdf.text(
+          `Generated: ${new Date().toLocaleString()}`,
+          pageWidth - margin,
+          pageHeight - 5,
+          { align: 'right' }
+        );
+      };
+
+      const addSectionHeader = (title: string, y: number = 30) => {
+        pdf.setFontSize(14);
+        pdf.setTextColor(51, 122, 183);
+        pdf.text(title, margin, y);
+      };
+
+      const addParagraph = (text: string, startY: number) => {
+        pdf.setFontSize(9);
+        pdf.setTextColor(80, 80, 80);
+        const lines = pdf.splitTextToSize(text, contentWidth);
+        pdf.text(lines, margin, startY);
+        return startY + lines.length * 4.5;
+      };
+
+      /**
+       * Prints the maintenance table, ensuring we only add a new page
+       * when the next row won't fit on the current page.
+       */
+      const addMaintenanceTable = (startY: number) => {
+        const rowHeight = 9;
+        const colWidths = [20, 25, 25, 25, 25, 30, 20];
+
+        // Print table header at the top of the table region
+        const printTableHeader = (headerY: number) => {
+          pdf.setFillColor(51, 122, 183);
+          pdf.rect(margin, headerY, contentWidth, rowHeight, 'F');
+          pdf.setTextColor(255, 255, 255);
+          pdf.setFontSize(9);
+
+          let xPos = margin;
+          const headers = [
+            'Bin ID',
+            'Type',
+            'Start Date',
+            'End Date',
+            'Status',
+            'Maintenance Type',
+            'Technician'
+          ];
+
+          headers.forEach((header, i) => {
+            pdf.text(header, xPos + 3, headerY + 6.5);
+            xPos += colWidths[i];
+          });
+          return headerY + rowHeight;
+        };
+
+        // Start by printing the table header
+        let currentY = printTableHeader(startY);
+
+        // Print each row, checking space before printing
+        this.maintenanceHistory.forEach((record, index) => {
+          const nextRowY = currentY + rowHeight;
+
+          // If we don't have enough room for the next row, add a new page
+          if (nextRowY > maxTableHeight) {
+            pdf.addPage();
+            addPageHeader();
+
+            // Start new page a bit lower to avoid colliding with header
+            currentY = printTableHeader(30);
+          }
+
+          // Fill row background color
+          pdf.setFillColor(index % 2 === 0 ? 245 : 255, 245, 245);
+          pdf.rect(margin, currentY, contentWidth, rowHeight, 'F');
+          pdf.setTextColor(80, 80, 80);
+          pdf.setFontSize(8);
+
+          // Prepare row data with formatted dates
+          const rowData = [
+            record.binId || 'N/A',
+            record.type || 'Unknown',
+            formatDate(record.startDate),
+            record.endDate ? formatDate(record.endDate) : 'Ongoing',
+            record.status || 'Unknown',
+            record.maintenanceType || 'Unspecified',
+            record.userId || 'N/A'
+          ];
+
+          // Print the row cells
+          let xPos = margin;
+          rowData.forEach((text, i) => {
+            pdf.text(text?.toString() || 'N/A', xPos + 3, currentY + 6);
+            xPos += colWidths[i];
+          });
+
+          currentY += rowHeight;
+        });
+
+        return currentY + 10; // Some spacing after the table
+      };
+
+      // --- COVER PAGE ---
+      pdf.setFillColor(51, 122, 183);
+      pdf.rect(0, 0, pageWidth, 100, 'F');
+      pdf.setTextColor(255, 255, 255);
+      pdf.setFontSize(26);
+      pdf.text('MAINTENANCE REPORT', margin, 50);
+      pdf.setFontSize(12);
+      pdf.text(`Bins in Maintenance: ${this.inMaintenanceBins}`, margin, 65);
+      pdf.text(new Date().toLocaleDateString(), margin, 75);
+
+      // Summary Block on Cover Page
+      pdf.setFillColor(245, 245, 245);
+      pdf.rect(margin, 110, contentWidth, 30, 'F');
+      const coverSummaryText = `This report provides a summary of all maintenance activities for waste collection bins, including preventive, corrective, and emergency efforts.`;
+      addParagraph(coverSummaryText, 120);
+
+      // --- DETAILED MAINTENANCE RECORDS ---
+      pdf.addPage();
+      addPageHeader();
+      addSectionHeader('DETAILED MAINTENANCE RECORDS', 40);
+      let currentY = addParagraph(
+        `Complete log of maintenance activities, including types, dates, and technician assignments.`,
+        50
+      );
+
+      // Add the table
+      addMaintenanceTable(currentY + 10);
+
+      // Add footers to all pages
+      const totalPages = pdf.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        addPageFooter(i, totalPages);
+      }
+
+      pdf.save(
+        `Maintenance_Report_${new Date().toISOString().split('T')[0]}.pdf`
+      );
+      this.isLoading = false;
+    } catch (error) {
+      console.error('Error generating maintenance report:', error);
+      this.isLoading = false;
+      // Handle error appropriately
+    }
+  }        }
