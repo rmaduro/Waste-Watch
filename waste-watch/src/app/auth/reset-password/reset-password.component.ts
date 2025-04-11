@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { CommonModule } from '@angular/common'; // Import CommonModule
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Add FormsModule and CommonModule
+  imports: [CommonModule, FormsModule,TranslateModule], // Add FormsModule and CommonModule
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css'],
 })

@@ -11,12 +11,12 @@
         <div class="header">
           <h2 class="title">
             <fa-icon [icon]="faTruck" class="me-2"></fa-icon>
-            Vehicle List
+            {{ 'VEHICLE_MANAGEMENT.TITLE' | translate }}
           </h2>
           <div class="button-group">
             <button class="btn-action btn-add" (click)="toggleAddForm()">
               <fa-icon [icon]="faPlus"></fa-icon>
-              <span class="ms-2">Add Vehicle</span>
+              <span class="ms-2">{{ 'VEHICLE_MANAGEMENT.ADD_BUTTON' | translate }}</span>
             </button>
             <button
               class="btn-action btn-remove"
@@ -24,7 +24,7 @@
               (click)="showDeleteDialog()"
             >
               <fa-icon [icon]="faMinus"></fa-icon>
-              <span class="ms-2">Remove Vehicle</span>
+              <span class="ms-2">{{ 'VEHICLE_MANAGEMENT.REMOVE_BUTTON' | translate }}</span>
             </button>
           </div>
         </div>
@@ -36,7 +36,7 @@
           <div class="filters-group">
             <label class="filter-label">
               <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
-              Filters:
+              {{ 'VEHICLE_MANAGEMENT.FILTERS.LABEL' | translate }}
             </label>
             <select
               class="filter-select"
@@ -44,43 +44,46 @@
               name="status"
               (change)="onFilterChange()"
             >
-              <option value="">All Status</option>
-              <option value="Active">Active</option>
-              <option value="Idle">Idle</option>
-              <option value="Maintenance">Maintenance</option>
+              <option value="">{{ 'VEHICLE_MANAGEMENT.FILTERS.STATUS.ALL' | translate }}</option>
+              <option value="Active">{{ 'VEHICLE_MANAGEMENT.FILTERS.STATUS.ACTIVE' | translate }}</option>
+              <option value="Idle">{{ 'VEHICLE_MANAGEMENT.FILTERS.STATUS.IDLE' | translate }}</option>
+              <option value="Maintenance">{{ 'VEHICLE_MANAGEMENT.FILTERS.STATUS.MAINTENANCE' | translate }}</option>
             </select>
+
             <select
               class="filter-select"
               [(ngModel)]="selectedRoute"
               name="routes"
               (change)="onFilterChange()"
             >
-              <option value="">All Routes</option>
-              <option value="Commercial">Commercial</option>
-              <option value="Industrial">Industrial</option>
-              <option value="Residential">Residential</option>
+              <option value="">{{ 'VEHICLE_MANAGEMENT.FILTERS.ROUTES.ALL' | translate }}</option>
+              <option value="Commercial">{{ 'VEHICLE_MANAGEMENT.FILTERS.ROUTES.COMMERCIAL' | translate }}</option>
+              <option value="Industrial">{{ 'VEHICLE_MANAGEMENT.FILTERS.ROUTES.INDUSTRIAL' | translate }}</option>
+              <option value="Residential">{{ 'VEHICLE_MANAGEMENT.FILTERS.ROUTES.RESIDENTIAL' | translate }}</option>
             </select>
+
             <select
               class="filter-select"
               [(ngModel)]="selectedCapacity"
               name="capacities"
               (change)="onFilterChange()"
             >
-              <option value="">All Capacities</option>
-              <option value="1000kg">1000kg</option>
-              <option value="1500kg">1500kg</option>
-              <option value="2000kg">2000kg</option>
-              <option value="2500kg">2500kg</option>
-              <option value="3000kg">3000kg</option>
+              <option value="">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.ALL' | translate }}</option>
+              <option value="1000kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.1000KG' | translate }}</option>
+              <option value="1500kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.1500KG' | translate }}</option>
+              <option value="2000kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.2000KG' | translate }}</option>
+              <option value="2500kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.2500KG' | translate }}</option>
+              <option value="3000kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.3000KG' | translate }}</option>
             </select>
           </div>
+
           <div class="search-group">
             <div class="search-input-wrapper">
               <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
               <input
                 type="text"
                 class="search-input"
-                placeholder="Search by ID..."
+                [placeholder]="'VEHICLE_MANAGEMENT.FILTERS.SEARCH_PLACEHOLDER' | translate"
                 [(ngModel)]="searchQuery"
                 (input)="onFilterChange()"
               />
@@ -91,46 +94,28 @@
         <!-- Loading and error states -->
         <div class="loading-container" *ngIf="isLoading">
           <fa-icon [icon]="faSpinner" size="2x"></fa-icon>
-          <p>Loading...</p>
+          <p>{{ 'VEHICLE_MANAGEMENT.LOADING' | translate }}</p>
         </div>
 
         <div class="error-message" *ngIf="error">
           <p>{{ error }}</p>
           <button class="btn-retry" (click)="refreshVehicles()">
-            Try Again
+            {{ 'VEHICLE_MANAGEMENT.ERROR.RETRY' | translate }}
           </button>
         </div>
-
         <!-- Vehicle table -->
         <div class="table-container" *ngIf="!isLoading && !error">
           <table class="vehicle-table">
             <thead>
               <tr>
-                <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> ID</th>
-                <th>
-                  <fa-icon [icon]="faTruck" class="me-2"></fa-icon> License
-                  Plate
-                </th>
-                <th>
-                  <fa-icon [icon]="faUser" class="me-2"></fa-icon> Driver's Name
-                </th>
-                <th>
-                  <fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status
-                </th>
-                <th>
-                  <fa-icon [icon]="faRoute" class="me-2"></fa-icon> Route Type
-                </th>
-                <th>
-                  <fa-icon [icon]="faWeight" class="me-2"></fa-icon> Max
-                  Capacity
-                </th>
-                <th>
-                  <fa-icon [icon]="faTools" class="me-2"></fa-icon> Last
-                  Maintenance
-                </th>
-                <th>
-                  <fa-icon [icon]="faMapMarked" class="me-2"></fa-icon> Route
-                </th>
+                <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> {{ 'VEHICLE_MANAGEMENT.TABLE.ID' | translate }}</th>
+                <th><fa-icon [icon]="faTruck" class="me-2"></fa-icon> {{ 'VEHICLE_MANAGEMENT.TABLE.LICENSE_PLATE' | translate }}</th>
+                <th><fa-icon [icon]="faUser" class="me-2"></fa-icon> {{ 'VEHICLE_MANAGEMENT.TABLE.DRIVER_NAME' | translate }}</th>
+                <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> {{ 'VEHICLE_MANAGEMENT.TABLE.STATUS' | translate }}</th>
+                <th><fa-icon [icon]="faRoute" class="me-2"></fa-icon> {{ 'VEHICLE_MANAGEMENT.TABLE.ROUTE_TYPE' | translate }}</th>
+                <th><fa-icon [icon]="faWeight" class="me-2"></fa-icon> {{ 'VEHICLE_MANAGEMENT.TABLE.MAX_CAPACITY' | translate }}</th>
+                <th><fa-icon [icon]="faTools" class="me-2"></fa-icon> {{ 'VEHICLE_MANAGEMENT.TABLE.LAST_MAINTENANCE' | translate }}</th>
+                <th><fa-icon [icon]="faMapMarked" class="me-2"></fa-icon> {{ 'VEHICLE_MANAGEMENT.TABLE.ROUTE' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -169,59 +154,296 @@
                       [icon]="vehicle.route ? faEye : faRoute"
                       class="me-1"
                     ></fa-icon>
-                    {{ vehicle.route ? "View Route" : "Create Route" }}
+                    {{
+                      vehicle.route
+                        ? ('VEHICLE_MANAGEMENT.TABLE.VIEW_ROUTE' | translate)
+                        : ('VEHICLE_MANAGEMENT.TABLE.CREATE_ROUTE' | translate)
+                    }}
                   </button>
                 </td>
               </tr>
               <tr *ngIf="filteredVehicles.length === 0">
-                <td colspan="8" class="no-data">No vehicles found</td>
+                <td colspan="8" class="no-data">
+                  {{ 'VEHICLE_MANAGEMENT.TABLE.NO_VEHICLES' | translate }}
+                </td>
               </tr>
             </tbody>
           </table>
+
           <div class="pagination-controls">
             <button
               class="pagination-btn"
               (click)="prevPage()"
               [disabled]="currentPage === 1"
             >
-              Previous
+              {{ 'VEHICLE_MANAGEMENT.PAGINATION.PREVIOUS' | translate }}
             </button>
             <span class="pagination-info">
-              Page {{ currentPage }} of {{ totalPages }}
+              {{ 'VEHICLE_MANAGEMENT.PAGINATION.INFO' | translate:{ currentPage: currentPage, totalPages: totalPages } }}
             </span>
             <button
               class="pagination-btn"
               (click)="nextPage()"
               [disabled]="currentPage >= totalPages"
             >
-              Next
+              {{ 'VEHICLE_MANAGEMENT.PAGINATION.NEXT' | translate }}
             </button>
+          </div>
+        </div>
+<!-- Add Vehicle Form -->
+<div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
+
+<div class="vehicle-form-container" *ngIf="showAddForm">
+  <h2 class="form-title">{{ 'VEHICLE_MANAGEMENT.FORM.TITLE' | translate }}</h2>
+  <form class="vehicle-form" (ngSubmit)="addVehicle()">
+
+    <!-- Vehicle Information -->
+    <h3 class="form-section-title">
+      {{ 'VEHICLE_MANAGEMENT.FORM.VEHICLE_INFORMATION' | translate }}
+    </h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="licensePlate">{{ 'VEHICLE_MANAGEMENT.TABLE.LICENSE_PLATE' | translate }}</label>
+        <input
+          type="text"
+          id="licensePlate"
+          class="form-control"
+          [(ngModel)]="vehicle.licensePlate"
+          name="licensePlate"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="routeType">{{ 'VEHICLE_MANAGEMENT.FORM.ROUTE_TYPE' | translate }}</label>
+        <select
+          id="routeType"
+          class="form-control"
+          [(ngModel)]="vehicle.routeType"
+          name="routeType"
+        >
+          <option value="Commercial">{{ 'VEHICLE_MANAGEMENT.FILTERS.ROUTES.COMMERCIAL' | translate }}</option>
+          <option value="Industrial">{{ 'VEHICLE_MANAGEMENT.FILTERS.ROUTES.INDUSTRIAL' | translate }}</option>
+          <option value="Residential">{{ 'VEHICLE_MANAGEMENT.FILTERS.ROUTES.RESIDENTIAL' | translate }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="maxCapacity">{{ 'VEHICLE_MANAGEMENT.FORM.MAX_CAPACITY' | translate }}</label>
+        <select
+          id="maxCapacity"
+          class="form-control"
+          [(ngModel)]="vehicle.maxCapacity"
+          name="maxCapacity"
+        >
+          <option value="1000kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.1000KG' | translate }}</option>
+          <option value="1500kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.1500KG' | translate }}</option>
+          <option value="2000kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.2000KG' | translate }}</option>
+          <option value="2500kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.2500KG' | translate }}</option>
+          <option value="3000kg">{{ 'VEHICLE_MANAGEMENT.FILTERS.CAPACITIES.3000KG' | translate }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="lastMaintenance">{{ 'VEHICLE_MANAGEMENT.FORM.LAST_MAINTENANCE_DATE' | translate }}</label>
+        <input
+          type="date"
+          id="lastMaintenance"
+          class="form-control"
+          [(ngModel)]="vehicle.lastMaintenance"
+          name="lastMaintenance"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Driver Information -->
+    <h3 class="form-section-title">{{ 'VEHICLE_MANAGEMENT.FORM.DRIVER_INFORMATION' | translate }}</h3>
+
+    <div class="form-row driver-selection-row">
+      <div class="form-group driver-toggle">
+        <div class="toggle-container">
+          <label class="toggle-label" [class.active]="!useCustomDriver">
+            {{ 'VEHICLE_MANAGEMENT.FORM.SELECT_DRIVER' | translate }}
+          </label>
+          <div class="toggle-switch" (click)="toggleDriverMode()">
+            <div class="toggle-slider" [class.right]="useCustomDriver"></div>
+          </div>
+          <label class="toggle-label" [class.active]="useCustomDriver">
+            {{ 'VEHICLE_MANAGEMENT.FORM.CUSTOM_DRIVER' | translate }}
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- Driver Selection Dropdown -->
+    <div *ngIf="!useCustomDriver">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="driverSelect">{{ 'VEHICLE_MANAGEMENT.FORM.SELECT_DRIVER' | translate }}</label>
+          <select
+            id="driverSelect"
+            class="form-control"
+            [(ngModel)]="selectedDriverIndex"
+            name="driverSelect"
+            (change)="onDriverSelect()"
+          >
+            <option [value]="-1" disabled selected>
+              -- {{ 'VEHICLE_MANAGEMENT.FORM.SELECT_DRIVER' | translate }} --
+            </option>
+            <option
+              *ngFor="let driver of availableDrivers; let i = index"
+              [value]="i"
+            >
+              {{ driver.name }} ({{ driver.licenseNumber }})
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="driver-preview" *ngIf="selectedDriverIndex >= 0">
+        <h4 class="driver-preview-title">
+          {{ 'VEHICLE_MANAGEMENT.FORM.DRIVER_DETAILS' | translate }}
+        </h4>
+        <div class="driver-preview-details">
+          <div class="preview-item">
+            <span class="preview-label">{{ 'VEHICLE_MANAGEMENT.FORM.DRIVER_NAME' | translate }}</span>
+            <span class="preview-value">{{ vehicle.driver?.name }}</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">{{ 'VEHICLE_MANAGEMENT.FORM.DRIVER_AGE' | translate }}</span>
+            <span class="preview-value">{{ vehicle.driver?.age }}</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">{{ 'VEHICLE_MANAGEMENT.FORM.LICENSE_NUMBER' | translate }}</span>
+            <span class="preview-value">{{ vehicle.driver?.licenseNumber }}</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-label">{{ 'VEHICLE_MANAGEMENT.FORM.COLLABORATOR_TYPE' | translate }}</span>
+            <span class="preview-value">{{ vehicle.driver?.collaboratorType }}</span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Route Creation Form -->
-<div
-  class="overlay"
-  *ngIf="showRouteForm"
-  (click)="showRouteForm = false"
-></div>
+    <!-- Custom Driver Form -->
+    <div *ngIf="useCustomDriver">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="driverName">{{ 'VEHICLE_MANAGEMENT.FORM.DRIVER_NAME' | translate }}</label>
+          <input
+            type="text"
+            id="driverName"
+            class="form-control"
+            [(ngModel)]="vehicle.driver!.name"
+            name="driverName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="driverAge">{{ 'VEHICLE_MANAGEMENT.FORM.DRIVER_AGE' | translate }}</label>
+          <input
+            type="number"
+            id="driverAge"
+            class="form-control"
+            [(ngModel)]="vehicle.driver!.age"
+            name="driverAge"
+            required
+            min="18"
+            max="70"
+          />
+        </div>
+      </div>
 
-<div
-  class="vehicle-form-container"
-  *ngIf="showRouteForm"
-  (click)="$event.stopPropagation()"
->
-  <h2 class="form-title">Create New Route</h2>
-  <form class="vehicle-form">
-    <h3 class="form-section-title">Route Information</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="licenseNumber">{{ 'VEHICLE_MANAGEMENT.FORM.LICENSE_NUMBER' | translate }}</label>
+          <input
+            type="text"
+            id="licenseNumber"
+            class="form-control"
+            [(ngModel)]="vehicle.driver!.licenseNumber"
+            name="licenseNumber"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="collaboratorType">{{ 'VEHICLE_MANAGEMENT.FORM.COLLABORATOR_TYPE' | translate }}</label>
+          <select
+            id="collaboratorType"
+            class="form-control"
+            [(ngModel)]="vehicle.driver!.collaboratorType"
+            name="collaboratorType"
+          >
+            <option value="Driver">{{ 'VEHICLE_MANAGEMENT.FORM.COLLABORATOR_TYPES.DRIVER' | translate }}</option>
+            <option value="Contractor">{{ 'VEHICLE_MANAGEMENT.FORM.COLLABORATOR_TYPES.CONTRACTOR' | translate }}</option>
+            <option value="Employee">{{ 'VEHICLE_MANAGEMENT.FORM.COLLABORATOR_TYPES.EMPLOYEE' | translate }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Location Information -->
+    <h3 class="form-section-title">
+      {{ 'VEHICLE_MANAGEMENT.FORM.LOCATION_INFORMATION' | translate }}
+    </h3>
 
     <div class="form-row">
       <div class="form-group">
-        <label for="vehicleId">Vehicle ID:</label>
+        <label for="latitude">{{ 'VEHICLE_MANAGEMENT.FORM.LATITUDE' | translate }}</label>
+        <input
+          type="number"
+          id="latitude"
+          class="form-control"
+          [(ngModel)]="vehicle.latitude"
+          name="latitude"
+          step="0.0001"
+        />
+      </div>
+      <div class="form-group">
+        <label for="longitude">{{ 'VEHICLE_MANAGEMENT.FORM.LONGITUDE' | translate }}</label>
+        <input
+          type="number"
+          id="longitude"
+          class="form-control"
+          [(ngModel)]="vehicle.longitude"
+          name="longitude"
+          step="0.0001"
+        />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit" [disabled]="isLoading">
+        <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
+        <span *ngIf="!isLoading">
+          {{ 'VEHICLE_MANAGEMENT.FORM.SAVE' | translate }}
+        </span>
+        <span *ngIf="isLoading">
+          {{ 'VEHICLE_MANAGEMENT.FORM.SAVING' | translate }}
+        </span>
+      </button>
+      <button
+        type="button"
+        class="btn-cancel"
+        (click)="toggleAddForm()"
+        [disabled]="isLoading"
+      >
+        {{ 'VEHICLE_MANAGEMENT.FORM.CANCEL' | translate }}
+      </button>
+    </div>
+  </form>
+</div>
+<!-- Route Creation Form -->
+<div class="overlay" *ngIf="showRouteForm" (click)="showRouteForm = false"></div>
+
+<div class="vehicle-form-container" *ngIf="showRouteForm" (click)="$event.stopPropagation()">
+  <h2 class="form-title">{{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.TITLE' | translate }}</h2>
+
+  <form class="vehicle-form">
+    <h3 class="form-section-title">{{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.ROUTE_INFORMATION' | translate }}</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="vehicleId">{{ 'VEHICLE_MANAGEMENT.TABLE.ID' | translate }}</label>
         <input
           type="text"
           id="vehicleId"
@@ -234,7 +456,7 @@
 
     <div class="form-row">
       <div class="form-group">
-        <label for="routeName">Route Name:</label>
+        <label for="routeName">{{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.ROUTE_NAME' | translate }}</label>
         <input
           type="text"
           id="routeName"
@@ -245,7 +467,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="routeType">Route Type:</label>
+        <label for="routeType">{{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.ROUTE_TYPE' | translate }}</label>
         <input
           type="text"
           id="routeType"
@@ -257,7 +479,7 @@
       </div>
     </div>
 
-    <h3 class="form-section-title">Select Bins for Collection</h3>
+    <h3 class="form-section-title">{{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.SELECT_BINS' | translate }}</h3>
 
     <div class="form-row">
       <div class="form-group" style="width: 100%">
@@ -269,11 +491,15 @@
             (click)="toggleBinSelection(bin)"
           >
             <div class="bin-info">
-              <span class="bin-id">Bin #{{ bin.id }}</span>
-              <span class="bin-type">Type: {{ bin.type }}</span>
+              <span class="bin-id">
+                {{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.BIN_ID' | translate:{ id: bin.id } }}
+              </span>
+              <span class="bin-type">
+                {{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.BIN_TYPE' | translate:{ type: bin.type } }}
+              </span>
               <span class="bin-location">
                 <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-                {{ bin.location.latitude }}, {{ bin.location.longitude }}
+                {{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.BIN_LOCATION' | translate:{ lat: bin.location.latitude, lng: bin.location.longitude } }}
               </span>
             </div>
           </div>
@@ -288,24 +514,22 @@
         (click)="createRoute()"
         [disabled]="isLoading"
       >
-        <span *ngIf="!isLoading">Create Route</span>
+        <span *ngIf="!isLoading">
+          {{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.CREATE' | translate }}
+        </span>
         <span *ngIf="isLoading">
-          <fa-icon [icon]="faSpinner"></fa-icon> Creating...
+          <fa-icon [icon]="faSpinner"></fa-icon>
+          {{ 'VEHICLE_MANAGEMENT.ROUTE_FORM.CREATING' | translate }}
         </span>
       </button>
       <button type="button" class="btn-cancel" (click)="showRouteForm = false">
-        Cancel
+        {{ 'VEHICLE_MANAGEMENT.FORM.CANCEL' | translate }}
       </button>
     </div>
   </form>
 </div>
-
 <!-- Route View Modal -->
-<div
-  class="overlay"
-  *ngIf="showRouteView"
-  (click)="showRouteView = false"
-></div>
+<div class="overlay" *ngIf="showRouteView" (click)="showRouteView = false"></div>
 
 <div class="route-view-container" *ngIf="showRouteView">
   <!-- Modal Header -->
@@ -313,26 +537,26 @@
     <div class="route-header-content">
       <h2>
         <fa-icon [icon]="faRoute" class="route-icon"></fa-icon>
-        <span class="route-title">{{
-          viewedVehicle?.route?.name || "Route Details"
-        }}</span>
+        <span class="route-title">
+          {{ viewedVehicle?.route?.name || ('VEHICLE_MANAGEMENT.ROUTE_VIEW.DETAILS' | translate) }}
+        </span>
       </h2>
+
       <button
-  class="btn-report"
-  (click)="generateRouteReport()"
-  [disabled]="isLoading"
->
-  <fa-icon [icon]="faFilePdf" class="me-1"></fa-icon>
-  Generate Report
-</button>
+        class="btn-report"
+        (click)="generateRouteReport()"
+        [disabled]="isLoading"
+      >
+        <fa-icon [icon]="faFilePdf" class="me-1"></fa-icon>
+        {{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.GENERATE_REPORT' | translate }}
+      </button>
+
       <div class="route-subtitle">
         <span
           class="route-type-badge"
-          [ngClass]="
-            'type-' + (viewedVehicle?.route?.type?.toLowerCase() || '')
-          "
+          [ngClass]="'type-' + (viewedVehicle?.route?.type?.toLowerCase() || '')"
         >
-          {{ viewedVehicle?.route?.type || "No type specified" }}
+          {{ viewedVehicle?.route?.type || ('VEHICLE_MANAGEMENT.ROUTE_VIEW.NO_TYPE' | translate) }}
         </span>
       </div>
     </div>
@@ -355,32 +579,26 @@
           <!-- First Column -->
           <div class="summary-column">
             <div class="summary-item">
-              <div class="summary-icon">
-                <fa-icon [icon]="faTruck"></fa-icon>
-              </div>
+              <div class="summary-icon"><fa-icon [icon]="faTruck"></fa-icon></div>
               <div class="summary-content">
-                <div class="summary-label">Assigned Vehicle</div>
+                <div class="summary-label">{{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.ASSIGNED_VEHICLE' | translate }}</div>
                 <div class="summary-value">{{ viewedVehicle?.licensePlate }}</div>
               </div>
             </div>
 
             <div class="summary-item">
-              <div class="summary-icon">
-                <fa-icon [icon]="faUser"></fa-icon>
-              </div>
+              <div class="summary-icon"><fa-icon [icon]="faUser"></fa-icon></div>
               <div class="summary-content">
-                <div class="summary-label">Driver</div>
+                <div class="summary-label">{{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.DRIVER' | translate }}</div>
                 <div class="summary-value">{{ getDriverName(viewedVehicle!) }}</div>
               </div>
             </div>
 
             <div class="summary-item">
-              <div class="summary-icon">
-                <fa-icon [icon]="faClock"></fa-icon>
-              </div>
+              <div class="summary-icon"><fa-icon [icon]="faClock"></fa-icon></div>
               <div class="summary-content">
-                <div class="summary-label">Estimated Time</div>
-                <div class="summary-value">{{ "~" + "" + estimatedTime }}</div>
+                <div class="summary-label">{{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.ESTIMATED_TIME' | translate }}</div>
+                <div class="summary-value">{{ "~" + estimatedTime }}</div>
               </div>
             </div>
           </div>
@@ -388,377 +606,131 @@
           <!-- Second Column -->
           <div class="summary-column">
             <div class="summary-item">
-              <div class="summary-icon">
-                <fa-icon [icon]="faLeaf"></fa-icon>
-              </div>
+              <div class="summary-icon"><fa-icon [icon]="faLeaf"></fa-icon></div>
               <div class="summary-content">
-                <div class="summary-label">Eco-friendly Route</div>
-                <div class="summary-value">{{ isEcoFriendlyRoute ? 'Yes' : 'No' }}</div>
+                <div class="summary-label">{{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.ECO_ROUTE' | translate }}</div>
+                <div class="summary-value">
+                  {{ isEcoFriendlyRoute ? 'Yes' : 'No' }}
+                </div>
               </div>
             </div>
 
             <div class="summary-item">
-              <div class="summary-icon">
-                <fa-icon [icon]="faMapMarked"></fa-icon>
-              </div>
+              <div class="summary-icon"><fa-icon [icon]="faMapMarked"></fa-icon></div>
               <div class="summary-content">
-                <div class="summary-label">Total Stops</div>
+                <div class="summary-label">{{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.TOTAL_STOPS' | translate }}</div>
                 <div class="summary-value">{{ viewedVehicle?.route?.locations?.length || 0 }}</div>
               </div>
             </div>
 
-            <!-- New CO2 Emissions Item -->
             <div class="summary-item">
-              <div class="summary-icon">
-                <fa-icon [icon]="faCloud"></fa-icon>
-              </div>
+              <div class="summary-icon"><fa-icon [icon]="faCloud"></fa-icon></div>
               <div class="summary-content">
-                <div class="summary-label">CO2 Emissions</div>
-                <div class="summary-value">{{ co2Emissions | number:'1.0-0' }} g/km</div> <!-- Display the calculated CO2 emissions -->
+                <div class="summary-label">{{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.CO2_EMISSIONS' | translate }}</div>
+                <div class="summary-value">{{ co2Emissions | number:'1.0-0' }} g/km</div>
               </div>
             </div>
           </div>
-
         </div>
 
-<br>
+        <br>
 
-      <!-- Route Map Section -->
-      <div class="route-map-section">
-        <h3 class="section-title">
-          <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-          Route Map
-        </h3>
-        <div
-          #routeMapContainer
-          class="map-container"
-          style="height: 400px; width: 100%; border-radius: 8px"
-        ></div>
-      </div>
-
-
-
-      <!-- Stops List Section -->
-      <div class="stops-list-section">
-        <div class="section-header">
+        <!-- Route Map Section -->
+        <div class="route-map-section">
           <h3 class="section-title">
-            <fa-icon [icon]="faListAlt"></fa-icon>
-            Collection Stops ({{ viewedVehicle?.route?.locations?.length || 0 }})
+            <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+            {{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.ROUTE_MAP' | translate }}
           </h3>
+          <div
+            #routeMapContainer
+            class="map-container"
+            style="height: 400px; width: 100%; border-radius: 8px"
+          ></div>
         </div>
+        <!-- Stops List Section -->
+        <div class="stops-list-section">
+          <div class="section-header">
+            <h3 class="section-title">
+              <fa-icon [icon]="faListAlt"></fa-icon>
+              {{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.COLLECTION_STOPS' | translate:{ count: viewedVehicle?.route?.locations?.length || 0 } }}
+            </h3>
+          </div>
 
-        <div class="stops-list-container">
-          <div *ngFor="let address of addresses; let i = index" class="stop-item">
-            <div class="stop-marker">
-              <div class="stop-number">{{ i + 1 }}</div>
-              <div class="stop-line" *ngIf="i < addresses.length - 1"></div>
-            </div>
+          <div class="stops-list-container">
+            <div *ngFor="let address of addresses; let i = index" class="stop-item">
+              <div class="stop-marker">
+                <div class="stop-number">{{ i + 1 }}</div>
+                <div class="stop-line" *ngIf="i < addresses.length - 1"></div>
+              </div>
 
-            <div class="stop-details">
-              <div class="stop-address">
-                <div class="address-main">{{ address }}</div>
-                <div class="address-coordinates">
-                  {{ (viewedVehicle?.route?.locations)![i].latitude }},
-                  {{ (viewedVehicle?.route?.locations)![i].longitude }}
+              <div class="stop-details">
+                <div class="stop-address">
+                  <div class="address-main">{{ address }}</div>
+                  <div class="address-coordinates">
+                    {{ (viewedVehicle?.route?.locations)![i].latitude }},
+                    {{ (viewedVehicle?.route?.locations)![i].longitude }}
+                  </div>
+                </div>
+
+                <div class="stop-actions">
+                  <button class="btn-stop-action">
+                    <fa-icon [icon]="faDirections"></fa-icon>
+                    {{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.DIRECTIONS' | translate }}
+                  </button>
                 </div>
               </div>
-
-              <div class="stop-actions">
-                <button class="btn-stop-action">
-                  <fa-icon [icon]="faDirections"></fa-icon>
-                  Directions
-                </button>
-              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- No Route Template -->
-    <ng-template #noRouteTemplate>
-      <div class="no-route-message">
-        <div class="no-route-icon">
-          <fa-icon [icon]="faRoute" size="3x"></fa-icon>
+      <!-- No Route Template -->
+      <ng-template #noRouteTemplate>
+        <div class="no-route-message">
+          <div class="no-route-icon">
+            <fa-icon [icon]="faRoute" size="3x"></fa-icon>
+          </div>
+          <h3>{{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.NO_ROUTE_ASSIGNED' | translate }}</h3>
+          <p>{{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.NO_ROUTE_MESSAGE' | translate }}</p>
+          <button
+            class="btn-create-route"
+            (click)="navigateToRoute(viewedVehicle?.id!); showRouteView = false"
+          >
+            <fa-icon [icon]="faPlus"></fa-icon>
+            {{ 'VEHICLE_MANAGEMENT.ROUTE_VIEW.CREATE_ROUTE' | translate }}
+          </button>
         </div>
-        <h3>No Route Assigned</h3>
-        <p>This vehicle doesn't have an assigned route yet</p>
-        <button
-          class="btn-create-route"
-          (click)="navigateToRoute(viewedVehicle?.id!); showRouteView = false"
-        >
-          <fa-icon [icon]="faPlus"></fa-icon>
-          Create Route
-        </button>
-      </div>
-    </ng-template>
+      </ng-template>
+    </div>
   </div>
-
-<!-- Add Vehicle Form -->
-<div class="overlay" *ngIf="showAddForm" (click)="toggleAddForm()"></div>
-
-<div class="vehicle-form-container" *ngIf="showAddForm">
-  <h2 class="form-title">Add New Vehicle</h2>
-  <form class="vehicle-form" (ngSubmit)="addVehicle()">
-    <!-- Vehicle Information -->
-    <h3 class="form-section-title">Vehicle Information</h3>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="licensePlate">License Plate:</label>
-        <input
-          type="text"
-          id="licensePlate"
-          class="form-control"
-          [(ngModel)]="vehicle.licensePlate"
-          name="licensePlate"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="routeType">Route Type:</label>
-        <select
-          id="routeType"
-          class="form-control"
-          [(ngModel)]="vehicle.routeType"
-          name="routeType"
-        >
-          <option value="Commercial">Commercial</option>
-          <option value="Industrial">Industrial</option>
-          <option value="Residential">Residential</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label for="maxCapacity">Max Capacity:</label>
-        <select
-          id="maxCapacity"
-          class="form-control"
-          [(ngModel)]="vehicle.maxCapacity"
-          name="maxCapacity"
-        >
-          <option value="1000kg">1000kg</option>
-          <option value="1500kg">1500kg</option>
-          <option value="2000kg">2000kg</option>
-          <option value="2500kg">2500kg</option>
-          <option value="3000kg">3000kg</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="lastMaintenance">Last Maintenance Date:</label>
-        <input
-          type="date"
-          id="lastMaintenance"
-          class="form-control"
-          [(ngModel)]="vehicle.lastMaintenance"
-          name="lastMaintenance"
-          required
-        />
-      </div>
-    </div>
-
-    <!-- Driver Information -->
-    <h3 class="form-section-title">Driver Information</h3>
-
-    <div class="form-row driver-selection-row">
-      <div class="form-group driver-toggle">
-        <div class="toggle-container">
-          <label class="toggle-label" [class.active]="!useCustomDriver"
-            >Select Driver</label
-          >
-          <div class="toggle-switch" (click)="toggleDriverMode()">
-            <div class="toggle-slider" [class.right]="useCustomDriver"></div>
-          </div>
-          <label class="toggle-label" [class.active]="useCustomDriver"
-            >Custom Driver</label
-          >
-        </div>
-      </div>
-    </div>
-
-    <!-- Driver Selection Dropdown -->
-    <div *ngIf="!useCustomDriver">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="driverSelect">Select a Driver:</label>
-          <select
-            id="driverSelect"
-            class="form-control"
-            [(ngModel)]="selectedDriverIndex"
-            name="driverSelect"
-            (change)="onDriverSelect()"
-          >
-            <option [value]="-1" disabled selected>
-              -- Select a Driver --
-            </option>
-            <option
-              *ngFor="let driver of availableDrivers; let i = index"
-              [value]="i"
-            >
-              {{ driver.name }} ({{ driver.licenseNumber }})
-            </option>
-          </select>
-        </div>
-      </div>
-
-      <div class="driver-preview" *ngIf="selectedDriverIndex >= 0">
-        <h4 class="driver-preview-title">Driver Details</h4>
-        <div class="driver-preview-details">
-          <div class="preview-item">
-            <span class="preview-label">Name:</span>
-            <span class="preview-value">{{ vehicle.driver?.name }}</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">Age:</span>
-            <span class="preview-value">{{ vehicle.driver?.age }}</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">License Number:</span>
-            <span class="preview-value">{{
-              vehicle.driver?.licenseNumber
-            }}</span>
-          </div>
-          <div class="preview-item">
-            <span class="preview-label">Type:</span>
-            <span class="preview-value">{{
-              vehicle.driver?.collaboratorType
-            }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Custom Driver Form -->
-    <div *ngIf="useCustomDriver">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="driverName">Driver's Name:</label>
-          <input
-            type="text"
-            id="driverName"
-            class="form-control"
-            [(ngModel)]="vehicle.driver!.name"
-            name="driverName"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="driverAge">Driver's Age:</label>
-          <input
-            type="number"
-            id="driverAge"
-            class="form-control"
-            [(ngModel)]="vehicle.driver!.age"
-            name="driverAge"
-            required
-            min="18"
-            max="70"
-          />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="licenseNumber">License Number:</label>
-          <input
-            type="text"
-            id="licenseNumber"
-            class="form-control"
-            [(ngModel)]="vehicle.driver!.licenseNumber"
-            name="licenseNumber"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="collaboratorType">Collaborator Type:</label>
-          <select
-            id="collaboratorType"
-            class="form-control"
-            [(ngModel)]="vehicle.driver!.collaboratorType"
-            name="collaboratorType"
-          >
-            <option value="Driver">Driver</option>
-            <option value="Contractor">Contractor</option>
-            <option value="Employee">Employee</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- Location Information -->
-    <h3 class="form-section-title">Current Location</h3>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="latitude">Latitude:</label>
-        <input
-          type="number"
-          id="latitude"
-          class="form-control"
-          [(ngModel)]="vehicle.latitude"
-          name="latitude"
-          step="0.0001"
-        />
-      </div>
-      <div class="form-group">
-        <label for="longitude">Longitude:</label>
-        <input
-          type="number"
-          id="longitude"
-          class="form-control"
-          [(ngModel)]="vehicle.longitude"
-          name="longitude"
-          step="0.0001"
-        />
-      </div>
-    </div>
-
-    <div class="form-actions">
-      <button type="submit" class="btn-submit" [disabled]="isLoading">
-        <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
-        <span *ngIf="!isLoading">Save Vehicle</span>
-        <span *ngIf="isLoading">Saving...</span>
-      </button>
-      <button
-        type="button"
-        class="btn-cancel"
-        (click)="toggleAddForm()"
-        [disabled]="isLoading"
-      >
-        Cancel
-      </button>
-    </div>
-  </form>
 </div>
-
 <!-- Delete Confirmation Modal -->
-<div
-  class="overlay"
-  *ngIf="showDeleteConfirmation"
-  (click)="cancelDelete()"
-></div>
+<div class="overlay" *ngIf="showDeleteConfirmation" (click)="cancelDelete()"></div>
 
 <div class="delete-confirmation-container" *ngIf="showDeleteConfirmation">
   <div class="delete-confirmation-header">
     <fa-icon [icon]="faExclamationTriangle" class="warning-icon"></fa-icon>
-    <h2>Confirm Deletion</h2>
+    <h2>{{ 'VEHICLE_MANAGEMENT.DELETE_CONFIRMATION.TITLE' | translate }}</h2>
   </div>
 
   <div class="delete-confirmation-body">
     <p>
-      Are you sure you want to delete vehicle with ID:
-      <strong>{{ selectedVehicle?.id }}</strong
-      >?
+      {{ 'VEHICLE_MANAGEMENT.DELETE_CONFIRMATION.MESSAGE' | translate }}
+      <strong>{{ selectedVehicle?.id }}</strong>?
     </p>
-    <p>This action cannot be undone.</p>
+    <p>{{ 'VEHICLE_MANAGEMENT.DELETE_CONFIRMATION.WARNING' | translate }}</p>
 
     <div class="vehicle-details" *ngIf="selectedVehicle">
       <div class="detail-item">
-        <span class="detail-label">License Plate:</span>
+        <span class="detail-label">
+          {{ 'VEHICLE_MANAGEMENT.DELETE_CONFIRMATION.LICENSE_PLATE' | translate }}
+        </span>
         <span class="detail-value">{{ selectedVehicle.licensePlate }}</span>
       </div>
       <div class="detail-item">
-        <span class="detail-label">Driver:</span>
+        <span class="detail-label">
+          {{ 'VEHICLE_MANAGEMENT.DELETE_CONFIRMATION.DRIVER' | translate }}
+        </span>
         <span class="detail-value">{{ getDriverName(selectedVehicle) }}</span>
       </div>
     </div>
@@ -768,11 +740,16 @@
     <button class="btn-delete" (click)="confirmDelete()" [disabled]="isLoading">
       <fa-icon *ngIf="!isLoading" [icon]="faTrash"></fa-icon>
       <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
-      <span *ngIf="!isLoading">Delete Vehicle</span>
-      <span *ngIf="isLoading">Deleting...</span>
+      <span *ngIf="!isLoading">
+        {{ 'VEHICLE_MANAGEMENT.DELETE_CONFIRMATION.CONFIRM' | translate }}
+      </span>
+      <span *ngIf="isLoading">
+        {{ 'VEHICLE_MANAGEMENT.DELETE_CONFIRMATION.CONFIRMING' | translate }}
+      </span>
     </button>
+
     <button class="btn-cancel" (click)="cancelDelete()" [disabled]="isLoading">
-      Cancel
+      {{ 'VEHICLE_MANAGEMENT.DELETE_CONFIRMATION.CANCEL' | translate }}
     </button>
   </div>
 </div>

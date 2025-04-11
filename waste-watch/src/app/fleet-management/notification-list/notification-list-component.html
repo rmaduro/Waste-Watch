@@ -6,7 +6,7 @@
     <div class="header">
       <h2 class="title">
         <fa-icon [icon]="faBell" class="me-2"></fa-icon>
-        Fleet Notifications
+        {{ 'FLEET_NOTIFICATIONS.TITLE' | translate }}
       </h2>
       <div class="button-group">
         <button
@@ -16,7 +16,7 @@
         >
           <fa-icon [icon]="faTrash"></fa-icon>
           <span class="ms-2">
-            {{ isLoading ? 'Clearing...' : 'Clear All' }}
+            {{ isLoading ? ('FLEET_NOTIFICATIONS.CLEARING' | translate) : ('FLEET_NOTIFICATIONS.CLEAR_ALL' | translate) }}
           </span>
         </button>
       </div>
@@ -29,7 +29,7 @@
       <div class="filters-group">
         <label class="filter-label">
           <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
-          Filters:
+          {{ 'FLEET_NOTIFICATIONS.FILTERS_LABEL' | translate }}
         </label>
         <select
           class="filter-select"
@@ -37,11 +37,11 @@
           name="type"
           (change)="onFilterChange()"
         >
-          <option value="">All Types</option>
-          <option value="info">Information</option>
-          <option value="warning">Warning</option>
-          <option value="error">Error</option>
-          <option value="success">Success</option>
+          <option value="">{{ 'FLEET_NOTIFICATIONS.FILTER_OPTIONS.ALL' | translate }}</option>
+          <option value="info">{{ 'FLEET_NOTIFICATIONS.FILTER_OPTIONS.INFO' | translate }}</option>
+          <option value="warning">{{ 'FLEET_NOTIFICATIONS.FILTER_OPTIONS.WARNING' | translate }}</option>
+          <option value="error">{{ 'FLEET_NOTIFICATIONS.FILTER_OPTIONS.ERROR' | translate }}</option>
+          <option value="success">{{ 'FLEET_NOTIFICATIONS.FILTER_OPTIONS.SUCCESS' | translate }}</option>
         </select>
       </div>
     </div>
@@ -49,12 +49,14 @@
     <!-- Loading and error states -->
     <div class="loading-container" *ngIf="isLoading">
       <fa-icon [icon]="faSpinner" size="2x"></fa-icon>
-      <p>Loading notifications...</p>
+      <p>{{ 'FLEET_NOTIFICATIONS.LOADING' | translate }}</p>
     </div>
 
     <div class="error-message" *ngIf="error">
       <p>{{ error }}</p>
-      <button class="btn-retry" (click)="loadNotifications()">Try Again</button>
+      <button class="btn-retry" (click)="loadNotifications()">
+        {{ 'FLEET_NOTIFICATIONS.RETRY' | translate }}
+      </button>
     </div>
 
     <!-- Notifications list -->
@@ -85,7 +87,7 @@
                 (click)="viewDetails(notification); $event.stopPropagation()"
               >
                 <fa-icon [icon]="faEye"></fa-icon>
-                View Details
+                {{ 'FLEET_NOTIFICATIONS.VIEW_DETAILS' | translate }}
               </button>
             </div>
           </div>
@@ -94,7 +96,7 @@
 
       <div class="no-notifications" *ngIf="filteredNotifications.length === 0">
         <fa-icon [icon]="faBell" size="3x"></fa-icon>
-        <p>No notifications found</p>
+        <p>{{ 'FLEET_NOTIFICATIONS.NO_NOTIFICATIONS' | translate }}</p>
       </div>
     </div>
 
@@ -105,17 +107,17 @@
         (click)="prevPage()"
         [disabled]="currentPage === 1"
       >
-        Previous
+        {{ 'FLEET_NOTIFICATIONS.PREVIOUS' | translate }}
       </button>
       <span class="pagination-info">
-        Page {{ currentPage }} of {{ totalPages }}
+        {{ 'FLEET_NOTIFICATIONS.PAGE_INFO' | translate:{ currentPage: currentPage, totalPages: totalPages } }}
       </span>
       <button
         class="pagination-btn"
         (click)="nextPage()"
         [disabled]="currentPage >= totalPages"
       >
-        Next
+        {{ 'FLEET_NOTIFICATIONS.NEXT' | translate }}
       </button>
     </div>
   </div>
@@ -132,7 +134,7 @@
     *ngIf="showDetailsModal && currentNotificationDetails"
   >
     <div class="modal-header">
-      <h3>Notification Details</h3>
+      <h3>{{ 'FLEET_NOTIFICATIONS.DETAILS_MODAL.TITLE' | translate }}</h3>
       <button class="close-btn" (click)="closeModal()">
         <fa-icon [icon]="faClose"></fa-icon>
       </button>
@@ -140,23 +142,23 @@
 
     <div class="modal-body">
       <div class="detail-row">
-        <span class="detail-label">Title:</span>
+        <span class="detail-label">{{ 'FLEET_NOTIFICATIONS.DETAILS_MODAL.LABELS.TITLE' | translate }}</span>
         <span class="detail-value">{{ currentNotificationDetails.title }}</span>
       </div>
 
       <div class="detail-row">
-        <span class="detail-label">Type:</span>
+        <span class="detail-label">{{ 'FLEET_NOTIFICATIONS.DETAILS_MODAL.LABELS.TYPE' | translate }}</span>
         <span class="detail-value type-{{ currentNotificationDetails.type }}">
           {{ currentNotificationDetails.type | titlecase }}
         </span>
       </div>
 
       <div class="detail-row">
-        <span class="detail-label">Priority:</span>
+        <span class="detail-label">{{ 'FLEET_NOTIFICATIONS.DETAILS_MODAL.LABELS.PRIORITY' | translate }}</span>
       </div>
 
       <div class="detail-row">
-        <span class="detail-label">Date:</span>
+        <span class="detail-label">{{ 'FLEET_NOTIFICATIONS.DETAILS_MODAL.LABELS.DATE' | translate }}</span>
         <span class="detail-value">
           <fa-icon [icon]="faCalendarAlt" class="me-1"></fa-icon>
           {{ currentNotificationDetails.timestamp | date:'medium' }}
@@ -164,14 +166,12 @@
       </div>
 
       <div class="detail-row" *ngIf="currentNotificationDetails.referenceId">
-        <span class="detail-label">Reference ID:</span>
-        <span class="detail-value"
-          >{{ currentNotificationDetails.referenceId }}</span
-        >
+        <span class="detail-label">{{ 'FLEET_NOTIFICATIONS.DETAILS_MODAL.LABELS.REFERENCE_ID' | translate }}</span>
+        <span class="detail-value">{{ currentNotificationDetails.referenceId }}</span>
       </div>
 
       <div class="detail-row full-width">
-        <span class="detail-label">Message:</span>
+        <span class="detail-label">{{ 'FLEET_NOTIFICATIONS.DETAILS_MODAL.LABELS.MESSAGE' | translate }}</span>
         <div class="message-content">
           {{ currentNotificationDetails.message }}
         </div>
@@ -179,7 +179,9 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn-action" (click)="closeModal()">Close</button>
+      <button class="btn-action" (click)="closeModal()">
+        {{ 'FLEET_NOTIFICATIONS.DETAILS_MODAL.CLOSE' | translate }}
+      </button>
     </div>
   </div>
 </div>

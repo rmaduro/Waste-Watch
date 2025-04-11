@@ -59,6 +59,7 @@ import {
 } from '../../services/FleetService';
 import { BinService, Bin } from '../../services/BinService';
 import { GoogleMapsService } from '../../services/GoogleMapsService';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -69,6 +70,7 @@ import { GoogleMapsService } from '../../services/GoogleMapsService';
     SideNavComponent,
     FontAwesomeModule,
     HttpClientModule,
+    TranslateModule
   ],
   providers: [VehicleService, BinService],
   templateUrl: './vehicle-list.component.html',

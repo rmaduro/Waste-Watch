@@ -46,26 +46,30 @@
       <!-- Login Form -->
       <form (ngSubmit)="onLogin()" class="w-100">
         <div class="mb-2">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label">
+            {{ 'LOGIN.EMAIL_LABEL' | translate }}
+          </label>
           <input
             type="email"
             class="form-control"
             id="email"
             [(ngModel)]="email"
             name="email"
-            placeholder="Enter your email..."
+            [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
             required
           />
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label">
+            {{ 'LOGIN.PASSWORD_LABEL' | translate }}
+          </label>
           <input
             type="password"
             class="form-control"
             id="password"
             [(ngModel)]="password"
             name="password"
-            placeholder="Enter your password..."
+            [placeholder]="'LOGIN.PASSWORD_PLACEHOLDER' | translate"
             required
           />
         </div>
@@ -73,7 +77,7 @@
         <!-- Submit Button with Loading State -->
         <button type="submit" class="btn btn-dark w-100" [disabled]="isLoading">
           <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          Log in
+          {{ 'LOGIN.LOGIN_BUTTON' | translate }}
         </button>
 
         <div class="text-center mt-3">
@@ -81,7 +85,7 @@
             (click)="navigateToResetPassword()"
             class="btn btn-link text-decoration-none p-0"
           >
-            Forgot your password?
+            {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
           </button>
         </div>
       </form>

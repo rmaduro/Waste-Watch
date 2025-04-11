@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../../services/AuthService';
 import { environment } from '../../../environments/environtment';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 interface MapOptions {
@@ -42,7 +43,7 @@ declare global {
   standalone: true,
   templateUrl: './fleet-map-component.html',
   styleUrls: ['./fleet-map-component.css'],
-  imports: [CommonModule, FontAwesomeModule, SideNavComponent],
+  imports: [CommonModule, FontAwesomeModule, SideNavComponent,TranslateModule],
 })
 export class FleetMapComponent implements OnInit {
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;

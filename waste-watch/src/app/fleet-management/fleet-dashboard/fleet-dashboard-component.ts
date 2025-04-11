@@ -3,6 +3,7 @@ import { AuthService } from '../../services/AuthService'; // Adjust the path as 
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   faTruck,
   faGasPump,
@@ -23,7 +24,7 @@ interface Alert {
 @Component({
   selector: 'app-fleet-dashboard',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, SideNavComponent],
+  imports: [CommonModule, FontAwesomeModule, SideNavComponent,TranslateModule],
   templateUrl: './fleet-dashboard-component.html',
   styleUrls: ['./fleet-dashboard-component.css'],
 })

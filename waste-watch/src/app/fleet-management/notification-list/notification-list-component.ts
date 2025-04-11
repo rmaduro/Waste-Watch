@@ -19,6 +19,7 @@ import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { VehicleService } from '../../services/FleetService';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface Notification {
   id: number;
@@ -33,7 +34,7 @@ interface Notification {
 @Component({
   selector: 'app-notification-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule, SideNavComponent],
+  imports: [CommonModule, FormsModule, FontAwesomeModule, SideNavComponent,TranslateModule],
   templateUrl: './notification-list-component.html',
   styleUrls: ['./notification-list-component.css']
 })

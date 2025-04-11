@@ -5,21 +5,23 @@
     <header class="dashboard-header">
       <h1 class="dashboard-title">
         <fa-icon [icon]="faTruck"></fa-icon>
-        Fleet Map
+        {{ 'FLEET_MAP.TITLE' | translate }}
       </h1>
       <button class="refresh-btn" (click)="refreshMap()">
         <fa-icon [icon]="faSync"></fa-icon>
-        Refresh Data
+        {{ 'FLEET_MAP.REFRESH_BUTTON' | translate }}
       </button>
     </header>
 
     <div *ngIf="isLoading" class="loading-container">
-      <p>Loading fleet data...</p>
+      <p>{{ 'FLEET_MAP.LOADING' | translate }}</p>
     </div>
 
     <div *ngIf="errorMessage" class="error-message">
       <p>{{ errorMessage }}</p>
-      <button class="btn-retry" (click)="refreshMap()">Retry</button>
+      <button class="btn-retry" (click)="refreshMap()">
+        {{ 'FLEET_MAP.RETRY_BUTTON' | translate }}
+      </button>
     </div>
 
     <div class="content-container" *ngIf="!isLoading && !errorMessage">
@@ -31,7 +33,7 @@
         <div class="vehicle-list-section">
           <h3>
             <fa-icon [icon]="faTruck"></fa-icon>
-            Active Vehicles
+            {{ 'FLEET_MAP.ACTIVE_VEHICLES' | translate }}
           </h3>
           <div class="vehicle-grid">
             <div
@@ -49,15 +51,17 @@
               <div class="vehicle-details">
                 <p>
                   <fa-icon [icon]="faUserAlt"></fa-icon>
-                  <strong>Driver:</strong> {{ vehicle.driver?.name || 'Unassigned' }}
+                  <strong>{{ 'FLEET_MAP.DRIVER_LABEL' | translate }}</strong>
+                  {{ vehicle.driver?.name || ('FLEET_MAP.UNASSIGNED' | translate) }}
                 </p>
                 <p>
                   <fa-icon [icon]="faRoute"></fa-icon>
-                  <strong>Route:</strong> {{ vehicle.routeType }}
+                  <strong>{{ 'FLEET_MAP.ROUTE_LABEL' | translate }}</strong>
+                  {{ vehicle.routeType }}
                 </p>
                 <p>
                   <fa-icon [icon]="faCalendarAlt"></fa-icon>
-                  <strong>Last Maintenance:</strong>
+                  <strong>{{ 'FLEET_MAP.LAST_MAINTENANCE_LABEL' | translate }}</strong>
                   {{ vehicle.lastMaintenance | date:'shortDate' }}
                 </p>
               </div>
