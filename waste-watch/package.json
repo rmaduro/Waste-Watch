@@ -24,6 +24,8 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.8",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
     "leaflet": "^1.9.4",
     "ng2-charts": "^8.0.0",
     "ngx-leaflet": "^0.0.16",

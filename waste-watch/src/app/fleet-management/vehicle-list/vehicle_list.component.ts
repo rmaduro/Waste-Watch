@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faPlus,
@@ -47,6 +49,7 @@ import {
   faLeaf,
   faClock,
   faCloud,
+  faFilePdf,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   VehicleService,
@@ -107,6 +110,7 @@ export class VehicleListComponent implements OnInit {
   faLeaf = faLeaf;
   faClock = faClock;
   faCloud = faCloud;
+  faFilePdf = faFilePdf;
 
   vehicles: Vehicle[] = [];
   availableDrivers: Driver[] = [];
@@ -434,7 +438,6 @@ export class VehicleListComponent implements OnInit {
     return distance * emissionFactor; // in grams of CO2
   }
 
-
   /**
    * @brief Calculates total distance of a route
    * @param route Google Maps route object
@@ -453,7 +456,6 @@ export class VehicleListComponent implements OnInit {
 
     return totalDistance / 1000; // Convert to kilometers
   }
-
 
   /**
    * @brief Calculates total time for a route
@@ -478,7 +480,6 @@ export class VehicleListComponent implements OnInit {
     return totalRouteTime;
   }
 
-
   /**
    * @brief Formats time in seconds to human-readable string
    * @param seconds Time in seconds
@@ -493,7 +494,6 @@ export class VehicleListComponent implements OnInit {
     }`;
   }
 
-
   /**
    * @brief Formats duration object to string
    * @param duration Google Maps duration object
@@ -502,7 +502,6 @@ export class VehicleListComponent implements OnInit {
   private formatDuration(duration: google.maps.Duration): string {
     return duration.text;
   }
-
 
   /**
    * @brief Adds markers to the route map
@@ -630,8 +629,6 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
-
-
   /**
    * @brief Gets stop type description
    * @param index Stop index
@@ -643,7 +640,6 @@ export class VehicleListComponent implements OnInit {
     if (index === total - 1) return 'Final destination for this route';
     return `Intermediate stop #${index}`;
   }
-
 
   /**
    * @brief Loads routes from the service
@@ -659,7 +655,6 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
-
   /**
    * @brief Gets paginated vehicles for current page
    */
@@ -668,14 +663,12 @@ export class VehicleListComponent implements OnInit {
     return this.filteredVehicles.slice(start, start + this.pageSize);
   }
 
-
   /**
    * @brief Calculates total number of pages
    */
   get totalPages(): number {
     return Math.ceil(this.filteredVehicles.length / this.pageSize);
   }
-
 
   /**
    * @brief Filters vehicles based on current filters
@@ -702,7 +695,6 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
-
   /**
    * @brief Navigates to next page
    */
@@ -712,8 +704,7 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
-   /**
+  /**
    * @brief Navigates to previous page
    */
   prevPage() {
@@ -722,14 +713,12 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
   /**
    * @brief Handles filter changes
    */
   onFilterChange() {
     this.currentPage = 1;
   }
-
 
   /**
    * @brief Selects a vehicle
@@ -739,8 +728,7 @@ export class VehicleListComponent implements OnInit {
     this.selectedVehicle = vehicle;
   }
 
-
-   /**
+  /**
    * @brief Toggles add vehicle form visibility
    */
   toggleAddForm() {
@@ -750,8 +738,7 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
-   /**
+  /**
    * @brief Shows delete confirmation dialog
    */
   showDeleteDialog() {
@@ -760,14 +747,12 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
   /**
    * @brief Cancels delete operation
    */
   cancelDelete() {
     this.showDeleteConfirmation = false;
   }
-
 
   /**
    * @brief Confirms and executes vehicle deletion
@@ -791,8 +776,7 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
-   /**
+  /**
    * @brief Adds a new vehicle
    */
   addVehicle() {
@@ -819,8 +803,6 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
-
   /**
    * @brief Navigates to route creation for a vehicle
    * @param vehicleId ID of vehicle to create route for
@@ -834,7 +816,6 @@ export class VehicleListComponent implements OnInit {
       this.resetRouteForm();
     });
   }
-
 
   /**
    * @brief Toggles bin selection for route creation
@@ -859,7 +840,6 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
   /**
    * @brief Checks if bin is selected for route
    * @param bin Bin to check
@@ -872,7 +852,6 @@ export class VehicleListComponent implements OnInit {
         loc.longitude === bin.location.longitude
     );
   }
-
 
   /**
    * @brief Creates a new route
@@ -925,8 +904,7 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
-   /**
+  /**
    * @brief Opens route view for a vehicle
    * @param vehicle Vehicle to view route for
    */
@@ -962,7 +940,6 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
   /**
    * @brief Clears the route map
    */
@@ -977,7 +954,6 @@ export class VehicleListComponent implements OnInit {
     }
     this.routeMap = null;
   }
-
 
   /**
    * @brief Gets address from coordinates
@@ -1010,8 +986,7 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
-
-   /**
+  /**
    * @brief Converts coordinate string to decimal
    * @param coordinate Coordinate string
    * @returns Decimal coordinate value
@@ -1029,7 +1004,6 @@ export class VehicleListComponent implements OnInit {
     return decimal;
   }
 
-
   /**
    * @brief Handles route button click
    * @param vehicle Vehicle to handle action for
@@ -1042,7 +1016,6 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
-
   /**
    * @brief Resets route form
    */
@@ -1050,7 +1023,6 @@ export class VehicleListComponent implements OnInit {
     this.newRoute = { name: '', type: '', locations: [] };
     this.binSearchQuery = '';
   }
-
 
   /**
    * @brief Formats capacity value
@@ -1061,8 +1033,7 @@ export class VehicleListComponent implements OnInit {
     return typeof capacity === 'number' ? `${capacity}kg` : capacity;
   }
 
-
-   /**
+  /**
    * @brief Gets driver name for vehicle
    * @param vehicle Vehicle to get driver for
    * @returns Driver name or 'N/A'
@@ -1071,8 +1042,7 @@ export class VehicleListComponent implements OnInit {
     return vehicle.driver?.name || vehicle.driverName || 'N/A';
   }
 
-
-   /**
+  /**
    * @brief Refreshes vehicle list
    */
   refreshVehicles() {
@@ -1081,7 +1051,6 @@ export class VehicleListComponent implements OnInit {
     this.loadVehicles();
     this.loadRoutes();
   }
-
 
   /**
    * @brief Handles driver selection
@@ -1093,7 +1062,6 @@ export class VehicleListComponent implements OnInit {
       };
     }
   }
-
 
   /**
    * @brief Toggles between custom driver and available drivers
@@ -1111,7 +1079,6 @@ export class VehicleListComponent implements OnInit {
       };
     }
   }
-
 
   /**
    * @brief Gets default vehicle template
@@ -1133,5 +1100,310 @@ export class VehicleListComponent implements OnInit {
         collaboratorType: 'Driver',
       },
     };
+  }
+
+  async generateRouteReport() {
+    this.isLoading = true;
+
+    try {
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.width;
+      const margin = 20;
+      const contentWidth = pageWidth - margin * 2;
+
+      const addPageHeader = () => {
+        pdf.setFillColor(240, 240, 240);
+        pdf.rect(0, 0, pageWidth, 15, 'F');
+        pdf.setFontSize(8);
+        pdf.setTextColor(100, 100, 100);
+        pdf.text('ROUTE MANAGEMENT SYSTEM', margin, 10);
+        const companyLogo = 'assets/images/logo2.png';
+        pdf.addImage(companyLogo, 'PNG', pageWidth - 30, 3, 20, 12);
+      };
+
+      const addPageFooter = (pageNum: number, totalPages: number) => {
+        pdf.setFillColor(240, 240, 240);
+        pdf.rect(0, 282, pageWidth, 15, 'F');
+        pdf.setFontSize(8);
+        pdf.setTextColor(100, 100, 100);
+        pdf.text(`Page ${pageNum} of ${totalPages}`, margin, 290);
+        pdf.text(
+          `Generated: ${new Date().toLocaleString()}`,
+          pageWidth - margin,
+          290,
+          { align: 'right' }
+        );
+      };
+
+      const addSectionHeader = (title: string, y: number = 30) => {
+        pdf.setFontSize(16);
+        pdf.setTextColor(51, 122, 183);
+        pdf.text(title, margin, y);
+      };
+
+      const addParagraph = (text: string, startY: number) => {
+        pdf.setFontSize(10);
+        pdf.setTextColor(80, 80, 80);
+        const lines = pdf.splitTextToSize(text, contentWidth);
+        pdf.text(lines, margin, startY);
+        return startY + lines.length * 5;
+      };
+
+      const addMetricTable = (
+        startY: number,
+        data: { label: string; value: string; highlight?: boolean }[]
+      ) => {
+        const rowHeight = 10;
+        const colWidth = contentWidth / 2;
+
+        pdf.setFillColor(51, 122, 183);
+        pdf.rect(margin, startY, contentWidth, rowHeight, 'F');
+        pdf.setTextColor(255, 255, 255);
+        pdf.setFontSize(10);
+        pdf.text('METRIC', margin + 5, startY + 7);
+        pdf.text('VALUE', margin + colWidth + 5, startY + 7);
+
+        data.forEach((row, index) => {
+          const y = startY + rowHeight * (index + 1);
+          pdf.setFillColor(
+            row.highlight ? 230 : index % 2 === 0 ? 245 : 255,
+            245,
+            245
+          );
+          pdf.rect(margin, y, contentWidth, rowHeight, 'F');
+          pdf.setTextColor(80, 80, 80);
+          pdf.setFont('helvetica', row.highlight ? 'bold' : 'normal');
+          pdf.text(row.label, margin + 5, y + 7);
+          pdf.text(row.value, margin + colWidth + 5, y + 7);
+          pdf.setFont('helvetica', 'normal');
+        });
+
+        return startY + rowHeight * (data.length + 1);
+      };
+
+      const addStopsSection = () => {
+        pdf.addPage();
+        addPageHeader();
+        addSectionHeader('4. COLLECTION STOPS');
+        let stopY = 45;
+
+        this.addresses.forEach((address, index) => {
+          if (stopY > 250) {
+            pdf.addPage();
+            addPageHeader();
+            stopY = 30;
+          }
+
+          pdf.setFillColor(245, 245, 245);
+          pdf.rect(margin, stopY, contentWidth, 25, 'F');
+          pdf.setFillColor(51, 122, 183);
+          pdf.circle(margin + 10, stopY + 12, 8, 'F');
+          pdf.setTextColor(255, 255, 255);
+          pdf.setFontSize(10);
+          pdf.text((index + 1).toString(), margin + 10, stopY + 14, {
+            align: 'center',
+          });
+
+          pdf.setTextColor(80, 80, 80);
+          pdf.setFontSize(10);
+          const addressLines = pdf.splitTextToSize(address, contentWidth - 40);
+          pdf.text(addressLines, margin + 25, stopY + 10);
+
+          const coords = `${
+            this.viewedVehicle?.route?.locations![index].latitude || ''
+          }, ${this.viewedVehicle?.route?.locations![index].longitude || ''}`;
+          pdf.setTextColor(120, 120, 120);
+          pdf.setFontSize(8);
+          pdf.text(coords, margin + 25, stopY + 20);
+
+          stopY += 30;
+        });
+      };
+
+      // --- COVER ---
+      pdf.setFillColor(51, 122, 183);
+      pdf.rect(0, 0, pageWidth, 100, 'F');
+      pdf.setTextColor(255, 255, 255);
+      pdf.setFontSize(32);
+      pdf.text('ROUTE REPORT', margin, 50);
+      pdf.setFontSize(14);
+      pdf.text(this.viewedVehicle?.licensePlate || 'N/A', margin, 65);
+      pdf.setFontSize(12);
+      pdf.text(new Date().toLocaleDateString(), margin, 75);
+
+      // Vehicle Info Block
+      pdf.setFillColor(245, 245, 245);
+      pdf.rect(margin, 120, contentWidth, 50, 'F');
+      pdf.setTextColor(80, 80, 80);
+      pdf.setFontSize(10);
+      const infoY = 130;
+      const lineH = 12;
+      pdf.text(
+        `Vehicle License: ${this.viewedVehicle?.licensePlate || 'N/A'}`,
+        margin + 5,
+        infoY
+      );
+      pdf.text(
+        `Driver: ${this.getDriverName(this.viewedVehicle!)}`,
+        margin + 5,
+        infoY + lineH
+      );
+      pdf.text(
+        `Route Name: ${this.viewedVehicle?.route?.name || 'N/A'}`,
+        margin + 5,
+        infoY + lineH * 2
+      );
+      pdf.text(
+        `Route Type: ${this.viewedVehicle?.route?.type || 'N/A'}`,
+        margin + 5,
+        infoY + lineH * 3
+      );
+
+      // --- TOC ---
+      pdf.addPage();
+      addPageHeader();
+      addSectionHeader('CONTENTS');
+      const tocY = 45;
+      const tocLh = 10;
+      const tocEntries = [
+        '1. Route Summary',
+        '2. Environmental Impact Analysis',
+        '3. Route Map',
+        '4. Collection Stops',
+      ];
+      pdf.setFontSize(10);
+      pdf.setTextColor(80, 80, 80);
+      tocEntries.forEach((text, i) => pdf.text(text, margin, tocY + tocLh * i));
+
+      // --- ROUTE SUMMARY ---
+      pdf.addPage();
+      addPageHeader();
+      addSectionHeader('1. ROUTE SUMMARY');
+      const routeText = `This report provides a comprehensive overview of the ${
+        this.viewedVehicle?.route?.name || ''
+      } route, assigned to vehicle ${
+        this.viewedVehicle?.licensePlate || ''
+      }. The analysis includes key performance metrics, environmental impact assessment, and detailed stop information to help optimize waste collection operations.`;
+      const afterDescY = addParagraph(routeText, 45);
+
+      const summaryMetrics = [
+        {
+          label: 'Route Name',
+          value: this.viewedVehicle?.route?.name || 'N/A',
+        },
+        {
+          label: 'Route Type',
+          value: this.viewedVehicle?.route?.type || 'N/A',
+        },
+        {
+          label: 'Vehicle License',
+          value: this.viewedVehicle?.licensePlate || 'N/A',
+        },
+        {
+          label: 'Assigned Driver',
+          value: this.getDriverName(this.viewedVehicle!),
+        },
+        {
+          label: 'Total Stops',
+          value: (this.viewedVehicle?.route?.locations?.length || 0).toString(),
+        },
+        {
+          label: 'Route Optimization',
+          value: this.isEcoFriendlyRoute ? 'Eco-Friendly' : 'Standard',
+        },
+        {
+          label: 'Estimated Duration',
+          value: this.estimatedTime || 'N/A',
+          highlight: true,
+        },
+        {
+          label: 'Last Maintenance',
+          value: this.viewedVehicle?.lastMaintenance || 'N/A',
+        },
+        {
+          label: 'Vehicle Capacity',
+          value: this.formatCapacity(this.viewedVehicle?.maxCapacity || 'N/A'),
+        },
+      ];
+      addMetricTable(afterDescY + 10, summaryMetrics);
+
+      // --- ENVIRONMENTAL IMPACT ---
+      pdf.addPage();
+      addPageHeader();
+      addSectionHeader('2. ENVIRONMENTAL IMPACT ANALYSIS');
+      const impactText = `This section provides a detailed analysis of the environmental footprint associated with the ${
+        this.viewedVehicle?.route?.name || 'N/A'
+      } route. The evaluation includes measurements of carbon dioxide emissions, fuel consumption, and the effectiveness of eco-friendly routing strategies. By leveraging data-driven methodologies, this report highlights how route optimization contributes to sustainability targets and cost efficiency. Special attention is given to identifying opportunities for emission reduction and the adoption of low-impact driving behaviors. The metrics presented here are grounded in both real-time GPS telemetry and historical performance data, providing a comprehensive view of the route's ecological impact. This analysis not only supports internal green initiatives but also ensures compliance with environmental regulations and aligns with broader climate responsibility goals. Through continuous monitoring and iterative improvements, this route plays a vital role in minimizing environmental disruption while maintaining service quality.`;
+      const afterImpactY = addParagraph(impactText, 45);
+
+      const envMetrics = [
+        {
+          label: 'CO2 Emissions',
+          value: `${this.co2Emissions.toFixed(0)} g/km`,
+          highlight: true,
+        },
+        {
+          label: 'Eco-Friendly Routing',
+          value: this.isEcoFriendlyRoute ? 'Yes' : 'No',
+        },
+        {
+          label: 'Estimated Fuel Consumption',
+          value: `${(this.co2Emissions / 2.31).toFixed(1)} liters`,
+        },
+        {
+          label: 'Emissions Savings Potential',
+          value: this.isEcoFriendlyRoute
+            ? 'Optimized'
+            : `${(this.co2Emissions * 0.15).toFixed(0)} g/km possible`,
+        },
+        {
+          label: 'Carbon Footprint Rating',
+          value:
+            this.co2Emissions < 100
+              ? 'Excellent'
+              : this.co2Emissions < 200
+              ? 'Good'
+              : 'Needs Improvement',
+        },
+      ];
+      addMetricTable(afterImpactY + 10, envMetrics);
+
+      // --- ROUTE MAP ---
+      pdf.addPage();
+      addPageHeader();
+      addSectionHeader('3. ROUTE MAP');
+      const mapCanvas = await html2canvas(
+        this.routeMapContainer.nativeElement,
+        { scale: 2, logging: false, useCORS: true }
+      );
+      const mapImage = mapCanvas.toDataURL('image/png');
+      pdf.addImage(mapImage, 'PNG', margin, 40, contentWidth, 100);
+
+      const mapText = `The map above illustrates the carefully optimized route designed to maximize efficiency while minimizing environmental impact. Each stop along the route has been strategically placed based on various factors including collection demand, traffic patterns, fuel economy, and safety considerations. By analyzing real-time data and historical trends, this route has been tailored to reduce idle time and distance traveled, thereby lowering carbon emissions and operational costs. The visual representation provides a clear overview of the vehicle’s path, highlighting the sequential order of collection points, directionality, and key geographical markers. This optimized route not only supports sustainability goals but also enhances service reliability and logistical performance. The map serves as a vital tool for drivers and managers alike, ensuring alignment with performance targets and regulatory standards.
+
+`;
+      addParagraph(mapText, 150);
+
+      // --- COLLECTION STOPS ---
+      addStopsSection();
+
+      // FOOTERS
+      const totalPages = pdf.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        addPageFooter(i, totalPages);
+      }
+
+      pdf.save(
+        `Route_Report_${this.viewedVehicle?.licensePlate || 'Unknown'}_${
+          new Date().toISOString().split('T')[0]
+        }.pdf`
+      );
+      this.isLoading = false;
+    } catch (error) {
+      console.error('Error generating report:', error);
+      this.error = 'Failed to generate report';
+      this.isLoading = false;
+    }
   }
 }

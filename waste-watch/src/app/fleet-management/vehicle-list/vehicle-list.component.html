@@ -317,6 +317,14 @@
           viewedVehicle?.route?.name || "Route Details"
         }}</span>
       </h2>
+      <button
+  class="btn-report"
+  (click)="generateRouteReport()"
+  [disabled]="isLoading"
+>
+  <fa-icon [icon]="faFilePdf" class="me-1"></fa-icon>
+  Generate Report
+</button>
       <div class="route-subtitle">
         <span
           class="route-type-badge"

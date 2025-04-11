@@ -907,6 +907,18 @@
   margin-bottom: 1.5rem;
 }
 
+.map-container.print-mode {
+  width: 100% !important;
+  height: 400px !important;
+  border: 1px solid #ddd;
+  background-color: white;
+}
+
+/* Hide interactive elements during PDF generation */
+.hide-on-print {
+  display: none;
+}
+
 .section-title {
   font-size: 1.125rem;
   font-weight: 600;
@@ -1105,6 +1117,34 @@
 
 .btn-create-route:hover {
   background-color: #059669;
+}
+
+.btn-report {
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 16px;
+  transition: background-color 0.2s;
+}
+
+.btn-report:hover {
+  background-color: #c53030;
+}
+
+.btn-report:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.btn-report .fa-icon {
+  margin-right: 8px;
 }
 
 /* Responsive Adjustments */
