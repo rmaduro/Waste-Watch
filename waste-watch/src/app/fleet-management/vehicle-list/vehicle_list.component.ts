@@ -1,3 +1,10 @@
+/**
+ * @class VehicleListComponent
+ * @brief Angular component for managing and displaying a list of vehicles.
+ *
+ * This component provides functionality to view, add, delete, and manage routes for vehicles.
+ * It includes features like filtering, pagination, and interactive route visualization using Google Maps.
+ */
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,20 +13,60 @@ import { HttpClientModule } from '@angular/common/http';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
-  faPlus, faMinus, faSearch, faFilter, faTruck, faIdCard, faUser, faCircle, faRoute, faWeight, faTools,
-  faTrash, faExclamationTriangle, faSpinner, faMapMarkerAlt, faIdBadge, faEye, faMapMarked, faTimes,
-  faHashtag, faTrashAlt, faWeightHanging, faCalendarAlt, faCheckCircle, faSave, faInfoCircle,
-  faSignature, faTags, faMap, faListAlt, faDirections,faLeaf,faClock,faCloud
+  faPlus,
+  faMinus,
+  faSearch,
+  faFilter,
+  faTruck,
+  faIdCard,
+  faUser,
+  faCircle,
+  faRoute,
+  faWeight,
+  faTools,
+  faTrash,
+  faExclamationTriangle,
+  faSpinner,
+  faMapMarkerAlt,
+  faIdBadge,
+  faEye,
+  faMapMarked,
+  faTimes,
+  faHashtag,
+  faTrashAlt,
+  faWeightHanging,
+  faCalendarAlt,
+  faCheckCircle,
+  faSave,
+  faInfoCircle,
+  faSignature,
+  faTags,
+  faMap,
+  faListAlt,
+  faDirections,
+  faLeaf,
+  faClock,
+  faCloud,
 } from '@fortawesome/free-solid-svg-icons';
-import { VehicleService, Vehicle, Driver, Route } from '../../services/FleetService';
+import {
+  VehicleService,
+  Vehicle,
+  Driver,
+  Route,
+} from '../../services/FleetService';
 import { BinService, Bin } from '../../services/BinService';
 import { GoogleMapsService } from '../../services/GoogleMapsService';
-
 
 @Component({
   selector: 'app-vehicle-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, SideNavComponent, FontAwesomeModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SideNavComponent,
+    FontAwesomeModule,
+    HttpClientModule,
+  ],
   providers: [VehicleService, BinService],
   templateUrl: './vehicle-list.component.html',
   styleUrls: ['./vehicle-list.component.css'],
@@ -87,15 +134,23 @@ export class VehicleListComponent implements OnInit {
   addresses: string[] = [];
   currentPage = 1;
   pageSize = 7;
-  estimatedTime = "";
+  estimatedTime = '';
   isEcoFriendlyRoute = false;
   co2Emissions = 0.0;
 
-  @ViewChild('routeMapContainer', { static: false }) routeMapContainer!: ElementRef;
+  @ViewChild('routeMapContainer', { static: false })
+  routeMapContainer!: ElementRef;
   routeMap: any = null;
   routeMarkers: any[] = [];
   routePolyline: any = null;
 
+  /**
+   * @brief Constructor for VehicleListComponent
+   * @param vehicleService Service for vehicle-related operations
+   * @param binService Service for bin-related operations
+   * @param router Angular router service
+   * @param googleMapsService Service for Google Maps integration
+   */
   constructor(
     private vehicleService: VehicleService,
     private binService: BinService,
@@ -103,12 +158,18 @@ export class VehicleListComponent implements OnInit {
     private googleMapsService: GoogleMapsService
   ) {}
 
+  /**
+   * @brief Angular lifecycle hook - initializes component
+   */
   ngOnInit(): void {
     this.loadVehicles();
     this.loadRoutes();
     this.availableDrivers = this.vehicleService.getAvailableDrivers();
   }
 
+  /**
+   * @brief Loads vehicles from the service
+   */
   loadVehicles() {
     this.isLoading = true;
     this.vehicleService.getVehiclesWithRoutes().subscribe({
@@ -124,6 +185,9 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
+  /**
+   * @brief Angular lifecycle hook - initializes after view is ready
+   */
   ngAfterViewInit() {
     // Ensure the container exists before proceeding
     if (!this.routeMapContainer?.nativeElement) {
@@ -132,186 +196,253 @@ export class VehicleListComponent implements OnInit {
     }
 
     // Load Google Maps API asynchronously using the service
-    this.googleMapsService.loadApi().then(() => {
-      // Delay initialization to ensure the container is fully rendered
-      setTimeout(() => {
-        // Now that the API is loaded, check if the container exists again
-        if (this.routeMapContainer?.nativeElement) {
-          if (this.viewedVehicle && this.viewedVehicle.route?.locations?.length) {
-            this.initRouteMap();
+    this.googleMapsService
+      .loadApi()
+      .then(() => {
+        // Delay initialization to ensure the container is fully rendered
+        setTimeout(() => {
+          // Now that the API is loaded, check if the container exists again
+          if (this.routeMapContainer?.nativeElement) {
+            if (
+              this.viewedVehicle &&
+              this.viewedVehicle.route?.locations?.length
+            ) {
+              this.initRouteMap();
+            }
+          }
+        }, 500); // Delay for 500ms (adjust as necessary)
+      })
+      .catch((error) => {
+        console.error('Error loading Google Maps API:', error);
+      });
+  }
+
+  /**
+   * @brief Initializes the route map with the viewed vehicle's route
+   */
+  private initRouteMap(): void {
+    if (
+      !this.viewedVehicle?.route?.locations?.length ||
+      !this.routeMapContainer?.nativeElement
+    ) {
+      console.error('Map container not found or not yet rendered.');
+      return;
+    }
+
+    try {
+      // Initialize the map
+      this.routeMap = new google.maps.Map(
+        this.routeMapContainer.nativeElement,
+        {
+          zoom: 12,
+          mapTypeId: 'roadmap',
+          streetViewControl: false,
+        }
+      );
+
+      // Initialize DirectionsService and DirectionsRenderer
+      const directionsService = new google.maps.DirectionsService();
+      const directionsRenderer = new google.maps.DirectionsRenderer({
+        map: this.routeMap,
+        suppressMarkers: true, // Suppress the default markers
+        polylineOptions: {
+          strokeColor: '#3b82f6',
+          strokeOpacity: 1.0,
+          strokeWeight: 4,
+        },
+      });
+
+      // Track eco-friendly preferences
+      const avoidHighways = true; // Default to avoid highways for eco-friendly routes
+      const avoidTolls = true; // Default to avoid tolls
+
+      // Prepare the request for DirectionsService
+      const origin = {
+        lat: this.convertToDecimal(
+          this.viewedVehicle.route.locations[0].latitude
+        ),
+        lng: this.convertToDecimal(
+          this.viewedVehicle.route.locations[0].longitude
+        ),
+      };
+
+      const destination = {
+        lat: this.convertToDecimal(
+          this.viewedVehicle.route.locations[
+            this.viewedVehicle.route.locations.length - 1
+          ].latitude
+        ),
+        lng: this.convertToDecimal(
+          this.viewedVehicle.route.locations[
+            this.viewedVehicle.route.locations.length - 1
+          ].longitude
+        ),
+      };
+
+      // Create waypoints (intermediate stops)
+      const waypoints = this.viewedVehicle.route.locations
+        .slice(1, -1)
+        .map((loc) => ({
+          location: {
+            lat: this.convertToDecimal(loc.latitude),
+            lng: this.convertToDecimal(loc.longitude),
+          },
+          stopover: true,
+        }));
+
+      // Request directions with waypoints to compare with and without highways
+      const requestWithHighways = {
+        origin: origin,
+        destination: destination,
+        waypoints: waypoints,
+        travelMode: google.maps.TravelMode.DRIVING,
+        avoidHighways: false, // Do not avoid highways for the first route (highway route)
+        avoidTolls: avoidTolls,
+        transitOptions: {
+          departureTime: new Date(), // For real-time traffic estimates
+        },
+      };
+
+      const requestWithoutHighways = {
+        origin: origin,
+        destination: destination,
+        waypoints: waypoints,
+        travelMode: google.maps.TravelMode.DRIVING,
+        avoidHighways: true, // Avoid highways for the second route (eco-friendly route)
+        avoidTolls: avoidTolls,
+        transitOptions: {
+          departureTime: new Date(),
+        },
+      };
+
+      // Request the route with highways (standard, faster option)
+      directionsService.route(
+        requestWithHighways,
+        (resultWithHighways, statusWithHighways) => {
+          if (statusWithHighways === google.maps.DirectionsStatus.OK) {
+            // Calculate the route time with highways
+            const routeWithHighways = resultWithHighways!.routes[0];
+            let totalRouteTimeWithHighways =
+              this.calculateTotalRouteTime(routeWithHighways);
+            let totalDistanceWithHighways =
+              this.calculateTotalRouteDistance(routeWithHighways);
+
+            // Calculate CO2 emissions for highway route
+            let co2EmissionsWithHighways = this.calculateCO2Emissions(
+              totalDistanceWithHighways,
+              'highway'
+            );
+
+            // Request the route without highways (eco-friendly option)
+            directionsService.route(
+              requestWithoutHighways,
+              (resultWithoutHighways, statusWithoutHighways) => {
+                if (statusWithoutHighways === google.maps.DirectionsStatus.OK) {
+                  // Calculate the route time without highways
+                  const routeWithoutHighways = resultWithoutHighways!.routes[0];
+                  let totalRouteTimeWithoutHighways =
+                    this.calculateTotalRouteTime(routeWithoutHighways);
+                  let totalDistanceWithoutHighways =
+                    this.calculateTotalRouteDistance(routeWithoutHighways);
+
+                  // Calculate CO2 emissions for eco-friendly route
+                  let co2EmissionsWithoutHighways = this.calculateCO2Emissions(
+                    totalDistanceWithoutHighways,
+                    'eco-friendly'
+                  );
+
+                  // Calculate stop times (in seconds)
+                  const averageTimePerStop = 2; // Adjust the stop time as necessary
+                  const totalStopTime =
+                    this.viewedVehicle?.route?.locations?.length! *
+                    averageTimePerStop *
+                    60; // Convert minutes to seconds
+
+                  // Add stop time to both routes
+                  totalRouteTimeWithHighways += totalStopTime;
+                  totalRouteTimeWithoutHighways += totalStopTime;
+
+                  // Now decide based on both time and CO2 emissions
+                  if (
+                    totalRouteTimeWithHighways <
+                      totalRouteTimeWithoutHighways &&
+                    co2EmissionsWithHighways <= co2EmissionsWithoutHighways
+                  ) {
+                    // If highway route is faster and has comparable or lower emissions, use it
+                    this.estimatedTime = this.formatDuration({
+                      text: this.formatTime(totalRouteTimeWithHighways), // Convert to readable time format
+                      value: totalRouteTimeWithHighways,
+                    });
+                    this.isEcoFriendlyRoute = false; // Mark as not eco-friendly, but faster
+                    directionsRenderer.setDirections(resultWithHighways);
+
+                    // Set the CO2 emissions for the selected route
+                    this.co2Emissions = co2EmissionsWithHighways; // Set CO2 emissions to highway route
+                  } else {
+                    // If eco-friendly route is better or close enough in emissions, use it
+                    this.estimatedTime = this.formatDuration({
+                      text: this.formatTime(totalRouteTimeWithoutHighways), // Convert to readable time format
+                      value: totalRouteTimeWithoutHighways,
+                    });
+                    this.isEcoFriendlyRoute = true; // Mark as eco-friendly
+                    directionsRenderer.setDirections(resultWithoutHighways);
+
+                    // Set the CO2 emissions for the selected route
+                    this.co2Emissions = co2EmissionsWithoutHighways; // Set CO2 emissions to eco-friendly route
+                  }
+
+                  // Add markers to the route
+                  this.addMarkersToRoute();
+                } else {
+                  console.error(
+                    'Directions request failed due to ' + statusWithoutHighways
+                  );
+                }
+              }
+            );
+          } else {
+            console.error(
+              'Directions request failed due to ' + statusWithHighways
+            );
           }
         }
-      }, 500); // Delay for 500ms (adjust as necessary)
-    }).catch((error) => {
-      console.error('Error loading Google Maps API:', error);
-    });
+      );
+    } catch (error) {
+      console.error('Error initializing route map:', error);
+    }
+  }
+
+  /**
+   * @brief Calculates CO2 emissions for a route
+   * @param distance Route distance in kilometers
+   * @param routeType Type of route ('highway' or 'eco-friendly')
+   * @returns CO2 emissions in grams
+   */
+  private calculateCO2Emissions(
+    distance: number,
+    routeType: 'highway' | 'eco-friendly'
+  ): number {
+    const emissionFactorHighway = 120; // CO2 emissions in grams per kilometer for highway (example value: 120 g/km)
+    const emissionFactorEcoFriendly = 150; // CO2 emissions in grams per kilometer for eco-friendly (example value: 150 g/km)
+
+    let emissionFactor =
+      routeType === 'highway'
+        ? emissionFactorHighway
+        : emissionFactorEcoFriendly;
+
+    // Calculate emissions based on distance and emission factor in grams
+    return distance * emissionFactor; // in grams of CO2
   }
 
 
-
-private initRouteMap(): void {
-  if (!this.viewedVehicle?.route?.locations?.length || !this.routeMapContainer?.nativeElement) {
-    console.error('Map container not found or not yet rendered.');
-    return;
-  }
-
-  try {
-    // Initialize the map
-    this.routeMap = new google.maps.Map(this.routeMapContainer.nativeElement, {
-      zoom: 12,
-      mapTypeId: 'roadmap',
-      streetViewControl: false,
-    });
-
-    // Initialize DirectionsService and DirectionsRenderer
-    const directionsService = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer({
-      map: this.routeMap,
-      suppressMarkers: true, // Suppress the default markers
-      polylineOptions: {
-        strokeColor: '#3b82f6',
-        strokeOpacity: 1.0,
-        strokeWeight: 4,
-      },
-    });
-
-    // Track eco-friendly preferences
-    const avoidHighways = true; // Default to avoid highways for eco-friendly routes
-    const avoidTolls = true; // Default to avoid tolls
-
-    // Prepare the request for DirectionsService
-    const origin = {
-      lat: this.convertToDecimal(this.viewedVehicle.route.locations[0].latitude),
-      lng: this.convertToDecimal(this.viewedVehicle.route.locations[0].longitude),
-    };
-
-    const destination = {
-      lat: this.convertToDecimal(
-        this.viewedVehicle.route.locations[this.viewedVehicle.route.locations.length - 1].latitude
-      ),
-      lng: this.convertToDecimal(
-        this.viewedVehicle.route.locations[this.viewedVehicle.route.locations.length - 1].longitude
-      ),
-    };
-
-    // Create waypoints (intermediate stops)
-    const waypoints = this.viewedVehicle.route.locations.slice(1, -1).map((loc) => ({
-      location: {
-        lat: this.convertToDecimal(loc.latitude),
-        lng: this.convertToDecimal(loc.longitude),
-      },
-      stopover: true,
-    }));
-
-    // Request directions with waypoints to compare with and without highways
-    const requestWithHighways = {
-      origin: origin,
-      destination: destination,
-      waypoints: waypoints,
-      travelMode: google.maps.TravelMode.DRIVING,
-      avoidHighways: false, // Do not avoid highways for the first route (highway route)
-      avoidTolls: avoidTolls,
-      transitOptions: {
-        departureTime: new Date(), // For real-time traffic estimates
-      },
-    };
-
-    const requestWithoutHighways = {
-      origin: origin,
-      destination: destination,
-      waypoints: waypoints,
-      travelMode: google.maps.TravelMode.DRIVING,
-      avoidHighways: true, // Avoid highways for the second route (eco-friendly route)
-      avoidTolls: avoidTolls,
-      transitOptions: {
-        departureTime: new Date(),
-      },
-    };
-
-    // Request the route with highways (standard, faster option)
-    directionsService.route(requestWithHighways, (resultWithHighways, statusWithHighways) => {
-      if (statusWithHighways === google.maps.DirectionsStatus.OK) {
-        // Calculate the route time with highways
-        const routeWithHighways = resultWithHighways!.routes[0];
-        let totalRouteTimeWithHighways = this.calculateTotalRouteTime(routeWithHighways);
-        let totalDistanceWithHighways = this.calculateTotalRouteDistance(routeWithHighways);
-
-        // Calculate CO2 emissions for highway route
-        let co2EmissionsWithHighways = this.calculateCO2Emissions(totalDistanceWithHighways, 'highway');
-
-        // Request the route without highways (eco-friendly option)
-        directionsService.route(requestWithoutHighways, (resultWithoutHighways, statusWithoutHighways) => {
-          if (statusWithoutHighways === google.maps.DirectionsStatus.OK) {
-            // Calculate the route time without highways
-            const routeWithoutHighways = resultWithoutHighways!.routes[0];
-            let totalRouteTimeWithoutHighways = this.calculateTotalRouteTime(routeWithoutHighways);
-            let totalDistanceWithoutHighways = this.calculateTotalRouteDistance(routeWithoutHighways);
-
-            // Calculate CO2 emissions for eco-friendly route
-            let co2EmissionsWithoutHighways = this.calculateCO2Emissions(totalDistanceWithoutHighways, 'eco-friendly');
-
-            // Calculate stop times (in seconds)
-            const averageTimePerStop = 2; // Adjust the stop time as necessary
-            const totalStopTime = this.viewedVehicle?.route?.locations?.length! * averageTimePerStop * 60; // Convert minutes to seconds
-
-            // Add stop time to both routes
-            totalRouteTimeWithHighways += totalStopTime;
-            totalRouteTimeWithoutHighways += totalStopTime;
-
-            // Now decide based on both time and CO2 emissions
-            if (totalRouteTimeWithHighways < totalRouteTimeWithoutHighways && co2EmissionsWithHighways <= co2EmissionsWithoutHighways) {
-              // If highway route is faster and has comparable or lower emissions, use it
-              this.estimatedTime = this.formatDuration({
-                text: this.formatTime(totalRouteTimeWithHighways), // Convert to readable time format
-                value: totalRouteTimeWithHighways,
-              });
-              this.isEcoFriendlyRoute = false; // Mark as not eco-friendly, but faster
-              directionsRenderer.setDirections(resultWithHighways);
-
-              // Set the CO2 emissions for the selected route
-              this.co2Emissions = co2EmissionsWithHighways; // Set CO2 emissions to highway route
-            } else {
-              // If eco-friendly route is better or close enough in emissions, use it
-              this.estimatedTime = this.formatDuration({
-                text: this.formatTime(totalRouteTimeWithoutHighways), // Convert to readable time format
-                value: totalRouteTimeWithoutHighways,
-              });
-              this.isEcoFriendlyRoute = true; // Mark as eco-friendly
-              directionsRenderer.setDirections(resultWithoutHighways);
-
-              // Set the CO2 emissions for the selected route
-              this.co2Emissions = co2EmissionsWithoutHighways; // Set CO2 emissions to eco-friendly route
-            }
-
-            // Add markers to the route
-            this.addMarkersToRoute();
-          } else {
-            console.error('Directions request failed due to ' + statusWithoutHighways);
-          }
-        });
-      } else {
-        console.error('Directions request failed due to ' + statusWithHighways);
-      }
-    });
-
-  } catch (error) {
-    console.error('Error initializing route map:', error);
-  }
-}
-
-
-private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-friendly'): number {
-  const emissionFactorHighway = 120; // CO2 emissions in grams per kilometer for highway (example value: 120 g/km)
-  const emissionFactorEcoFriendly = 150; // CO2 emissions in grams per kilometer for eco-friendly (example value: 150 g/km)
-
-  let emissionFactor = routeType === 'highway' ? emissionFactorHighway : emissionFactorEcoFriendly;
-
-  // Calculate emissions based on distance and emission factor in grams
-  return distance * emissionFactor; // in grams of CO2
-}
-
-
-  private calculateTotalRouteDistance(route: google.maps.DirectionsRoute): number {
+  /**
+   * @brief Calculates total distance of a route
+   * @param route Google Maps route object
+   * @returns Total distance in kilometers
+   */
+  private calculateTotalRouteDistance(
+    route: google.maps.DirectionsRoute
+  ): number {
     let totalDistance = 0;
     const legs = route.legs;
 
@@ -323,6 +454,12 @@ private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-frie
     return totalDistance / 1000; // Convert to kilometers
   }
 
+
+  /**
+   * @brief Calculates total time for a route
+   * @param route Google Maps route object
+   * @returns Total time in seconds
+   */
   private calculateTotalRouteTime(route: google.maps.DirectionsRoute): number {
     let totalRouteTime = 0;
     const legs = route.legs;
@@ -332,58 +469,75 @@ private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-frie
       const leg = legs[i];
 
       // Calculate time for this leg (in seconds)
-      const legTime = leg.duration_in_traffic ? leg.duration_in_traffic.value : leg.duration!.value;
+      const legTime = leg.duration_in_traffic
+        ? leg.duration_in_traffic.value
+        : leg.duration!.value;
       totalRouteTime += legTime;
     }
 
     return totalRouteTime;
   }
 
-  // Helper method to format time in seconds into hours, minutes, and seconds
+
+  /**
+   * @brief Formats time in seconds to human-readable string
+   * @param seconds Time in seconds
+   * @returns Formatted time string
+   */
   private formatTime(seconds: number): string {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
 
-    return `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
+    return `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} min${
+      minutes !== 1 ? 's' : ''
+    }`;
   }
 
+
+  /**
+   * @brief Formats duration object to string
+   * @param duration Google Maps duration object
+   * @returns Formatted duration string
+   */
   private formatDuration(duration: google.maps.Duration): string {
-    // Format the duration into a user-friendly string (e.g., "10 min")
     return duration.text;
   }
 
 
+  /**
+   * @brief Adds markers to the route map
+   */
   private addMarkersToRoute(): void {
     const path = this.viewedVehicle?.route?.locations?.map((loc) => ({
-        lat: this.convertToDecimal(loc.latitude),
-        lng: this.convertToDecimal(loc.longitude),
+      lat: this.convertToDecimal(loc.latitude),
+      lng: this.convertToDecimal(loc.longitude),
     }));
 
     if (!path) return;
 
     this.routeMarkers = path.map((point, index) => {
-        const marker = new google.maps.Marker({
-            position: point,
-            map: this.routeMap,
-            title: `Stop ${index + 1}`,
-            label: {
-                text: `${index + 1}`,
-                color: '#FFFFFF',
-                fontWeight: 'bold',
-                fontSize: '12px'
-            },
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: '#4F46E5',  // Indigo-600
-                fillOpacity: 1,
-                strokeColor: '#FFFFFF',
-                strokeWeight: 2,
-                scale: 10
-            },
-            optimized: false
-        });
+      const marker = new google.maps.Marker({
+        position: point,
+        map: this.routeMap,
+        title: `Stop ${index + 1}`,
+        label: {
+          text: `${index + 1}`,
+          color: '#FFFFFF',
+          fontWeight: 'bold',
+          fontSize: '12px',
+        },
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: '#4F46E5', // Indigo-600
+          fillOpacity: 1,
+          strokeColor: '#FFFFFF',
+          strokeWeight: 2,
+          scale: 10,
+        },
+        optimized: false,
+      });
 
-        const content = `
+      const content = `
             <div class="info-window-container" style="font-family: 'Segoe UI', system-ui, sans-serif; max-width: 320px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                 <!-- Header -->
                 <div style="background: #4F46E5; padding: 16px; border-bottom: 1px solid #4338CA;">
@@ -407,7 +561,10 @@ private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-frie
                         <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">
                             <div>
                                 <span style="display: block; color: #111827; font-weight: 500; font-size: 14px;">
-                                    ${this.addresses[index] || 'Address not specified'}
+                                    ${
+                                      this.addresses[index] ||
+                                      'Address not specified'
+                                    }
                                 </span>
                             </div>
                         </div>
@@ -421,12 +578,16 @@ private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-frie
                         <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">
                             <div style="display: flex; justify-content: space-between;">
                                 <span style="color: #6B7280; font-size: 14px;">Latitude</span>
-                                <span style="color: #111827; font-weight: 500; font-size: 14px;">${point.lat.toFixed(6)}</span>
+                                <span style="color: #111827; font-weight: 500; font-size: 14px;">${point.lat.toFixed(
+                                  6
+                                )}</span>
                             </div>
                             <div style="height: 1px; background: #E5E7EB; margin: 8px 0;"></div>
                             <div style="display: flex; justify-content: space-between;">
                                 <span style="color: #6B7280; font-size: 14px;">Longitude</span>
-                                <span style="color: #111827; font-weight: 500; font-size: 14px;">${point.lng.toFixed(6)}</span>
+                                <span style="color: #111827; font-weight: 500; font-size: 14px;">${point.lng.toFixed(
+                                  6
+                                )}</span>
                             </div>
                         </div>
                     </div>
@@ -449,33 +610,44 @@ private calculateCO2Emissions(distance: number, routeType: 'highway' | 'eco-frie
             </div>
         `;
 
-        const infoWindow = new google.maps.InfoWindow({
-            content: content,
-            maxWidth: 320
+      const infoWindow = new google.maps.InfoWindow({
+        content: content,
+        maxWidth: 320,
+      });
+
+      marker.addListener('click', () => {
+        // Close all other info windows first
+        this.routeMarkers.forEach((m) => {
+          const iw = m.get('infoWindow');
+          if (iw) iw.close();
         });
 
-        marker.addListener('click', () => {
-            // Close all other info windows first
-            this.routeMarkers.forEach(m => {
-                const iw = m.get('infoWindow');
-                if (iw) iw.close();
-            });
+        infoWindow.open(this.routeMap, marker);
+        marker.set('infoWindow', infoWindow);
+      });
 
-            infoWindow.open(this.routeMap, marker);
-            marker.set('infoWindow', infoWindow);
-        });
-
-        return marker;
+      return marker;
     });
-}
+  }
 
-private getStopType(index: number, total: number): string {
+
+
+  /**
+   * @brief Gets stop type description
+   * @param index Stop index
+   * @param total Total number of stops
+   * @returns Stop type description
+   */
+  private getStopType(index: number, total: number): string {
     if (index === 0) return 'Starting location for this route';
     if (index === total - 1) return 'Final destination for this route';
     return `Intermediate stop #${index}`;
-}
+  }
 
 
+  /**
+   * @brief Loads routes from the service
+   */
   loadRoutes() {
     this.vehicleService.getRoutes().subscribe({
       next: (data) => {
@@ -487,49 +659,90 @@ private getStopType(index: number, total: number): string {
     });
   }
 
+
+  /**
+   * @brief Gets paginated vehicles for current page
+   */
   get paginatedVehicles() {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.filteredVehicles.slice(start, start + this.pageSize);
   }
 
+
+  /**
+   * @brief Calculates total number of pages
+   */
   get totalPages(): number {
     return Math.ceil(this.filteredVehicles.length / this.pageSize);
   }
 
+
+  /**
+   * @brief Filters vehicles based on current filters
+   */
   get filteredVehicles() {
     return this.vehicles.filter((vehicle) => {
-      const maxCapacityString = typeof vehicle.maxCapacity === 'number' ? `${vehicle.maxCapacity}kg` : vehicle.maxCapacity;
+      const maxCapacityString =
+        typeof vehicle.maxCapacity === 'number'
+          ? `${vehicle.maxCapacity}kg`
+          : vehicle.maxCapacity;
       return (
-        (this.selectedStatus === '' || vehicle.status === this.selectedStatus) &&
-        (this.selectedRoute === '' || vehicle.routeType === this.selectedRoute) &&
-        (this.selectedCapacity === '' || maxCapacityString === this.selectedCapacity) &&
+        (this.selectedStatus === '' ||
+          vehicle.status === this.selectedStatus) &&
+        (this.selectedRoute === '' ||
+          vehicle.routeType === this.selectedRoute) &&
+        (this.selectedCapacity === '' ||
+          maxCapacityString === this.selectedCapacity) &&
         (this.searchQuery === '' ||
           (vehicle.id && vehicle.id.toString().includes(this.searchQuery)) ||
-          vehicle.licensePlate.toLowerCase().includes(this.searchQuery.toLowerCase()))
+          vehicle.licensePlate
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()))
       );
     });
   }
 
+
+  /**
+   * @brief Navigates to next page
+   */
   nextPage() {
     if (this.currentPage * this.pageSize < this.filteredVehicles.length) {
       this.currentPage++;
     }
   }
 
+
+   /**
+   * @brief Navigates to previous page
+   */
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
   }
 
+
+  /**
+   * @brief Handles filter changes
+   */
   onFilterChange() {
     this.currentPage = 1;
   }
 
+
+  /**
+   * @brief Selects a vehicle
+   * @param vehicle Vehicle to select
+   */
   selectVehicle(vehicle: Vehicle) {
     this.selectedVehicle = vehicle;
   }
 
+
+   /**
+   * @brief Toggles add vehicle form visibility
+   */
   toggleAddForm() {
     this.showAddForm = !this.showAddForm;
     if (this.showAddForm) {
@@ -537,16 +750,28 @@ private getStopType(index: number, total: number): string {
     }
   }
 
+
+   /**
+   * @brief Shows delete confirmation dialog
+   */
   showDeleteDialog() {
     if (this.selectedVehicle) {
       this.showDeleteConfirmation = true;
     }
   }
 
+
+  /**
+   * @brief Cancels delete operation
+   */
   cancelDelete() {
     this.showDeleteConfirmation = false;
   }
 
+
+  /**
+   * @brief Confirms and executes vehicle deletion
+   */
   confirmDelete() {
     if (this.selectedVehicle?.id) {
       this.isLoading = true;
@@ -566,8 +791,16 @@ private getStopType(index: number, total: number): string {
     }
   }
 
+
+   /**
+   * @brief Adds a new vehicle
+   */
   addVehicle() {
-    if (this.vehicle.licensePlate && this.vehicle.driver?.name && this.vehicle.driver?.licenseNumber) {
+    if (
+      this.vehicle.licensePlate &&
+      this.vehicle.driver?.name &&
+      this.vehicle.driver?.licenseNumber
+    ) {
       this.isLoading = true;
       this.vehicle.driverName = this.vehicle.driver.name;
       this.vehicleService.addVehicle(this.vehicle).subscribe({
@@ -586,6 +819,12 @@ private getStopType(index: number, total: number): string {
     }
   }
 
+
+
+  /**
+   * @brief Navigates to route creation for a vehicle
+   * @param vehicleId ID of vehicle to create route for
+   */
   navigateToRoute(vehicleId: number) {
     if (!vehicleId) return;
     this.routeVehicleId = vehicleId;
@@ -596,10 +835,18 @@ private getStopType(index: number, total: number): string {
     });
   }
 
+
+  /**
+   * @brief Toggles bin selection for route creation
+   * @param bin Bin to toggle selection for
+   */
   toggleBinSelection(bin: Bin) {
-    const index = this.newRoute.locations?.findIndex(
-      (loc) => loc.latitude === bin.location.latitude && loc.longitude === bin.location.longitude
-    ) ?? -1;
+    const index =
+      this.newRoute.locations?.findIndex(
+        (loc) =>
+          loc.latitude === bin.location.latitude &&
+          loc.longitude === bin.location.longitude
+      ) ?? -1;
 
     if (index >= 0) {
       this.newRoute.locations?.splice(index, 1);
@@ -612,28 +859,56 @@ private getStopType(index: number, total: number): string {
     }
   }
 
+
+  /**
+   * @brief Checks if bin is selected for route
+   * @param bin Bin to check
+   * @returns True if bin is selected
+   */
   isBinSelected(bin: Bin): boolean {
     return !!this.newRoute.locations?.some(
-      (loc) => loc.latitude === bin.location.latitude && loc.longitude === bin.location.longitude
+      (loc) =>
+        loc.latitude === bin.location.latitude &&
+        loc.longitude === bin.location.longitude
     );
   }
 
+
+  /**
+   * @brief Creates a new route
+   */
   async createRoute() {
-    if (!this.routeVehicleId || !this.newRoute.name || !this.newRoute.type || !this.newRoute.locations?.length) {
+    if (
+      !this.routeVehicleId ||
+      !this.newRoute.name ||
+      !this.newRoute.type ||
+      !this.newRoute.locations?.length
+    ) {
       this.error = 'Please ensure all required fields are filled out.';
       return;
     }
 
     this.isLoading = true;
     try {
-      const createdRoute = await this.vehicleService.createRoute(this.newRoute).toPromise();
-      if (!createdRoute?.id) throw new Error('Route creation failed or returned invalid ID');
-      await this.vehicleService.updateVehicleRoute(this.routeVehicleId, createdRoute.id).toPromise();
+      const createdRoute = await this.vehicleService
+        .createRoute(this.newRoute)
+        .toPromise();
+      if (!createdRoute?.id)
+        throw new Error('Route creation failed or returned invalid ID');
+      await this.vehicleService
+        .updateVehicleRoute(this.routeVehicleId, createdRoute.id)
+        .toPromise();
 
-      const vehicleIndex = this.vehicles.findIndex((v) => v.id === this.routeVehicleId);
+      const vehicleIndex = this.vehicles.findIndex(
+        (v) => v.id === this.routeVehicleId
+      );
       if (vehicleIndex >= 0) {
         this.vehicles = [...this.vehicles];
-        this.vehicles[vehicleIndex] = { ...this.vehicles[vehicleIndex], routeId: createdRoute.id, route: createdRoute };
+        this.vehicles[vehicleIndex] = {
+          ...this.vehicles[vehicleIndex],
+          routeId: createdRoute.id,
+          route: createdRoute,
+        };
       }
 
       this.showRouteForm = false;
@@ -641,12 +916,20 @@ private getStopType(index: number, total: number): string {
       this.error = '';
     } catch (error) {
       console.error('Route creation failed:', error);
-      this.error = error instanceof Error ? error.message : 'Failed to create route. Please try again.';
+      this.error =
+        error instanceof Error
+          ? error.message
+          : 'Failed to create route. Please try again.';
     } finally {
       this.isLoading = false;
     }
   }
 
+
+   /**
+   * @brief Opens route view for a vehicle
+   * @param vehicle Vehicle to view route for
+   */
   async openRouteView(vehicle: Vehicle) {
     this.viewedVehicle = vehicle;
     this.showRouteView = true;
@@ -659,7 +942,10 @@ private getStopType(index: number, total: number): string {
 
       for (const location of vehicle.route.locations) {
         try {
-          const address = await this.getAddressFromCoordinates(location.latitude, location.longitude);
+          const address = await this.getAddressFromCoordinates(
+            location.latitude,
+            location.longitude
+          );
           this.addresses.push(address);
         } catch {
           this.addresses.push('Address not found');
@@ -673,13 +959,16 @@ private getStopType(index: number, total: number): string {
           console.error('Map container not found or not yet rendered.');
         }
       }, 100);
-
     }
   }
 
+
+  /**
+   * @brief Clears the route map
+   */
   private clearRouteMap(): void {
     if (this.routeMarkers) {
-      this.routeMarkers.forEach(marker => marker.setMap(null));
+      this.routeMarkers.forEach((marker) => marker.setMap(null));
       this.routeMarkers = [];
     }
     if (this.routePolyline) {
@@ -689,7 +978,17 @@ private getStopType(index: number, total: number): string {
     this.routeMap = null;
   }
 
-  getAddressFromCoordinates(latitude: string, longitude: string): Promise<string> {
+
+  /**
+   * @brief Gets address from coordinates
+   * @param latitude Latitude coordinate
+   * @param longitude Longitude coordinate
+   * @returns Promise resolving to address string
+   */
+  getAddressFromCoordinates(
+    latitude: string,
+    longitude: string
+  ): Promise<string> {
     return new Promise(async (resolve, reject) => {
       try {
         await this.googleMapsService.loadApi();
@@ -711,6 +1010,12 @@ private getStopType(index: number, total: number): string {
     });
   }
 
+
+   /**
+   * @brief Converts coordinate string to decimal
+   * @param coordinate Coordinate string
+   * @returns Decimal coordinate value
+   */
   convertToDecimal(coordinate: string): number {
     const regex = /(\d+)°(\d+)'(\d+(?:\.\d+)?)"?([NSEW])/;
     const parts = coordinate.match(regex);
@@ -724,6 +1029,11 @@ private getStopType(index: number, total: number): string {
     return decimal;
   }
 
+
+  /**
+   * @brief Handles route button click
+   * @param vehicle Vehicle to handle action for
+   */
   handleRouteButtonClick(vehicle: Vehicle) {
     if (vehicle.route) {
       this.openRouteView(vehicle);
@@ -732,19 +1042,39 @@ private getStopType(index: number, total: number): string {
     }
   }
 
+
+  /**
+   * @brief Resets route form
+   */
   resetRouteForm() {
     this.newRoute = { name: '', type: '', locations: [] };
     this.binSearchQuery = '';
   }
 
+
+  /**
+   * @brief Formats capacity value
+   * @param capacity Capacity value
+   * @returns Formatted capacity string
+   */
   formatCapacity(capacity: string | number): string {
     return typeof capacity === 'number' ? `${capacity}kg` : capacity;
   }
 
+
+   /**
+   * @brief Gets driver name for vehicle
+   * @param vehicle Vehicle to get driver for
+   * @returns Driver name or 'N/A'
+   */
   getDriverName(vehicle: Vehicle): string {
     return vehicle.driver?.name || vehicle.driverName || 'N/A';
   }
 
+
+   /**
+   * @brief Refreshes vehicle list
+   */
   refreshVehicles() {
     this.isLoading = true;
     this.error = '';
@@ -752,21 +1082,41 @@ private getStopType(index: number, total: number): string {
     this.loadRoutes();
   }
 
+
+  /**
+   * @brief Handles driver selection
+   */
   onDriverSelect() {
     if (this.selectedDriverIndex >= 0) {
-      this.vehicle.driver = { ...this.availableDrivers[this.selectedDriverIndex] };
+      this.vehicle.driver = {
+        ...this.availableDrivers[this.selectedDriverIndex],
+      };
     }
   }
 
+
+  /**
+   * @brief Toggles between custom driver and available drivers
+   */
   toggleDriverMode() {
     this.useCustomDriver = !this.useCustomDriver;
     if (!this.useCustomDriver) {
       this.selectedDriverIndex = -1;
     } else {
-      this.vehicle.driver = { name: '', age: 30, licenseNumber: '', collaboratorType: 'Driver' };
+      this.vehicle.driver = {
+        name: '',
+        age: 30,
+        licenseNumber: '',
+        collaboratorType: 'Driver',
+      };
     }
   }
 
+
+  /**
+   * @brief Gets default vehicle template
+   * @returns Default vehicle object
+   */
   private getDefaultVehicle(): Vehicle {
     return {
       licensePlate: '',
