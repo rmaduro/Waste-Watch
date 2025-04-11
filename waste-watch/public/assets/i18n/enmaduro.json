@@ -1,0 +1,17 @@
+{
+  "DASHBOARD": {
+    "TITLE": "Fleet Management Dashboard",
+    "ACTIVE_TRUCKS": "Active Trucks",
+    "AVG_FUEL_EFFICIENCY": "Average Fuel Efficiency",
+    "NEARING_CAPACITY": "Nearing Capacity",
+    "TODAYS_COLLECTIONS": "Today's Collections",
+    "COLLECTION_TREND": "vs. previous day",
+    "MONTHLY_OVERVIEW": "Monthly Collections Overview",
+    "MONTHLY_BREAKDOWN": "Monthly Collection Breakdown",
+    "ACTIVE_ALERTS": "Active Alerts",
+    "ALERT_TYPE": {
+      "CRITICAL": "Critical",
+      "WARNING": "Warning"
+    }
+  }
+}
