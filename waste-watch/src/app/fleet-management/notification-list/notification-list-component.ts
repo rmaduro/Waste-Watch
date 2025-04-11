@@ -19,7 +19,7 @@ import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { VehicleService } from '../../services/FleetService';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface Notification {
   id: number;
@@ -61,7 +61,10 @@ export class FleetNotificationListComponent implements OnInit {
   showDetailsModal = false;
   currentNotificationDetails: Notification | null = null;
 
-  constructor(private vehicleService: VehicleService) {}
+  constructor(private vehicleService: VehicleService, private translate: TranslateService) {
+      translate.setDefaultLang('en');
+      translate.use('en');
+    }
 
   ngOnInit(): void {
     this.loadNotifications();

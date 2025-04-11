@@ -3,7 +3,7 @@ import { AuthService } from '../../services/AuthService'; // Adjust the path as 
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   faTruck,
   faGasPump,
@@ -87,7 +87,10 @@ export class FleetDashboardComponent implements OnInit {
   currentUser: { email: string; userName: string; roles: string[] } | null =
     null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private translate: TranslateService) {
+      translate.setDefaultLang('en');
+      translate.use('en');
+    }
 
   ngOnInit(): void {
     this.loadDashboardData();

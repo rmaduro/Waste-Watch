@@ -59,7 +59,7 @@ import {
 } from '../../services/FleetService';
 import { BinService, Bin } from '../../services/BinService';
 import { GoogleMapsService } from '../../services/GoogleMapsService';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -161,8 +161,10 @@ export class VehicleListComponent implements OnInit {
     private vehicleService: VehicleService,
     private binService: BinService,
     private router: Router,
-    private googleMapsService: GoogleMapsService
-  ) {}
+    private googleMapsService: GoogleMapsService, private translate: TranslateService) {
+      translate.setDefaultLang('en');
+      translate.use('en');
+    }
 
   /**
    * @brief Angular lifecycle hook - initializes component

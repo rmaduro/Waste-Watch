@@ -19,6 +19,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { BinService } from '../../services/BinService';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
+import { TranslateModule, TranslateService  } from '@ngx-translate/core';
+
 
 // ✅ Updated Bin Interface with the new fillLevel property for local use only
 export interface Bin {
@@ -38,10 +40,11 @@ export interface Bin {
 @Component({
   selector: 'app-bin-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule, HttpClientModule, SideNavComponent],
+  imports: [CommonModule, FormsModule, FontAwesomeModule, HttpClientModule, SideNavComponent, TranslateModule],
   providers: [BinService],
   templateUrl: './bin-list-component.html',
   styleUrls: ['./bin-list-components.css']
+
 })
 export class BinListComponent implements OnInit {
   // Font Awesome Icons
@@ -92,7 +95,10 @@ export class BinListComponent implements OnInit {
     return Math.ceil(this.bins.length / this.pageSize);
   }
 
-  constructor(private binService: BinService) {}
+  constructor(private binService: BinService, private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use('en');
+  }
 
   ngOnInit(): void {
     this.loadBins();

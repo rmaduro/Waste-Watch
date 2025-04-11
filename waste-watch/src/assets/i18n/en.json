@@ -45,5 +45,293 @@
     "UNITS": {
       "KILOGRAMS": "Kg"
     }
+  },
+  "BIN_LIST": {
+    "TITLE": "Bin List",
+    "ACTIONS": {
+      "ADD_BIN": "Add Bin",
+      "REMOVE_BIN": "Remove Bin",
+      "SAVE": "Save Bin",
+      "SAVING": "Saving...",
+      "DELETE": "Delete Bin",
+      "DELETING": "Deleting...",
+      "CANCEL": "Cancel",
+      "PREVIOUS": "Previous",
+      "NEXT": "Next"
+    },
+    "FILTERS": {
+      "LABEL": "Filters:",
+      "ALL_STATUS": "All Status",
+      "STATUS_VALUES": {
+        "EMPTY": "Empty",
+        "PARTIAL": "Partial",
+        "FULL": "Full",
+        "OVERFLOW": "Overflow"
+      },
+      "ALL_TYPES": "All Types",
+      "TYPE_VALUES": {
+        "GENERAL": "General",
+        "RECYCLING": "Recycling",
+        "COMPOST": "Compost",
+        "HAZARDOUS": "Hazardous"
+      },
+      "SEARCH_PLACEHOLDER": "Search by ID or location..."
+    },
+    "TABLE": {
+      "HEADERS": {
+        "ID": "ID",
+        "TYPE": "Type",
+        "LOCATION": "Location",
+        "FILL_LEVEL": "Fill Level",
+        "STATUS": "Status",
+        "CAPACITY": "Max Capacity",
+        "LAST_EMPTIED": "Last Emptied"
+      },
+      "NO_DATA": "No bins found",
+      "PAGINATION": "Page {{current}} of {{total}}"
+    },
+    "ADD_FORM": {
+      "TITLE": "Add New Bin",
+      "LOCATION": "Location:",
+      "LATITUDE": "Latitude:",
+      "LONGITUDE": "Longitude:",
+      "COORDINATES_HELP": "Enter the coordinates for the bin's location manually (in degrees, minutes, and seconds format).",
+      "CAPACITY": "Max Capacity (kg):",
+      "TYPE": "Type:"
+    },
+    "DELETE_CONFIRMATION": {
+      "TITLE": "Confirm Deletion",
+      "MESSAGE": "Are you sure you want to delete bin with ID:",
+      "WARNING": "This action cannot be undone.",
+      "DETAILS": {
+        "LOCATION": "Location:",
+        "TYPE": "Type:"
+      }
+    },
+    "LOADING": "Loading...",
+    "ERROR": {
+      "TRY_AGAIN": "Try Again"
+    }
+  },
+  "RESET_PASSWORD": {
+    "EMAIL_LABEL": "Email",
+    "PASSWORD_LABEL": "New Password",
+    "CONFIRM_PASSWORD_LABEL": "Confirm New Password",
+    "PASSWORD_PLACEHOLDER": "Enter your new password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your new password",
+    "PASSWORD_MISMATCH": "Passwords do not match",
+    "RESET_BUTTON": "Reset Password",
+    "BACK_TO_LOGIN": "Back to Login"
+  },
+
+  "LOGIN": {
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Enter your email...",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter your password...",
+    "LOGIN_BUTTON": "Log in",
+    "FORGOT_PASSWORD": "Forgot your password?",
+    "LOGIN_ERROR": "Invalid email or password"
+  },
+
+  "REGISTER": {
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Enter your email...",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter your password...",
+    "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your password...",
+    "ROLE_LABEL": "Role",
+    "ROLE_PLACEHOLDER": "Select your role",
+    "ROLE_OPTIONS": {
+      "BIN_MANAGER": "Bin Manager",
+      "FLEET_MANAGER": "Fleet Manager",
+      "ADMIN": "Admin"
+    },
+    "REGISTER_BUTTON": "Register",
+    "LOGOUT": "Logout and return to login"
+  },
+  "REQUEST_RESET": {
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Enter your email to reset password...",
+    "SUBMIT_BUTTON": "Send Email",
+    "BACK_TO_LOGIN": "Back to Login",
+    "ERROR_MESSAGE": "An error occurred. Please try again."
+  },
+
+  "FLEET_DASHBOARD": {
+    "TITLE": "Fleet Management Dashboard",
+    "ACTIVE_TRUCKS": "Active Trucks",
+    "AVG_FUEL_EFFICIENCY": "Average Fuel Efficiency",
+    "NEARING_CAPACITY": "Nearing Capacity",
+    "TODAYS_COLLECTIONS": "Today's Collections",
+    "COLLECTION_TREND": "vs. previous day",
+    "MONTHLY_OVERVIEW": "Monthly Collections Overview",
+    "MONTHLY_BREAKDOWN": "Monthly Collection Breakdown",
+    "ACTIVE_ALERTS": "Active Alerts",
+    "ALERT_TYPE": {
+      "CRITICAL": "Critical",
+      "WARNING": "Warning"
+    }
+  },
+  "FLEET_MAP": {
+    "TITLE": "Fleet Map",
+    "REFRESH_BUTTON": "Refresh Data",
+    "LOADING": "Loading fleet data...",
+    "RETRY_BUTTON": "Retry",
+    "ACTIVE_VEHICLES": "Active Vehicles",
+    "DRIVER_LABEL": "Driver:",
+    "ROUTE_LABEL": "Route:",
+    "LAST_MAINTENANCE_LABEL": "Last Maintenance:",
+    "UNASSIGNED": "Unassigned"
+  },
+  "FLEET_NOTIFICATIONS": {
+    "TITLE": "Fleet Notifications",
+    "CLEARING": "Clearing...",
+    "CLEAR_ALL": "Clear All",
+    "FILTERS_LABEL": "Filters:",
+    "FILTER_OPTIONS": {
+      "ALL": "All Types",
+      "INFO": "Information",
+      "WARNING": "Warning",
+      "ERROR": "Error",
+      "SUCCESS": "Success"
+    },
+    "LOADING": "Loading notifications...",
+    "RETRY": "Try Again",
+    "VIEW_DETAILS": "View Details",
+    "NO_NOTIFICATIONS": "No notifications found",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "PAGE_INFO": "Page {{ currentPage }} of {{ totalPages }}",
+    "DETAILS_MODAL": {
+      "TITLE": "Notification Details",
+      "LABELS": {
+        "TITLE": "Title:",
+        "TYPE": "Type:",
+        "PRIORITY": "Priority:",
+        "DATE": "Date:",
+        "REFERENCE_ID": "Reference ID:",
+        "MESSAGE": "Message:"
+      },
+      "CLOSE": "Close"
+    }
+  },
+  "VEHICLE_MANAGEMENT": {
+    "TITLE": "Vehicle List",
+    "ADD_BUTTON": "Add Vehicle",
+    "REMOVE_BUTTON": "Remove Vehicle",
+    "FILTERS": {
+      "LABEL": "Filters:",
+      "STATUS": {
+        "ALL": "All Status",
+        "ACTIVE": "Active",
+        "IDLE": "Idle",
+        "MAINTENANCE": "Maintenance"
+      },
+      "ROUTES": {
+        "ALL": "All Routes",
+        "COMMERCIAL": "Commercial",
+        "INDUSTRIAL": "Industrial",
+        "RESIDENTIAL": "Residential"
+      },
+      "CAPACITIES": {
+        "ALL": "All Capacities",
+        "1000KG": "1000kg",
+        "1500KG": "1500kg",
+        "2000KG": "2000kg",
+        "2500KG": "2500kg",
+        "3000KG": "3000kg"
+      },
+      "SEARCH_PLACEHOLDER": "Search by ID..."
+    },
+    "TABLE": {
+      "ID": "ID",
+      "LICENSE_PLATE": "License Plate",
+      "DRIVER_NAME": "Driver's Name",
+      "STATUS": "Status",
+      "ROUTE_TYPE": "Route Type",
+      "MAX_CAPACITY": "Max Capacity",
+      "LAST_MAINTENANCE": "Last Maintenance",
+      "ROUTE": "Route",
+      "VIEW_ROUTE": "View Route",
+      "CREATE_ROUTE": "Create Route",
+      "NO_VEHICLES": "No vehicles found"
+    },
+    "PAGINATION": {
+      "PREVIOUS": "Previous",
+      "NEXT": "Next",
+      "INFO": "Page {{ currentPage }} of {{ totalPages }}"
+    },
+    "LOADING": "Loading...",
+    "ERROR": {
+      "GENERIC": "An error occurred.",
+      "RETRY": "Try Again"
+    },
+    "FORM": {
+      "TITLE": "Add New Vehicle",
+      "SAVE": "Save Vehicle",
+      "SAVING": "Saving...",
+      "CANCEL": "Cancel",
+      "VEHICLE_INFORMATION": "Vehicle Information",
+      "ROUTE_TYPE": "Route Type",
+      "MAX_CAPACITY": "Max Capacity",
+      "LAST_MAINTENANCE_DATE": "Last Maintenance Date",
+      "DRIVER_INFORMATION": "Driver Information",
+      "SELECT_DRIVER": "Select Driver",
+      "CUSTOM_DRIVER": "Custom Driver",
+      "DRIVER_DETAILS": "Driver Details",
+      "DRIVER_NAME": "Name:",
+      "DRIVER_AGE": "Age:",
+      "LICENSE_NUMBER": "License Number:",
+      "COLLABORATOR_TYPE": "Type:",
+      "COLLABORATOR_TYPES": {
+        "DRIVER": "Driver",
+        "CONTRACTOR": "Contractor",
+        "EMPLOYEE": "Employee"
+      },
+      "LOCATION_INFORMATION": "Current Location",
+      "LATITUDE": "Latitude:",
+      "LONGITUDE": "Longitude:"
+    },
+    "ROUTE_FORM": {
+      "TITLE": "Create New Route",
+      "ROUTE_INFORMATION": "Route Information",
+      "ROUTE_NAME": "Route Name:",
+      "ROUTE_TYPE": "Route Type:",
+      "SELECT_BINS": "Select Bins for Collection",
+      "BIN_ID": "Bin #{{ id }}",
+      "BIN_TYPE": "Type: {{ type }}",
+      "BIN_LOCATION": "{{ lat }}, {{ lng }}",
+      "CREATE": "Create Route",
+      "CREATING": "Creating..."
+    },
+    "ROUTE_VIEW": {
+      "DETAILS": "Route Details",
+      "GENERATE_REPORT": "Generate Report",
+      "NO_TYPE": "No type specified",
+      "ASSIGNED_VEHICLE": "Assigned Vehicle",
+      "DRIVER": "Driver",
+      "ESTIMATED_TIME": "Estimated Time",
+      "ECO_ROUTE": "Eco-friendly Route",
+      "TOTAL_STOPS": "Total Stops",
+      "CO2_EMISSIONS": "CO2 Emissions",
+      "ROUTE_MAP": "Route Map",
+      "COLLECTION_STOPS": "Collection Stops ({{ count }})",
+      "DIRECTIONS": "Directions",
+      "NO_ROUTE_ASSIGNED": "No Route Assigned",
+      "NO_ROUTE_MESSAGE": "This vehicle doesn't have an assigned route yet",
+      "CREATE_ROUTE": "Create Route"
+    },
+    "DELETE_CONFIRMATION": {
+      "TITLE": "Confirm Deletion",
+      "MESSAGE": "Are you sure you want to delete vehicle with ID:",
+      "WARNING": "This action cannot be undone.",
+      "LICENSE_PLATE": "License Plate:",
+      "DRIVER": "Driver:",
+      "CONFIRM": "Delete Vehicle",
+      "CONFIRMING": "Deleting...",
+      "CANCEL": "Cancel"
+    }
   }
 }

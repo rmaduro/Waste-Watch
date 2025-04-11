@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../../services/AuthService';
 import { environment } from '../../../environments/environtment';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 interface MapOptions {
@@ -71,8 +71,10 @@ export class FleetMapComponent implements OnInit {
 
   constructor(
     private vehicleService: VehicleService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService, private translate: TranslateService) {
+        translate.setDefaultLang('en');
+        translate.use('en');
+      }
 
   ngOnInit(): void {
     this.checkAuthorization();
