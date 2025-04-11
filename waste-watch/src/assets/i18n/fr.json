@@ -330,8 +330,64 @@
           "CONFIRMING": "Suppression...",
           "CANCEL": "Annuler"
         }
+      },
+      "BIN_MAP": {
+        "TITLE": "Carte des Bacs",
+        "REFRESH_BUTTON": "Actualiser les Données",
+        "LOADING": "Chargement des données des bacs...",
+        "RETRY": "Réessayer",
+        "AVAILABLE_BINS": "Bacs Disponibles",
+        "TYPE": "Type :",
+        "CAPACITY": "Capacité :"
+      },
+      "BIN_NOTIFICATIONS": {
+        "TITLE": "Notifications de Bacs",
+        "CLEARING": "Suppression en cours...",
+        "CLEAR_ALL": "Tout Supprimer",
+        "FILTERS_LABEL": "Filtres :",
+        "FILTER_OPTIONS": {
+          "ALL": "Tous les Types",
+          "INFO": "Information",
+          "WARNING": "Avertissement",
+          "ERROR": "Erreur",
+          "SUCCESS": "Succès"
+        },
+        "LOADING": "Chargement des notifications...",
+        "RETRY": "Réessayer",
+        "VIEW_DETAILS": "Voir les Détails",
+        "NO_NOTIFICATIONS": "Aucune notification trouvée",
+        "PREVIOUS": "Précédent",
+        "NEXT": "Suivant",
+        "PAGE_INFO": "Page {{ currentPage }} sur {{ totalPages }}",
+        "DETAILS_MODAL": {
+          "TITLE": "Détails de la Notification",
+          "LABELS": {
+            "TITLE": "Titre :",
+            "TYPE": "Type :",
+            "PRIORITY": "Priorité :",
+            "DATE": "Date :",
+            "REFERENCE_ID": "ID de Référence :",
+            "MESSAGE": "Message :"
+          },
+          "CLOSE": "Fermer"
+        }
+      },
+        "SIDENAV": {
+          "APP_NAME": "WasteWatch",
+          "FLEET_DASHBOARD": "Tableau de Bord de la Flotte",
+          "VEHICLE_ROSTER": "Liste des Véhicules",
+          "FLEET_MONITORING": "Suivi de la Flotte",
+          "FLEET_NOTIFICATIONS": "Notifications de la Flotte",
+          "BIN_DASHBOARD": "Tableau de Bord des Bacs",
+          "BIN_LIST": "Liste des Bacs",
+          "BIN_MONITORING": "Suivi des Bacs",
+          "BIN_NOTIFICATIONS": "Notifications des Bacs",
+          "LOGOUT": "Se déconnecter"
+        }
       }
-    }
+      
+    
+    
     
   
   

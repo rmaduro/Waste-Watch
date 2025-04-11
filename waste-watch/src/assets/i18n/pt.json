@@ -331,8 +331,64 @@
           "CONFIRMING": "A eliminar...",
           "CANCEL": "Cancelar"
         }
+      },
+      "BIN_MAP": {
+        "TITLE": "Mapa de Contentores",
+        "REFRESH_BUTTON": "Atualizar Dados",
+        "LOADING": "A carregar dados dos contentores...",
+        "RETRY": "Tentar novamente",
+        "AVAILABLE_BINS": "Contentores Disponíveis",
+        "TYPE": "Tipo:",
+        "CAPACITY": "Capacidade:"
+      },
+      "BIN_NOTIFICATIONS": {
+        "TITLE": "Notificações de Contentores",
+        "CLEARING": "A limpar...",
+        "CLEAR_ALL": "Limpar Tudo",
+        "FILTERS_LABEL": "Filtros:",
+        "FILTER_OPTIONS": {
+          "ALL": "Todos os Tipos",
+          "INFO": "Informação",
+          "WARNING": "Aviso",
+          "ERROR": "Erro",
+          "SUCCESS": "Sucesso"
+        },
+        "LOADING": "A carregar notificações...",
+        "RETRY": "Tentar novamente",
+        "VIEW_DETAILS": "Ver Detalhes",
+        "NO_NOTIFICATIONS": "Nenhuma notificação encontrada",
+        "PREVIOUS": "Anterior",
+        "NEXT": "Seguinte",
+        "PAGE_INFO": "Página {{ currentPage }} de {{ totalPages }}",
+        "DETAILS_MODAL": {
+          "TITLE": "Detalhes da Notificação",
+          "LABELS": {
+            "TITLE": "Título:",
+            "TYPE": "Tipo:",
+            "PRIORITY": "Prioridade:",
+            "DATE": "Data:",
+            "REFERENCE_ID": "ID de Referência:",
+            "MESSAGE": "Mensagem:"
+          },
+          "CLOSE": "Fechar"
+        }
+      },
+        "SIDENAV": {
+          "APP_NAME": "WasteWatch",
+          "FLEET_DASHBOARD": "Painel da Frota",
+          "VEHICLE_ROSTER": "Lista de Veículos",
+          "FLEET_MONITORING": "Monitorização da Frota",
+          "FLEET_NOTIFICATIONS": "Notificações da Frota",
+          "BIN_DASHBOARD": "Painel de Contentores",
+          "BIN_LIST": "Lista de Contentores",
+          "BIN_MONITORING": "Monitorização de Contentores",
+          "BIN_NOTIFICATIONS": "Notificações de Contentores",
+          "LOGOUT": "Terminar sessão"
+        }
       }
-    }
+      
+    
+    
     
   
   

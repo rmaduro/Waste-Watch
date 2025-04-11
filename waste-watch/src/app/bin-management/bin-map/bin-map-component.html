@@ -8,23 +8,25 @@
     <header class="dashboard-header">
       <h1 class="dashboard-title">
         <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-        Bin Map
+        {{ 'BIN_MAP.TITLE' | translate }}
       </h1>
       <button class="btn refresh-btn" (click)="refreshMap()">
         <fa-icon [icon]="faSync"></fa-icon>
-        Refresh Data
+        {{ 'BIN_MAP.REFRESH_BUTTON' | translate }}
       </button>
     </header>
 
     <!-- Loading State -->
     <div *ngIf="isLoading" class="loading-container">
-      <p>Loading bin data...</p>
+      <p>{{ 'BIN_MAP.LOADING' | translate }}</p>
     </div>
 
     <!-- Error State -->
     <div *ngIf="errorMessage" class="error-message">
       <p>{{ errorMessage }}</p>
-      <button class="btn-retry" (click)="refreshMap()">Retry</button>
+      <button class="btn-retry" (click)="refreshMap()">
+        {{ 'BIN_MAP.RETRY' | translate }}
+      </button>
     </div>
 
     <!-- Content Container -->
@@ -38,7 +40,10 @@
 
         <!-- Bin List Section -->
         <div class="bin-list-section">
-          <h3><fa-icon [icon]="faMapMarkerAlt"></fa-icon> Available Bins</h3>
+          <h3>
+            <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+            {{ 'BIN_MAP.AVAILABLE_BINS' | translate }}
+          </h3>
           <div class="bin-grid">
             <div
               *ngFor="let bin of bins"
@@ -53,8 +58,8 @@
                 </span>
               </div>
               <div class="bin-details">
-                <p><strong>Type:</strong> {{ getBinTypeText(bin.type) }}</p>
-                <p><strong>Capacity:</strong> {{ bin.capacity }} kg</p>
+                <p><strong>{{ 'BIN_MAP.TYPE' | translate }}</strong> {{ getBinTypeText(bin.type) }}</p>
+                <p><strong>{{ 'BIN_MAP.CAPACITY' | translate }}</strong> {{ bin.capacity }} kg</p>
               </div>
             </div>
           </div>

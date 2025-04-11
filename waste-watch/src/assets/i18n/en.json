@@ -333,5 +333,61 @@
       "CONFIRMING": "Deleting...",
       "CANCEL": "Cancel"
     }
+  },
+  "BIN_MAP": {
+    "TITLE": "Bin Map",
+    "REFRESH_BUTTON": "Refresh Data",
+    "LOADING": "Loading bin data...",
+    "RETRY": "Retry",
+    "AVAILABLE_BINS": "Available Bins",
+    "TYPE": "Type:",
+    "CAPACITY": "Capacity:"
+  },
+  "BIN_NOTIFICATIONS": {
+    "TITLE": "Bin Notifications",
+    "CLEARING": "Clearing...",
+    "CLEAR_ALL": "Clear All",
+    "FILTERS_LABEL": "Filters:",
+    "FILTER_OPTIONS": {
+      "ALL": "All Types",
+      "INFO": "Information",
+      "WARNING": "Warning",
+      "ERROR": "Error",
+      "SUCCESS": "Success"
+    },
+    "LOADING": "Loading notifications...",
+    "RETRY": "Try Again",
+    "VIEW_DETAILS": "View Details",
+    "NO_NOTIFICATIONS": "No notifications found",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "PAGE_INFO": "Page {{ currentPage }} of {{ totalPages }}",
+    "DETAILS_MODAL": {
+      "TITLE": "Notification Details",
+      "LABELS": {
+        "TITLE": "Title:",
+        "TYPE": "Type:",
+        "PRIORITY": "Priority:",
+        "DATE": "Date:",
+        "REFERENCE_ID": "Reference ID:",
+        "MESSAGE": "Message:"
+      },
+      "CLOSE": "Close"
+    }
+  },
+  "SIDENAV": {
+    "APP_NAME": "WasteWatch",
+    "FLEET_DASHBOARD": "Fleet Dashboard",
+    "VEHICLE_ROSTER": "Vehicle Roster",
+    "FLEET_MONITORING": "Fleet Monitoring",
+    "FLEET_NOTIFICATIONS": "Fleet Notification List",
+    "BIN_DASHBOARD": "Bin Dashboard",
+    "BIN_LIST": "Bin List",
+    "BIN_MONITORING": "Bin Monitoring",
+    "BIN_NOTIFICATIONS": "Bin Notification List",
+    "LOGOUT": "Logout"
   }
 }
+
+
+

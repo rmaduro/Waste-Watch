@@ -331,8 +331,64 @@
           "CONFIRMING": "Wird gelöscht...",
           "CANCEL": "Abbrechen"
         }
+      },
+      "BIN_MAP": {
+        "TITLE": "Behälterkarte",
+        "REFRESH_BUTTON": "Daten aktualisieren",
+        "LOADING": "Behälterdaten werden geladen...",
+        "RETRY": "Erneut versuchen",
+        "AVAILABLE_BINS": "Verfügbare Behälter",
+        "TYPE": "Typ:",
+        "CAPACITY": "Kapazität:"
+      },
+      "BIN_NOTIFICATIONS": {
+        "TITLE": "Behälterbenachrichtigungen",
+        "CLEARING": "Wird gelöscht...",
+        "CLEAR_ALL": "Alle löschen",
+        "FILTERS_LABEL": "Filter:",
+        "FILTER_OPTIONS": {
+          "ALL": "Alle Typen",
+          "INFO": "Information",
+          "WARNING": "Warnung",
+          "ERROR": "Fehler",
+          "SUCCESS": "Erfolg"
+        },
+        "LOADING": "Benachrichtigungen werden geladen...",
+        "RETRY": "Erneut versuchen",
+        "VIEW_DETAILS": "Details anzeigen",
+        "NO_NOTIFICATIONS": "Keine Benachrichtigungen gefunden",
+        "PREVIOUS": "Zurück",
+        "NEXT": "Weiter",
+        "PAGE_INFO": "Seite {{ currentPage }} von {{ totalPages }}",
+        "DETAILS_MODAL": {
+          "TITLE": "Benachrichtigungsdetails",
+          "LABELS": {
+            "TITLE": "Titel:",
+            "TYPE": "Typ:",
+            "PRIORITY": "Priorität:",
+            "DATE": "Datum:",
+            "REFERENCE_ID": "Referenz-ID:",
+            "MESSAGE": "Nachricht:"
+          },
+          "CLOSE": "Schließen"
+        }
+      },
+        "SIDENAV": {
+          "APP_NAME": "WasteWatch",
+          "FLEET_DASHBOARD": "Flotten-Dashboard",
+          "VEHICLE_ROSTER": "Fahrzeugliste",
+          "FLEET_MONITORING": "Flottenüberwachung",
+          "FLEET_NOTIFICATIONS": "Flottenbenachrichtigungen",
+          "BIN_DASHBOARD": "Behälter-Dashboard",
+          "BIN_LIST": "Behälterliste",
+          "BIN_MONITORING": "Behälterüberwachung",
+          "BIN_NOTIFICATIONS": "Behälterbenachrichtigungen",
+          "LOGOUT": "Abmelden"
+        }
       }
-    }
+      
+    
+    
     
   
 

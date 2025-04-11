@@ -11,89 +11,90 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
   imports: [CommonModule, FontAwesomeModule],
   template: `
     <div class="sidebar">
-      <div class="logo-container">
-        <img src="assets/images/logo2.png" alt="WasteWatch Logo" class="logo">
-        <span class="logo-text">WasteWatch</span>
-      </div>
+  <div class="logo-container">
+    <img src="assets/images/logo2.png" alt="WasteWatch Logo" class="logo" />
+    <span class="logo-text">{{ 'SIDENAV.APP_NAME' | translate }}</span>
+  </div>
 
-      <ul class="nav flex-column">
-        <!-- Conditional Rendering of Fleet Manager or Bin Manager Links -->
-        <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/fleet-dashboard', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faDashboard"></fa-icon>
-            </div>
-            <span class="link-text">Fleet Dashboard</span>
-          </a>
-        </li>
-        <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/vehicle-list', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faTruck"></fa-icon>
-            </div>
-            <span class="link-text">Vehicle Roster</span>
-          </a>
-        </li>
-        <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/vehicle-map', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faMap"></fa-icon>
-            </div>
-            <span class="link-text">Fleet Monitoring</span>
-          </a>
-        </li>
-        <li *ngIf="isFleetManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/fleet-notification-list', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faBell"></fa-icon>
-            </div>
-            <span class="link-text">Fleet Notification List</span>
-          </a>
-        </li>
+  <ul class="nav flex-column">
+    <!-- Conditional Rendering of Fleet Manager or Bin Manager Links -->
+    <li *ngIf="isFleetManager" class="nav-item">
+      <a class="nav-link" (click)="navigateTo('/fleet-dashboard', $event)">
+        <div class="icon-container">
+          <fa-icon [icon]="faDashboard"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.FLEET_DASHBOARD' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="isFleetManager" class="nav-item">
+      <a class="nav-link" (click)="navigateTo('/vehicle-list', $event)">
+        <div class="icon-container">
+          <fa-icon [icon]="faTruck"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.VEHICLE_ROSTER' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="isFleetManager" class="nav-item">
+      <a class="nav-link" (click)="navigateTo('/vehicle-map', $event)">
+        <div class="icon-container">
+          <fa-icon [icon]="faMap"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.FLEET_MONITORING' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="isFleetManager" class="nav-item">
+      <a class="nav-link" (click)="navigateTo('/fleet-notification-list', $event)">
+        <div class="icon-container">
+          <fa-icon [icon]="faBell"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.FLEET_NOTIFICATIONS' | translate }}</span>
+      </a>
+    </li>
 
-        <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/bin-dashboard', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faDashboard"></fa-icon>
-            </div>
-            <span class="link-text">Bin Dashboard</span>
-          </a>
-        </li>
-        <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/bin-list', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faTrash"></fa-icon>
-            </div>
-            <span class="link-text">Bin List</span>
-          </a>
-        </li>
-        <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/bin-map', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faMap"></fa-icon>
-            </div>
-            <span class="link-text">Bin Monitoring</span>
-          </a>
-        </li>
-        <li *ngIf="isBinManager" class="nav-item">
-          <a class="nav-link" (click)="navigateTo('/bin-notification-list', $event)">
-            <div class="icon-container">
-              <fa-icon [icon]="faBell"></fa-icon>
-            </div>
-            <span class="link-text">Bin Notification List</span>
-          </a>
-        </li>
+    <li *ngIf="isBinManager" class="nav-item">
+      <a class="nav-link" (click)="navigateTo('/bin-dashboard', $event)">
+        <div class="icon-container">
+          <fa-icon [icon]="faDashboard"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.BIN_DASHBOARD' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="isBinManager" class="nav-item">
+      <a class="nav-link" (click)="navigateTo('/bin-list', $event)">
+        <div class="icon-container">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.BIN_LIST' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="isBinManager" class="nav-item">
+      <a class="nav-link" (click)="navigateTo('/bin-map', $event)">
+        <div class="icon-container">
+          <fa-icon [icon]="faMap"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.BIN_MONITORING' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="isBinManager" class="nav-item">
+      <a class="nav-link" (click)="navigateTo('/bin-notification-list', $event)">
+        <div class="icon-container">
+          <fa-icon [icon]="faBell"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.BIN_NOTIFICATIONS' | translate }}</span>
+      </a>
+    </li>
 
-        <li class="nav-item mt-auto">
-          <a class="nav-link logout" (click)="logout()">
-            <div class="icon-container">
-              <fa-icon [icon]="faSignOutAlt"></fa-icon>
-            </div>
-            <span class="link-text">Logout</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+    <li class="nav-item mt-auto">
+      <a class="nav-link logout" (click)="logout()">
+        <div class="icon-container">
+          <fa-icon [icon]="faSignOutAlt"></fa-icon>
+        </div>
+        <span class="link-text">{{ 'SIDENAV.LOGOUT' | translate }}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
   `,
   styles: [`
     .sidebar {

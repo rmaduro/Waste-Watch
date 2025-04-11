@@ -331,8 +331,64 @@
       "CONFIRMING": "Eliminando...",
       "CANCEL": "Cancelar"
     }
-  }
-}
+  },
+    "BIN_MAP": {
+      "TITLE": "Mapa de Contenedores",
+      "REFRESH_BUTTON": "Actualizar Datos",
+      "LOADING": "Cargando datos de contenedores...",
+      "RETRY": "Reintentar",
+      "AVAILABLE_BINS": "Contenedores Disponibles",
+      "TYPE": "Tipo:",
+      "CAPACITY": "Capacidad:"
+    },
+      "BIN_NOTIFICATIONS": {
+        "TITLE": "Notificaciones de Contenedores",
+        "CLEARING": "Eliminando...",
+        "CLEAR_ALL": "Eliminar Todo",
+        "FILTERS_LABEL": "Filtros:",
+        "FILTER_OPTIONS": {
+          "ALL": "Todos los Tipos",
+          "INFO": "Información",
+          "WARNING": "Advertencia",
+          "ERROR": "Error",
+          "SUCCESS": "Éxito"
+        },
+        "LOADING": "Cargando notificaciones...",
+        "RETRY": "Intentar de nuevo",
+        "VIEW_DETAILS": "Ver Detalles",
+        "NO_NOTIFICATIONS": "No se encontraron notificaciones",
+        "PREVIOUS": "Anterior",
+        "NEXT": "Siguiente",
+        "PAGE_INFO": "Página {{ currentPage }} de {{ totalPages }}",
+        "DETAILS_MODAL": {
+          "TITLE": "Detalles de la Notificación",
+          "LABELS": {
+            "TITLE": "Título:",
+            "TYPE": "Tipo:",
+            "PRIORITY": "Prioridad:",
+            "DATE": "Fecha:",
+            "REFERENCE_ID": "ID de Referencia:",
+            "MESSAGE": "Mensaje:"
+          },
+          "CLOSE": "Cerrar"
+        }
+      },
+        "SIDENAV": {
+          "APP_NAME": "WasteWatch",
+          "FLEET_DASHBOARD": "Panel de Flota",
+          "VEHICLE_ROSTER": "Lista de Vehículos",
+          "FLEET_MONITORING": "Monitoreo de Flota",
+          "FLEET_NOTIFICATIONS": "Notificaciones de Flota",
+          "BIN_DASHBOARD": "Panel de Contenedores",
+          "BIN_LIST": "Lista de Contenedores",
+          "BIN_MONITORING": "Monitoreo de Contenedores",
+          "BIN_NOTIFICATIONS": "Notificaciones de Contenedores",
+          "LOGOUT": "Cerrar sesión"
+        }
+      }
+      
+    
+  
 
 
 
