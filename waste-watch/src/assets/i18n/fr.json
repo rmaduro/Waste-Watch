@@ -1,0 +1,343 @@
+{
+  "DASHBOARD": {
+    "TITLE": "Tableau de Bord de Gestion des Bacs",
+    "ACTIONS": {
+      "REFRESH": "Rafraîchir les Données",
+      "GENERATE_REPORT": "Générer un Rapport",
+      "GENERATING": "Génération en cours..."
+    },
+    "STATS": {
+      "TITLE": "Indicateurs Clés",
+      "MAINTENANCE": {
+        "TITLE": "Bacs en Maintenance",
+        "VALUE": "{{value}}"
+      }
+    },
+    "COLLECTION_HISTORY": {
+      "TITLE": "Historique des Collectes",
+      "COLUMNS": {
+        "ID": "ID",
+        "BIN_ID": "ID du Bac",
+        "TIMESTAMP": "Horodatage",
+        "AMOUNT": "Quantité Collectée",
+        "ISSUES": "Problèmes Signalés",
+        "STATUS": "État de la Collecte"
+      },
+      "STATUS_VALUES": {
+        "PENDING": "En attente",
+        "COMPLETED": "Complétée",
+        "FAILED": "Échouée"
+      },
+      "NO_DATA": "Aucune donnée d’historique de collecte disponible."
+    },
+    "MAINTENANCE_HISTORY": {
+      "TITLE": "Historique de Maintenance",
+      "COLUMNS": {
+        "BIN_ID": "ID du Bac",
+        "TYPE": "Type de Maintenance",
+        "DESCRIPTION": "Description",
+        "START_DATE": "Date de Début",
+        "END_DATE": "Date de Fin"
+      },
+      "ONGOING": "En cours",
+      "NO_DATA": "Aucune donnée d’historique de maintenance disponible."
+    },
+    "UNITS": {
+      "KILOGRAMS": "Kg"
+    }
+  },
+    "BIN_LIST": {
+      "TITLE": "Liste des Bacs",
+      "ACTIONS": {
+        "ADD_BIN": "Ajouter un Bac",
+        "REMOVE_BIN": "Supprimer le Bac",
+        "SAVE": "Enregistrer le Bac",
+        "SAVING": "Enregistrement...",
+        "DELETE": "Supprimer le Bac",
+        "DELETING": "Suppression...",
+        "CANCEL": "Annuler",
+        "PREVIOUS": "Précédent",
+        "NEXT": "Suivant"
+      },
+      "FILTERS": {
+        "LABEL": "Filtres :",
+        "ALL_STATUS": "Tous les États",
+        "STATUS_VALUES": {
+          "EMPTY": "Vide",
+          "PARTIAL": "Partiellement plein",
+          "FULL": "Plein",
+          "OVERFLOW": "Débordement"
+        },
+        "ALL_TYPES": "Tous les Types",
+        "TYPE_VALUES": {
+          "GENERAL": "Général",
+          "RECYCLING": "Recyclage",
+          "COMPOST": "Compost",
+          "HAZARDOUS": "Dangereux"
+        },
+        "SEARCH_PLACEHOLDER": "Rechercher par ID ou emplacement..."
+      },
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "TYPE": "Type",
+          "LOCATION": "Emplacement",
+          "FILL_LEVEL": "Niveau de Remplissage",
+          "STATUS": "État",
+          "CAPACITY": "Capacité Maximale",
+          "LAST_EMPTIED": "Dernier Vidage"
+        },
+        "NO_DATA": "Aucun bac trouvé",
+        "PAGINATION": "Page {{current}} sur {{total}}"
+      },
+      "ADD_FORM": {
+        "TITLE": "Ajouter un Nouveau Bac",
+        "LOCATION": "Emplacement :",
+        "LATITUDE": "Latitude :",
+        "LONGITUDE": "Longitude :",
+        "COORDINATES_HELP": "Saisissez manuellement les coordonnées de l'emplacement du bac (au format degrés, minutes, secondes).",
+        "CAPACITY": "Capacité Maximale (kg) :",
+        "TYPE": "Type :"
+      },
+      "DELETE_CONFIRMATION": {
+        "TITLE": "Confirmer la Suppression",
+        "MESSAGE": "Êtes-vous sûr de vouloir supprimer le bac avec l’ID :",
+        "WARNING": "Cette action est irréversible.",
+        "DETAILS": {
+          "LOCATION": "Emplacement :",
+          "TYPE": "Type :"
+        }
+      },
+      "LOADING": "Chargement...",
+      "ERROR": {
+        "TRY_AGAIN": "Réessayer"
+      }
+    },
+    "RESET_PASSWORD": {
+      "EMAIL_LABEL": "Email",
+      "PASSWORD_LABEL": "Nouveau mot de passe",
+      "CONFIRM_PASSWORD_LABEL": "Confirmer le mot de passe",
+      "PASSWORD_PLACEHOLDER": "Saisissez votre nouveau mot de passe",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Confirmez votre nouveau mot de passe",
+      "PASSWORD_MISMATCH": "Les mots de passe ne correspondent pas",
+      "RESET_BUTTON": "Réinitialiser le mot de passe",
+      "BACK_TO_LOGIN": "Retour à la Connexion"
+    },
+    "LOGIN": {
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Entrez votre email...",
+      "PASSWORD_LABEL": "Mot de passe",
+      "PASSWORD_PLACEHOLDER": "Entrez votre mot de passe...",
+      "LOGIN_BUTTON": "Se connecter",
+      "FORGOT_PASSWORD": "Mot de passe oublié ?",
+      "LOGIN_ERROR": "Email ou mot de passe invalide"
+    },
+    "REGISTER": {
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Entrez votre email...",
+      "PASSWORD_LABEL": "Mot de passe",
+      "PASSWORD_PLACEHOLDER": "Entrez votre mot de passe...",
+      "CONFIRM_PASSWORD_LABEL": "Confirmer le mot de passe",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Confirmez votre mot de passe...",
+      "ROLE_LABEL": "Rôle",
+      "ROLE_PLACEHOLDER": "Sélectionnez votre rôle",
+      "ROLE_OPTIONS": {
+        "BIN_MANAGER": "Responsable des Bacs",
+        "FLEET_MANAGER": "Responsable de Flotte",
+        "ADMIN": "Administrateur"
+      },
+      "REGISTER_BUTTON": "S’inscrire",
+      "LOGOUT": "Se déconnecter et retourner à la connexion"
+    },
+    "FLEET_DASHBOARD": {
+      "TITLE": "Tableau de Bord de Gestion de Flotte",
+      "ACTIVE_TRUCKS": "Camions Actifs",
+      "AVG_FUEL_EFFICIENCY": "Consommation Moyenne de Carburant",
+      "NEARING_CAPACITY": "Proche de la Capacité Maximale",
+      "TODAYS_COLLECTIONS": "Collectes du Jour",
+      "COLLECTION_TREND": "par rapport à la veille",
+      "MONTHLY_OVERVIEW": "Aperçu Mensuel des Collectes",
+      "MONTHLY_BREAKDOWN": "Répartition Mensuelle des Collectes",
+      "ACTIVE_ALERTS": "Alertes Actives",
+      "ALERT_TYPE": {
+        "CRITICAL": "Critique",
+        "WARNING": "Avertissement"
+      }
+    },
+    "REQUEST_RESET": {
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Entrez votre email pour réinitialiser le mot de passe...",
+      "SUBMIT_BUTTON": "Envoyer l’email",
+      "BACK_TO_LOGIN": "Retour à la Connexion",
+      "ERROR_MESSAGE": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "FLEET_MAP": {
+      "TITLE": "Carte de la Flotte",
+      "REFRESH_BUTTON": "Rafraîchir les Données",
+      "LOADING": "Chargement des données de la flotte...",
+      "RETRY_BUTTON": "Réessayer",
+      "ACTIVE_VEHICLES": "Véhicules Actifs",
+      "DRIVER_LABEL": "Conducteur :",
+      "ROUTE_LABEL": "Itinéraire :",
+      "LAST_MAINTENANCE_LABEL": "Dernière Maintenance :",
+      "UNASSIGNED": "Non Assigné"
+    },
+    "FLEET_NOTIFICATIONS": {
+      "TITLE": "Notifications de la Flotte",
+      "CLEARING": "Suppression en cours...",
+      "CLEAR_ALL": "Tout Supprimer",
+      "FILTERS_LABEL": "Filtres :",
+      "FILTER_OPTIONS": {
+        "ALL": "Tous les Types",
+        "INFO": "Information",
+        "WARNING": "Avertissement",
+        "ERROR": "Erreur",
+        "SUCCESS": "Succès"
+      },
+      "LOADING": "Chargement des notifications...",
+      "RETRY": "Réessayer",
+      "VIEW_DETAILS": "Voir les Détails",
+      "NO_NOTIFICATIONS": "Aucune notification trouvée",
+      "PREVIOUS": "Précédent",
+      "NEXT": "Suivant",
+      "PAGE_INFO": "Page {{ currentPage }} sur {{ totalPages }}",
+      "DETAILS_MODAL": {
+        "TITLE": "Détails de la Notification",
+        "LABELS": {
+          "TITLE": "Titre :",
+          "TYPE": "Type :",
+          "PRIORITY": "Priorité :",
+          "DATE": "Date :",
+          "REFERENCE_ID": "ID de Référence :",
+          "MESSAGE": "Message :"
+        },
+        "CLOSE": "Fermer"
+      }
+    },
+      "VEHICLE_MANAGEMENT": {
+        "TITLE": "Liste des Véhicules",
+        "ADD_BUTTON": "Ajouter un Véhicule",
+        "REMOVE_BUTTON": "Supprimer le Véhicule",
+        "FILTERS": {
+          "LABEL": "Filtres :",
+          "STATUS": {
+            "ALL": "Tous les États",
+            "ACTIVE": "Actif",
+            "IDLE": "Inactif",
+            "MAINTENANCE": "Maintenance"
+          },
+          "ROUTES": {
+            "ALL": "Tous les Itinéraires",
+            "COMMERCIAL": "Commercial",
+            "INDUSTRIAL": "Industriel",
+            "RESIDENTIAL": "Résidentiel"
+          },
+          "CAPACITIES": {
+            "ALL": "Toutes les Capacités",
+            "1000KG": "1000kg",
+            "1500KG": "1500kg",
+            "2000KG": "2000kg",
+            "2500KG": "2500kg",
+            "3000KG": "3000kg"
+          },
+          "SEARCH_PLACEHOLDER": "Rechercher par ID..."
+        },
+        "TABLE": {
+          "ID": "ID",
+          "LICENSE_PLATE": "Plaque d’Immatriculation",
+          "DRIVER_NAME": "Nom du Conducteur",
+          "STATUS": "État",
+          "ROUTE_TYPE": "Type d’Itinéraire",
+          "MAX_CAPACITY": "Capacité Maximale",
+          "LAST_MAINTENANCE": "Dernière Maintenance",
+          "ROUTE": "Itinéraire",
+          "VIEW_ROUTE": "Voir l’Itinéraire",
+          "CREATE_ROUTE": "Créer un Itinéraire",
+          "NO_VEHICLES": "Aucun véhicule trouvé"
+        },
+        "PAGINATION": {
+          "PREVIOUS": "Précédent",
+          "NEXT": "Suivant",
+          "INFO": "Page {{ currentPage }} sur {{ totalPages }}"
+        },
+        "LOADING": "Chargement...",
+        "ERROR": {
+          "GENERIC": "Une erreur est survenue.",
+          "RETRY": "Réessayer"
+        },
+        "FORM": {
+          "TITLE": "Ajouter un Nouveau Véhicule",
+          "SAVE": "Enregistrer le Véhicule",
+          "SAVING": "Enregistrement...",
+          "CANCEL": "Annuler",
+          "VEHICLE_INFORMATION": "Informations sur le Véhicule",
+          "ROUTE_TYPE": "Type d’Itinéraire",
+          "MAX_CAPACITY": "Capacité Maximale",
+          "LAST_MAINTENANCE_DATE": "Date de la Dernière Maintenance",
+          "DRIVER_INFORMATION": "Informations sur le Conducteur",
+          "SELECT_DRIVER": "Sélectionner un Conducteur",
+          "CUSTOM_DRIVER": "Conducteur Personnalisé",
+          "DRIVER_DETAILS": "Détails du Conducteur",
+          "DRIVER_NAME": "Nom :",
+          "DRIVER_AGE": "Âge :",
+          "LICENSE_NUMBER": "Numéro de Permis :",
+          "COLLABORATOR_TYPE": "Type :",
+          "COLLABORATOR_TYPES": {
+            "DRIVER": "Conducteur",
+            "CONTRACTOR": "Prestataire",
+            "EMPLOYEE": "Employé"
+          },
+          "LOCATION_INFORMATION": "Emplacement Actuel",
+          "LATITUDE": "Latitude :",
+          "LONGITUDE": "Longitude :"
+        },
+        "ROUTE_FORM": {
+          "TITLE": "Créer un Nouvel Itinéraire",
+          "ROUTE_INFORMATION": "Informations sur l’Itinéraire",
+          "ROUTE_NAME": "Nom de l’Itinéraire :",
+          "ROUTE_TYPE": "Type d’Itinéraire :",
+          "SELECT_BINS": "Sélectionner les Bacs à Collecter",
+          "BIN_ID": "Bac #{{ id }}",
+          "BIN_TYPE": "Type : {{ type }}",
+          "BIN_LOCATION": "{{ lat }}, {{ lng }}",
+          "CREATE": "Créer l’Itinéraire",
+          "CREATING": "Création en cours..."
+        },
+        "ROUTE_VIEW": {
+          "DETAILS": "Détails de l’Itinéraire",
+          "GENERATE_REPORT": "Générer un Rapport",
+          "NO_TYPE": "Type non spécifié",
+          "ASSIGNED_VEHICLE": "Véhicule Assigné",
+          "DRIVER": "Conducteur",
+          "ESTIMATED_TIME": "Temps Estimé",
+          "ECO_ROUTE": "Itinéraire Écoresponsable",
+          "TOTAL_STOPS": "Nombre Total d’Arrêts",
+          "CO2_EMISSIONS": "Émissions de CO2",
+          "ROUTE_MAP": "Carte de l’Itinéraire",
+          "COLLECTION_STOPS": "Points de Collecte ({{ count }})",
+          "DIRECTIONS": "Itinéraire",
+          "NO_ROUTE_ASSIGNED": "Aucun Itinéraire Assigné",
+          "NO_ROUTE_MESSAGE": "Ce véhicule n’a pas encore d’itinéraire assigné",
+          "CREATE_ROUTE": "Créer un Itinéraire"
+        },
+        "DELETE_CONFIRMATION": {
+          "TITLE": "Confirmer la Suppression",
+          "MESSAGE": "Êtes-vous sûr de vouloir supprimer le véhicule avec l’ID :",
+          "WARNING": "Cette action est irréversible.",
+          "LICENSE_PLATE": "Plaque d’Immatriculation :",
+          "DRIVER": "Conducteur :",
+          "CONFIRM": "Supprimer le Véhicule",
+          "CONFIRMING": "Suppression...",
+          "CANCEL": "Annuler"
+        }
+      }
+    }
+    
+  
+  
+  
+  
+  
+  
+  
+  

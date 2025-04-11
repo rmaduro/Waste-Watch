@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\3º Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\WasteWatchAuth.csproj": {}
+    "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\WasteWatchAuth.csproj": {}
   },
   "projects": {
-    "D:\\3º Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\WasteWatchAuth.csproj": {
+    "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\WasteWatchAuth.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\3º Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\WasteWatchAuth.csproj",
+        "projectUniqueName": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\WasteWatchAuth.csproj",
         "projectName": "WasteWatchAuth",
-        "projectPath": "D:\\3º Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\WasteWatchAuth.csproj",
-        "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
-        "outputPath": "D:\\3º Ano\\ESA\\Projeto\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\obj\\",
+        "projectPath": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\WasteWatchAuth.csproj",
+        "packagesPath": "C:\\Users\\migue\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\migue\\Desktop\\Faculdade\\3_ano_1_semestre\\ESA\\project\\Waste-Watch\\WasteWatchAuth\\WasteWatchAuth\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\migue\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,8 +40,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -109,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
