@@ -1116,9 +1116,9 @@ export class VehicleListComponent implements OnInit {
         pdf.rect(0, 0, pageWidth, 15, 'F');
         pdf.setFontSize(8);
         pdf.setTextColor(100, 100, 100);
-        pdf.text('ROUTE MANAGEMENT SYSTEM', margin, 10);
+        pdf.text('WasteWatch Route Report', margin, 10);
         const companyLogo = 'assets/images/logo2.png';
-        pdf.addImage(companyLogo, 'PNG', pageWidth - 30, 3, 20, 12);
+        pdf.addImage(companyLogo, 'PNG', pageWidth - 30, 3, 15, 15);
       };
 
       const addPageFooter = (pageNum: number, totalPages: number) => {
@@ -1284,7 +1284,7 @@ export class VehicleListComponent implements OnInit {
       } route, assigned to vehicle ${
         this.viewedVehicle?.licensePlate || ''
       }. The analysis includes key performance metrics, environmental impact assessment, and detailed stop information to help optimize waste collection operations.`;
-      const afterDescY = addParagraph(routeText, 45);
+      const afterDescY = addParagraph(routeText, 40);
 
       const summaryMetrics = [
         {
@@ -1366,7 +1366,7 @@ export class VehicleListComponent implements OnInit {
               : 'Needs Improvement',
         },
       ];
-      addMetricTable(afterImpactY + 10, envMetrics);
+      addMetricTable(afterImpactY , envMetrics);
 
       // --- ROUTE MAP ---
       pdf.addPage();
