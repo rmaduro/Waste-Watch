@@ -21,6 +21,7 @@ import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { jsPDF } from 'jspdf';
+import { TranslateModule, TranslateService  } from '@ngx-translate/core';
 
 
 @Component({
@@ -28,7 +29,8 @@ import { jsPDF } from 'jspdf';
   standalone: true,
   templateUrl: './bin-dashboard-component.html',
   styleUrls: ['./bin-dashboard-component.css'],
-  imports: [CommonModule, FontAwesomeModule, SideNavComponent], // Add SideNavComponent here
+  imports: [CommonModule, FontAwesomeModule, SideNavComponent, TranslateModule], // Add SideNavComponent here
+  providers: [TranslateService] // Provide TranslateService here
 })
 export class BinDashboardComponent implements OnInit {
   // Assign icons to class properties
@@ -52,7 +54,10 @@ export class BinDashboardComponent implements OnInit {
   collectionHistory: CollectionHistory[] = []; // Now using the CollectionHistory type
   maintenanceHistory: any[] = [];
 
-  constructor(private binService: BinService) { }
+  constructor(private binService: BinService, private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use('en'); // or dynamically switch languages
+   }
 
   isLoading: boolean = false;
   error: string | null = null;

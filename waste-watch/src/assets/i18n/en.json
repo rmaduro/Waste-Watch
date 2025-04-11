@@ -1,0 +1,49 @@
+{
+  "DASHBOARD": {
+    "TITLE": "Bin Management Dashboard",
+    "ACTIONS": {
+      "REFRESH": "Refresh Data",
+      "GENERATE_REPORT": "Generate Report",
+      "GENERATING": "Generating..."
+    },
+    "STATS": {
+      "TITLE": "Key Metrics",
+      "MAINTENANCE": {
+        "TITLE": "In Maintenance Bins",
+        "VALUE": "{{value}}"
+      }
+    },
+    "COLLECTION_HISTORY": {
+      "TITLE": "Collection History",
+      "COLUMNS": {
+        "ID": "ID",
+        "BIN_ID": "Bin ID",
+        "TIMESTAMP": "Timestamp",
+        "AMOUNT": "Amount Collected",
+        "ISSUES": "Issues Logged",
+        "STATUS": "Collection Status"
+      },
+      "STATUS_VALUES": {
+        "PENDING": "Pending",
+        "COMPLETED": "Completed",
+        "FAILED": "Failed"
+      },
+      "NO_DATA": "No collection history data available."
+    },
+    "MAINTENANCE_HISTORY": {
+      "TITLE": "Maintenance History",
+      "COLUMNS": {
+        "BIN_ID": "Bin ID",
+        "TYPE": "Maintenance Type",
+        "DESCRIPTION": "Description",
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date"
+      },
+      "ONGOING": "Ongoing",
+      "NO_DATA": "No maintenance history available."
+    },
+    "UNITS": {
+      "KILOGRAMS": "Kg"
+    }
+  }
+}
