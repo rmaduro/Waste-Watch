@@ -150,6 +150,17 @@ export class VehicleListComponent implements OnInit {
   routeMarkers: any[] = [];
   routePolyline: any = null;
 
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
+
   /**
    * @brief Constructor for VehicleListComponent
    * @param vehicleService Service for vehicle-related operations
@@ -162,8 +173,8 @@ export class VehicleListComponent implements OnInit {
     private binService: BinService,
     private router: Router,
     private googleMapsService: GoogleMapsService, private translate: TranslateService) {
-      translate.setDefaultLang('en');
-      translate.use('en');
+      const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
     }
 
   /**
@@ -173,6 +184,18 @@ export class VehicleListComponent implements OnInit {
     this.loadVehicles();
     this.loadRoutes();
     this.availableDrivers = this.vehicleService.getAvailableDrivers();
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      // Optional: Save to localStorage
+      localStorage.setItem('userLanguage', langCode);
+    }
   }
 
   /**

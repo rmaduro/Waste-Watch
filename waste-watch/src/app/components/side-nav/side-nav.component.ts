@@ -4,10 +4,13 @@ import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faTruck, faSignOutAlt, faMap, faDashboard,faBell } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../services/AuthService'; // Import AuthService
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-side-nav',
   standalone: true,
+<<<<<<< Updated upstream
   imports: [CommonModule, FontAwesomeModule],
   template: `
     <div class="sidebar">
@@ -93,6 +96,93 @@ import { AuthService } from '../../services/AuthService'; // Import AuthService
       </a>
     </li>
   </ul>
+=======
+  imports: [CommonModule, FontAwesomeModule, TranslateModule],
+  template:  `
+  <div class="sidebar">
+<div class="logo-container">
+  <img src="assets/images/logo2.png" alt="WasteWatch Logo" class="logo" />
+  <span class="logo-text">{{ 'SIDENAV.APP_NAME' | translate }}</span>
+</div>
+
+<ul class="nav flex-column">
+  <!-- Conditional Rendering of Fleet Manager or Bin Manager Links -->
+  <li *ngIf="isFleetManager" class="nav-item">
+    <a class="nav-link" (click)="navigateTo('/fleet-dashboard', $event)">
+      <div class="icon-container">
+        <fa-icon [icon]="faDashboard"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.FLEET_DASHBOARD' | translate }}</span>
+    </a>
+  </li>
+  <li *ngIf="isFleetManager" class="nav-item">
+    <a class="nav-link" (click)="navigateTo('/vehicle-list', $event)">
+      <div class="icon-container">
+        <fa-icon [icon]="faTruck"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.VEHICLE_ROSTER' | translate }}</span>
+    </a>
+  </li>
+  <li *ngIf="isFleetManager" class="nav-item">
+    <a class="nav-link" (click)="navigateTo('/vehicle-map', $event)">
+      <div class="icon-container">
+        <fa-icon [icon]="faMap"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.FLEET_MONITORING' | translate }}</span>
+    </a>
+  </li>
+  <li *ngIf="isFleetManager" class="nav-item">
+    <a class="nav-link" (click)="navigateTo('/fleet-notification-list', $event)">
+      <div class="icon-container">
+        <fa-icon [icon]="faBell"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.FLEET_NOTIFICATIONS' | translate }}</span>
+    </a>
+  </li>
+
+  <li *ngIf="isBinManager" class="nav-item">
+    <a class="nav-link" (click)="navigateTo('/bin-dashboard', $event)">
+      <div class="icon-container">
+        <fa-icon [icon]="faDashboard"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.BIN_DASHBOARD' | translate }}</span>
+    </a>
+  </li>
+  <li *ngIf="isBinManager" class="nav-item">
+    <a class="nav-link" (click)="navigateTo('/bin-list', $event)">
+      <div class="icon-container">
+        <fa-icon [icon]="faTrash"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.BIN_LIST' | translate }}</span>
+    </a>
+  </li>
+  <li *ngIf="isBinManager" class="nav-item">
+    <a class="nav-link" (click)="navigateTo('/bin-map', $event)">
+      <div class="icon-container">
+        <fa-icon [icon]="faMap"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.BIN_MONITORING' | translate }}</span>
+    </a>
+  </li>
+  <li *ngIf="isBinManager" class="nav-item">
+    <a class="nav-link" (click)="navigateTo('/bin-notification-list', $event)">
+      <div class="icon-container">
+        <fa-icon [icon]="faBell"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.BIN_NOTIFICATIONS' | translate }}</span>
+    </a>
+  </li>
+
+  <li class="nav-item mt-auto">
+    <a class="nav-link logout" (click)="logout()">
+      <div class="icon-container">
+        <fa-icon [icon]="faSignOutAlt"></fa-icon>
+      </div>
+      <span class="link-text">{{ 'SIDENAV.LOGOUT' | translate }}</span>
+    </a>
+  </li>
+</ul>
+>>>>>>> Stashed changes
 </div>
 
   `,
@@ -273,8 +363,22 @@ export class SideNavComponent implements OnInit {
 
   isFleetManager = false;
   isBinManager = false;
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  isDropdownOpen = false;
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private translate: TranslateService) {
+    const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
+  }
 
   ngOnInit() {
     // Check the user roles on initialization
@@ -282,6 +386,20 @@ export class SideNavComponent implements OnInit {
       this.isFleetManager = roles.includes('Fleet Manager');
       this.isBinManager = roles.includes('Bin Manager');
     });
+    const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      // Optional: Save to localStorage
+      localStorage.setItem('userLanguage', langCode);
+    }
   }
 
   // Programmatic navigation with console log

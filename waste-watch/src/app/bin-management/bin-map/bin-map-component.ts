@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { environment } from '../../../environments/environtment';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 interface MapOptions {
   center: { lat: number; lng: number };
@@ -51,7 +53,7 @@ declare global {
   standalone: true,
   templateUrl: './bin-map-component.html',
   styleUrls: ['./bin-map-component.css'],
-  imports: [CommonModule, FontAwesomeModule, SideNavComponent],
+  imports: [CommonModule, FontAwesomeModule, SideNavComponent, TranslateModule],
 })
 export class BinMapComponent implements OnInit {
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
@@ -78,15 +80,41 @@ export class BinMapComponent implements OnInit {
   lat: number = 38.552583;
   lng: number = -8.859192;
 
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
+
   constructor(
     private binService: BinService,
-    private authService: AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.checkAuthorization();
     this.loadBins();
     this.loadGoogleMaps();
+    const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      // Optional: Save to localStorage
+      localStorage.setItem('userLanguage', langCode);
+    }
   }
 
   checkAuthorization(): void {

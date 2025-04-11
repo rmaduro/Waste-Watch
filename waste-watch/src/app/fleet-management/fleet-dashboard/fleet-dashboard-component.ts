@@ -14,6 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Chart from 'chart.js/auto';
 
+
 interface Alert {
   id: string;
   type: 'Critical' | 'Warning';
@@ -83,13 +84,23 @@ export class FleetDashboardComponent implements OnInit {
 
   barChartInstance!: Chart;
   pieChartInstance!: Chart;
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
 
   currentUser: { email: string; userName: string; roles: string[] } | null =
     null;
 
   constructor(private authService: AuthService, private translate: TranslateService) {
-      translate.setDefaultLang('en');
-      translate.use('en');
+    const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
     }
 
   ngOnInit(): void {
@@ -105,6 +116,18 @@ export class FleetDashboardComponent implements OnInit {
       this.renderChart();
       this.renderPieChart();
     }, 100);
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      // Optional: Save to localStorage
+      localStorage.setItem('userLanguage', langCode);
+    }
   }
 
   loadDashboardData(): void {

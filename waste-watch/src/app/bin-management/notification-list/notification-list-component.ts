@@ -19,6 +19,8 @@ import { SideNavComponent } from '../../components/side-nav/side-nav.component';
 import { BinService } from '../../services/BinService';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 interface Notification {
   id: number;
@@ -33,7 +35,7 @@ interface Notification {
 @Component({
   selector: 'app-notification-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule, SideNavComponent],
+  imports: [CommonModule, FormsModule, FontAwesomeModule, SideNavComponent, TranslateModule],
   templateUrl: './notification-list-component.html',
   styleUrls: ['./notification-list-component.css']
 })
@@ -60,10 +62,36 @@ export class BinNotificationListComponent implements OnInit {
   showDetailsModal = false;
   currentNotificationDetails: Notification | null = null;
 
-  constructor(private binService: BinService) {}
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
+
+  constructor(private binService: BinService,
+    private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.loadNotifications();
+    const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      // Optional: Save to localStorage
+      localStorage.setItem('userLanguage', langCode);
+    }
   }
 
   loadNotifications() {

@@ -13,6 +13,27 @@
     class="card d-flex flex-column flex-md-row overflow-hidden position-relative"
     style="max-width: 80%; width: 900px; max-height: 800px; height: 500px; border-radius: 15px;"
   >
+    <!-- Language Selector (Top Right of Card) -->
+    <!-- In your template -->
+<div class="position-absolute top-0 end-0 m-3">
+  <div class="dropdown" [class.show]="isDropdownOpen">
+    <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+            type="button"
+            (click)="toggleDropdown()">
+      <span class="fi fi-{{currentLanguageFlag}} me-1"></span>
+      {{currentLanguageName}}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" [class.show]="isDropdownOpen">
+      <li *ngFor="let lang of languageOptions">
+        <a class="dropdown-item" (click)="changeLanguage(lang.code)">
+          <span class="fi fi-{{lang.flag}} me-2"></span>
+          {{lang.name}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
     <!-- Image Container -->
     <div
       class="image-container d-none d-md-flex"

@@ -69,17 +69,40 @@ export class FleetMapComponent implements OnInit {
   lat: number = 38.7223;
   lng: number = -9.1393;
 
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
+
   constructor(
     private vehicleService: VehicleService,
     private authService: AuthService, private translate: TranslateService) {
-        translate.setDefaultLang('en');
-        translate.use('en');
+      const savedLang = localStorage.getItem('userLanguage') || 'en';
+      this.changeLanguage(savedLang);
       }
 
   ngOnInit(): void {
     this.checkAuthorization();
     this.loadVehicles();
     this.loadGoogleMaps();
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      // Optional: Save to localStorage
+      localStorage.setItem('userLanguage', langCode);
+    }
   }
 
   checkAuthorization(): void {

@@ -171,7 +171,7 @@
       "WARNING": "Aviso"
     }
   },
-  
+
     "FLEET_MAP": {
       "TITLE": "Mapa da Frota",
       "REFRESH_BUTTON": "Atualizar Dados",
@@ -386,12 +386,21 @@
           "LOGOUT": "Terminar sessão"
         }
       }
+<<<<<<< Updated upstream
       
     
     
     
   
   
+=======
+
+
+
+
+
+
+>>>>>>> Stashed changes
 
 
 

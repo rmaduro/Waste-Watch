@@ -8,13 +8,13 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/AuthService'; // Import the AuthService
-import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '../../services/AuthService';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [CommonModule, FormsModule,TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './define-password.component.html',
   styleUrls: ['./define-password.component.css'],
 })
@@ -25,41 +25,55 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
   password = '';
   confirmPassword = '';
   currentImage = 'assets/images/login_image5.jpeg';
-  readonly token: string = ''; // Marking as readonly for extra security
+  readonly token: string = '';
 
-  errorMessage: string = ''; // Error message to show in UI
-  successMessage: string = ''; // Success message to show in UI
+  errorMessage: string = '';
+  successMessage: string = '';
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  isDropdownOpen = false;
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService // Inject the AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
-    // Get the email and token from URL
     this.route.queryParams.subscribe((params) => {
-      this.email = params['email'] || ''; // Automatically fill the email field
-      (this as any).token = params['token'] || ''; // Store the token internally (not shown in UI)
+      this.email = params['email'] || '';
+      (this as any).token = params['token'] || '';
     });
-    console.log('Token from URL:', this.token);
 
-    // Print the current user's session info when the page is loaded
     this.authService.checkAuthState().subscribe({
-      next: (response) => {
-        if (response?.user) {
-          console.log('Current user session info:', response.user);
-        } else {
-          console.log('No authenticated user found.');
-        }
-      },
-      error: (error) => {
-        console.error('Error checking authentication state:', error);
-      },
+      error: () => {} // Silent error handling
     });
 
     if (this.backgroundVideo) {
       this.backgroundVideo.nativeElement.playbackRate = 0.5;
+    }
+
+    const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      localStorage.setItem('userLanguage', langCode);
     }
   }
 
@@ -69,32 +83,29 @@ export class DefinePasswordComponent implements OnInit, OnDestroy {
     this.clearMessages();
 
     if (!this.password || !this.confirmPassword) {
-      this.errorMessage = 'Por favor, preencha todos os campos.';
+      this.errorMessage = 'Please fill all fields';
       return;
     }
 
     if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'As senhas não coincidem!';
+      this.errorMessage = 'Passwords do not match';
       return;
     }
 
     const resetData = {
       email: this.email,
-      token: this.token, // Send the token without showing it
+      token: this.token,
       newPassword: this.password,
-      confirmPassword: this.confirmPassword, // Fixed syntax
+      confirmPassword: this.confirmPassword,
     };
 
     this.authService.resetPassword(resetData).subscribe({
-      next: (response) => {
-        this.successMessage =
-          'Senha redefinida com sucesso! Redirecionando para login...';
+      next: () => {
+        this.successMessage = 'Password reset successfully! Redirecting...';
         setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       error: (error) => {
-        this.errorMessage =
-          error.error?.message ||
-          'Falha ao redefinir a senha. Tente novamente.';
+        this.errorMessage = error.error?.message || 'Failed to reset password';
       },
     });
   }
