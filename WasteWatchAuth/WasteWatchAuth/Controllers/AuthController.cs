@@ -174,7 +174,7 @@ namespace WasteWatchAuth.Controllers
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-            var resetLink = $"http://localhost:4200/define-password?email={model.Email}&token={encodedToken}";
+            var resetLink = $"https://waste-watch.azurewebsites.net/define-password?email={model.Email}&token={encodedToken}";
 
             var emailBody = $@"
     <html>
