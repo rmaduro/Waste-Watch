@@ -59,7 +59,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   onResetPassword() {
     const resetData = { email: this.email };
 
-    this.http.post('https://localhost:7259/api/auth/forgot-password', resetData)
+    this.http.post('https://waste-watch.azurewebsites.net/api/auth/forgot-password', resetData)
       .subscribe({
         next: () => {
           this.router.navigate(['/login']);

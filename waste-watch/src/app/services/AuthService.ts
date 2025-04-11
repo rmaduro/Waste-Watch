@@ -26,7 +26,7 @@ export class AuthService {
   userRoles$ = this.userRolesSubject.asObservable();
   currentUser$ = this.currentUserSubject.asObservable();
 
-  private apiUrl = 'https://localhost:7259/api/auth';
+  private apiUrl = 'https://waste-watch.azurewebsites.net/api/auth';
 
   constructor(private http: HttpClient, private router: Router) {
     // Check authentication state when the service is instantiated
@@ -111,7 +111,7 @@ export class AuthService {
    */
   logout(email: string): Observable<any> {
     return this.http.post(
-      'https://localhost:7259/api/auth/logout',
+      'https://waste-watch.azurewebsites.net/api/auth/logout',
       { email },
       { withCredentials: true, responseType: 'text' } // Ensure cookies are sent
     ).pipe(

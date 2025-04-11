@@ -43,8 +43,8 @@ export interface Vehicle {
   providedIn: 'root',
 })
 export class VehicleService {
-  private apiUrl = 'https://localhost:7259/api/vehicles';
-  private routesUrl = 'https://localhost:7259/api/routes';
+  private apiUrl = 'https://waste-watch.azurewebsites.net/api/vehicles';
+  private routesUrl = 'https://waste-watch.azurewebsites.net/api/routes';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -340,7 +340,7 @@ export class VehicleService {
   }
 
   getFleetNotifications(): Observable<any> {
-    const url = 'https://localhost:7259/api/notifications/fleet';
+    const url = 'https://waste-watch.azurewebsites.net/api/notifications/fleet';
     return this.http.get<any>(url, this.httpOptions).pipe(
       catchError((error) => {
         console.error('Error fetching fleet notifications:', error);
@@ -350,7 +350,7 @@ export class VehicleService {
   }
 
   deleteFleetNotification(id: number): Observable<any> {
-    const url = `https://localhost:7259/api/notifications/${id}`;
+    const url = `https://waste-watch.azurewebsites.net/api/notifications/${id}`;
     return this.http.delete(url, this.httpOptions).pipe(
       catchError((error) => {
         console.error('Error deleting fleet notification:', error);

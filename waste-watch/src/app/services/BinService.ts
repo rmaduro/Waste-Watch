@@ -63,8 +63,8 @@ export interface Alert {
 })
 export class BinService {
   private binsSubject = new BehaviorSubject<Bin[]>([]); // Stores the current bins data
-  private apiUrl = 'https://localhost:7259/api/bins'; // URL to interact with the bins API
-  private collectionApiUrl = 'https://localhost:7259/api/collection-history'; // URL to interact with collection history API
+  private apiUrl = 'https://waste-watch.azurewebsites.net/api/bins'; // URL to interact with the bins API
+  private collectionApiUrl = 'https://waste-watch.azurewebsites.net/api/collection-history'; // URL to interact with collection history API
 
   bins$ = this.binsSubject.asObservable(); // Observable to subscribe to bin data updates
 
@@ -420,7 +420,7 @@ createBin(bin: Bin): Observable<Bin> {
   }
 
   getBinNotifications(): Observable<any> {
-    const url = 'https://localhost:7259/api/notifications/bin';
+    const url = 'https://waste-watch.azurewebsites.net/api/notifications/bin';
     return this.http.get<any>(url, this.httpOptions).pipe(
       catchError((error) => {
         console.error('Error fetching fleet notifications:', error);
@@ -430,7 +430,7 @@ createBin(bin: Bin): Observable<Bin> {
   }
 
     deleteBinNotification(id: number): Observable<any> {
-      const url = `https://localhost:7259/api/notifications/${id}`;
+      const url = `https://waste-watch.azurewebsites.net/api/notifications/${id}`;
       return this.http.delete(url, this.httpOptions).pipe(
         catchError((error) => {
           console.error('Error deleting fleet notification:', error);
