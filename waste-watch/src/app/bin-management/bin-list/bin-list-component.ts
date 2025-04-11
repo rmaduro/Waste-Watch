@@ -15,12 +15,12 @@ import {
   faPercent,
   faTrash,
   faExclamationTriangle,
-  faSpinner
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 import { BinService } from '../../services/BinService';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-// ✅ Updated Bin Interface with the new fillLevel property for local use only
 export interface Bin {
   id?: number;
   type: number;
@@ -32,19 +32,25 @@ export interface Bin {
     latitude: string;
     timestamp: string;
   };
-  fillLevel?: number;  // Added for local use
+  fillLevel?: number;
 }
 
 @Component({
   selector: 'app-bin-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule, HttpClientModule, SideNavComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    FontAwesomeModule,
+    HttpClientModule,
+    SideNavComponent,
+    TranslateModule,
+  ],
   providers: [BinService],
   templateUrl: './bin-list-component.html',
-  styleUrls: ['./bin-list-components.css']
+  styleUrls: ['./bin-list-components.css'],
 })
 export class BinListComponent implements OnInit {
-  // Font Awesome Icons
   faPlus = faPlus;
   faMinus = faMinus;
   faSearch = faSearch;
@@ -58,7 +64,6 @@ export class BinListComponent implements OnInit {
   faExclamationTriangle = faExclamationTriangle;
   faSpinner = faSpinner;
 
-
   bins: Bin[] = [];
   isLoading = false;
   error = '';
@@ -69,22 +74,30 @@ export class BinListComponent implements OnInit {
   selectedBin: Bin | null = null;
   showAddForm = false;
   showDeleteConfirmation = false;
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
 
-  // ✅ Initialize fillLevel to 0 for new bins
   bin: Bin = {
     type: 0,
     status: 0,
     capacity: 100,
     lastEmptied: new Date().toISOString(),
     location: {
-      longitude: "",
-      latitude: "",
-      timestamp: new Date().toISOString()
+      longitude: '',
+      latitude: '',
+      timestamp: new Date().toISOString(),
     },
-    fillLevel: 0 // This will remain local and will be updated later
+    fillLevel: 0,
   };
 
-  // Pagination
   currentPage: number = 1;
   pageSize: number = 7;
 
@@ -92,10 +105,27 @@ export class BinListComponent implements OnInit {
     return Math.ceil(this.bins.length / this.pageSize);
   }
 
-  constructor(private binService: BinService) {}
+  constructor(
+    private binService: BinService,
+    private translate: TranslateService
+  ) {
+    const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
+  }
 
   ngOnInit(): void {
     this.loadBins();
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      localStorage.setItem('userLanguage', langCode);
+    }
   }
 
   loadBins(): void {
@@ -104,27 +134,27 @@ export class BinListComponent implements OnInit {
 
     this.binService.getBins().subscribe({
       next: (data: Bin[]) => {
-        // Assuming bins are fetched and fillLevel is calculated here
-        this.bins = data.map(bin => {
-          // Calculate and set the fillLevel if not set
+        this.bins = data.map((bin) => {
           const fillLevel = this.calculateFillLevel(bin);
-          return { ...bin, fillLevel: fillLevel, status: this.getStatusBasedOnFillLevel(fillLevel) };
+          return {
+            ...bin,
+            fillLevel: fillLevel,
+            status: this.getStatusBasedOnFillLevel(fillLevel),
+          };
         });
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error('Error fetching bins:', err);
+      error: () => {
         this.error = 'Failed to load bins. Please try again later.';
         this.isLoading = false;
-      }
+      },
     });
   }
 
-  // Pagination Logic
   get paginatedBins() {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    return this.bins.slice(start, end); // Returns the bins for the current page
+    return this.bins.slice(start, end);
   }
 
   nextPage() {
@@ -139,23 +169,22 @@ export class BinListComponent implements OnInit {
     }
   }
 
-  // Calculate fillLevel as a percentage based on capacity and some other factor (e.g., current fill weight)
   calculateFillLevel(bin: Bin): number {
-    // For simplicity, let's assume the bin's fill level is based on the capacity
-    // You can replace this with an actual formula if you have more data
-    return (bin.capacity > 0) ? (bin.status * 25) : 0;  // Dummy example, replace with actual logic
+    return bin.capacity > 0 ? bin.status * 25 : 0;
   }
 
-  // Get filtered bins based on the status, type, and search query
   get filteredBins() {
     return this.bins.filter((bin) => {
       const statusMatches =
-        this.selectedStatus === '' || bin.status === parseInt(this.selectedStatus, 10);
-        const typeMatches =
-        this.selectedType === '' || this.getTypeNumericValue(this.selectedType) === bin.type;
+        this.selectedStatus === '' ||
+        bin.status === parseInt(this.selectedStatus, 10);
+      const typeMatches =
+        this.selectedType === '' ||
+        this.getTypeNumericValue(this.selectedType) === bin.type;
 
       const searchMatches =
-        this.searchQuery === '' || (bin.id && bin.id.toString().includes(this.searchQuery));
+        this.searchQuery === '' ||
+        (bin.id && bin.id.toString().includes(this.searchQuery));
 
       return statusMatches && typeMatches && searchMatches;
     });
@@ -171,7 +200,6 @@ export class BinListComponent implements OnInit {
   selectBin(bin: Bin) {
     this.selectedBin = bin;
   }
-
 
   showDeleteDialog() {
     if (this.selectedBin) {
@@ -194,31 +222,29 @@ export class BinListComponent implements OnInit {
           this.showDeleteConfirmation = false;
           this.isLoading = false;
         },
-        error: (err) => {
-          console.error('❌ Error deleting bin:', err);
-          this.error = 'Failed to delete bin. Please try again later.'; // Custom error message for deletion
+        error: () => {
+          this.error = 'Failed to delete bin. Please try again later.';
           this.isLoading = false;
           this.showDeleteConfirmation = false;
-        }
+        },
       });
     }
   }
 
   addBin() {
     this.isLoading = true;
-    this.error = ''; // Clear previous errors if any
+    this.error = '';
 
     const newBin: Bin = {
       ...this.bin,
       type: this.getTypeNumericValue(this.bin.type.toString()),
       lastEmptied: new Date().toISOString(),
       location: {
-        longitude: this.bin.location.longitude,  // Ensure it's a number
-        latitude: this.bin.location.latitude,    // Ensure it's a number
-        timestamp: new Date().toISOString()
-      }
+        longitude: this.bin.location.longitude,
+        latitude: this.bin.location.latitude,
+        timestamp: new Date().toISOString(),
+      },
     };
-
 
     this.binService.createBin(newBin).subscribe({
       next: () => {
@@ -227,11 +253,10 @@ export class BinListComponent implements OnInit {
         this.showAddForm = false;
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error('❌ Error adding bin:', err);
-        this.error = 'Failed to add bin. Please check the data and try again.'; // Custom error message
+      error: () => {
+        this.error = 'Failed to add bin. Please check the data and try again.';
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -242,11 +267,11 @@ export class BinListComponent implements OnInit {
       capacity: 0,
       lastEmptied: new Date().toISOString(),
       location: {
-        longitude: "",
-        latitude: "",
-        timestamp: new Date().toISOString()
+        longitude: '',
+        latitude: '',
+        timestamp: new Date().toISOString(),
       },
-      fillLevel: 0 // Reset fillLevel when clearing the form
+      fillLevel: 0,
     };
   }
 
@@ -266,8 +291,8 @@ export class BinListComponent implements OnInit {
   }
 
   setDefaultLocation() {
-    this.bin.location.longitude = "";  // Static longitude
-    this.bin.location.latitude = "";   // Static latitude
+    this.bin.location.longitude = '';
+    this.bin.location.latitude = '';
   }
 
   getStatusText(status: number): string {
@@ -285,16 +310,15 @@ export class BinListComponent implements OnInit {
     }
   }
 
-  // This method returns a status based on the fill level (in percentage)
   getStatusBasedOnFillLevel(fillLevel: number): number {
     if (fillLevel === 0) {
-      return 0; // Empty
+      return 0;
     } else if (fillLevel > 0 && fillLevel <= 50) {
-      return 1; // Partial
+      return 1;
     } else if (fillLevel > 50 && fillLevel <= 100) {
-      return 2; // Full
+      return 2;
     } else {
-      return 3; // Overflow
+      return 3;
     }
   }
 
@@ -309,17 +333,22 @@ export class BinListComponent implements OnInit {
       case 'Hazardous':
         return 3;
       default:
-        return 0; // Default to General
+        return 0;
     }
   }
 
   getTypeText(type: number): string {
     switch (type) {
-      case 0: return 'General';
-      case 1: return 'Recycling';
-      case 2: return 'Compost';
-      case 3: return 'Hazardous';
-      default: return 'Unknown';
+      case 0:
+        return 'General';
+      case 1:
+        return 'Recycling';
+      case 2:
+        return 'Compost';
+      case 3:
+        return 'Hazardous';
+      default:
+        return 'Unknown';
     }
   }
 }

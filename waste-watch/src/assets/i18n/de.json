@@ -1,0 +1,391 @@
+{
+  "DASHBOARD": {
+    "TITLE": "Dashboard zur Behälterverwaltung",
+    "ACTIONS": {
+      "REFRESH": "Daten aktualisieren",
+      "GENERATE_REPORT": "Bericht erstellen",
+      "GENERATING": "Wird erstellt..."
+    },
+    "STATS": {
+      "TITLE": "Wichtige Kennzahlen",
+      "MAINTENANCE": {
+        "TITLE": "Behälter in Wartung",
+        "VALUE": "{{value}}"
+      }
+    },
+    "COLLECTION_HISTORY": {
+      "TITLE": "Sammlungshistorie",
+      "COLUMNS": {
+        "ID": "ID",
+        "BIN_ID": "Behälter-ID",
+        "TIMESTAMP": "Zeitstempel",
+        "AMOUNT": "Gesammelte Menge",
+        "ISSUES": "Gemeldete Probleme",
+        "STATUS": "Status der Sammlung"
+      },
+      "STATUS_VALUES": {
+        "PENDING": "Ausstehend",
+        "COMPLETED": "Abgeschlossen",
+        "FAILED": "Fehlgeschlagen"
+      },
+      "NO_DATA": "Keine Sammlungshistorie verfügbar."
+    },
+    "MAINTENANCE_HISTORY": {
+      "TITLE": "Wartungshistorie",
+      "COLUMNS": {
+        "BIN_ID": "Behälter-ID",
+        "TYPE": "Wartungstyp",
+        "DESCRIPTION": "Beschreibung",
+        "START_DATE": "Startdatum",
+        "END_DATE": "Enddatum"
+      },
+      "ONGOING": "Läuft",
+      "NO_DATA": "Keine Wartungshistorie verfügbar."
+    },
+    "UNITS": {
+      "KILOGRAMS": "kg"
+    }
+  },
+  "BIN_LIST": {
+    "TITLE": "Behälterliste",
+    "ACTIONS": {
+      "ADD_BIN": "Behälter hinzufügen",
+      "REMOVE_BIN": "Behälter entfernen",
+      "SAVE": "Behälter speichern",
+      "SAVING": "Speichern...",
+      "DELETE": "Behälter löschen",
+      "DELETING": "Löschen...",
+      "CANCEL": "Abbrechen",
+      "PREVIOUS": "Zurück",
+      "NEXT": "Weiter"
+    },
+    "FILTERS": {
+      "LABEL": "Filter:",
+      "ALL_STATUS": "Alle Zustände",
+      "STATUS_VALUES": {
+        "EMPTY": "Leer",
+        "PARTIAL": "Teilweise gefüllt",
+        "FULL": "Voll",
+        "OVERFLOW": "Überfüllt"
+      },
+      "ALL_TYPES": "Alle Typen",
+      "TYPE_VALUES": {
+        "GENERAL": "Allgemein",
+        "RECYCLING": "Recycling",
+        "COMPOST": "Kompost",
+        "HAZARDOUS": "Gefährlich"
+      },
+      "SEARCH_PLACEHOLDER": "Nach ID oder Standort suchen..."
+    },
+    "TABLE": {
+      "HEADERS": {
+        "ID": "ID",
+        "TYPE": "Typ",
+        "LOCATION": "Standort",
+        "FILL_LEVEL": "Füllstand",
+        "STATUS": "Zustand",
+        "CAPACITY": "Max. Kapazität",
+        "LAST_EMPTIED": "Zuletzt geleert"
+      },
+      "NO_DATA": "Keine Behälter gefunden",
+      "PAGINATION": "Seite {{current}} von {{total}}"
+    },
+    "ADD_FORM": {
+      "TITLE": "Neuen Behälter hinzufügen",
+      "LOCATION": "Standort:",
+      "LATITUDE": "Breitengrad:",
+      "LONGITUDE": "Längengrad:",
+      "COORDINATES_HELP": "Geben Sie die Koordinaten des Standorts manuell ein (im Grad-, Minuten-, Sekundenformat).",
+      "CAPACITY": "Maximale Kapazität (kg):",
+      "TYPE": "Typ:"
+    },
+    "DELETE_CONFIRMATION": {
+      "TITLE": "Löschen bestätigen",
+      "MESSAGE": "Möchten Sie den Behälter mit der ID wirklich löschen:",
+      "WARNING": "Diese Aktion kann nicht rückgängig gemacht werden.",
+      "DETAILS": {
+        "LOCATION": "Standort:",
+        "TYPE": "Typ:"
+      }
+    },
+    "LOADING": "Wird geladen...",
+    "ERROR": {
+      "TRY_AGAIN": "Erneut versuchen"
+    }
+  },
+  "RESET_PASSWORD": {
+    "EMAIL_LABEL": "E-Mail",
+    "PASSWORD_LABEL": "Neues Passwort",
+    "CONFIRM_PASSWORD_LABEL": "Passwort bestätigen",
+    "PASSWORD_PLACEHOLDER": "Geben Sie Ihr neues Passwort ein",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Bestätigen Sie Ihr neues Passwort",
+    "PASSWORD_MISMATCH": "Passwörter stimmen nicht überein",
+    "RESET_BUTTON": "Passwort zurücksetzen",
+    "BACK_TO_LOGIN": "Zurück zur Anmeldung"
+  },
+  "LOGIN": {
+    "EMAIL_LABEL": "E-Mail",
+    "EMAIL_PLACEHOLDER": "Geben Sie Ihre E-Mail-Adresse ein...",
+    "PASSWORD_LABEL": "Passwort",
+    "PASSWORD_PLACEHOLDER": "Geben Sie Ihr Passwort ein...",
+    "LOGIN_BUTTON": "Anmelden",
+    "FORGOT_PASSWORD": "Passwort vergessen?",
+    "LOGIN_ERROR": "Ungültige E-Mail-Adresse oder Passwort"
+  },
+  "REGISTER": {
+    "EMAIL_LABEL": "E-Mail",
+    "EMAIL_PLACEHOLDER": "Geben Sie Ihre E-Mail-Adresse ein...",
+    "PASSWORD_LABEL": "Passwort",
+    "PASSWORD_PLACEHOLDER": "Geben Sie Ihr Passwort ein...",
+    "CONFIRM_PASSWORD_LABEL": "Passwort bestätigen",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Bestätigen Sie Ihr Passwort...",
+    "ROLE_LABEL": "Rolle",
+    "ROLE_PLACEHOLDER": "Wählen Sie Ihre Rolle",
+    "ROLE_OPTIONS": {
+      "BIN_MANAGER": "Behälterverwalter",
+      "FLEET_MANAGER": "Flottenmanager",
+      "ADMIN": "Administrator"
+    },
+    "REGISTER_BUTTON": "Registrieren",
+    "LOGOUT": "Abmelden und zurück zur Anmeldung"
+  },
+  "REQUEST_RESET": {
+    "EMAIL_LABEL": "E-Mail",
+    "EMAIL_PLACEHOLDER": "Geben Sie Ihre E-Mail-Adresse ein, um das Passwort zurückzusetzen...",
+    "SUBMIT_BUTTON": "E-Mail senden",
+    "BACK_TO_LOGIN": "Zurück zur Anmeldung",
+    "ERROR_MESSAGE": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  },
+    "FLEET_DASHBOARD": {
+      "TITLE": "Dashboard zur Flottenverwaltung",
+      "ACTIVE_TRUCKS": "Aktive Fahrzeuge",
+      "AVG_FUEL_EFFICIENCY": "Durchschnittlicher Kraftstoffverbrauch",
+      "NEARING_CAPACITY": "Nahe an der Kapazitätsgrenze",
+      "TODAYS_COLLECTIONS": "Heutige Sammlungen",
+      "COLLECTION_TREND": "im Vergleich zum Vortag",
+      "MONTHLY_OVERVIEW": "Monatliche Sammelübersicht",
+      "MONTHLY_BREAKDOWN": "Monatliche Aufschlüsselung der Sammlungen",
+      "ACTIVE_ALERTS": "Aktive Warnungen",
+      "ALERT_TYPE": {
+        "CRITICAL": "Kritisch",
+        "WARNING": "Warnung"
+      }
+    },
+    "FLEET_MAP": {
+      "TITLE": "Flottenkarte",
+      "REFRESH_BUTTON": "Daten aktualisieren",
+      "LOADING": "Flottendaten werden geladen...",
+      "RETRY_BUTTON": "Erneut versuchen",
+      "ACTIVE_VEHICLES": "Aktive Fahrzeuge",
+      "DRIVER_LABEL": "Fahrer:",
+      "ROUTE_LABEL": "Route:",
+      "LAST_MAINTENANCE_LABEL": "Letzte Wartung:",
+      "UNASSIGNED": "Nicht zugewiesen"
+    },
+    "FLEET_NOTIFICATIONS": {
+      "TITLE": "Flottenbenachrichtigungen",
+      "CLEARING": "Wird gelöscht...",
+      "CLEAR_ALL": "Alle löschen",
+      "FILTERS_LABEL": "Filter:",
+      "FILTER_OPTIONS": {
+        "ALL": "Alle Typen",
+        "INFO": "Information",
+        "WARNING": "Warnung",
+        "ERROR": "Fehler",
+        "SUCCESS": "Erfolg"
+      },
+      "LOADING": "Benachrichtigungen werden geladen...",
+      "RETRY": "Erneut versuchen",
+      "VIEW_DETAILS": "Details anzeigen",
+      "NO_NOTIFICATIONS": "Keine Benachrichtigungen gefunden",
+      "PREVIOUS": "Zurück",
+      "NEXT": "Weiter",
+      "PAGE_INFO": "Seite {{ currentPage }} von {{ totalPages }}",
+      "DETAILS_MODAL": {
+        "TITLE": "Benachrichtigungsdetails",
+        "LABELS": {
+          "TITLE": "Titel:",
+          "TYPE": "Typ:",
+          "PRIORITY": "Priorität:",
+          "DATE": "Datum:",
+          "REFERENCE_ID": "Referenz-ID:",
+          "MESSAGE": "Nachricht:"
+        },
+        "CLOSE": "Schließen"
+      }
+    },
+
+      "VEHICLE_MANAGEMENT": {
+        "TITLE": "Fahrzeugliste",
+        "ADD_BUTTON": "Fahrzeug hinzufügen",
+        "REMOVE_BUTTON": "Fahrzeug entfernen",
+        "FILTERS": {
+          "LABEL": "Filter:",
+          "STATUS": {
+            "ALL": "Alle Status",
+            "ACTIVE": "Aktiv",
+            "IDLE": "Inaktiv",
+            "MAINTENANCE": "Wartung"
+          },
+          "ROUTES": {
+            "ALL": "Alle Routen",
+            "COMMERCIAL": "Gewerblich",
+            "INDUSTRIAL": "Industriell",
+            "RESIDENTIAL": "Wohngebiet"
+          },
+          "CAPACITIES": {
+            "ALL": "Alle Kapazitäten",
+            "1000KG": "1000kg",
+            "1500KG": "1500kg",
+            "2000KG": "2000kg",
+            "2500KG": "2500kg",
+            "3000KG": "3000kg"
+          },
+          "SEARCH_PLACEHOLDER": "Nach ID suchen..."
+        },
+        "TABLE": {
+          "ID": "ID",
+          "LICENSE_PLATE": "Kennzeichen",
+          "DRIVER_NAME": "Fahrername",
+          "STATUS": "Status",
+          "ROUTE_TYPE": "Routentyp",
+          "MAX_CAPACITY": "Max. Kapazität",
+          "LAST_MAINTENANCE": "Letzte Wartung",
+          "ROUTE": "Route",
+          "VIEW_ROUTE": "Route anzeigen",
+          "CREATE_ROUTE": "Route erstellen",
+          "NO_VEHICLES": "Keine Fahrzeuge gefunden"
+        },
+        "PAGINATION": {
+          "PREVIOUS": "Zurück",
+          "NEXT": "Weiter",
+          "INFO": "Seite {{ currentPage }} von {{ totalPages }}"
+        },
+        "LOADING": "Wird geladen...",
+        "ERROR": {
+          "GENERIC": "Ein Fehler ist aufgetreten.",
+          "RETRY": "Erneut versuchen"
+        },
+        "FORM": {
+          "TITLE": "Neues Fahrzeug hinzufügen",
+          "SAVE": "Fahrzeug speichern",
+          "SAVING": "Speichern...",
+          "CANCEL": "Abbrechen",
+          "VEHICLE_INFORMATION": "Fahrzeuginformationen",
+          "ROUTE_TYPE": "Routentyp",
+          "MAX_CAPACITY": "Max. Kapazität",
+          "LAST_MAINTENANCE_DATE": "Letztes Wartungsdatum",
+          "DRIVER_INFORMATION": "Fahrerinformationen",
+          "SELECT_DRIVER": "Fahrer auswählen",
+          "CUSTOM_DRIVER": "Benutzerdefinierter Fahrer",
+          "DRIVER_DETAILS": "Fahrerdetails",
+          "DRIVER_NAME": "Name:",
+          "DRIVER_AGE": "Alter:",
+          "LICENSE_NUMBER": "Führerscheinnummer:",
+          "COLLABORATOR_TYPE": "Typ:",
+          "COLLABORATOR_TYPES": {
+            "DRIVER": "Fahrer",
+            "CONTRACTOR": "Dienstleister",
+            "EMPLOYEE": "Mitarbeiter"
+          },
+          "LOCATION_INFORMATION": "Aktueller Standort",
+          "LATITUDE": "Breitengrad:",
+          "LONGITUDE": "Längengrad:"
+        },
+        "ROUTE_FORM": {
+          "TITLE": "Neue Route erstellen",
+          "ROUTE_INFORMATION": "Routeninformationen",
+          "ROUTE_NAME": "Routenname:",
+          "ROUTE_TYPE": "Routentyp:",
+          "SELECT_BINS": "Behälter zur Sammlung auswählen",
+          "BIN_ID": "Behälter #{{ id }}",
+          "BIN_TYPE": "Typ: {{ type }}",
+          "BIN_LOCATION": "{{ lat }}, {{ lng }}",
+          "CREATE": "Route erstellen",
+          "CREATING": "Wird erstellt..."
+        },
+        "ROUTE_VIEW": {
+          "DETAILS": "Routendetails",
+          "GENERATE_REPORT": "Bericht erstellen",
+          "NO_TYPE": "Kein Typ angegeben",
+          "ASSIGNED_VEHICLE": "Zugewiesenes Fahrzeug",
+          "DRIVER": "Fahrer",
+          "ESTIMATED_TIME": "Geschätzte Zeit",
+          "ECO_ROUTE": "Umweltfreundliche Route",
+          "TOTAL_STOPS": "Gesamte Haltestellen",
+          "CO2_EMISSIONS": "CO₂-Emissionen",
+          "ROUTE_MAP": "Routenkarte",
+          "COLLECTION_STOPS": "Sammelpunkte ({{ count }})",
+          "DIRECTIONS": "Wegbeschreibung",
+          "NO_ROUTE_ASSIGNED": "Keine Route zugewiesen",
+          "NO_ROUTE_MESSAGE": "Dieses Fahrzeug hat noch keine zugewiesene Route",
+          "CREATE_ROUTE": "Route erstellen"
+        },
+        "DELETE_CONFIRMATION": {
+          "TITLE": "Löschen bestätigen",
+          "MESSAGE": "Möchten Sie das Fahrzeug mit der ID wirklich löschen:",
+          "WARNING": "Diese Aktion kann nicht rückgängig gemacht werden.",
+          "LICENSE_PLATE": "Kennzeichen:",
+          "DRIVER": "Fahrer:",
+          "CONFIRM": "Fahrzeug löschen",
+          "CONFIRMING": "Wird gelöscht...",
+          "CANCEL": "Abbrechen"
+        }
+      },
+      "BIN_MAP": {
+        "TITLE": "Behälterkarte",
+        "REFRESH_BUTTON": "Daten aktualisieren",
+        "LOADING": "Behälterdaten werden geladen...",
+        "RETRY": "Erneut versuchen",
+        "AVAILABLE_BINS": "Verfügbare Behälter",
+        "TYPE": "Typ:",
+        "CAPACITY": "Kapazität:"
+      },
+      "BIN_NOTIFICATIONS": {
+        "TITLE": "Behälterbenachrichtigungen",
+        "CLEARING": "Wird gelöscht...",
+        "CLEAR_ALL": "Alle löschen",
+        "FILTERS_LABEL": "Filter:",
+        "FILTER_OPTIONS": {
+          "ALL": "Alle Typen",
+          "INFO": "Information",
+          "WARNING": "Warnung",
+          "ERROR": "Fehler",
+          "SUCCESS": "Erfolg"
+        },
+        "LOADING": "Benachrichtigungen werden geladen...",
+        "RETRY": "Erneut versuchen",
+        "VIEW_DETAILS": "Details anzeigen",
+        "NO_NOTIFICATIONS": "Keine Benachrichtigungen gefunden",
+        "PREVIOUS": "Zurück",
+        "NEXT": "Weiter",
+        "PAGE_INFO": "Seite {{ currentPage }} von {{ totalPages }}",
+        "DETAILS_MODAL": {
+          "TITLE": "Benachrichtigungsdetails",
+          "LABELS": {
+            "TITLE": "Titel:",
+            "TYPE": "Typ:",
+            "PRIORITY": "Priorität:",
+            "DATE": "Datum:",
+            "REFERENCE_ID": "Referenz-ID:",
+            "MESSAGE": "Nachricht:"
+          },
+          "CLOSE": "Schließen"
+        }
+      },
+        "SIDENAV": {
+          "APP_NAME": "WasteWatch",
+          "FLEET_DASHBOARD": "Flotten-Dashboard",
+          "VEHICLE_ROSTER": "Fahrzeugliste",
+          "FLEET_MONITORING": "Flottenüberwachung",
+          "FLEET_NOTIFICATIONS": "Flottenbenachrichtigungen",
+          "BIN_DASHBOARD": "Behälter-Dashboard",
+          "BIN_LIST": "Behälterliste",
+          "BIN_MONITORING": "Behälterüberwachung",
+          "BIN_NOTIFICATIONS": "Behälterbenachrichtigungen",
+          "LOGOUT": "Abmelden"
+        }
+      }
+
+
+

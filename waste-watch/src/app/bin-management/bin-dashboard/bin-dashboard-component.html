@@ -8,11 +8,11 @@
     <header class="dashboard-header">
       <h1 class="dashboard-title">
         <fa-icon [icon]="faTrash"></fa-icon>
-        Bin Management Dashboard
+        {{ 'DASHBOARD.TITLE' | translate }}
       </h1>
       <button class="btn refresh-btn" (click)="refreshData()">
         <fa-icon [icon]="faSync"></fa-icon>
-        Refresh Data
+        {{ 'DASHBOARD.ACTIONS.REFRESH' | translate }}
       </button>
     </header>
 
@@ -23,26 +23,31 @@
         <div class="stat-card">
           <div class="stat-header">
             <fa-icon [icon]="faTools"></fa-icon>
-            <h3>In Maintenance Bins</h3>
+            <h3>{{ 'DASHBOARD.STATS.MAINTENANCE.TITLE' | translate }}</h3>
           </div>
-          <div class="stat-value">{{ inMaintenanceBins }}</div>
+          <div class="stat-value">
+            {{ 'DASHBOARD.STATS.MAINTENANCE.VALUE' | translate: { value: inMaintenanceBins } }}
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Collection History Table -->
     <section class="table-section">
-      <h4><fa-icon [icon]="faHistory"></fa-icon> Collection History</h4>
+      <h4>
+        <fa-icon [icon]="faHistory"></fa-icon>
+        {{ 'DASHBOARD.COLLECTION_HISTORY.TITLE' | translate }}
+      </h4>
       <div class="table-container">
         <table class="bin-table">
           <thead>
             <tr>
-              <th><fa-icon [icon]="faIdCard"></fa-icon> ID</th>
-              <th><fa-icon [icon]="faBinoculars"></fa-icon> Bin ID</th>
-              <th><fa-icon [icon]="faClock"></fa-icon> Timestamp</th>
-              <th><fa-icon [icon]="faArrowUp"></fa-icon> Amount Collected</th>
-              <th><fa-icon [icon]="faExclamationTriangle"></fa-icon> Issues Logged</th>
-              <th><fa-icon [icon]="faTools"></fa-icon> Collection Status</th>
+              <th><fa-icon [icon]="faIdCard"></fa-icon> {{ 'DASHBOARD.COLLECTION_HISTORY.COLUMNS.ID' | translate }}</th>
+              <th><fa-icon [icon]="faBinoculars"></fa-icon> {{ 'DASHBOARD.COLLECTION_HISTORY.COLUMNS.BIN_ID' | translate }}</th>
+              <th><fa-icon [icon]="faClock"></fa-icon> {{ 'DASHBOARD.COLLECTION_HISTORY.COLUMNS.TIMESTAMP' | translate }}</th>
+              <th><fa-icon [icon]="faArrowUp"></fa-icon> {{ 'DASHBOARD.COLLECTION_HISTORY.COLUMNS.AMOUNT' | translate }}</th>
+              <th><fa-icon [icon]="faExclamationTriangle"></fa-icon> {{ 'DASHBOARD.COLLECTION_HISTORY.COLUMNS.ISSUES' | translate }}</th>
+              <th><fa-icon [icon]="faTools"></fa-icon> {{ 'DASHBOARD.COLLECTION_HISTORY.COLUMNS.STATUS' | translate }}</th>
             </tr>
           </thead>
           <tbody *ngIf="collectionHistory.length > 0; else noData">
@@ -50,17 +55,27 @@
               <td>{{ history.id }}</td>
               <td>{{ history.binId }}</td>
               <td>{{ history.timestamp | date:'short' }}</td>
-              <td>{{ history.amountCollected }} Kg</td>
+              <td>{{ history.amountCollected }} {{ 'DASHBOARD.UNITS.KILOGRAMS' | translate }}</td>
               <td>{{ history.issuesLogged }}</td>
               <td>
-                <span *ngIf="history.collectionStatus === 0">Pending</span>
-                <span *ngIf="history.collectionStatus === 1">Completed</span>
-                <span *ngIf="history.collectionStatus === 2">Failed</span>
+                <span *ngIf="history.collectionStatus === 0">
+                  {{ 'DASHBOARD.COLLECTION_HISTORY.STATUS_VALUES.PENDING' | translate }}
+                </span>
+                <span *ngIf="history.collectionStatus === 1">
+                  {{ 'DASHBOARD.COLLECTION_HISTORY.STATUS_VALUES.COMPLETED' | translate }}
+                </span>
+                <span *ngIf="history.collectionStatus === 2">
+                  {{ 'DASHBOARD.COLLECTION_HISTORY.STATUS_VALUES.FAILED' | translate }}
+                </span>
               </td>
             </tr>
           </tbody>
           <ng-template #noData>
-            <tr><td colspan="6">No collection history data available.</td></tr>
+            <tr>
+              <td colspan="6">
+                {{ 'DASHBOARD.COLLECTION_HISTORY.NO_DATA' | translate }}
+              </td>
+            </tr>
           </ng-template>
         </table>
       </div>
@@ -68,17 +83,28 @@
 
     <!-- Maintenance History Table -->
     <section class="table-section">
-      <h4><fa-icon [icon]="faWrench"></fa-icon> Maintenance History</h4>
+      <div class="header-container">
+        <h4>
+          <fa-icon [icon]="faWrench"></fa-icon>
+          {{ 'DASHBOARD.MAINTENANCE_HISTORY.TITLE' | translate }}
+        </h4>
+        <button class="btn-report" (click)="generateMaintenanceReport()" [disabled]="isLoading">
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+          {{ isLoading ?
+             ('DASHBOARD.ACTIONS.GENERATING' | translate) :
+             ('DASHBOARD.ACTIONS.GENERATE_REPORT' | translate) }}
+        </button>
+      </div>
+
       <div class="table-container">
         <table class="bin-table">
           <thead>
             <tr>
-              <th><fa-icon [icon]="faIdCard"></fa-icon> Bin ID</th>
-              <th><fa-icon [icon]="faWrench"></fa-icon> Maintenance Type</th>
-              <th><fa-icon [icon]="faTools"></fa-icon> Description</th>
-              <th><fa-icon [icon]="faClock"></fa-icon> Start Date</th>
-              <th><fa-icon [icon]="faClock"></fa-icon> End Date</th>
-              <th><fa-icon [icon]="faIdCard"></fa-icon> User ID</th>
+              <th><fa-icon [icon]="faIdCard"></fa-icon> {{ 'DASHBOARD.MAINTENANCE_HISTORY.COLUMNS.BIN_ID' | translate }}</th>
+              <th><fa-icon [icon]="faWrench"></fa-icon> {{ 'DASHBOARD.MAINTENANCE_HISTORY.COLUMNS.TYPE' | translate }}</th>
+              <th><fa-icon [icon]="faTools"></fa-icon> {{ 'DASHBOARD.MAINTENANCE_HISTORY.COLUMNS.DESCRIPTION' | translate }}</th>
+              <th><fa-icon [icon]="faClock"></fa-icon> {{ 'DASHBOARD.MAINTENANCE_HISTORY.COLUMNS.START_DATE' | translate }}</th>
+              <th><fa-icon [icon]="faClock"></fa-icon> {{ 'DASHBOARD.MAINTENANCE_HISTORY.COLUMNS.END_DATE' | translate }}</th>
             </tr>
           </thead>
           <tbody *ngIf="maintenanceHistory.length > 0; else noMaintenance">
@@ -87,11 +113,15 @@
               <td>{{ maintenance.maintenanceType }}</td>
               <td>{{ maintenance.description }}</td>
               <td>{{ maintenance.startDate | date:'short' }}</td>
-              <td>{{ maintenance.endDate ? (maintenance.endDate | date:'short') : 'Ongoing' }}</td>
+              <td>{{ maintenance.endDate ? (maintenance.endDate | date:'short') : ('DASHBOARD.MAINTENANCE_HISTORY.ONGOING' | translate) }}</td>
             </tr>
           </tbody>
           <ng-template #noMaintenance>
-            <tr><td colspan="6">No maintenance history available.</td></tr>
+            <tr>
+              <td colspan="6">
+                {{ 'DASHBOARD.MAINTENANCE_HISTORY.NO_DATA' | translate }}
+              </td>
+            </tr>
           </ng-template>
         </table>
       </div>

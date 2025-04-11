@@ -8,20 +8,25 @@ using WasteWatchAuth.Models;
 
 namespace WasteWatchAuth.Controllers
 {
+	/// <summary>
+	/// Controller responsible for managing the collection history of bins.
+	/// </summary>
 	[Route("api/collection-history")]
 	[ApiController]
 	public class CollectionHistoryController : ControllerBase
 	{
 		private readonly ApplicationDbContext _context;
 
+		/// <summary>
+		/// Constructor that injects the application database context.
+		/// </summary>
 		public CollectionHistoryController(ApplicationDbContext context)
 		{
 			_context = context;
 		}
 
-
 		/// <summary>
-		/// Criar um novo registo de recolha manualmente.
+		/// Create a new manual collection record.
 		/// </summary>
 		[HttpPost]
 		public async Task<IActionResult> CreateCollection([FromBody] CollectionHistory history)
@@ -29,7 +34,6 @@ namespace WasteWatchAuth.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			// Define o timestamp como o momento atual
 			history.Timestamp = DateTime.UtcNow;
 
 			_context.CollectionHistories.Add(history);
@@ -38,9 +42,8 @@ namespace WasteWatchAuth.Controllers
 			return CreatedAtAction(nameof(GetCollectionHistoryById), new { id = history.Id }, history);
 		}
 
-
 		/// <summary>
-		/// Obter todas as recolhas registadas.
+		/// Retrieve all collection records.
 		/// </summary>
 		[HttpGet]
 		public async Task<IActionResult> GetAllCollections()
@@ -50,7 +53,7 @@ namespace WasteWatchAuth.Controllers
 		}
 
 		/// <summary>
-		/// Obter todas as recolhas de um bin específico.
+		/// Retrieve all collection records for a specific bin.
 		/// </summary>
 		[HttpGet("bin/{id}")]
 		public async Task<IActionResult> GetCollectionByBin(int id)
@@ -60,13 +63,13 @@ namespace WasteWatchAuth.Controllers
 				.ToListAsync();
 
 			if (!collections.Any())
-				return NotFound(new { message = "Nenhuma recolha encontrada para este bin." });
+				return NotFound(new { message = "No collection found for this bin." });
 
 			return Ok(collections);
 		}
 
 		/// <summary>
-		/// Obter a última recolha de cada bin.
+		/// Retrieve the most recent collection for each bin.
 		/// </summary>
 		[HttpGet("latest")]
 		public async Task<IActionResult> GetLatestCollectionForEachBin()
@@ -77,14 +80,13 @@ namespace WasteWatchAuth.Controllers
 				.ToListAsync();
 
 			if (!latestCollections.Any() || latestCollections.All(c => c == null))
-				return NotFound("Nenhuma recolha encontrada.");
+				return NotFound("No collection records found.");
 
 			return Ok(latestCollections);
 		}
 
-
 		/// <summary>
-		/// Obtém um histórico de recolha por ID.
+		/// Retrieve a specific collection history by ID.
 		/// </summary>
 		[HttpGet("by-id/{id}")]
 		public async Task<IActionResult> GetCollectionHistoryById(int id)
@@ -93,13 +95,13 @@ namespace WasteWatchAuth.Controllers
 				.FirstOrDefaultAsync(ch => ch.Id == id);
 
 			if (history == null)
-				return NotFound(new { message = "Histórico de recolha não encontrado." });
+				return NotFound(new { message = "Collection history not found." });
 
 			return Ok(history);
 		}
 
 		/// <summary>
-		/// Obter a última recolha de um bin específico.
+		/// Retrieve the most recent collection for a specific bin.
 		/// </summary>
 		[HttpGet("latest/{binId}")]
 		public async Task<IActionResult> GetLatestCollectionForBin(int binId)
@@ -110,13 +112,13 @@ namespace WasteWatchAuth.Controllers
 				.FirstOrDefaultAsync();
 
 			if (latestCollection == null)
-				return NotFound($"Nenhuma recolha encontrada para o bin com ID {binId}.");
+				return NotFound($"No collection found for bin with ID {binId}.");
 
 			return Ok(latestCollection);
 		}
 
 		/// <summary>
-		/// Obtém o número total de coletas registradas.
+		/// Get the total number of collection records.
 		/// </summary>
 		[HttpGet("total")]
 		public async Task<IActionResult> GetTotalCollections()
@@ -125,6 +127,10 @@ namespace WasteWatchAuth.Controllers
 			return Ok(new { totalCollections });
 		}
 
+		/// <summary>
+		/// Get the total number of collections for a specific day.
+		/// </summary>
+		/// <param name="date">Optional date to filter collections (UTC). Defaults to today.</param>
 		[HttpGet("daily-collections")]
 		public async Task<IActionResult> GetDailyCollections([FromQuery] DateTime? date)
 		{
@@ -143,14 +149,20 @@ namespace WasteWatchAuth.Controllers
 			}
 			catch (Exception ex)
 			{
-				return StatusCode(500,
-					new
-					{
-						message = "Unable to fetch daily collection data. Please try again later.", error = ex.Message
-					});
+				return StatusCode(500, new
+				{
+					message = "Unable to fetch daily collection data. Please try again later.",
+					error = ex.Message
+				});
 			}
 		}
 
+		/// <summary>
+		/// Calculate the average consumption over a specific time period.
+		/// </summary>
+		/// <param name="startDate">Start date of the custom range.</param>
+		/// <param name="endDate">End date of the custom range.</param>
+		/// <param name="period">Optional predefined period: "daily", "weekly", or "monthly".</param>
 		[HttpGet("average-consumption")]
 		public async Task<IActionResult> GetAverageConsumption(
 			[FromQuery] DateTime? startDate,
@@ -160,7 +172,6 @@ namespace WasteWatchAuth.Controllers
 			DateTime fromDate;
 			DateTime toDate = DateTime.UtcNow;
 
-			// Determinar intervalo com base no período escolhido
 			switch (period?.ToLower())
 			{
 				case "daily":
@@ -175,7 +186,7 @@ namespace WasteWatchAuth.Controllers
 				default:
 					if (!startDate.HasValue || !endDate.HasValue)
 						return BadRequest(
-							"É necessário fornecer um período ('daily', 'weekly', 'monthly') ou um intervalo de datas (startDate e endDate).");
+							"A period ('daily', 'weekly', 'monthly') or a valid date range (startDate and endDate) must be provided.");
 
 					fromDate = startDate.Value;
 					toDate = endDate.Value;
@@ -183,16 +194,15 @@ namespace WasteWatchAuth.Controllers
 			}
 
 			if (fromDate > toDate)
-				return BadRequest("A data de início não pode ser posterior à data de término.");
+				return BadRequest("Start date cannot be after end date.");
 
 			var collections = await _context.CollectionHistories
 				.Where(ch => ch.Timestamp >= fromDate && ch.Timestamp <= toDate)
 				.ToListAsync();
 
 			if (!collections.Any())
-				return NotFound(new { message = "Dados insuficientes para calcular o consumo médio." });
+				return NotFound(new { message = "Insufficient data to calculate average consumption." });
 
-			// 🔹 Agora usamos a propriedade AmountCollected
 			double averageConsumption = collections.Average(ch => ch.AmountCollected);
 
 			return Ok(new
@@ -202,8 +212,5 @@ namespace WasteWatchAuth.Controllers
 				endDate = toDate
 			});
 		}
-
-
 	}
-
 }

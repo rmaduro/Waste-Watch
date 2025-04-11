@@ -6,12 +6,12 @@
         <div class="header">
           <h2 class="title">
             <fa-icon [icon]="faTrashCan" class="me-2"></fa-icon>
-            Bin List
+            {{ 'BIN_LIST.TITLE' | translate }}
           </h2>
           <div class="button-group">
             <button class="btn-action btn-add" (click)="toggleAddForm()">
               <fa-icon [icon]="faPlus"></fa-icon>
-              <span class="ms-2">Add Bin</span>
+              <span class="ms-2">{{ 'BIN_LIST.ACTIONS.ADD_BIN' | translate }}</span>
             </button>
             <button
               class="btn-action btn-remove"
@@ -19,7 +19,7 @@
               (click)="showDeleteDialog()"
             >
               <fa-icon [icon]="faMinus"></fa-icon>
-              <span class="ms-2">Remove Bin</span>
+              <span class="ms-2">{{ 'BIN_LIST.ACTIONS.REMOVE_BIN' | translate }}</span>
             </button>
           </div>
         </div>
@@ -30,21 +30,21 @@
           <div class="filters-group">
             <label class="filter-label">
               <fa-icon [icon]="faFilter" class="me-2"></fa-icon>
-              Filters:
+              {{ 'BIN_LIST.FILTERS.LABEL' | translate }}:
             </label>
             <select class="filter-select" [(ngModel)]="selectedStatus">
-              <option value="">All Status</option>
-              <option value="0">Empty</option>
-              <option value="1">Partial</option>
-              <option value="2">Full</option>
-              <option value="3">Overflow</option>
+              <option value="">{{ 'BIN_LIST.FILTERS.ALL_STATUS' | translate }}</option>
+              <option value="0">{{ 'BIN_LIST.FILTERS.STATUS_VALUES.EMPTY' | translate }}</option>
+              <option value="1">{{ 'BIN_LIST.FILTERS.STATUS_VALUES.PARTIAL' | translate }}</option>
+              <option value="2">{{ 'BIN_LIST.FILTERS.STATUS_VALUES.FULL' | translate }}</option>
+              <option value="3">{{ 'BIN_LIST.FILTERS.STATUS_VALUES.OVERFLOW' | translate }}</option>
             </select>
             <select class="filter-select" [(ngModel)]="selectedType">
-              <option value="">All Types</option>
-              <option value="General">General</option>
-              <option value="Recycling">Recycling</option>
-              <option value="Compost">Compost</option>
-              <option value="Hazardous">Hazardous</option>
+              <option value="">{{ 'BIN_LIST.FILTERS.ALL_TYPES' | translate }}</option>
+              <option value="General">{{ 'BIN_LIST.FILTERS.TYPE_VALUES.GENERAL' | translate }}</option>
+              <option value="Recycling">{{ 'BIN_LIST.FILTERS.TYPE_VALUES.RECYCLING' | translate }}</option>
+              <option value="Compost">{{ 'BIN_LIST.FILTERS.TYPE_VALUES.COMPOST' | translate }}</option>
+              <option value="Hazardous">{{ 'BIN_LIST.FILTERS.TYPE_VALUES.HAZARDOUS' | translate }}</option>
             </select>
           </div>
           <div class="search-group">
@@ -53,7 +53,7 @@
               <input
                 type="text"
                 class="search-input"
-                placeholder="Search by ID or location..."
+                [placeholder]="'BIN_LIST.FILTERS.SEARCH_PLACEHOLDER' | translate"
                 [(ngModel)]="searchQuery"
               />
             </div>
@@ -62,62 +62,37 @@
 
         <div class="loading-container" *ngIf="isLoading">
           <fa-icon [icon]="faSpinner" size="2x"></fa-icon>
-          <p>Loading...</p>
+          <p>{{ 'BIN_LIST.LOADING' | translate }}</p>
         </div>
 
         <div class="error-message" *ngIf="error">
           <p>{{ error }}</p>
-          <button class="btn-retry" (click)="loadBins()">Try Again</button>
+          <button class="btn-retry" (click)="loadBins()">{{ 'BIN_LIST.ERROR.TRY_AGAIN' | translate }}</button>
         </div>
 
         <div class="table-container" *ngIf="!isLoading && !error">
           <table class="bin-table">
             <thead>
               <tr>
-                <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> ID</th>
-                <th>
-                  <fa-icon [icon]="faTrashCan" class="me-2"></fa-icon> Type
-                </th>
-                <th>
-                  <fa-icon [icon]="faLocationDot" class="me-2"></fa-icon>
-                  Location
-                </th>
-                <th>
-                  <fa-icon [icon]="faPercent" class="me-2"></fa-icon> Fill Level
-                </th>
-                <th>
-                  <fa-icon [icon]="faCircle" class="me-2"></fa-icon> Status
-                </th>
-                <th>
-                  <fa-icon [icon]="faPercent" class="me-2"></fa-icon> Max
-                  Capacity
-                </th>
-                <th>
-                  <fa-icon
-                    [icon]="faExclamationTriangle"
-                    class="me-2"
-                  ></fa-icon>
-                  Last Emptied
-                </th>
+                <th><fa-icon [icon]="faIdCard" class="me-2"></fa-icon> {{ 'BIN_LIST.TABLE.HEADERS.ID' | translate }}</th>
+                <th><fa-icon [icon]="faTrashCan" class="me-2"></fa-icon> {{ 'BIN_LIST.TABLE.HEADERS.TYPE' | translate }}</th>
+                <th><fa-icon [icon]="faLocationDot" class="me-2"></fa-icon> {{ 'BIN_LIST.TABLE.HEADERS.LOCATION' | translate }}</th>
+                <th><fa-icon [icon]="faPercent" class="me-2"></fa-icon> {{ 'BIN_LIST.TABLE.HEADERS.FILL_LEVEL' | translate }}</th>
+                <th><fa-icon [icon]="faCircle" class="me-2"></fa-icon> {{ 'BIN_LIST.TABLE.HEADERS.STATUS' | translate }}</th>
+                <th><fa-icon [icon]="faPercent" class="me-2"></fa-icon> {{ 'BIN_LIST.TABLE.HEADERS.CAPACITY' | translate }}</th>
+                <th><fa-icon [icon]="faExclamationTriangle" class="me-2"></fa-icon> {{ 'BIN_LIST.TABLE.HEADERS.LAST_EMPTIED' | translate }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr
-                *ngFor="let bin of paginatedBins"
-                (click)="selectBin(bin)"
-                [class.selected-row]="selectedBin && selectedBin.id === bin.id"
-              >
+              <tr *ngFor="let bin of paginatedBins"
+                  (click)="selectBin(bin)"
+                  [class.selected-row]="selectedBin && selectedBin.id === bin.id">
                 <td>{{ bin.id }}</td>
                 <td>{{ getTypeText(bin.type) }}</td>
-                <td>
-                  {{ bin.location.latitude }}, {{ bin.location.longitude }}
-                </td>
+                <td>{{ bin.location.latitude }}, {{ bin.location.longitude }}</td>
                 <td>{{ bin.fillLevel }}%</td>
                 <td>
-                  <span
-                    class="status-badge"
-                    [ngClass]="getStatusClass(bin.status)"
-                  >
+                  <span class="status-badge" [ngClass]="getStatusClass(bin.status)">
                     <fa-icon [icon]="faCircle" class="me-1" size="xs"></fa-icon>
                     {{ getStatusText(bin.status) }}
                   </span>
@@ -126,39 +101,26 @@
                 <td>{{ bin.lastEmptied | date:'short' }}</td>
               </tr>
               <tr *ngIf="paginatedBins.length === 0">
-                <td colspan="7" class="no-data">No bins found</td>
+                <td colspan="7" class="no-data">{{ 'BIN_LIST.TABLE.NO_DATA' | translate }}</td>
               </tr>
             </tbody>
           </table>
 
           <div class="pagination-controls">
-            <button
-              class="pagination-btn"
-              (click)="prevPage()"
-              [disabled]="currentPage === 1"
-            >
-              Previous
+            <button class="pagination-btn"
+                    (click)="prevPage()"
+                    [disabled]="currentPage === 1">
+              {{ 'BIN_LIST.ACTIONS.PREVIOUS' | translate }}
             </button>
-            <span class="pagination-info"
-              >Page {{ currentPage }} of {{ totalPages }}</span
-            >
-            <button
-              class="pagination-btn"
-              (click)="nextPage()"
-              [disabled]="currentPage * pageSize >= bins.length"
-            >
-              Next
+            <span class="pagination-info">
+              {{ 'BIN_LIST.TABLE.PAGINATION' | translate: { current: currentPage, total: totalPages } }}
+            </span>
+            <button class="pagination-btn"
+                    (click)="nextPage()"
+                    [disabled]="currentPage * pageSize >= bins.length">
+              {{ 'BIN_LIST.ACTIONS.NEXT' | translate }}
             </button>
           </div>
-        </div>
-
-        <div *ngIf="isLoading" class="loading-spinner">
-          <fa-icon [icon]="faSpinner" spin size="3x"></fa-icon>
-        </div>
-
-        <div *ngIf="error" class="error-message">
-          <fa-icon [icon]="faExclamationTriangle" class="me-2"></fa-icon>
-          {{ error }}
         </div>
       </div>
     </div>
@@ -167,102 +129,79 @@
 
 <!-- Add Bin Form -->
 <div class="bin-form-container" *ngIf="showAddForm">
-  <h2 class="form-title">Add New Bin</h2>
+  <h2 class="form-title">{{ 'BIN_LIST.ADD_FORM.TITLE' | translate }}</h2>
   <form class="bin-form" (ngSubmit)="addBin()">
     <div class="form-group">
-      <label>Location:</label>
+      <label>{{ 'BIN_LIST.ADD_FORM.LOCATION' | translate }}:</label>
       <div class="coordinates-input">
-        <label for="latitude">Latitude:</label>
+        <label for="latitude">{{ 'BIN_LIST.ADD_FORM.LATITUDE' | translate }}:</label>
         <input type="text" id="latitude" class="form-control"
-        [(ngModel)]="bin.location.latitude" name="latitude" required
-        placeholder='38°33&#39;09.3"W' />
+               [(ngModel)]="bin.location.latitude" name="latitude" required
+               placeholder='38°33&#39;09.3"W' />
       </div>
 
       <div class="coordinates-input">
-        <label for="longitude">Longitude:</label>
+        <label for="longitude">{{ 'BIN_LIST.ADD_FORM.LONGITUDE' | translate }}:</label>
         <input type="text" id="longitude" class="form-control"
-[(ngModel)]="bin.location.longitude" name="longitude" required
-placeholder='8°51&#39;33.3"W' />
-
+               [(ngModel)]="bin.location.longitude" name="longitude" required
+               placeholder='8°51&#39;33.3"W' />
       </div>
-      <p>
-        Enter the coordinates for the bin's location manually (in degrees,
-        minutes, and seconds format).
-      </p>
+      <p>{{ 'BIN_LIST.ADD_FORM.COORDINATES_HELP' | translate }}</p>
     </div>
 
     <div class="form-group">
-      <label for="capacity">Max Capacity (kg):</label>
-      <input
-        type="number"
-        id="capacity"
-        class="form-control"
-        [(ngModel)]="bin.capacity"
-        name="capacity"
-        min="1"
-        required
-      />
+      <label for="capacity">{{ 'BIN_LIST.ADD_FORM.CAPACITY' | translate }}:</label>
+      <input type="number" id="capacity" class="form-control"
+             [(ngModel)]="bin.capacity" name="capacity" min="1" required />
     </div>
 
-    <!-- Type Field -->
     <div class="form-group">
-      <label for="type">Type:</label>
+      <label for="type">{{ 'BIN_LIST.ADD_FORM.TYPE' | translate }}:</label>
       <select id="type" class="form-control" [(ngModel)]="bin.type" name="type">
-        <option value="General">General</option>
-        <option value="Recycling">Recycling</option>
-        <option value="Compost">Compost</option>
-        <option value="Hazardous">Hazardous</option>
+        <option value="General">{{ 'BIN_LIST.FILTERS.TYPE_VALUES.GENERAL' | translate }}</option>
+        <option value="Recycling">{{ 'BIN_LIST.FILTERS.TYPE_VALUES.RECYCLING' | translate }}</option>
+        <option value="Compost">{{ 'BIN_LIST.FILTERS.TYPE_VALUES.COMPOST' | translate }}</option>
+        <option value="Hazardous">{{ 'BIN_LIST.FILTERS.TYPE_VALUES.HAZARDOUS' | translate }}</option>
       </select>
     </div>
 
     <div class="form-actions">
       <button type="submit" class="btn-submit" [disabled]="isLoading">
         <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
-        <span *ngIf="!isLoading">Save Bin</span>
-        <span *ngIf="isLoading">Saving...</span>
+        <span *ngIf="!isLoading">{{ 'BIN_LIST.ACTIONS.SAVE' | translate }}</span>
+        <span *ngIf="isLoading">{{ 'BIN_LIST.ACTIONS.SAVING' | translate }}</span>
       </button>
-      <button
-        type="button"
-        class="btn-cancel"
-        (click)="toggleAddForm()"
-        [disabled]="isLoading"
-      >
-        Cancel
+      <button type="button" class="btn-cancel"
+              (click)="toggleAddForm()" [disabled]="isLoading">
+        {{ 'BIN_LIST.ACTIONS.CANCEL' | translate }}
       </button>
     </div>
   </form>
 </div>
 
 <!-- Delete Confirmation Modal -->
-<div
-  class="overlay"
-  *ngIf="showDeleteConfirmation"
-  (click)="cancelDelete()"
-></div>
+<div class="overlay" *ngIf="showDeleteConfirmation" (click)="cancelDelete()"></div>
 
 <div class="delete-confirmation-container" *ngIf="showDeleteConfirmation">
   <div class="delete-confirmation-header">
     <fa-icon [icon]="faExclamationTriangle" class="warning-icon"></fa-icon>
-    <h2>Confirm Deletion</h2>
+    <h2>{{ 'BIN_LIST.DELETE_CONFIRMATION.TITLE' | translate }}</h2>
   </div>
 
   <div class="delete-confirmation-body">
     <p>
-      Are you sure you want to delete bin with ID:
+      {{ 'BIN_LIST.DELETE_CONFIRMATION.MESSAGE' | translate }}
       <strong>{{ selectedBin?.id }}</strong>?
     </p>
-    <p>This action cannot be undone.</p>
+    <p>{{ 'BIN_LIST.DELETE_CONFIRMATION.WARNING' | translate }}</p>
 
     <div class="bin-details" *ngIf="selectedBin">
       <div class="detail-item">
-        <span class="detail-label">Location:</span>
-        <span class="detail-value"
-          >{{ selectedBin.location.latitude }}, {{
-          selectedBin.location.longitude }}</span
-        >
+        <span class="detail-label">{{ 'BIN_LIST.DELETE_CONFIRMATION.DETAILS.LOCATION' | translate }}:</span>
+        <span class="detail-value">{{ selectedBin.location.latitude }}, {{ selectedBin.location.longitude }}</span>
       </div>
       <div class="detail-item">
-        <span class="detail-label">Type:</span>
+        <span class="detail-label">{{ 'BIN_LIST.DELETE_CONFIRMATION.DETAILS.TYPE' | translate }}:</span>
         <span class="detail-value">{{ getTypeText(selectedBin.type) }}</span>
       </div>
     </div>
@@ -272,11 +211,11 @@ placeholder='8°51&#39;33.3"W' />
     <button class="btn-delete" (click)="confirmDelete()" [disabled]="isLoading">
       <fa-icon *ngIf="!isLoading" [icon]="faTrash"></fa-icon>
       <fa-icon *ngIf="isLoading" [icon]="faSpinner"></fa-icon>
-      <span *ngIf="!isLoading">Delete Bin</span>
-      <span *ngIf="isLoading">Deleting...</span>
+      <span *ngIf="!isLoading">{{ 'BIN_LIST.ACTIONS.DELETE' | translate }}</span>
+      <span *ngIf="isLoading">{{ 'BIN_LIST.ACTIONS.DELETING' | translate }}</span>
     </button>
     <button class="btn-cancel" (click)="cancelDelete()" [disabled]="isLoading">
-      Cancel
+      {{ 'BIN_LIST.ACTIONS.CANCEL' | translate }}
     </button>
   </div>
 </div>

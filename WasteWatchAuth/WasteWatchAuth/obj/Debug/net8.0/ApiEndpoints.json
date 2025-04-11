@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WasteWatchAuth.Controllers.ForgotPasswordModel",
+        "Type": "WasteWatchAuth.Models.ForgotPasswordModel",
         "IsRequired": true
       }
     ],
@@ -35,7 +35,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WasteWatchAuth.Controllers.LoginModel",
+        "Type": "WasteWatchAuth.Models.LoginModel",
         "IsRequired": true
       }
     ],
@@ -67,7 +67,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WasteWatchAuth.Controllers.RegisterModel",
+        "Type": "WasteWatchAuth.Models.RegisterModel",
         "IsRequired": true
       }
     ],
@@ -83,7 +83,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WasteWatchAuth.Controllers.ResetPasswordModel",
+        "Type": "WasteWatchAuth.Models.ResetPasswordModel",
         "IsRequired": true
       }
     ],
@@ -424,6 +424,116 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WasteWatchAuth.Controllers.NotificationsController",
+    "Method": "CreateNotification",
+    "RelativePath": "api/Notifications",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "notification",
+        "Type": "WasteWatchAuth.Models.Notification",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.NotificationsController",
+    "Method": "DeleteNotification",
+    "RelativePath": "api/Notifications/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.NotificationsController",
+    "Method": "GetBinNotifications",
+    "RelativePath": "api/Notifications/bin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.NotificationsController",
+    "Method": "GetFleetNotifications",
+    "RelativePath": "api/Notifications/fleet",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.RoutesController",
+    "Method": "CreateRoute",
+    "RelativePath": "api/Routes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "route",
+        "Type": "WasteWatchAuth.Models.Routes",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.RoutesController",
+    "Method": "GetAllRoutes",
+    "RelativePath": "api/Routes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.RoutesController",
+    "Method": "GetRouteById",
+    "RelativePath": "api/Routes/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.RoutesController",
+    "Method": "DeleteRoute",
+    "RelativePath": "api/Routes/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WasteWatchAuth.Controllers.VehiclesController",
     "Method": "CreateVehicle",
     "RelativePath": "api/Vehicles",
@@ -460,6 +570,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WasteWatchAuth.Controllers.VehiclesController",
+    "Method": "UpdateVehicle",
+    "RelativePath": "api/Vehicles/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatedVehicle",
+        "Type": "WasteWatchAuth.Models.Vehicle",
         "IsRequired": true
       }
     ],

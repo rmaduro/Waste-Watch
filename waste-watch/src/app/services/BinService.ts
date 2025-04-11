@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of , throwError } from 'rxjs';
 import { catchError, tap, map, switchMap } from 'rxjs/operators';
 
 /**
@@ -396,7 +396,7 @@ createBin(bin: Bin): Observable<Bin> {
   }
 
   /**
-   * Fetches bins that are almost full. 
+   * Fetches bins that are almost full.
    * @returns Observable<any[]> - The bins nearing full capacity.
    */
   getAlmostFullBins(): Observable<any[]> {
@@ -419,6 +419,25 @@ createBin(bin: Bin): Observable<Bin> {
     );
   }
 
+  getBinNotifications(): Observable<any> {
+    const url = 'https://localhost:7259/api/notifications/bin';
+    return this.http.get<any>(url, this.httpOptions).pipe(
+      catchError((error) => {
+        console.error('Error fetching fleet notifications:', error);
+        return throwError(() => new Error(error));
+      })
+    );
+  }
+
+    deleteBinNotification(id: number): Observable<any> {
+      const url = `https://localhost:7259/api/notifications/${id}`;
+      return this.http.delete(url, this.httpOptions).pipe(
+        catchError((error) => {
+          console.error('Error deleting fleet notification:', error);
+          return throwError(() => error);
+        })
+      );
+    }
 
 
 }

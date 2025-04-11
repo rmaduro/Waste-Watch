@@ -31,50 +31,61 @@
       style="flex: 2;"
     >
 
-<!-- Success or Error Message -->
-<div *ngIf="message" class="alert alert-sm" [ngClass]="messageType">
-  {{ message }}
-</div>
+      <!-- Success or Error Message -->
+      <div *ngIf="message" class="alert alert-sm" [ngClass]="messageType">
+        {{ message }}
+      </div>
 
       <form (ngSubmit)="onRegister()" class="w-100">
         <div class="mb-2">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label">
+            {{ 'REGISTER.EMAIL_LABEL' | translate }}
+          </label>
           <input
             type="email"
             class="form-control"
             id="email"
             [(ngModel)]="email"
             name="email"
-            placeholder="Enter your email..."
+            [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate"
             required
           />
         </div>
+
         <div class="mb-2">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label">
+            {{ 'REGISTER.PASSWORD_LABEL' | translate }}
+          </label>
           <input
             type="password"
             class="form-control"
             id="password"
             [(ngModel)]="password"
             name="password"
-            placeholder="Enter your password..."
+            [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate"
             required
           />
         </div>
+
         <div class="mb-2">
-          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <label for="confirmPassword" class="form-label">
+            {{ 'REGISTER.CONFIRM_PASSWORD_LABEL' | translate }}
+          </label>
           <input
             type="password"
             class="form-control"
             id="confirmPassword"
             [(ngModel)]="confirmPassword"
             name="confirmPassword"
-            placeholder="Confirm your password..."
+            [placeholder]="'REGISTER.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
             required
           />
         </div>
+
         <div class="mb-3">
-          <label for="role" class="form-label">Role</label>
+          <label for="role" class="form-label">
+            {{ 'REGISTER.ROLE_LABEL' | translate }}
+          </label>
           <select
             class="form-select"
             id="role"
@@ -82,13 +93,24 @@
             name="role"
             required
           >
-            <option value="" disabled selected>Select your role</option>
-            <option value="Bin Manager">Bin Manager</option>
-            <option value="Fleet Manager">Fleet Manager</option>
-            <option value="Admin">Admin</option>
+            <option value="" disabled selected>
+              {{ 'REGISTER.ROLE_PLACEHOLDER' | translate }}
+            </option>
+            <option value="Bin Manager">
+              {{ 'REGISTER.ROLE_OPTIONS.BIN_MANAGER' | translate }}
+            </option>
+            <option value="Fleet Manager">
+              {{ 'REGISTER.ROLE_OPTIONS.FLEET_MANAGER' | translate }}
+            </option>
+            <option value="Admin">
+              {{ 'REGISTER.ROLE_OPTIONS.ADMIN' | translate }}
+            </option>
           </select>
         </div>
-        <button type="submit" class="btn btn-dark w-100">Register</button>
+
+        <button type="submit" class="btn btn-dark w-100">
+          {{ 'REGISTER.REGISTER_BUTTON' | translate }}
+        </button>
       </form>
 
       <!-- Logout Button (Moved outside the form) -->
@@ -97,7 +119,7 @@
           (click)="logout()"
           class="btn btn-link text-decoration-none p-0"
         >
-          Logout and return to login
+          {{ 'REGISTER.LOGOUT' | translate }}
         </button>
       </div>
     </div>

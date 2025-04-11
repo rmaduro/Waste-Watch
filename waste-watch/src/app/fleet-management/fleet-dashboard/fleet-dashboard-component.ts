@@ -3,6 +3,7 @@ import { AuthService } from '../../services/AuthService'; // Adjust the path as 
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideNavComponent } from '../../components/side-nav/side-nav.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   faTruck,
   faGasPump,
@@ -12,6 +13,7 @@ import {
   faTools,
 } from '@fortawesome/free-solid-svg-icons';
 import Chart from 'chart.js/auto';
+
 
 interface Alert {
   id: string;
@@ -23,7 +25,7 @@ interface Alert {
 @Component({
   selector: 'app-fleet-dashboard',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, SideNavComponent],
+  imports: [CommonModule, FontAwesomeModule, SideNavComponent,TranslateModule],
   templateUrl: './fleet-dashboard-component.html',
   styleUrls: ['./fleet-dashboard-component.css'],
 })
@@ -82,11 +84,24 @@ export class FleetDashboardComponent implements OnInit {
 
   barChartInstance!: Chart;
   pieChartInstance!: Chart;
+  currentLanguage = 'en';
+  currentLanguageFlag = 'gb';
+  currentLanguageName = 'English';
+  languageOptions = [
+    { code: 'en', flag: 'gb', name: 'English' },
+    { code: 'es', flag: 'es', name: 'Español' },
+    { code: 'de', flag: 'de', name: 'Deutsch' },
+    { code: 'pt', flag: 'pt', name: 'Português' },
+    { code: 'fr', flag: 'fr', name: 'Français' },
+  ];
 
   currentUser: { email: string; userName: string; roles: string[] } | null =
     null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private translate: TranslateService) {
+    const savedLang = localStorage.getItem('userLanguage') || 'en';
+    this.changeLanguage(savedLang);
+    }
 
   ngOnInit(): void {
     this.loadDashboardData();
@@ -101,6 +116,18 @@ export class FleetDashboardComponent implements OnInit {
       this.renderChart();
       this.renderPieChart();
     }, 100);
+  }
+
+  changeLanguage(langCode: string) {
+    const selectedLang = this.languageOptions.find((l) => l.code === langCode);
+    if (selectedLang) {
+      this.currentLanguage = selectedLang.code;
+      this.currentLanguageFlag = selectedLang.flag;
+      this.currentLanguageName = selectedLang.name;
+      this.translate.use(langCode);
+      // Optional: Save to localStorage
+      localStorage.setItem('userLanguage', langCode);
+    }
   }
 
   loadDashboardData(): void {

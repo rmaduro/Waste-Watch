@@ -400,6 +400,84 @@ namespace WasteWatchAuth.Migrations
                     b.ToTable("MaintenanceHistories");
                 });
 
+            modelBuilder.Entity("WasteWatchAuth.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ReferenceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("WasteWatchAuth.Models.RouteLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RouteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RouteId");
+
+                    b.ToTable("RouteLocations");
+                });
+
+            modelBuilder.Entity("WasteWatchAuth.Models.Routes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Routes");
+                });
+
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
                 {
                     b.Property<int>("Id")
@@ -429,6 +507,9 @@ namespace WasteWatchAuth.Migrations
                     b.Property<int>("MaxCapacity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RouteId")
+                        .HasColumnType("int");
+
                     b.Property<string>("RouteType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -443,6 +524,8 @@ namespace WasteWatchAuth.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DriverId");
+
+                    b.HasIndex("RouteId");
 
                     b.ToTable("Vehicles");
                 });
@@ -520,6 +603,17 @@ namespace WasteWatchAuth.Migrations
                     b.Navigation("Bin");
                 });
 
+            modelBuilder.Entity("WasteWatchAuth.Models.RouteLocation", b =>
+                {
+                    b.HasOne("WasteWatchAuth.Models.Routes", "Route")
+                        .WithMany("Locations")
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Route");
+                });
+
             modelBuilder.Entity("WasteWatchAuth.Models.Vehicle", b =>
                 {
                     b.HasOne("WasteWatchAuth.Models.Collaborator", "Driver")
@@ -528,7 +622,18 @@ namespace WasteWatchAuth.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WasteWatchAuth.Models.Routes", "Route")
+                        .WithMany()
+                        .HasForeignKey("RouteId");
+
                     b.Navigation("Driver");
+
+                    b.Navigation("Route");
+                });
+
+            modelBuilder.Entity("WasteWatchAuth.Models.Routes", b =>
+                {
+                    b.Navigation("Locations");
                 });
 #pragma warning restore 612, 618
         }

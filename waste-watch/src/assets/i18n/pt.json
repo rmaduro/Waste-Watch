@@ -1,0 +1,390 @@
+{
+  "DASHBOARD": {
+    "TITLE": "Painel de Gestão de Contentores",
+    "ACTIONS": {
+      "REFRESH": "Atualizar Dados",
+      "GENERATE_REPORT": "Gerar Relatório",
+      "GENERATING": "A gerar..."
+    },
+    "STATS": {
+      "TITLE": "Métricas Principais",
+      "MAINTENANCE": {
+        "TITLE": "Contentores em Manutenção",
+        "VALUE": "{{value}}"
+      }
+    },
+    "COLLECTION_HISTORY": {
+      "TITLE": "Histórico de Recolhas",
+      "COLUMNS": {
+        "ID": "ID",
+        "BIN_ID": "ID do Contentor",
+        "TIMESTAMP": "Data e Hora",
+        "AMOUNT": "Quantidade Recolhida",
+        "ISSUES": "Problemas Registados",
+        "STATUS": "Estado da Recolha"
+      },
+      "STATUS_VALUES": {
+        "PENDING": "Pendente",
+        "COMPLETED": "Concluída",
+        "FAILED": "Falhada"
+      },
+      "NO_DATA": "Não existem dados de histórico de recolhas disponíveis."
+    },
+    "MAINTENANCE_HISTORY": {
+      "TITLE": "Histórico de Manutenção",
+      "COLUMNS": {
+        "BIN_ID": "ID do Contentor",
+        "TYPE": "Tipo de Manutenção",
+        "DESCRIPTION": "Descrição",
+        "START_DATE": "Data de Início",
+        "END_DATE": "Data de Fim"
+      },
+      "ONGOING": "Em Curso",
+      "NO_DATA": "Não existem dados de histórico de manutenção disponíveis."
+    },
+    "UNITS": {
+      "KILOGRAMS": "Kg"
+    }
+  },
+  "BIN_LIST": {
+    "TITLE": "Lista de Contentores",
+    "ACTIONS": {
+      "ADD_BIN": "Adicionar Contentor",
+      "REMOVE_BIN": "Remover Contentor",
+      "SAVE": "Guardar Contentor",
+      "SAVING": "A guardar...",
+      "DELETE": "Eliminar Contentor",
+      "DELETING": "A eliminar...",
+      "CANCEL": "Cancelar",
+      "PREVIOUS": "Anterior",
+      "NEXT": "Seguinte"
+    },
+    "FILTERS": {
+      "LABEL": "Filtros:",
+      "ALL_STATUS": "Todos os Estados",
+      "STATUS_VALUES": {
+        "EMPTY": "Vazio",
+        "PARTIAL": "Parcial",
+        "FULL": "Cheio",
+        "OVERFLOW": "Transbordo"
+      },
+      "ALL_TYPES": "Todos os Tipos",
+      "TYPE_VALUES": {
+        "GENERAL": "Geral",
+        "RECYCLING": "Reciclagem",
+        "COMPOST": "Compostagem",
+        "HAZARDOUS": "Perigoso"
+      },
+      "SEARCH_PLACEHOLDER": "Procurar por ID ou localização..."
+    },
+    "TABLE": {
+      "HEADERS": {
+        "ID": "ID",
+        "TYPE": "Tipo",
+        "LOCATION": "Localização",
+        "FILL_LEVEL": "Nível de Enchimento",
+        "STATUS": "Estado",
+        "CAPACITY": "Capacidade Máxima",
+        "LAST_EMPTIED": "Último Esvaziamento"
+      },
+      "NO_DATA": "Nenhum contentor encontrado",
+      "PAGINATION": "Página {{current}} de {{total}}"
+    },
+    "ADD_FORM": {
+      "TITLE": "Adicionar Novo Contentor",
+      "LOCATION": "Localização:",
+      "LATITUDE": "Latitude:",
+      "LONGITUDE": "Longitude:",
+      "COORDINATES_HELP": "Insira manualmente as coordenadas da localização do contentor (em formato de graus, minutos e segundos).",
+      "CAPACITY": "Capacidade Máxima (kg):",
+      "TYPE": "Tipo:"
+    },
+    "DELETE_CONFIRMATION": {
+      "TITLE": "Confirmar Eliminação",
+      "MESSAGE": "Tem a certeza de que pretende eliminar o contentor com o ID:",
+      "WARNING": "Esta ação não pode ser anulada.",
+      "DETAILS": {
+        "LOCATION": "Localização:",
+        "TYPE": "Tipo:"
+      }
+    },
+    "LOADING": "A carregar...",
+    "ERROR": {
+      "TRY_AGAIN": "Tentar Novamente"
+    }
+  },
+  "RESET_PASSWORD": {
+    "EMAIL_LABEL": "Email",
+    "PASSWORD_LABEL": "Nova Palavra-passe",
+    "CONFIRM_PASSWORD_LABEL": "Confirmar Nova Palavra-passe",
+    "PASSWORD_PLACEHOLDER": "Introduza a sua nova palavra-passe",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirme a sua nova palavra-passe",
+    "PASSWORD_MISMATCH": "As palavras-passe não coincidem",
+    "RESET_BUTTON": "Repor Palavra-passe",
+    "BACK_TO_LOGIN": "Voltar ao Início de Sessão"
+  },
+  "LOGIN": {
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Introduza o seu email...",
+    "PASSWORD_LABEL": "Palavra-passe",
+    "PASSWORD_PLACEHOLDER": "Introduza a sua palavra-passe...",
+    "LOGIN_BUTTON": "Iniciar Sessão",
+    "FORGOT_PASSWORD": "Esqueceu-se da palavra-passe?",
+    "LOGIN_ERROR": "Email ou palavra-passe inválidos"
+  },
+  "REGISTER": {
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Introduza o seu email...",
+    "PASSWORD_LABEL": "Palavra-passe",
+    "PASSWORD_PLACEHOLDER": "Introduza a sua palavra-passe...",
+    "CONFIRM_PASSWORD_LABEL": "Confirmar Palavra-passe",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirme a sua palavra-passe...",
+    "ROLE_LABEL": "Função",
+    "ROLE_PLACEHOLDER": "Selecione a sua função",
+    "ROLE_OPTIONS": {
+      "BIN_MANAGER": "Gestor de Contentores",
+      "FLEET_MANAGER": "Gestor de Frota",
+      "ADMIN": "Administrador"
+    },
+    "REGISTER_BUTTON": "Registar",
+    "LOGOUT": "Terminar sessão e voltar ao início"
+  },
+  "REQUEST_RESET": {
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Introduza o seu email para repor a palavra-passe...",
+    "SUBMIT_BUTTON": "Enviar Email",
+    "BACK_TO_LOGIN": "Voltar ao Início de Sessão",
+    "ERROR_MESSAGE": "Ocorreu um erro. Por favor, tente novamente."
+  },
+  "FLEET_DASHBOARD": {
+    "TITLE": "Painel de Gestão da Frota",
+    "ACTIVE_TRUCKS": "Camiões Ativos",
+    "AVG_FUEL_EFFICIENCY": "Eficiência Média de Combustível",
+    "NEARING_CAPACITY": "Próximo da Capacidade Máxima",
+    "TODAYS_COLLECTIONS": "Recolhas de Hoje",
+    "COLLECTION_TREND": "vs. dia anterior",
+    "MONTHLY_OVERVIEW": "Resumo Mensal das Recolhas",
+    "MONTHLY_BREAKDOWN": "Detalhamento Mensal das Recolhas",
+    "ACTIVE_ALERTS": "Alertas Ativos",
+    "ALERT_TYPE": {
+      "CRITICAL": "Crítico",
+      "WARNING": "Aviso"
+    }
+  },
+
+    "FLEET_MAP": {
+      "TITLE": "Mapa da Frota",
+      "REFRESH_BUTTON": "Atualizar Dados",
+      "LOADING": "A carregar dados da frota...",
+      "RETRY_BUTTON": "Tentar Novamente",
+      "ACTIVE_VEHICLES": "Veículos Ativos",
+      "DRIVER_LABEL": "Motorista:",
+      "ROUTE_LABEL": "Rota:",
+      "LAST_MAINTENANCE_LABEL": "Última Manutenção:",
+      "UNASSIGNED": "Não Atribuído"
+    },
+    "FLEET_NOTIFICATIONS": {
+      "TITLE": "Notificações da Frota",
+      "CLEARING": "A limpar...",
+      "CLEAR_ALL": "Limpar Tudo",
+      "FILTERS_LABEL": "Filtros:",
+      "FILTER_OPTIONS": {
+        "ALL": "Todos os Tipos",
+        "INFO": "Informação",
+        "WARNING": "Aviso",
+        "ERROR": "Erro",
+        "SUCCESS": "Sucesso"
+      },
+      "LOADING": "A carregar notificações...",
+      "RETRY": "Tentar Novamente",
+      "VIEW_DETAILS": "Ver Detalhes",
+      "NO_NOTIFICATIONS": "Nenhuma notificação encontrada",
+      "PREVIOUS": "Anterior",
+      "NEXT": "Seguinte",
+      "PAGE_INFO": "Página {{ currentPage }} de {{ totalPages }}",
+      "DETAILS_MODAL": {
+        "TITLE": "Detalhes da Notificação",
+        "LABELS": {
+          "TITLE": "Título:",
+          "TYPE": "Tipo:",
+          "PRIORITY": "Prioridade:",
+          "DATE": "Data:",
+          "REFERENCE_ID": "ID de Referência:",
+          "MESSAGE": "Mensagem:"
+        },
+        "CLOSE": "Fechar"
+      }
+    },
+      "VEHICLE_MANAGEMENT": {
+        "TITLE": "Lista de Veículos",
+        "ADD_BUTTON": "Adicionar Veículo",
+        "REMOVE_BUTTON": "Remover Veículo",
+        "FILTERS": {
+          "LABEL": "Filtros:",
+          "STATUS": {
+            "ALL": "Todos os Estados",
+            "ACTIVE": "Ativo",
+            "IDLE": "Inativo",
+            "MAINTENANCE": "Manutenção"
+          },
+          "ROUTES": {
+            "ALL": "Todas as Rotas",
+            "COMMERCIAL": "Comercial",
+            "INDUSTRIAL": "Industrial",
+            "RESIDENTIAL": "Residencial"
+          },
+          "CAPACITIES": {
+            "ALL": "Todas as Capacidades",
+            "1000KG": "1000kg",
+            "1500KG": "1500kg",
+            "2000KG": "2000kg",
+            "2500KG": "2500kg",
+            "3000KG": "3000kg"
+          },
+          "SEARCH_PLACEHOLDER": "Pesquisar por ID..."
+        },
+        "TABLE": {
+          "ID": "ID",
+          "LICENSE_PLATE": "Matrícula",
+          "DRIVER_NAME": "Nome do Motorista",
+          "STATUS": "Estado",
+          "ROUTE_TYPE": "Tipo de Rota",
+          "MAX_CAPACITY": "Capacidade Máxima",
+          "LAST_MAINTENANCE": "Última Manutenção",
+          "ROUTE": "Rota",
+          "VIEW_ROUTE": "Ver Rota",
+          "CREATE_ROUTE": "Criar Rota",
+          "NO_VEHICLES": "Nenhum veículo encontrado"
+        },
+        "PAGINATION": {
+          "PREVIOUS": "Anterior",
+          "NEXT": "Seguinte",
+          "INFO": "Página {{ currentPage }} de {{ totalPages }}"
+        },
+        "LOADING": "A carregar...",
+        "ERROR": {
+          "GENERIC": "Ocorreu um erro.",
+          "RETRY": "Tentar Novamente"
+        },
+        "FORM": {
+          "TITLE": "Adicionar Novo Veículo",
+          "SAVE": "Guardar Veículo",
+          "SAVING": "A guardar...",
+          "CANCEL": "Cancelar",
+          "VEHICLE_INFORMATION": "Informações do Veículo",
+          "ROUTE_TYPE": "Tipo de Rota",
+          "MAX_CAPACITY": "Capacidade Máxima",
+          "LAST_MAINTENANCE_DATE": "Data da Última Manutenção",
+          "DRIVER_INFORMATION": "Informações do Motorista",
+          "SELECT_DRIVER": "Selecionar Motorista",
+          "CUSTOM_DRIVER": "Motorista Personalizado",
+          "DRIVER_DETAILS": "Detalhes do Motorista",
+          "DRIVER_NAME": "Nome:",
+          "DRIVER_AGE": "Idade:",
+          "LICENSE_NUMBER": "Número da Carta:",
+          "COLLABORATOR_TYPE": "Tipo:",
+          "COLLABORATOR_TYPES": {
+            "DRIVER": "Motorista",
+            "CONTRACTOR": "Prestador de Serviços",
+            "EMPLOYEE": "Funcionário"
+          },
+          "LOCATION_INFORMATION": "Localização Atual",
+          "LATITUDE": "Latitude:",
+          "LONGITUDE": "Longitude:"
+        },
+        "ROUTE_FORM": {
+          "TITLE": "Criar Nova Rota",
+          "ROUTE_INFORMATION": "Informações da Rota",
+          "ROUTE_NAME": "Nome da Rota:",
+          "ROUTE_TYPE": "Tipo de Rota:",
+          "SELECT_BINS": "Selecionar Contentores para Recolha",
+          "BIN_ID": "Contentor #{{ id }}",
+          "BIN_TYPE": "Tipo: {{ type }}",
+          "BIN_LOCATION": "{{ lat }}, {{ lng }}",
+          "CREATE": "Criar Rota",
+          "CREATING": "A criar..."
+        },
+        "ROUTE_VIEW": {
+          "DETAILS": "Detalhes da Rota",
+          "GENERATE_REPORT": "Gerar Relatório",
+          "NO_TYPE": "Tipo não especificado",
+          "ASSIGNED_VEHICLE": "Veículo Atribuído",
+          "DRIVER": "Motorista",
+          "ESTIMATED_TIME": "Tempo Estimado",
+          "ECO_ROUTE": "Rota Ecológica",
+          "TOTAL_STOPS": "Paragens Totais",
+          "CO2_EMISSIONS": "Emissões de CO2",
+          "ROUTE_MAP": "Mapa da Rota",
+          "COLLECTION_STOPS": "Paragens de Recolha ({{ count }})",
+          "DIRECTIONS": "Direções",
+          "NO_ROUTE_ASSIGNED": "Rota Não Atribuída",
+          "NO_ROUTE_MESSAGE": "Este veículo ainda não tem uma rota atribuída",
+          "CREATE_ROUTE": "Criar Rota"
+        },
+        "DELETE_CONFIRMATION": {
+          "TITLE": "Confirmar Eliminação",
+          "MESSAGE": "Tem a certeza de que pretende eliminar o veículo com o ID:",
+          "WARNING": "Esta ação não pode ser anulada.",
+          "LICENSE_PLATE": "Matrícula:",
+          "DRIVER": "Motorista:",
+          "CONFIRM": "Eliminar Veículo",
+          "CONFIRMING": "A eliminar...",
+          "CANCEL": "Cancelar"
+        }
+      },
+      "BIN_MAP": {
+        "TITLE": "Mapa de Contentores",
+        "REFRESH_BUTTON": "Atualizar Dados",
+        "LOADING": "A carregar dados dos contentores...",
+        "RETRY": "Tentar novamente",
+        "AVAILABLE_BINS": "Contentores Disponíveis",
+        "TYPE": "Tipo:",
+        "CAPACITY": "Capacidade:"
+      },
+      "BIN_NOTIFICATIONS": {
+        "TITLE": "Notificações de Contentores",
+        "CLEARING": "A limpar...",
+        "CLEAR_ALL": "Limpar Tudo",
+        "FILTERS_LABEL": "Filtros:",
+        "FILTER_OPTIONS": {
+          "ALL": "Todos os Tipos",
+          "INFO": "Informação",
+          "WARNING": "Aviso",
+          "ERROR": "Erro",
+          "SUCCESS": "Sucesso"
+        },
+        "LOADING": "A carregar notificações...",
+        "RETRY": "Tentar novamente",
+        "VIEW_DETAILS": "Ver Detalhes",
+        "NO_NOTIFICATIONS": "Nenhuma notificação encontrada",
+        "PREVIOUS": "Anterior",
+        "NEXT": "Seguinte",
+        "PAGE_INFO": "Página {{ currentPage }} de {{ totalPages }}",
+        "DETAILS_MODAL": {
+          "TITLE": "Detalhes da Notificação",
+          "LABELS": {
+            "TITLE": "Título:",
+            "TYPE": "Tipo:",
+            "PRIORITY": "Prioridade:",
+            "DATE": "Data:",
+            "REFERENCE_ID": "ID de Referência:",
+            "MESSAGE": "Mensagem:"
+          },
+          "CLOSE": "Fechar"
+        }
+      },
+        "SIDENAV": {
+          "APP_NAME": "WasteWatch",
+          "FLEET_DASHBOARD": "Painel da Frota",
+          "VEHICLE_ROSTER": "Lista de Veículos",
+          "FLEET_MONITORING": "Monitorização da Frota",
+          "FLEET_NOTIFICATIONS": "Notificações da Frota",
+          "BIN_DASHBOARD": "Painel de Contentores",
+          "BIN_LIST": "Lista de Contentores",
+          "BIN_MONITORING": "Monitorização de Contentores",
+          "BIN_NOTIFICATIONS": "Notificações de Contentores",
+          "LOGOUT": "Terminar sessão"
+        }
+      }
+
+
