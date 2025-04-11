@@ -399,11 +399,7 @@
     z-index: 999;
   }
 
-  .blur-background {
-    filter: blur(5px);
-    pointer-events: none;
-  }
-
+  
   .vehicle-form-container {
     position: fixed;
     top: 5%;
